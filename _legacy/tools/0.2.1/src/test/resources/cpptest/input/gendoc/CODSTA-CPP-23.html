@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Whenever a global function  is  referenced, use the :: operator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Whenever a global function  is  referenced, use the :: operator [CODSTA-CPP-23-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Whenever a global function is used, use the :: operator. 
+This rule detects if you do not use the :: operator whenever a global function 
+is used. Using the :: operator in these situations will make it easier 
+to determine which variable is being used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability and maintainability. Using the :: operator helps the maintainer of 
+code clearly identify used function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+namespace N {
+    void globalFoo1( );
+}
+
+void globalFoo1( ) {
+}
+
+void globalFoo2( ) {
+    globalFoo1( );      // Violation
+    N::globalFoo1( );   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+namespace N {
+    void globalFoo1( );
+}
+
+void globalFoo1( ) {
+}
+
+void globalFoo2( ) {
+    ::globalFoo1( );    // OK
+    ::N::globalFoo1( ); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

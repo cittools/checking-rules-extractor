@@ -1,0 +1,62 @@
+.NAME Use delete [] for arrays
+
+.DESCRIPTION
+
+Definition:
+-----------
+Empty brackets must be used for delete when de-allocating arrays.
+
+Justification:
+--------------
+Ensures that the appropriate amount of memory is freed.
+
+Example:
+--------
+int *table = new int[7];
+delete table;      // violation
+delete [10] table; // violation
+delete [] table;   // ok
+
+Limitations:
+------------
+There are some limitations to this rule when delete is used followed by a 
+variable name. These limitations do not apply in the case where delete is 
+followed by a number in brackets.
+
+This rule is not violated in the case of "complex" types: 
+
+Example 1:
+int ** myarray = new int[2];
+myarray[0] = new int[10];
+
+delete myarray;     // violation
+delete myarray[0];  // no violation
+
+Example 2:
+class A
+{
+  public:
+    int *tab;
+...
+};
+...
+    A var;
+    var.tab = new int[10];
+    delete var.tab;        // no violation
+
+The rule is also not violated when the new operation is hidden:
+
+int * create_array(int nb)
+{
+   return (new int[nb]); 
+}
+...
+    int * myarray = create_array(10);
+    delete myarray;    // no violation
+
+.REQUIRED newarray
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use consistent linkage for identifiers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use consistent linkage for identifiers [MISRA-024-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Identifiers shall not simultaneously have both internal and external 
+linkage in the same translation unit.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents variable-name hiding which can be confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static unsigned short x;
+static unsigned short y;
+
+void foo( ) {
+    extern unsigned short x;     // Violation
+    extern unsigned short y;     // Violation
+    {
+        extern unsigned short y; // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not declare variables simultaneously with internal and external 
+linkage in the same translation unit.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin:  Misra Guidelines - Rule 24
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.15 Declarations and Definitions, AV Rule 138
+
+</PRE>
+</BODY>
+</HTML>

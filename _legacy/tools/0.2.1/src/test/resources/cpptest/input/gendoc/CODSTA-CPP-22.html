@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer non-member non-friend functions to member functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer non-member non-friend functions to member functions [CODSTA-CPP-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The non-member approach is thus better than a member function in many ways.
+The member function actually yields less encapsulation than the non-member.
+Furthermore, offering the non-member function allows for greater packaging
+flexibility, related functionality, and that, in turn, yields fewer compilation 
+dependencies and an increase extensibility.
+Friends have the same access to a class's private members that member functions
+have, hence the same impact on encapsulation. From an encapsulation point
+of view, the choice isn't between member and non-member functions, it's between
+member functions and non-member non-friend functions."
+Rule reports violation on the member functions which call public functions
+and don't have the access to private and protected members.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule ensures greater flexibility and safety of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class WebBrowser {
+public:
+    void clearCache();
+    void clearHistory();
+    void removeCookies();
+    void clearEverything();          // Violation
+};
+
+void WebBrowser::clearEverything()
+{
+    clearCache();
+    clearHistory();
+    removeCookies();
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class WebBrowser {
+public:
+    void clearCache();
+    void clearHistory();
+    void removeCookies();
+};
+
+void clearEverything(WebBrowser&amp; wb)  // OK
+{
+    wb.clearCache();
+    wb.clearHistory();
+    wb.removeCookies();
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 4, Item 23
+
+</PRE>
+</BODY>
+</HTML>

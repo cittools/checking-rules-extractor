@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Evaluation of constant unsigned expression should not lead to wrap-around
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Evaluation of constant unsigned expression should not lead to wrap-around [JSF-203-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Because unsigned integer expressions do not strictly overflow, but instead
+wrap-around in a modular way, any constant unsigned integer expressions
+which in effect 'overflow' will not be detected by the compiler."
+The rule reports a violation if a result of substraction of two integer
+constants is lower than 0.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule checks only simple substractions for unsigned integer constants.
+It is not possible to checks:
+- expressions other than substraction
+- complex expressions
+- expressions which use Macro definition or hexadecimal values
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents from wrap-around for unsigned integer.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#if (1u - 2u) /* Violation */
+/* ... */
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Avoid wrap-around for unsigned integer.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 51
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.25 Expressions, AV Rule 203
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Provide none or all identifiers for function arguments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Provide none or all identifiers for function arguments [MISRA-073-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Identifiers shall either be given for all of the parameters
+in a function prototype declaration, or for none.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and clarity of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo3(int a, int);  /* Violation */
+void foo4(int a, int, int b);  /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo();  /* OK */
+void foo1(int, int);  /* OK */
+void foo2(int a, int b);  /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 73
+
+</PRE>
+</BODY>
+</HTML>

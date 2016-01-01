@@ -1,0 +1,23 @@
+.NAME "goto" statement
+
+.DESCRIPTION
+
+Definition:
+-----------
+The goto statement must not be used, except with the labels chosen by the user. 
+
+Justification:
+--------------
+Insures that structured programming rules are respected, so the code is easier
+to understand. The goto statement often reveals an analysis error and its 
+systematic rejection improves the code structure.
+
+Parameters:
+-----------
+A list of strings representing the labels that can be used with the goto statement.
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

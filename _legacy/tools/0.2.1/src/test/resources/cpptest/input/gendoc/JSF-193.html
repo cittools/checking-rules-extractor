@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An unconditional break statement shall terminate every non-empty switch clause
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An unconditional break statement shall terminate every non-empty switch clause [JSF-193-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The last statement in every switch clause shall be a break statement, 
+or if the switch clause is a compound statement, then the last statement
+in the compound statement shall be a break statement."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule allows also to use return instead break statement.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents unpredictable program behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int i )
+{
+    switch( i )
+    {
+        case 0 :         // Violation
+            i = 4;
+            break;
+            i++;
+        case 1 :         // Violation
+            i = 7;
+            if (i &gt; 0)
+            {
+                i = 5;
+                break;
+            }
+        case 2 :         // Violation
+            {
+                i = 3;
+            }
+        default:         // Violation
+            i = 8;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int i )
+{
+    switch( i )
+    {
+        case 0 :         // OK
+            i = 4;
+            i++;
+            break;
+        case 1 :         // OK
+            i = 7;
+            if (i &gt; 0)
+            {
+                i = 5;
+                break;
+            }
+            break;
+        case 2 :         // OK
+            {
+                i = 3;
+                break;
+            }
+        case 3 :         // OK - empty case
+        default:         // OK
+            i = 8;
+            break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 15
+
+2. Misra Guidelines - Rule 61
+
+3. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 14 Flow Control Structures - Rule 47
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 193
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+typedefs that indicate size and signedness should be used in place of the basic types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+typedefs that indicate size and signedness should be used in place of the basic types [MISRA2004-6_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The basic numerical types of signed and unsigned variants of char, int,
+short, long, and float, double should not be used, but specific-length
+typedefs should be used."
+Rule reports a violation message if basic numerical type is used 
+( e.g. signed char ch; ) or typedef's name does not contain any digits
+indicating the size (e.g. typedef int my_int;).
+
+
+Exceptions:
+
+Rule skips "main" function return type, extern variable declaration,
+plain char, boolean and enum types. Also typedefs are not considered
+necessary in the specification of bit-field types. 
+Rule also does not report a violation message on typedefs' names which
+do not contain digits but start with 'bool' prefix.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Rule helps to clarify the size of the storage, but does not guarantee 
+portability because of the asymmetric behaviour of integral promotion."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef signed int my_int; // Violation
+signed char a;             // Violation
+float b;                   // Violation
+
+void foo( ) 
+{
+    double h;             // Violation
+    int z;                // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef signed char int8_t;
+typedef signed int int32_t; // OK
+typedef float float32_t;
+typedef double float64_t;
+
+int8_t a;                   // OK
+float32_t b;                // OK
+
+void foo( ) 
+{
+    float64_t h;            // OK
+    int32_t z;              // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 6
+
+2. Misra Guidelines - Rule 13
+
+3. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   from: 18 Portable Code - 18.1 Data Abstraction - Port. Rec. 1
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.28 Portable Code, AV Rule 209
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 3, Rule 3-9-2
+
+</PRE>
+</BODY>
+</HTML>

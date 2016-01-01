@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+No identifier name should be reused
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+No identifier name should be reused [MISRA2004-5_7-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+No identifier name should be reused.
+Regardless of scope, no identifier should be re-used across any files 
+in the system. This rule checks if all members names are unique.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct air_speed
+{
+int speed;   
+} * x;
+struct gnd_speed
+{
+int speed;         /* Violation */
+} * y;
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use the same names for different members.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 5
+
+</PRE>
+</BODY>
+</HTML>

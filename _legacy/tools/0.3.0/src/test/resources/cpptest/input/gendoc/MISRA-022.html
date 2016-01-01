@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare objects at function scope
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare objects at function scope [MISRA-022-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Declarations of objects should be at function scope
+unless a wider scope is necessary.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using global variables.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int globalVar;  // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int localVar;   // OK 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Misra Guidelines - Rule 22
+
+2. Ellemtel Coding Standards 
+    <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+    From: 16 Memory Allocation - Rec. 57
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.15 Declarations and Definitions, AV Rule 136
+
+</PRE>
+</BODY>
+</HTML>

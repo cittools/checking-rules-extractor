@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Q_DECLARE_OPERATORS_FOR_FLAGS must be in the global namespace, Q_DECLARE_FLAGS inside the enum's namespace
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Q_DECLARE_OPERATORS_FOR_FLAGS must be in the global namespace, Q_DECLARE_FLAGS inside the enum's namespace [QT-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Q_DECLARE_OPERATORS_FOR_FLAGS must be in the global namespace, 
+Q_DECLARE_FLAGS inside the enum's namespace.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By declaring the flags in the enums scope and the operators in the global
+scope, you may type-safely OR together scoped flags. If either Q_DECLARE_FLAGS
+or Q_DECLARE_OPERATORS_FOR_FLAGS is in the wrong scope, you will not be able
+to OR together the flags anywhere in your code, even if you use the correct
+scopes on the flags.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+namespace N
+{
+    enum Value { FirstVal, SecondVal, ThirdVal };
+    namespace M
+    {
+        Q_DECLARE_FLAGS(Values, Value)               // Violation
+        Q_DECLARE_OPERATORS_FOR_FLAGS(Values)        // Violation
+    }
+}
+
+namespace S
+{
+    enum Item { FirstVal, SecondVal, ThirdVal };
+    Q_DECLARE_FLAGS(Items, Item)
+    Q_DECLARE_OPERATORS_FOR_FLAGS(Items)             // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+namespace N 
+{
+    enum Value { FirstVal, SecondVal, ThirdVal };
+    Q_DECLARE_FLAGS(Values, Value)                   // OK
+}
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(N::Values)             // OK
+
+namespace S
+{
+    enum Item { FirstVal, SecondVal, ThirdVal };
+    Q_DECLARE_FLAGS(Items, Item)                     // OK
+}
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(S::Items)              // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

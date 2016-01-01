@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't change default arguments of virtual functions in template classes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't change default arguments of virtual functions in template classes [TEMPL-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When overriding a virtual function, preserve substitutability;in particular,
+observe the function's pre- and post-conditions in the base class.
+Don't change default arguments of virtual functions. Prefer explicitly
+redeclaring overrides as virtual. Beware of hiding overloads in the base class."
+See also: OOP-15, OOP-17
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents misinterpretation which value is passed as default.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+template&lt;class T&gt; class Base {
+public:
+    virtual void foo( T i = 1 ) { }
+};
+
+template&lt;class T&gt; class Derived: public Base&lt;T&gt; {
+public:
+    virtual void foo( T i = 0 ) { }    // Violation
+};
+
+void foo( ) {
+    Base&lt;int&gt;    b;
+    Derived&lt;int&gt; d;
+    d.foo( );
+    b.foo( );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+template&lt;class T&gt; class Base {
+public:
+    virtual void foo( T i = 1 ) { }
+};
+
+template&lt;class T&gt; class Derived: public Base&lt;T&gt; {
+public:
+    virtual void foo( T i = 1 ) { }    // OK
+};
+
+void foo( ) {
+    Base&lt;int&gt;    b;
+    Derived&lt;int&gt; d;
+    d.foo( );
+    b.foo( );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 38
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+.NAME Classes in code file
+
+.DESCRIPTION
+
+Definition:
+-----------
+A code file must not contain any class declaration.
+
+Parameters:
+-----------
+A string representing the types of modules (metric type) that should 
+be considered as code files.
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

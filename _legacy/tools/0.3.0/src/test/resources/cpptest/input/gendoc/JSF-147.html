@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The underlying bit representations of floating point numbers shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The underlying bit representations of floating point numbers shall not be used [JSF-147-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The underlying bit representations of floating point numbers shall not be used
+in any way by the programmer.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents from casting with possible data losing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    int* pi;
+    float* pf;
+    double* pd;
+    short int* ps;
+    long * pl;
+
+    pi = (int*)pf;    /* Violation */
+    pi = (int*)pd;    /* Violation */
+    ps = (short*)pf;  /* Violation */
+    pl = (long*)pf;   /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    int* pi;
+    float* pf;
+    double* pd;
+    short int* ps;
+	
+    pf = (float*)pd;  /* OK */ 
+    ps = (short*)pi;  /* OK */ 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 16
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.17 Types, AV Rule 147
+
+</PRE>
+</BODY>
+</HTML>

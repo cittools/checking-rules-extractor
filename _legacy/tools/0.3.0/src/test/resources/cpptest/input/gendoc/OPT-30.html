@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Every defined function shall be called at least once
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Every defined function shall be called at least once [OPT-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Every defined function shall be called at least once."
+The rule reports a violation if a defined function is not used in provided
+translation units
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule checks following functions:
+- in C: 
+  - static functions,
+- in C++: 
+  - non-template global static functions, 
+  - non-template global functions in anonymous namespaces,
+  - non-template non-static non-operator private member functions
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Functions or procedures that are not called may be symptomatic of a serious
+problem, such as missing paths."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static void foo() // Violation
+{
+   /* ... */
+}
+
+int main()
+{
+  return (0);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+static void foo() // OK
+{
+   /* ... */
+}
+
+int main()
+{
+  foo(); 
+  return (0);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 0, Rule 0-1-10
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid accessing arrays out of bounds
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid accessing arrays out of bounds [BD-PB-ARRAY-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects array access operations which may result in out of bounds access.
+Specifically, a violation is reported if an execution path with obvious out-of-bounds
+access is possible. This occurs when an index value is negative, equal to,
+or greater than the array size.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.0.22
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+The potential to access arrays beyond their boundaries is a severe security threat.
+If an application has a vulnerability of this kind, it can be exploited to
+execute arbitrary code and gain full control over the application.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+void fillArray(int array[], int size)
+{
+	int i;
+	for (i = 0; i &lt;= size; i++) { // iterate from 0 to 100
+		array[i] = 0; // VIOLATION (accessing array out of bounds: "array[i]" where (i == 100))
+	}
+}
+
+void example()
+{
+	int array[100];
+	fillArray(array, 100);
+	// ...
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following is fixed example for which no violations will be reported:
+
+void fillArray(int array[], int size)
+{
+	int i;
+	for (i = 0; i &lt; size; i++) { // iterate from 0 to 99
+		array[i] = 0; // NO VIOLATION
+	}
+}
+
+void example()
+{
+	int array[100];
+	fillArray(array, 100);
+	// ...
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.owasp.org/index.php/Buffer_Overflow">http://www.owasp.org/index.php/Buffer_Overflow</A> (security relevance)
+
+</PRE>
+</BODY>
+</HTML>

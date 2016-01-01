@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use calloc, malloc, realloc and free functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use calloc, malloc, realloc and free functions [MRM-46-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In C malloc, realloc and free are used to allocate memory dynamically on the
+heap. This may lead to conflicts with the use of the new and delete operators
+in C++."
+The rule disallow using calloc, malloc, realloc and free functions in C++.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule prevents or decreases the danger of:
+"- invoking delete for a pointer obtained via malloc/realloc, 
+- invoking malloc/realloc for objects having constructors, 
+- invoking free for anything allocated using new."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;malloc.h&gt;
+void foo( ) {
+    char* string;
+    char* string2;
+
+    string = (char *) malloc( 10 );             /* Violation */
+    string2 = (char*) realloc( string, 12 );    /* Violation */  
+    free( string );                             /* Violation */
+    free( string2 );                            /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use calloc, malloc, realloc and free functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 16 Memory Allocation - Rule 50
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Shifting from C to C++", Item 3
+
+</PRE>
+</BODY>
+</HTML>

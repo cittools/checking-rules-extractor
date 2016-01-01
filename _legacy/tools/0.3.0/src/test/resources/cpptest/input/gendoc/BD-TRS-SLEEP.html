@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use blocking functions in critical sections
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use blocking functions in critical sections [BD-TRS-SLEEP-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases where functions that cease thread execution for a certain time
+(such as sleep()) are called from critical sections--thus unnecessarily increasing
+resource contention between threads.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+The rule can be customized to check for unlocked mutexes of certain common APIs
+(from the list of supported APIs), it also possible to specify multithreading
+functions from any third-party API by providing specification of relevant functions.
+To view the list of all the supported APIs, configure the APIs that the rule will
+check as well as to define functions from a third-party API to be checked by the rule,
+please visit "Multithreading" sub-tab on the "BugDetective options" tab for your test
+configuration.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+Helps prevent unnecessary resource contention between threads as well as
+thread starvation.
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+#include &lt;pthread.h&gt;
+#include &lt;unistd.h&gt;
+
+pthread_mutex_t *mutex;
+
+static void testLock()
+{
+	pthread_mutex_lock(mutex);
+    sleep(10);
+    /* do something */
+	pthread_mutex_unlock(mutex);
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+Removing the call to sleep() repairs the code:
+
+#include &lt;pthread.h&gt;
+#include &lt;unistd.h&gt;
+
+pthread_mutex_t *mutex;
+
+static void testLock()
+{
+	pthread_mutex_lock(mutex);
+    /* do something */
+	pthread_mutex_unlock(mutex);
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The copy assignment operator shall be declared protected or private in an abstract class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The copy assignment operator shall be declared protected or private in an abstract class [MISRA2008-12_8_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"An abstract class represents the interface part of a hierarchy.
+Invoking the copy assignment operator from the top of such
+a hierarchy bypasses the underlying implementation resulting
+in only the base subobjects being copied."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+A user-declared copy assignment operator X::operator= is a non-static
+non-template member function of class X with exactly one parameter
+of type X, X&amp;, const X&amp;, volatile X&amp; or const volatile X&amp;.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Making the abstract copy assignment operator protected allows
+access from the derived classes but not from outside the hierarchy.
+Making the copy assignment operator private is a common idiom used
+to restrict copying objects of the class type."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+class B1
+{
+    public:
+        virtual void f( ) = 0;
+        B1 &amp; operator= ( B1 const &amp; rhs );          // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+class B1
+{
+    public:
+        virtual void f( ) = 0;
+    protected:
+        B1 &amp; operator= ( B1 const &amp; rhs );          // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 12, Rule 12-8-2
+
+</PRE>
+</BODY>
+</HTML>

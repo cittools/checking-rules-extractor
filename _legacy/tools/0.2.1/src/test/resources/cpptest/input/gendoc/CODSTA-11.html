@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Assert liberally to document internal assumptions and invariants
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Assert liberally to document internal assumptions and invariants [CODSTA-11-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that code asserts liberally to document internal
+assumptions and invariants.
+"Use assert or an equivalent liberally to document assumptions internal 
+to a module. Never write expressions with side effects in assert statement.
+Avoid assert(false) and prefer assert(!"informational message"). 
+Most compilers will helpfully emit the string in their error output."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and prevents error-prone code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;assert.h&gt;
+void foo( ) {
+   int i = 0;
+   assert( i++ != 0 ); // Violation
+   assert(i=5);        // Violation
+   assert(false);      // Violation     
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;assert.h&gt;
+void foo( ) {
+   int i = 0;
+   assert(i != 0);                   // OK
+   assert(!"informational message"); // OK 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Error Handling and Exceptions", Rule 68
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.25 Expressions &amp; References, AV Rule 204
+
+</PRE>
+</BODY>
+</HTML>

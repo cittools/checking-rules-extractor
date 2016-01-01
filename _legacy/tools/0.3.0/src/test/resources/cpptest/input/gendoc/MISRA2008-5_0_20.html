@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Non-constant operands to a binary bitwise operator shall have the same underlying type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Non-constant operands to a binary bitwise operator shall have the same underlying type [MISRA2008-5_0_20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Non-constant operands to a binary bitwise operator shall have the same
+underlying type. The term 'underlying type' is defined as describing
+the type that would be obtained from evaluating an expression if it were
+not for the effects of integral promotion."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Using operands of the same underlying type documents that it is the number
+of bits in the final (promoted and balanced) type that are used, and not
+the number of bits in the original types of the expression."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    unsigned char mask = ~(0x10);
+    unsigned short ushort;
+    ushort ^= mask;         // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    unsigned short mask = ~(0x10);
+    unsigned short ushort;
+    ushort ^= mask;         // OK 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-0-20
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Call delete on pointer members in destructors
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Call delete on pointer members in destructors [MRM-33-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Classes performing dynamic memory allocation will use 'new'
+in the constructor(s) to allocate the memory and will later
+use 'delete' in the destructor to free up the memory. 
+Failing to delete the pointer in the destructor often exhibits no obvious
+external symptoms. Instead, it manifests itself as a subtle memory leak"
+This rule reports a violation if it finds a pointer member allocated by 'new'
+by any member function, that has no corresponding 'delete' in the destructor.
+See also: MRM-42
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Pointer member can be deleted inside function called from destructor.
+The rule checks two nested levels of function's calls.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents memory leaks now and as the code evolves in the future.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+    A( );
+    ~A( );
+    void init();
+private:
+    int* ptr1;  // Violation
+    int* ptr2;  // Violation
+    int* ptr3;  // Violation
+    int* ptr4;  // OK - null pointer
+};
+
+A::A() : ptr1(new int), ptr4(0){
+	ptr3 = new int;
+	init();
+}
+
+void A::init(){
+	ptr2 = new int;
+}
+
+A::~A(){
+	// any delete
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+    A( );
+    ~A( );
+    void init();
+    void freeMem();
+private:
+    int* ptr1;  // OK
+    int* ptr2;  // OK
+    int* ptr3;  // OK
+    int* ptr4;  // OK - null pointer
+};
+
+A::A() : ptr1(new int), ptr4(0){
+	ptr3 = new int;
+	init();
+}
+
+void A::init(){
+	ptr2 = new int;
+}
+
+void A::freeMem(){
+	delete ptr1;
+	delete ptr2;
+}
+
+A::~A(){
+	freeMem();
+	delete ptr3;
+	delete ptr4; // not necessary
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+Your Programs and Design", Second Edition, Addison-Wesley,
+(C) 2005 Pearson Education, Inc., Chapter: "Memory Management", Item 6
+
+</PRE>
+</BODY>
+</HTML>

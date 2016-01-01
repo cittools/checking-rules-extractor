@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An object shall not be assigned to an overlapping object
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An object shall not be assigned to an overlapping object [MISRA2008-0_2_1_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The behaviour is undefined when two objects are created 
+which have some overlap in memory and one is copied to the other."
+Rule detects if two different members of the same union are copied to 
+each other using the same object.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour and data loss.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string.h&gt;
+union U {
+    int         iValue; 
+    long        lValue;
+    double      dValue;
+};
+
+int main( ) {
+    union U a, b;
+    union U *p;
+
+    (void)memcpy( &amp;a.dValue,  &amp;a.lValue, 8 );    /* Violation */
+    (void)memcpy( &amp;p-&gt;dValue, &amp;p-&gt;iValue, 8 );   /* Violation */
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string.h&gt;
+union U {
+    int         iValue; 
+    long        lValue;
+    double      dValue;
+};
+
+int main( ) {
+    union U a, b;
+    union U *p, *q;
+    (void)memcpy( &amp;a.dValue,  &amp;b.lValue, 8 );     /* OK */
+    (void)memcpy( &amp;p-&gt;dValue, &amp;q-&gt;iValue, 8 );    /* OK */
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 18
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-2-1
+
+</PRE>
+</BODY>
+</HTML>

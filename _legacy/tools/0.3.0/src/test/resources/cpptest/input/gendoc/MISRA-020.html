@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All functions shall be declared before use
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All functions shall be declared before use [MISRA-020-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule requires that all functions must be declared before they are used.
+A declaration provides information to the compiler about the type of function.
+If undeclared function is found, the compiler will have to make assumptions
+about the function prototype, and will not verify if actual parameter types
+match types specified in function declaration. This may lead to undefined
+behavior, which can result in hard-to-find errors at runtime.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule active for C code only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule prevents undefined behaviours.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void goo()
+{
+  foo1();       /* Violation - function undeclared */
+  foo2();       /* Violation - function declared after use */
+}
+void foo2();
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+//--------file.h-----------------
+void foo1_h();
+void foo2_h(){}
+
+//--------file.c-----------------
+#include "file.h"
+void foo1();
+void foo2(){}
+
+void goo()
+{
+    foo1(); /* OK - function declared before use */
+    foo2(); /* OK - function defined before use */
+    foo1(); /* OK - function declared in header */
+    foo2(); /* OK - function defined in header */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Misra Guidelines - Rule 20
+
+2. Multiplatform Porting to 64 Bits
+   <A HREF="http://www.ddj.com/showArticle.jhtml;jsessionid=GJEIYBMN14LMIQSNDBCSKHSCJUMEKJVN?articleID=184406427">http://www.ddj.com/showArticle.jhtml;jsessionid=GJEIYBMN14LMIQSNDBCSKHSCJUMEKJVN?articleID=184406427</A>
+
+</PRE>
+</BODY>
+</HTML>

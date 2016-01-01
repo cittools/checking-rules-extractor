@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Order of scopes in classes: protected before private
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Order of scopes in classes: protected before private [CODSTA-CPP-47-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Protected section must be before private section.
+See also: CODSTA-CPP-45, CODSTA-CPP-46, CODSTA-CPP-48, CODSTA-CPP-49
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Test {	// Violation
+public:
+    void foo1( );
+private:
+    void foo3( );
+protected:
+    void foo2( );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Test {	// OK
+public:
+    void foo1( );
+protected:
+    void foo2( );
+private:
+    void foo3( );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 6 Style - 6.1 Classes - Rule 20
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.9 Style, AV Rule 57
+
+</PRE>
+</BODY>
+</HTML>

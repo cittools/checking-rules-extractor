@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't treat arrays polymorphically
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't treat arrays polymorphically [JSF-96-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Arrays are ill-adjusted: Treating arrays polymorphically is a gross type 
+error that your compiler will probably remain silent about.
+Don't fall into the trap."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents leading code to grief. 
+Array operations almost always involve pointer arithmetic, 
+so arrays and polymorphism don't mix.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class BST {
+public:
+    void cleanBSTArray(BST array[], int numElements)
+    {
+        for (int i = 1; i &lt; numElements; ++i) 
+        {
+            array[i] = array[0];              
+        }                             
+    }                               
+	
+    void deleteArray(BST array[])
+    {
+        delete [] array;
+    }
+};
+
+class BalancedBST: public BST {};
+
+void foo()
+{
+    BalancedBST *p;
+    BST BSTArray[10];
+    BalancedBST bBSTArray[10];
+	
+    p-&gt;cleanBSTArray(bBSTArray, 10);   // Violation
+    p-&gt;deleteArray(bBSTArray);         // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class BST {
+public:
+    void cleanBSTArray(BST array[], int numElements)
+    {
+        for (int i = 1; i &lt; numElements; ++i) 
+        {
+            array[i] = array[0];              
+        }                             
+    }                               
+	
+    void deleteArray(BST array[])
+    {
+        delete [] array;
+    }
+};
+
+class BalancedBST: public BST {};
+
+void foo()
+{
+    BalancedBST *p;
+    BST BSTArray[10];
+    BalancedBST bBSTArray[10];
+	
+    p-&gt;cleanBSTArray(BSTArray, 10);    // OK
+    p-&gt;deleteArray(BSTArray);          // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Type Safety", Rule 100
+
+2. Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+   Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+   Chapter: "Basics", Item 3
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 96
+
+</PRE>
+</BODY>
+</HTML>

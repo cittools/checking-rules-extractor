@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid implicit conversions from wider to narrower types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid implicit conversions from wider to narrower types [JSF-180_e-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The value of an expression of integer type shall not be implicitly converted
+to a different underlying type.
+The term 'underlying type' is defined as describing the type that would
+be obtained from evaluating an expression if it were not for the effects
+of integral promotion.
+Integral promotion describes a process whereby arithmetic operations are always
+conducted on integer operands of type int or long (signed or unsigned).
+Operands of any other integer type, (char, short, bit-field and enum) are
+always converted to type int or unsigned int before an arithmetic operation.
+The underlying type of an integer constant expression will be determined
+according to its magnitude and signedness"
+Rule checks if implicit conversions from wider to narrower types are used.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"By observing the principle whereby all operations are performed in 
+a consistent (underlying) type, it is possible to avoid programmer confusion 
+and some of the dangers associated with integral promotion."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Conv1_int( ) {
+    unsigned char u8a;
+    unsigned short u16a;
+    unsigned int u32a;
+
+    u16a = u32a;        /* Violation */
+    u8a  = u32a;        /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void Conv1_int( ) {
+    unsigned char u8a;
+    unsigned short u16a;
+    unsigned int u32a;
+
+    u16a = (unsigned short)u32a;       /* OK */
+    u8a  = (unsigned char)u32a;        /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 10
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-6
+
+</PRE>
+</BODY>
+</HTML>

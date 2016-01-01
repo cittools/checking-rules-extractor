@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not declare member variables as bit-fields
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not declare member variables as bit-fields [CODSTA-02-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule is purely informational.
+It will report a message when a bitfield is declared.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents error prone code.
+The ordering of bits in memory varies from compiler to
+compiler. In addition, many popular compilers generate
+inefficient code for reading and writing bit members,
+and there are potentially severe thread safety issues
+relating to bit fields (especially on multiprocessor
+systems) due to the fact that most machines cannot
+manipulate arbitrary sets of bits in memory, but must
+instead load and store whole words. 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct A
+{
+    int iVarBitField : 8;  // Violation
+    int iVar;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not declare bitfield.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft
+
+</PRE>
+</BODY>
+</HTML>

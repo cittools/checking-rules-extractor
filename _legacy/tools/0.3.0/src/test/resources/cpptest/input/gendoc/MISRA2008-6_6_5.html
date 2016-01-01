@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A function shall have a single point of exit at the end of the function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A function shall have a single point of exit at the end of the function [MISRA2008-6_6_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Every function should have a single point of exit.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Calls of functions exit, abort, and _Exit from standard library stdlib.h
+are detected by rule as exit points.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo(int i)
+{
+    if (i == 0) {
+        return 0;        // Violation	
+    } else if (i == 1) {
+        return 1;        // Violation
+    } else {
+        return 2;        // Violation
+    }
+}
+
+int foo2(int a) {  
+    int result;
+    if (a &gt; 0) {
+        return result;  // Violation
+    } 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo(int i)
+{
+	int result = 0;
+    if (i == 0) {
+        result = 0;
+    } else if (i == 1) {
+    	result = 1;
+    } else {
+    	result = 2;
+    }
+    return result;   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 14
+
+2. Origin: Misra Guidelines - Rule 82
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 113
+
+</PRE>
+</BODY>
+</HTML>

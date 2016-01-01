@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use of floating-point arithmetic shall be documented
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use of floating-point arithmetic shall be documented [COMMENT-10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If floating-point is to be used, then the following issues need to be covered
+as part of the deviation process:
+- A justification explaining why floating-point is the appropriate
+  or only solution.
+- Demonstrate that appropriate skills are available.
+- Demonstrate that an appropriate process is being applied.
+- Document the floating-point implementation."
+Rule checks if in previous or the same line as floating-point arithmetic
+expression there is a comment.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The safe use of floating-point arithmetic requires a high level of numerical
+analysis skills and indepth knowledge of the compiler and target hardware."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// Violation in line: double d = d1 + d2;
+double add(double d1, double d2)
+{
+    double d = d1 + d2;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+double add(double d1, double d2)
+{
+	double d = d1 + d2; // OK - floating point arithmetic
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 0, Rule 0-4-2
+
+</PRE>
+</BODY>
+</HTML>

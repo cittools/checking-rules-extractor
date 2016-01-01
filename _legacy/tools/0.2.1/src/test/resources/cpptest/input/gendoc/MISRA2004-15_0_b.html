@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A switch statement shall only contain switch labels and switch clauses, and no other code
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A switch statement shall only contain switch labels and switch clauses, and no other code [MISRA2004-15_0_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A switch statement shall only contain switch labels and switch clauses,
+and no other code."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int a,int b)
+{
+    int c;     
+    switch(a)
+    {
+        c = 0;  /* Violation */
+    case 1:
+        break;
+    case 2:
+        break;
+        
+    default:
+        break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1(int a,int b)
+{
+    int c;  
+    c = 0;    /* OK */
+    switch(a)
+    {
+    case 1:
+        break;
+    case 2:
+        break;
+        
+    default:
+        break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 15
+
+</PRE>
+</BODY>
+</HTML>

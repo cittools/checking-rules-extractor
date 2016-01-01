@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+C++ macros shall only be used for include guards, type qualifiers, or storage class specifiers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+C++ macros shall only be used for include guards, type qualifiers, or storage class specifiers [PREPROC-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"C++ macros shall only be used for include guards, type qualifiers, or storage
+class specifiers. These are the only permitted uses of macros. C++ offers
+const variable and function templates, which provide a type-safe alternative
+to the preprocessor."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+List of type qualifiers and storage class specifiers:
+// type qualifiers:
+    const
+    volatile
+// storage class specifiers:
+    auto
+    register
+    static
+    extern
+    mutable 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves code reliability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define PI 3.14         // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define STOR extern     // OK storage class specifier
+const double PI = 3.14; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 - Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 16, Rule 16-2-2
+
+</PRE>
+</BODY>
+</HTML>

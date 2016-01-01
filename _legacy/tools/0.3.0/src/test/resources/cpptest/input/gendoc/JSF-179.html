@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A pointer to a virtual base class shall only be cast to a pointer to a derived class by means of dynamic_cast
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A pointer to a virtual base class shall only be cast to a pointer to a derived class by means of dynamic_cast [JSF-179-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Since the virtualness of inheritance is not a property of a base class,
+the layout of a derived class object, referenced through a virtual base
+pointer, is unknown at compile time."
+"Casting from a virtual base to a derived class, using any means
+other than dynamic_cast has undefined behaviour.
+The behaviour for dynamic_cast is defined."
+See also: OOP-29, OOP-49
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviours.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// The code is not compilable with all compilers
+class B { 
+public:
+	virtual int foo();
+};
+class D: public virtual B {
+public:
+	virtual int foo(){}
+};
+void fun(){
+    D d;
+    B *pB = &amp;d;
+    D *pD = static_cast&lt;D*&gt;(pB);  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class B { 
+public:
+	virtual int foo();
+};
+class D: public virtual B {
+public:
+	virtual int foo(){}
+};
+void fun(){
+    D d;
+    B *pB = &amp;d;
+    D *pD = dynamic_cast&lt;D*&gt;(pB);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 179
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+   Chapter 6, Section 5, Rule 5-2-2
+
+</PRE>
+</BODY>
+</HTML>

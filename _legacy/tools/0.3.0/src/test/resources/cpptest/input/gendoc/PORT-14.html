@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid conversions from "shorter" type to "longer" type in assignment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid conversions from "shorter" type to "longer" type in assignment [PORT-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Be careful not to make conversion from a shorter type to a longer one."
+See also: PB-06, MISRA-043, PORT-15, PORT-16
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1() {
+   int intValue;
+   long longValue = 1L;
+   longValue = intValue;	// Violation
+}
+
+void foo2() {
+    int intValue=1;
+    float floatValue;
+    floatValue = intValue;	// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not make conversion from a shorter type to a longer one.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3</A>
+From: 18 Portable Code - 18.3 Type Conversions - Port. Rec. 6
+
+</PRE>
+</BODY>
+</HTML>

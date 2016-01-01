@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+For multiple inheritance use virtual common base class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+For multiple inheritance use virtual common base class [OOP-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Multiple inheritance often leads to the need for virtual base classes. Without 
+virtual base classes, if a derived class has more than one inheritance path to 
+a base class, the data members of that base class are replicated within each 
+derived class object, one copy for each path between the derived class and the 
+base class. Such replication is almost never what programmers want, and making 
+base classes virtual eliminates the replication. Virtual base classes may incur 
+a cost of their own, however, because implementations of virtual base classes 
+often use pointers to virtual base class parts as the means for avoiding the 
+replication, and one or more of those pointers may be stored inside your
+objects."
+See also: OOP-07, OOP-05, OOP-04, OOP-03
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Protect from no virtual multiple inheritance.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {};
+class B : public A {};
+class C : public A {};
+class D : public  B, public C {};  // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {};
+class B : virtual public A {};
+class C : virtual public A {};
+class D : public  B, public C {};  // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers,
+"More Effective C++: 35 New Ways to Improve Your Programs and Designs"
+Chapter: Efficiency, Item 24
+
+</PRE>
+</BODY>
+</HTML>

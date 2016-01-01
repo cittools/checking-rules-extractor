@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid internal or external name conflict with a C++ reserved word
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid internal or external name conflict with a C++ reserved word [CODSTA-39-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Internal or external name conflicts with a C++ reserved word will cause problems
+if program is compiled with a C compiler. Most C compilers do not detect naming
+conflicts, and they can lead to unpredictable program behavior.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Avoid unpredictable program behavior.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int bool  = 0;		// Violation
+int catch = 0;		// Violation
+int class = 0;		// Violation
+int const_cast = 0;	// Violation
+int delete = 0;		// Violation
+int dynamic_cast = 0;	// Violation
+int explicit = 0;	// Violation
+int export = 0;		// Violation
+int false = 0;		// Violation
+int friend = 0;		// Violation
+int mutable = 0;	// Violation
+int namespace = 0;	// Violation
+int new = 0;		// Violation
+int operator = 0;	// Violation
+int private = 0;	// Violation
+int public = 0;		// Violation
+int protected = 0;	// Violation
+int reinterpret_cast = 0;	// Violation
+int static_cast = 0;	// Violation
+int template = 0;	// Violation
+int this = 0;		// Violation
+int throw = 0;		// Violation
+int true = 0;		// Violation
+int try = 0;		// Violation
+int typeid = 0;		// Violation
+int typename = 0;	// Violation
+int using = 0;		// Violation
+int virtual = 0;	// Violation
+int wchar_t = 0;	// Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// Avoid using reserved word as variable name
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

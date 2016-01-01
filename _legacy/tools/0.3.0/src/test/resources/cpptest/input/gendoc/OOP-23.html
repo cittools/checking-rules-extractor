@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a class has virtual functions it shall have a virtual destructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a class has virtual functions it shall have a virtual destructor [OOP-23-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Declaring virtual destructors in classes that have virtual functions causes
+the compiler to call destructors for each class from which the object inherits.
+This rule detects if you write a virtual function without also writing
+a virtual destructor.
+See also: OOP-22, OOP-24, OOP-31
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents memory leaks in derived classes. A class that has virtual functions
+is intended to be used as a base class, so it should have a virtual destructor
+to guarantee that the destructor will be called when the derived object
+is referenced through a pointer to the base class.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A        // Violation
+{	
+    public:
+        ~A( );
+        virtual int foo( );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A         // OK
+{	
+    public:
+        virtual ~A( );
+        virtual int foo( );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 2, Item 7
+
+</PRE>
+</BODY>
+</HTML>

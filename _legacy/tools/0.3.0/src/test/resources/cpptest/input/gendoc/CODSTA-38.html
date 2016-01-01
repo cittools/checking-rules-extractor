@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use a #define that prevents the compiler from checking types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use a #define that prevents the compiler from checking types [CODSTA-38-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you use a #define that the compiler cannot check type.
+Using a #define prevents using unchecked types.
+See also: MISRA2004-19_7, CODSTA-03, CODSTA-37
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By following this rule, you prevent the compiler from disabling type checking.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MAX_COMPUTERNAME_LENGTH   10
+#define MACHINE_NAME_LEN   MAX_COMPUTERNAME_LENGTH + 2    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const int MAX_COMPUTERNAME_LENGTH = 10;
+const int MACHINE_NAME_LEN = MAX_COMPUTERNAME_LENGTH + 2; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 1, Item 2
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider returning object by reference instead of by value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider returning object by reference instead of by value [OPT-33-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule reports a violation if an object of type class/struct/union
+is returned from function by value. In this case could consider
+returning this object by reference. It could more efficient than returning
+by value, however could be unsafe in some cases. So, the user should check
+himself the definition of function before the changes, to be sure that a new 
+code is safe and more efficient than previous one. 
+See also: PB-20, OPT-14
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves code consistency and runtime performance.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo{};
+class A {
+public:
+    Foo foo();         // Violation
+    Foo goo( A&amp; a ) {  // Violation
+        return foo();
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A2 {
+public:
+    Foo&amp; foo();
+    Foo&amp; goo( A2&amp; a ) {  // OK
+        return foo();
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

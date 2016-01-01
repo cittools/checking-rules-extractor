@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not assume that members are initialized in any special order in constructors
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not assume that members are initialized in any special order in constructors [INIT-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Do not assume that an object is initialized in any special order
+in constructors. Do not depend on the order of initialization in constructors."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class X {
+public:
+    X( int y );
+private:
+    int i;
+    int j;
+};
+
+inline X::X( int y ) : j( y ), i( j ) {}    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class X {
+public:
+    X( int x, int y );
+private:
+    int i;
+    int j;
+};
+
+inline X::X( int x, int y ) : j( y ), i( x ) {}    // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+From: 18 Portable Code - 18.6 Order of Execution - Port. Rec. 14
+
+</PRE>
+</BODY>
+</HTML>

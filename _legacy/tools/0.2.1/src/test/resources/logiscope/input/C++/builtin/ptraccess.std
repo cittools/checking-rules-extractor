@@ -1,0 +1,12 @@
+.NAME Pointer access.
+
+.DESCRIPTION
+
+Definition:
+-----------
+Use the ptr->fld access to the (*ptr).fld access.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

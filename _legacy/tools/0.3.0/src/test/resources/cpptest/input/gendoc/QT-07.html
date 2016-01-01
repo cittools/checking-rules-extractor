@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not force thread termination by calling QThread::terminate()
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not force thread termination by calling QThread::terminate() [QT-07-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not force thread termination by calling QThread::terminate().
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This function is dangerous and its use is discouraged. The thread may or may
+not be terminated immediately, depending on the operating systems scheduling
+policies. The thread can be terminate at any point in its code path. Threads
+can be terminated while modifying data. There is no chance for the thread to
+cleanup after itself, unlock any held mutexes, etc.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+class MyQThread : public QThread
+{
+    Q_OBJECT
+
+public:
+    void terminate();
+    void run();
+    MyQThread();
+
+private:
+    Q_DISABLE_COPY(MyQThread)
+};
+
+void MyQThread::terminate()
+{
+    QThread::terminate(); // Violation
+}
+
+void foo(){
+    MyQThread qt;
+    qt.terminate();
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use QThread::terminate(). Return from the thread's run() function
+instead, or throw an exception and catch it at the end of run().
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/4.2/qthread.html#terminate">http://doc.trolltech.com/4.2/qthread.html#terminate</A>
+
+</PRE>
+</BODY>
+</HTML>

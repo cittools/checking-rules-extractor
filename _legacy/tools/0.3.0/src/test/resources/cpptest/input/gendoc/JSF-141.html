@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A class, structure, or enumeration will not be declared in the definition of its type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A class, structure, or enumeration will not be declared in the definition of its type [JSF-141-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A class, structure, or enumeration will not be declared in the definition
+of its type.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum
+{
+  up,
+  down
+} direction;             // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+enum direction_e
+{
+  up,
+  down
+};
+
+direction_e direction; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.15 Declarations and Definitions, AV Rule 141
+
+</PRE>
+</BODY>
+</HTML>

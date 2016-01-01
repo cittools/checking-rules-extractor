@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use empty parentheses when calling function with no arguments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use empty parentheses when calling function with no arguments [MISRA-085-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Function called with no parameters should have empty parentheses.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents errornous code and improves quality.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo()
+{
+    int iVar = 0;
+    if( foo == 0 ) { /* Violation */
+        iVar++;
+    }
+    if( 0 == foo ) { /* Violation */
+        iVar++;
+    }
+  return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo()
+{
+    int iVar = 0;
+    if( foo() == 0 ) { /* OK */
+        iVar++;
+    }
+    if( 0 == foo() ) { /* OK */
+        iVar++;
+    }
+  return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 85
+
+</PRE>
+</BODY>
+</HTML>

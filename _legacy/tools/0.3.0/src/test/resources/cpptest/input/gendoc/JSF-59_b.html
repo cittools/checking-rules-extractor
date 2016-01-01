@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+'if' and 'else' should be followed by a compound statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+'if' and 'else' should be followed by a compound statement [JSF-59_b-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"An 'if' (expression) construct shall be followed by a compound statement. 
+The 'else' keyword shall be followed by either a compound statement, 
+or another 'if' statement."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x, int y )
+{
+    int i, j;
+    if(x &gt; 0)      // Violation
+        x = i;
+    else if(y &gt; 0) // Violation
+        y = i;
+    else
+        y = j;     // Violation
+        x = j;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int x, int y )
+{
+    int i, j;
+    if(x &gt; 0)      // OK
+    {
+        x = i;
+    }
+    else if(y &gt; 0) // OK
+    {
+        y = i;
+    }
+    else
+    {
+        y = j;     // OK
+        x = j;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 14
+
+2. Misra Guidelines - Rule 59
+
+3. Ellemtel Coding Standards 
+    <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+    from: 6 Style - 6.4 Flow Control Statements - Rec. 25
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.9 Style, AV Rule 59
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-1
+
+</PRE>
+</BODY>
+</HTML>

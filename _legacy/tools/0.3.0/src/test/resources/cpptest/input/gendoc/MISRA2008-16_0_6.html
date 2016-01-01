@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In the definition of a function-like macro, each instance of a parameter shall be enclosed in parentheses, unless it is used as the operand of # or ##
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In the definition of a function-like macro, each instance of a parameter shall be enclosed in parentheses, unless it is used as the operand of # or ## [MISRA2008-16_0_6-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Within a definition of a function-like macro,
+the arguments shall be enclosed in parentheses.
+See also: MISRA-096
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves the readability of code and ensures operations order.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MULTI_2(x)  (x*2)   /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define MULTI_2(x)  ((x)*2) /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-0-6
+
+</PRE>
+</BODY>
+</HTML>

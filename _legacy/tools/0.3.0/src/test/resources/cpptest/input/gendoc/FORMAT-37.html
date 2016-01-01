@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+First line in control statement body should be indented more than control statement keyword
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+First line in control statement body should be indented more than control statement keyword [FORMAT-37-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+First line in control statement body (if, else, while, do while, for, 
+switch, try, catch, case, default) should be indented more than 
+control statement keyword.
+See also: FORMAT-27, FORMAT-36
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+- Rule does not check indentation for lines which starts with preprocessor directives.
+- Rule can be parameterized by changing values of the following variables 
+  in Python scripts:
+  "MinIndentSize" - the minimum admissible size of indentation in spaces
+  "MaxIndentSize" - the maximum admissible size of indentation in spaces
+  "TabSize"       - size of tab character in spaces
+  All variables are set to 4 by default.
+
+  For example: MinIndentSize = 2, MaxIndentSize = 4:
+  
+  while (x == 0)
+    x = 1;       // OK - indent size = 2 
+
+  while (x == 0)
+     x = 1;      // OK - indent size = 3
+
+  while (x == 0)
+      x = 1;     // OK - indent size = 4
+  
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x ) {
+    while (x == 0)
+      x = 1;       // Violation
+    if (x == 0) {
+    x++;           // Violation
+    x++;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int x ) {
+    while (x == 0)
+        x = 1;     // OK
+    if (x == 0) {
+        x++;       // OK
+        x++;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

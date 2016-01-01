@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The declaration of objects shall contain no more than two levels of pointer indirection
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The declaration of objects shall contain no more than two levels of pointer indirection [MISRA2008-5_0_19_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Array indexing is the only acceptable form of pointer arithmetic, because it is
+clearer and hence less error prone than pointer manipulation. This rule bans the
+explicit calculation of pointer values. Array indexing shall only be applied to 
+objects defined as an array type. Any explicitly calculated pointer value has 
+the potential to access unintended or invalid memory addresses. Pointers may go 
+out of bounds of arrays or structures, or may even point to effectively 
+arbitrary locations."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Array type with unspecified length is treat as a pointer.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves safety of the code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int * INTPTR;
+struct s {
+    int *** s3;                  /* Violation */
+};
+
+struct s *** ps3;                /* Violation */
+int ** (***pfunc3)();            /* Violation */
+int *** ( **pfunc4)();           /* Violation */
+void function( int * par1,
+    int *** par3,                /* Violation */
+    INTPTR * const * const par5  /* Violation */
+    )              
+{
+    int *** ptr3;                /* Violation */
+    INTPTR * const * const ptr5 = 0; /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not declare more than two levels of pointer indirection.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 17
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.22 Pointers &amp; References, AV Rule 170
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-19
+
+4. Origin: Misra Guidelines - Rule 102
+
+</PRE>
+</BODY>
+</HTML>

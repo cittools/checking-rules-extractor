@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Unions shall not be used to access the sub-parts of larger data structure
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Unions shall not be used to access the sub-parts of larger data structure [MISRA-110-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Unions shall not be used to access the sub-parts of larger data structure.
+
+One mechanism in C for accessing the sub-parts of larger data structures
+(e.g. the individual bits of an I/O port) is to overlay one data structure
+on another using unions.
+For example, a structure containing bit fields might be overlaid 
+on an integer.
+This is not a secure mechanism for achieving the desired aim, because it
+assumes too much about the way in which the different data types are stored.
+
+This rule triggers when an union has some bit-fields member variable,
+when it includes other data structures which themselves include bit-fields,  
+or finally when it has a member variable of type array of char where dimension
+is sizeof of some type (see examples).
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents data loss.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef union {  /* Violation */
+    struct {
+        unsigned int en      :1;
+        unsigned int dly     :1;
+        unsigned int tm_en   :1;
+        unsigned int dta_inv :1;
+        unsigned int clk_inv :1;
+    } _bitfield; 
+    unsigned long _int;
+} REG_PTR;
+
+union A { /* Violation */
+    int field;
+    int firstTwoBits :2;
+};
+
+typedef int* TYPE;
+
+union B { /* Violation */
+    TYPE t;
+    char bytes[sizeof(TYPE)];
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use union structure.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 110
+
+</PRE>
+</BODY>
+</HTML>

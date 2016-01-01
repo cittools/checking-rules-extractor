@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Be wary about using multiple inheritance of classes that are not abstract interfaces
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Be wary about using multiple inheritance of classes that are not abstract interfaces [OOP-07-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Be wary about using multiple inheritance of classes that are not abstract 
+interfaces. Designs that use multiple inheritance can be very expressive,
+but are harder to get right and easier to get wrong. In particular, 
+state management is particularly hard in designs using multiple inheritance."
+See also: OOP-06, OOP-05, OOP-04, OOP-03
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule allows for only one direct not interface parent class.
+By interface class is meant class which has no member variables
+and all member functions (except for destructor) are pure virtual.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Avoiding state in abstract interfaces simplifies the entire hierarchy design."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    void foo1( );
+};
+
+class B {
+public:
+    void foo2( );
+};
+
+class C: public A, public B {   // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    void foo1( );
+};
+
+class B {
+public:
+    virtual void foo2( ) = 0;
+};
+
+class C: public A, public B {   // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 36
+
+</PRE>
+</BODY>
+</HTML>

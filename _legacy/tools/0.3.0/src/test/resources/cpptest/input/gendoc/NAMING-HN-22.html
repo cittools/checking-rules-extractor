@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for int types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for int types [NAMING-HN-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For int variables and parameters use "i" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int g_imyVar;                                  // Violation
+int g_MyVariable;                              // Violation
+static const int g_skMyVariable = 0;           // Violation
+class A {
+    int m_MyVariable;                          // Violation
+    static const int m_skMyVariable;           // Violation
+    void foo( int MyParam ) {                  // Violation
+        int MyVariable;                        // Violation
+        static const int skMyVariable = 0;     // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int g_iMyVar;                                 // OK
+int g_iMyVariable;                            // OK
+static const int g_skiMyVariable = 0;         // OK
+class A {
+    int m_iMyVariable;                        // OK
+    static const int m_skiMyVariable;         // OK
+    void foo( int iMyParam ) {                // OK
+        int iMyVariable;                      // OK
+        static const int skiMyVariable = 0;   // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

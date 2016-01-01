@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid overloading &amp;&amp;, || or , (comma)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid overloading &amp;&amp;, || or , (comma) [JSF-159-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The built-in &amp;&amp;, || or, (comma) enjoy special treatment from the compiler.
+If you overload them, they become ordinary functions with very different
+semantics, and this is a sure way to introduce subtle bugs and fragilities."
+This rule detects when you overload operator &amp;&amp;, || or ,(comma).
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Overloading these operators changes the way the compiler reads the 
+semantics of an expression, resulting in unpredictable program behavior.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( int i ) : _i( i ) {}
+    ~A( );
+
+    int value( ) { return _i; }
+private:
+    int _i;
+};
+
+int operator&amp;&amp;( A&amp; lhs, A&amp; rhs ) {              // Violation
+    return lhs.value( ) &amp;&amp; rhs.value( );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not overload operator &amp;&amp;, || or ,(comma).
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Functions and Operators", Rule 30
+
+2. Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+   Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+   Chapter: "Operators", Item 7
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule 159
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-2-11
+
+</PRE>
+</BODY>
+</HTML>

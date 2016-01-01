@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Bitwise operators, comparison operators, logical operators, comma operator should be const
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Bitwise operators, comparison operators, logical operators, comma operator should be const [CODSTA-CPP-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Bitwise operators, comparison operators, logical operators, 
+comma operator should be const.
+See also: CODSTA-CPP-38, CODSTA-CPP-43, CODSTA-CPP-44, 
+              MISRA-104, MISRA2004-16_7, OPT-21
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+C++ powerful const property should be enforced as appropriate, 
+to provide additional checks on the correct behavior of the code. 
+The semantics of operators "&amp;", "^", "|", "~", "!=", "&lt;=", "&lt;", 
+"==", "&gt;=", "&gt;", "!", "&amp;&amp;", "||" ,and ","
+presumes that they do not change the internals of the object they
+are called on. Therefore, it is a good practice to declare them const.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A&amp; operator^( int x );  // Violation
+    A&amp; operator==( int x ); // Violation
+    A&amp; operator&amp;&amp;( int x ); // Violation
+    A&amp; operator,( int x );  // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A&amp; operator^( int x ) const;  // OK
+    A&amp; operator==( int x ) const; // OK
+    A&amp; operator&amp;&amp;( int x ) const; // OK
+    A&amp; operator,( int x ) const;  // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 1, Item 3
+
+</PRE>
+</BODY>
+</HTML>

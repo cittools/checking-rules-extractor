@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Limited dependence should be placed on C++ operator precedence rules in expressions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Limited dependence should be placed on C++ operator precedence rules in expressions [MISRA2008-5_0_2_e-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In addition to the use of parentheses to override default operator precedence,
+parentheses should also be used to emphasise it. It is easy to make a mistake 
+with the rather complicated precedence rules of C, and this approach helps to 
+avoid such errors, and helps to make the code easier to read. However, do not 
+add too many parentheses so as to clutter the code and make it unreadable.
+Use parentheses unless all operators in the expression are the same."
+See also: MISRA2004-12_5, CODSTA-90
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The operands of a logical &amp;&amp; and || are checked by the rule MISRA2004-12_5
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int a, b;
+    b = a * a + a;      // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int a, b;
+    b = (a * a) + a;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.28 Portable Code, AV Rule 213
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-2
+
+4. Origin: Misra Guidelines - Rule 47
+
+</PRE>
+</BODY>
+</HTML>

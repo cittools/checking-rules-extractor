@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use no more than one level of dereferencing
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use no more than one level of dereferencing [CODSTA-87-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The use of pointers should be restricted. Specifically, no more than one level
+of dereferencing is allowed."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Pointers are easily misused, even by experienced programmers. They can make it
+hard to follow or analyze the flow of data in a program, especially by toolbased
+static analyzers."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(){
+    int** p;
+    int** q;
+    int i;
+
+    **p = 1; // Violation
+    i = **q; // Violation
+}
+
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use more than one level of dereferencing.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 9
+
+</PRE>
+</BODY>
+</HTML>

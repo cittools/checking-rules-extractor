@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be a maximum of 1 ASCII space character following the opening parenthesis in conditional statements
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be a maximum of 1 ASCII space character following the opening parenthesis in conditional statements [FORMAT-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether there is a maximum of 1 ASCII space 
+character following the opening parenthesis in conditional
+statements: for, if, switch, while.
+See also: FORMAT-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+A maximum of 1 ASCII space after the opening
+parenthesis improves readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+   int x=1;
+   int y=1;
+
+   if(  x == y  ) // Violation
+   {
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo()
+{
+   int x=1;
+   int y=1;
+
+   if (x == y) // OK
+   {
+   }
+
+   if ( x == y ) // OK
+   {
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

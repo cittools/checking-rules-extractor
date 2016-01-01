@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The assertion density of the code should average to a minimum of two assertions per function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The assertion density of the code should average to a minimum of two assertions per function [METRICS-31-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The assertion density of the code should average to a minimum of two assertions
+per function. Assertions are used to check for anomalous conditions that should
+never happen in real-life executions."
+The rule reports a violation if  A &lt; 2*F  where A is the number of assertions 
+and F is the number of defined functions.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule detects all using of macros which names are ended by 'assert' 
+e.g. 'assert', 'c_assert', 'checkAssert' etc.
+The rule checks one file at time.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Statistics for industrial coding efforts indicate that unit tests often
+find at least one defect per 10 to 100 lines of code written. The odds
+of intercepting defects increase with assertion density. Use of assertions
+is often also recommended as part of a strong defensive coding strategy.
+Assertions can be used to verify pre- and post-conditions of functions,
+parameter values, return values of functions, and loop-invariants. 
+Because assertions are side-effect free, they can be selectively disabled
+after testing in performance-critical code."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* Violation - 2 functions defined and 1 assertion used */
+
+#define c_assert(x) ((x) ? 1 : 0);
+void foo(int x) {
+    /* Some code */
+    c_assert(x); /* Use of assertion */
+}
+void bar(int x, int y) {
+    /* Some code */
+}
+int baz();
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* OK - 2 functions defined and 4 assertions used (density: 2) */
+
+#define c_assert(x) ((x) ? 1 : 0);
+void foo(int x) {
+    c_assert(x); /* Use of assertion */
+    /* Some code */    
+}
+void bar(int x, int y) {
+    c_assert(x); /* Use of assertion */
+    c_assert(y); /* Use of assertion */
+    /* Some code */
+    c_assert(x+y); /* Use of assertion */
+}
+int baz();
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 5
+
+</PRE>
+</BODY>
+</HTML>

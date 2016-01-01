@@ -1,0 +1,30 @@
+.NAME Parameters mode
+
+.DESCRIPTION
+
+Definition:
+-----------
+In function definitions, the parameters mode used (IN, OUT or INOUT) must be 
+indicated.
+
+Example:
+--------
+
+// write
+int Multiply(IN Matrix *m, IN Vector *v, OUT Matrix *result);
+ 
+Parameters:
+----------
+A list of character strings representing the authorized keywords 
+(their order does not matter).
+
+Example:
+--------
+The standard may be specified as following:
+STANDARD parammode ON LIST "IN" "OUT" "INOUT" END LIST END STANDARD 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

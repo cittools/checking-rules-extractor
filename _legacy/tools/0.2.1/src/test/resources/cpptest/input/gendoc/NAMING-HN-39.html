@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for string types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for string types [NAMING-HN-39-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For string variables and parameters use "str" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using namespace std;
+
+string g_strmyVar;                                // Violation
+string g_MyVariable;                              // Violation
+static const string g_skMyVariable;               // Violation
+class A {
+    string m_MyVariable;                          // Violation
+    static const string m_skMyVariable;           // Violation
+    void foo( string MyParam ) {                  // Violation
+        string MyVariable;                        // Violation
+        static const string skMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using namespace std;
+
+string g_strMyVar;                                  // OK
+string g_strMyVariable;                             // OK
+static const string g_skstrMyVariable;              // OK
+class A {
+    string m_strMyVariable;                         // OK
+    static const string m_skstrMyVariable;          // OK
+    void foo( string strMyParam ) {                 // OK
+        string strMyVariable;                       // OK
+        static const string skstrMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

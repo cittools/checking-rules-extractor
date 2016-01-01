@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Array elements shall be accessed by the array operator [ ]
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Array elements shall be accessed by the array operator [ ] [CODSTA-01-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether array elements are accessed by the array operator [].
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Array elements shall be accessed by the array operator [] rather than 
+the dereference operator '*'. Access to array by the dereference operator 
+'*' is cryptic and hides the real intention.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{    
+     int array[2];	 
+     *(array+1) = 0; // Violation
+     *array = 0;      // Violation              
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo()
+{    
+     int array[2];	 
+     array[1] = 0; // OK         
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards R-46
+
+</PRE>
+</BODY>
+</HTML>

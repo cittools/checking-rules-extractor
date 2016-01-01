@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Each functor class should has only one operator() function, and it's parameter and return types should be passed to unary_function or binary_function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Each functor class should has only one operator() function, and it's parameter and return types should be passed to unary_function or binary_function [STL-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"(...) unary_function and binary_function are templates, so you can't inherit
+from them directly. Instead, you must inherit from structs they generate, and
+that requires that you specify some type arguments. For unary_function, you
+must specify the type of parameter taken by your functor class's operator(),
+as well as its return type. For binary_function, you specify three types: the
+types of your operator's first and second parameters, and your operator's 
+return type. Let's not forget the fundamental reason for all this
+unary_function and binary_function base class gobbledegook. These classes
+supply typedefs that are required by function object adapters, so inheritance
+from those classes yields adaptable function objects."
+
+STL function objects are modeled on C++ functions, and a C++ function has only
+one set of parameter types and one return type. As a result, the STL
+implicitly assumes that each functor class has only one operator() function,
+and it's the parameter and return types for this function that should be passed
+to unary_function or binary_function. This means that, tempting though it might
+be, you shouldn't try to combine the functionality of WidgetNameCompare and
+PtrWidgetNameCompare by creating a single struct with two operator() functions.
+If you did, the functor would be adaptable with respect to at most one of its
+calling forms, and a functor that's adaptable only half the time might just as
+well not be adaptable at all."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Adaptability is important, and you should strive to facilitate it each time
+you write a functor class."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget{};
+
+template&lt;typename T&gt;
+class MeetsThreshold2: public std::unary_function&lt;Widget, int&gt;  // Violation
+{
+private:
+    const T threshold;
+public:
+    MeetsThreshold2(const T&amp; threshold);
+    bool operator()(const Widget&amp;) const;
+};
+
+
+struct WidgetNameCompare:std::binary_function&lt;Widget, Widget, int&gt;  // Violation
+{
+    bool operator()(const Widget&amp; lhs, const Widget&amp; rhs) const;
+    bool operator()(const Widget&amp; lhs) const;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget{};
+
+template&lt;typename T&gt;
+class MeetsThreshold: public std::unary_function&lt;Widget, bool&gt;      // OK
+{
+private:
+    const T threshold;
+public:
+    MeetsThreshold(const T&amp; threshold);
+    bool operator()(const Widget&amp;) const;
+};
+
+
+struct WidgetNameCompare:                                             // OK
+std::binary_function&lt;Widget, Widget, bool&gt;{
+    bool operator()(const Widget&amp; lhs, const Widget&amp; rhs) const;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 6, item 40
+
+</PRE>
+</BODY>
+</HTML>

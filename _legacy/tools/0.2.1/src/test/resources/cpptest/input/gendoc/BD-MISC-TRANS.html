@@ -1,0 +1,265 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Always close transactions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Always close transactions [BD-MISC-TRANS-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects situations where a transaction associated with a certain variable
+('transaction object') is not closed.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.0
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+This rule must be parameterized before it is used.
+
+The parameterization dialog consists of two tables: 'Functions that start a transaction'
+and 'Functions that terminate a transaction'.
+
+PARAMETERIZATION COMMON TO BOTH TRANSACTION STARTERS AND TERMINATORS
+'Enabled' column:
+Should be used to include/exclude an already-defined starter/terminator from being taken
+into account during the analysis.
+
+'Fully qualified type name or namespace' column:
+Allows for specification of the entity the starter/terminator is declared within.
+If this field is left empty, only the global function with the name specified
+in the 'Function name' column will be considered a transaction starter/terminator.
+If this field is filled with '*', the function declared in any type
+or namespace-- or a global function declared outside of any type or namespace-- will be
+considered a transaction starter/terminator.
+
+'Function name' column:
+The name of the transaction starting/terminating function should be specified here.
+
+'+ definitions in subclasses' column:
+This is to indicate whether function definitions in subclasses should be considered
+starters/terminators as well. This applies to both instance and non-instance functions
+and makes sense only if the declaring type is specified.
+
+
+SETTING UP TRANSACTION STARTERS
+The 'Functions that start a transaction' table can be filled with the descriptors of functions
+that start a transaction. These can be represented by functions that are able to do any of the following:
+	a) Return a transaction object.
+	b) Open a transaction on the object that the function is called upon. For example, after the call
+	   transaction-&gt;open(); "transaction" is an open transaction that has to be properly closed.
+	c) Turn one of its actual parameters into a transaction object.
+
+For any starting function, the fields in the columns labeled 'Returns a transaction object',
+'"this" object is a transaction one' and 'Numbers of the parameters for the transaction object (1-based)'
+should be used to depict the situation (a, b or c) that takes place. The value of the latter
+column is expected to be an ordinal number (1-based) of the affected parameter.
+For example, this should be set to "2" if the function designates its second parameter
+as a transaction object. Use '*' to specify that all parameters are transaction object.
+
+NOTE ABOUT CONSTRUCTORS
+Any transaction starting function with a name (the value of the appropriate field in the
+'Function name' column) that is exactly the same as the unqualified name of its declaring type
+(the last segment of the value of the field in 'Fully qualified type name or namespace' column)
+is considered a constructor. The '"this" object is a transaction one' check box must be ticked
+for constructors that represent a starting function.
+Changing values in the fields '+ definitions in subclasses', 'Returns a transaction object'
+and 'Numbers of the parameters for the transaction object (1-based)' has no effect on the analysis
+for constructors.
+
+SETTING UP TRANSACTION TERMINATORS:
+The second pane can be filled with functions that terminate a transaction by being
+called on the object that is designated as a transaction object, or by being passed a transaction
+object as one of their parameters.
+As with transaction starters, the fields in the columns labeled '"this" object is a transaction one'
+and 'Numbers of the parameters for the transaction object' should be filled appropriately for transaction
+terminators.
+
+A step-by-step example of how to correctly perform parameterization is provided in
+the 'EXAMPLE' section of this help page.
+
+SPECIFYING THE APPROACH TO REPORTING OF VIOLATIONS AT THE MOMENT OF APPLICATION TERMINATION
+The "Do not report violations at application termination"
+parameter allows you to manage reporting of violations at the moment of application
+termination. The default setting is "off" because it's generally recommended
+to close the transaction manually.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+Example#1(C-style parameterization):
+Consider the following parameterization of the rule:
+ - The function that starts a transaction is defined with the name 'start'
+   and the corresponding 'Returns a transaction object' check box is ticked.
+ - The function that terminates a transaction is defined with the name 'terminate'
+   and '1' is set as the value of the corresponding cell of the
+   'Numbers of the parameters for the transaction object' table column.
+
+Being parameterized in this way, the rule detects a violation on the following
+sample code:
+
+#include&lt;stdio.h&gt;
+
+void* start() { }
+
+void terminate(void * a) { }
+
+static void notClosedTransaction()
+{
+	void* transaction;
+	transaction = start();
+}
+
+
+
+Example#2(C++-style parameterization):
+Consider the following sample code:
+
+namespace mySpace {
+	class MyTransaction
+	{
+		public:
+			void start();
+			void terminate();
+			static void terminateTransaction(MyTransaction* p)
+			{
+			};
+	};
+}
+
+static void transactionUse()
+{
+    mySpace::MyTransaction* t = new mySpace::MyTransaction();
+    t-&gt;start();
+} // 't' is not terminated
+
+
+In order to detect un-closed transaction in the code above, the rule should be parameterized as follows:
+
+ - Function that starts a transaction:
+       'Fully qualified type name or namespace' field value: "mySpace::MyTransaction";
+       'Function name' field value: "start";
+       '"this" object is a transaction one' check box status: checked.
+ - Terminating function:
+       'Fully qualified type name or namespace' field value: "mySpace::MyTransaction";
+       'Function name' field value: "terminate";
+       '"this" object is a transaction one' check box status: checked.
+ - Another terminating function:
+       'Fully qualified type name or namespace' field value: "mySpace::MyTransaction";
+       'Function name' field value: "terminateTransaction";
+       'Numbers of the parameters for the transaction object (1-based)' field value: 1.
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+For the Example#1:
+By adding a call to terminating function, we repair the code so that
+it does not trigger a violation:
+
+#include&lt;stdio.h&gt;
+
+void* start() { }
+
+void terminate(void * a) { }
+
+static void notClosedTransaction()
+{
+	void* transaction;
+	transaction = start();
+	terminate(transaction);
+}
+
+
+For the Example#2:
+By adding a call to the terminating function, we repair the code so that
+it does not trigger a violation:
+
+namespace mySpace {
+	class MyTransaction
+	{
+		public:
+			void start();
+			void terminate();
+			static void terminateTransaction(MyTransaction* p)
+			{
+			};
+	};
+}
+
+static void transactionUse()
+{
+    mySpace::MyTransaction* t = new mySpace::MyTransaction();
+    t-&gt;start();
+    t-&gt;terminate(); // mySpace::MyTransaction::terminateTransaction(t); may be used as well
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

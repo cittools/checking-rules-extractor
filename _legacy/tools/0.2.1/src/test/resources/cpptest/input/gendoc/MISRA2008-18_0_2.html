@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The library functions atof, atoi and atol from library &lt;cstdlib&gt; shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The library functions atof, atoi and atol from library &lt;cstdlib&gt; shall not be used [MISRA2008-18_0_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+'atof', 'atoi' and 'atol' functions from library &lt;stdlib.h&gt; have undefined
+behaviour associated with them when the string cannot be converted.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using functions which have sometimes undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+void foo( void ) {
+    char *s; double x; int i; long l;
+    s = "  -2309.12E-15";    
+    x = atof( s );           /* Violation */
+    s = "  -9885 pigs";      
+    i = atoi( s );           /* Violation */
+    s = "98854 dollars";     
+    l = atol( s );           /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use atof, atoi and atol functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. Origin: Misra Guidelines - Rule 125
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.5 Libraries, AV Rule 23
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 18, Rule 18-0-2
+
+</PRE>
+</BODY>
+</HTML>

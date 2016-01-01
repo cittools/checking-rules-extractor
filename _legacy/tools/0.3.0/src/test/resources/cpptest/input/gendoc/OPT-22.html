@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Useless case statement shall not be permitted
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Useless case statement shall not be permitted [OPT-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid writing useless case statements.
+See also: MISRA2004-15_5, OPT-21
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If an empty case statement is found it is highly likely that there 
+is a programming error.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo(int i) {
+    switch(i)      /* Violation */
+    {
+        case 0:
+            return 1;
+        case 1:
+        case 2:
+        default:
+            return 0;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo(int i) {
+    switch(i)      /* OK */
+    {
+        case 0:
+            return 1;
+        default:
+            return 0;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

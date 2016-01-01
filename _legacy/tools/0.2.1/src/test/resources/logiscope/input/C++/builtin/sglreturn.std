@@ -1,0 +1,17 @@
+.NAME A single return per function.
+
+.DESCRIPTION
+
+Definition:
+-----------
+Only one return instruction is allowed in a function.
+
+Justification:
+--------------
+Makes the code easier to understand and helps avoid dead branches.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

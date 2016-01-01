@@ -1,0 +1,51 @@
+.NAME Literal constants
+
+.DESCRIPTION
+
+Definition:
+-----------
+Numbers, characters and strings have to be declared as constants instead of being 
+used as literals inside a program. The user can list the allowed literal 
+constants.
+
+Parameters:
+-----------
+A list of character strings representing the allowed literal constants.
+
+Note: In the case of constants used in initializing lists 
+(concerning array and struct structures), only the first five violations are shown. 
+
+Justification:
+--------------
+Makes maintenance easier by avoiding the scattering of constants among the code, 
+often with the same value.
+
+Example:
+--------
+
+// do not write
+
+char tab[100];
+int i;
+...
+if (i == 7) {
+p = "Hello World.";
+}
+
+// write
+
+#define TAB_SIZE 100
+enum i_val { ok =7; ko =11};
+const char HelloWorld[] = "Hello World.";
+char tab[TAB_SIZE];
+i_val i;
+...
+if (i == ok) {
+p = HelloWorld;
+}
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

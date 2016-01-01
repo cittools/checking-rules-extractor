@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Macros shall only be #define'd or #undef'd in the global namespace
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Macros shall only be #define'd or #undef'd in the global namespace [MISRA2008-16_0_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"While it is legal C to place #define or #undef directives anywhere in a code
+file, placing them inside blocks is misleading as it implies a scope restricted
+to that block, which is not the case."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves the readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int* x ) {
+#define CHECKPARAM(p) (p != 0)  // Violation
+    if (CHECKPARAM(x)) {
+	/* ... */
+    }
+#undef CHECKPARAM               // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define CHECKPARAM(p) (p != 0) // OK - macro is defined outside of any blocks
+void foo( int* x ) {
+    if (CHECKPARAM(x)) {
+        /* ... */
+    }
+}
+#undef CHECKPARAM              // OK - macro is undefined outside of any blocks
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. Origin: Misra Guidelines - Rule 91
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-0-2
+
+</PRE>
+</BODY>
+</HTML>

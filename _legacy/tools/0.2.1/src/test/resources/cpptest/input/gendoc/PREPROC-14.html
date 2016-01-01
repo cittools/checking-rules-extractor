@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All macros must expand into complete syntactic units
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All macros must expand into complete syntactic units [PREPROC-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"All macros must expand into complete syntactic units. The restriction of macro
+definitions to the definition of complete syntactic units means that all macro
+bodies must be enclosed in either round or curly braces."
+See also: MISRA2004-19_4
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The C preprocessor is a powerful obfuscation tool that can destroy code
+clarity and befuddle many text based checkers. The effect of constructs 
+in unrestricted preprocessor code can be extremely hard to decipher,
+even with a formal language definition in hand."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MAC1(a, b) a + b                 // Violation - no braces
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define MAC1(a, b) (a + b)               // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 8
+
+</PRE>
+</BODY>
+</HTML>

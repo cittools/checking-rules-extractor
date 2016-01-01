@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid infinite loops
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid infinite loops [CODSTA-82-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Infinite loops are usually caused by user error and result in resource
+exhaustion or program termination.
+The rule reports a violations if an iteration statement (while, do while, for)
+does not have a termination point. Only loops with empty or simple constant 
+conditions are checked.
+The rule assumes that a loop can be terminated if it contains:
+- break
+- return
+- goto to a label outside of the loop
+- throw that is not caught by try/catch inside of the loop
+- calls to standard functions: exit, abort or _Exit
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule does not check called functions - if there's a termination point 
+in a function called from within the loop, which is used to stop the loop,
+the rule will still report a violation.
+The rule does not check if the termination point is reachable (e.g. 'break'
+inside of an 'if' statement is considered to be valid regardless of the 'if' 
+condition).
+The rule does only limited checking of 'catch' handlers.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Finds possible infinite loops that could result in unwanted program termination,
+resource exhaustion or computer "freezing".
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(char *s) {
+    for (;;) {                 // Violation - infinite loop           
+        switch (*s++) {
+        case 'a':  continue;
+        case '\0': break;      // The break is for 'switch'!
+        }
+    }  
+    while(true) {              // Violation - infinite loop           
+        if (!s) {
+            // return;         // Code commented out by mistake
+        }
+        ++s;
+    }  
+    do {                       // Violation - infinite loop           
+        char * ptr = s;
+        for(; ptr; ++ptr) {
+            if (!*ptr) {
+                goto END_LOOP; // Jump does not end 'do while' loop
+            }
+        }
+        END_LOOP:
+    } while(1);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(char *s) {
+    for (;;) {                // OK
+        switch (*s++) {
+        case 'a':  continue;
+        case '\0': break;     
+        }
+        break;
+    }  
+    while(true) {             // OK           
+        if (!s) {
+            return;        
+        }
+        ++s;
+    }  
+    do {                      // OK           
+        char * ptr = s;
+        for(; ptr; ++ptr) {
+           if (!*ptr) {
+               goto END_LOOP;
+           }
+        }
+    } while(1);
+    END_LOOP:
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

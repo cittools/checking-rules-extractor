@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a function has internal linkage then all re-declarations shall include the static storage class specifier
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a function has internal linkage then all re-declarations shall include the static storage class specifier [MISRA2008-3_3_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If the declaration of a function includes the static storage class specifier,
+then it has internal linkage. A re-declaration of such a function is not
+required to have the static keyword, but it will still have internal linkage.
+However, this is implicit and may not be obvious to a developer. It is therefore
+good practice to apply the static keyword consistently so that the linkage
+is explicitly stated."
+See also: MISRA2004-8_11
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves good programming style and readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static void f1 ( );
+void f1 ( ) { }         // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+static void f1 ( );
+static void f1 ( ) { }  // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 3, Rule 3-3-2
+
+</PRE>
+</BODY>
+</HTML>

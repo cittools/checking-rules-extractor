@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Arguments to a function-like macro shall not contain tokens that look like preprocessing directives
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Arguments to a function-like macro shall not contain tokens that look like preprocessing directives [MISRA2008-16_0_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If any of the arguments act like preprocessor directives,
+the behaviour when macro substitution is made can be unpredictable."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule works only within file scope.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MACRO1(x)
+#define MACRO2(x, y)
+
+void foo( void ) {
+    int i = 0;
+    MACRO1( #foo );       /* Violation */
+    MACRO2( i, #foo );    /* Violation */
+    MACRO2( i, "#foo" );  /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define MACRO1(x) 
+#define MACRO2(x, y) 
+
+void foo( void ) {
+    int i = 0;
+    MACRO1( i );          /* OK */
+    MACRO2( i, i );       /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. Origin: Misra Guidelines - Rule 95
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-0-5
+
+</PRE>
+</BODY>
+</HTML>

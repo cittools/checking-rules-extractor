@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never convert pointers to objects of a derived class to pointers to objects of a virtual base class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never convert pointers to objects of a derived class to pointers to objects of a virtual base class [OOP-26-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Never convert pointers to objects of a derived class to 
+pointers to objects of a virtual base class."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents casting to pointer to virtual base class.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {}; 
+class Derived: virtual Base {};
+
+void foo( ) {
+    Base *b = 0;
+    Derived *d = 0;
+    b = (Base*) d;    // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not convert pointers to objects of a derived class to 
+pointers to objects of a virtual base class.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 13 Type Conversions - Rule 45
+
+</PRE>
+</BODY>
+</HTML>

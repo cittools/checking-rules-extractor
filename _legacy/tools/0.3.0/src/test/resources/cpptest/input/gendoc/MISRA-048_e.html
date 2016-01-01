@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use explicit type conversions for arithmetic using signed and unsigned values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use explicit type conversions for arithmetic using signed and unsigned values [MISRA-048_e-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use explicit type conversions for arithmetic using signed and unsigned values."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(signed char a)
+{
+    signed char b = 'b';
+    unsigned char c = 'c';
+    a = b + c;                 // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(signed char a)
+{
+    signed char b = 'b';
+    unsigned char c = 'c';
+    a = (unsigned char)b + c;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+    <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+    From: 18 Portable Code - 18.3 Type Conversions - Port. Rec. 8
+
+2. Misra Guidelines - Rule 48
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule 162
+
+</PRE>
+</BODY>
+</HTML>

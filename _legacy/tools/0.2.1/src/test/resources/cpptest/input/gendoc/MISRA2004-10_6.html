@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A "U" suffix shall be applied to all constants of unsigned type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A "U" suffix shall be applied to all constants of unsigned type [MISRA2004-10_6-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Signedness of constants should be explicit. Consistent signedness
+is an important principle in constructing well formed expressions.
+If a constant is of an unsigned type, it is helpful to avoid
+ambiguity by applying a “U” suffix."
+The rule reports a violation message if to an unsigned variable is assigned
+a constant without 'U' suffix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+    unsigned int a = 10;       /* Violation */
+    unsigned int b;
+    b = 10;                    /* Violation */
+}
+
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo()
+{
+    unsigned int a = 10U;       /* OK */
+    unsigned int b;
+    b = 10U;                    /* OK */
+} 
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+
+</PRE>
+</BODY>
+</HTML>

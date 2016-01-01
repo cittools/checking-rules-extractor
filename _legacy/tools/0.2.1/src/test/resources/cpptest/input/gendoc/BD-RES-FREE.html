@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use resources that have been freed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use resources that have been freed [BD-RES-FREE-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects uses of resources that have been freed. In particular, a violation is reported
+when a pointer or reference to a freed resource is:
+
+   * returned from a function,
+   * passed as a parameter to a function,
+   * used in an arithmetic operation,
+   * dereferenced, or
+   * assigned to a variable/field/array element.
+
+The rule can identify violations for any type of resource. The set of resources
+is defined in the "Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+The "Report violation when pointer to freed resource is compared to null" check box
+unsupresses/suppresses  violations where a pointer to a freed resource is compared to a null
+pointer. This may be allowed by the code writing policy and application design.
+By default, such violations are not reported.
+
+The "Report violation when pointer to freed resource is compared to other pointers" check box
+unsuppresses/suppresses violations where a pointer to a freed resource is compared to other
+pointers. This may be allowed by the code writing policy and application design.
+By default, such violations are not reported.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+Prevents strange, often non-deterministic errors elated to the use of freed resources.
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+int compute(int* buffer, const int size)
+{
+	int result = 0;
+	// perform computations
+	delete[] buffer;
+	return result;
+}
+
+void process(const int size)
+{
+	int* buffer = new int[size];
+	int result = compute(buffer, size);
+	delete[] buffer;
+	// do something
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+Removing delete in the compute() function repairs the example above. (Please note that in order for BugDetective
+to find violations in the example, "Memory (standard C++)" must be turned on in the resource
+table on "Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab):
+
+int compute(int* buffer, const int size)
+{
+	int result = 0;
+	// perform computations
+	return result;
+}
+
+void process(const int size)
+{
+	int* buffer = new int[size];
+	int result = compute(buffer, size);
+	delete[] buffer;
+	// do something
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

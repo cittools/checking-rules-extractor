@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid too long functions (blocks)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid too long functions (blocks) [METRICS-21-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Avoid long and complex functions. Complex functions are difficult to test. 
+If a function consists of 15 nested if statements, then there are 2**15
+(or 32768) different branches to test in a single function."
+See also: METRICS-01, METRICS-20, METRICS-22
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule triggers if function contains more than 10 blocks.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By always using short and simple functions, such an error can be more exactly
+localized and function testing is much easier.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void func( int i ) {  // Violation
+    if (1) {
+    } else {
+    }
+    do {
+    } while(1);
+    switch(i) {
+    case 1:
+        break;
+    default:
+        break;
+    }
+    if (1) {
+    } else {
+    }
+    if (2) {
+    } else {
+    }
+    if (3) {
+    } else {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit the number of blocks within function body to 10.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 9 Functions - 9.7 General - Rec. 47
+
+</PRE>
+</BODY>
+</HTML>

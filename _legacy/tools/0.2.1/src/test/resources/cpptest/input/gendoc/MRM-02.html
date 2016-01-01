@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not allocate more than one resource in a single statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not allocate more than one resource in a single statement [MRM-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Make sure that all resources are owned by objects. Perform every explicit 
+resource allocation (e.g., new) in its own statement that immediately gives 
+the allocated resource to a manager object (e.g., shared_ptr).
+Follow the advice to perform every explicit resource allocation (e.g., new)
+in its own code statement that immediately gives the resource to an owning 
+object (e.g., shared_ptr)."
+Rule disallows allocating more than one resource in a single statement.
+See also: MRM-01
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Memory allocation (by calling operator new) could be done first for both 
+objects, followed by attempts to call the two constructors. That very nicely
+sets things up for a leak because if one of the constructor calls throws an 
+exception, then the other object's memory will never be released."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;boost/shared_ptr.hpp&gt;
+
+using boost::shared_ptr;
+
+class Sport{};
+
+void smartPointer( ) {
+    shared_ptr&lt;Sport&gt; sport1( new Sport ), sport2( new Sport );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;boost/shared_ptr.hpp&gt;
+
+using boost::shared_ptr;
+
+class Sport{};
+
+void smartPointer( ) {
+    shared_ptr&lt;Sport&gt; sport1( new Sport );       // OK
+    shared_ptr&lt;Sport&gt; sport2( new Sport );       // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Design Style", Rule 13
+
+</PRE>
+</BODY>
+</HTML>

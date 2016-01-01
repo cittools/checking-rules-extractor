@@ -1,0 +1,26 @@
+.NAME Distinguish between Prefix and Postfix Forms of Increment and Decrement Operators
+
+.DESCRIPTION
+
+Definition:
+-----------
+Increment and decrement operators must be declared in the same manner as 
+in the following example:
+class Example {
+  public:
+    Example& operator++();          // prefix ++
+    const Example operator++(int);  // postfix ++
+    Example& operator--();          // prefix --
+    const Example operator--(int);  // postfix --
+}
+(This rule relates to Item 6 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Keeps the consistency with built-in types.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

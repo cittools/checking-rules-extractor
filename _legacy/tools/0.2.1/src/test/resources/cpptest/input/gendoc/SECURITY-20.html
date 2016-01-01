@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid passing user input into methods as parameters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid passing user input into methods as parameters [SECURITY-20-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid passing user input into methods as parameters.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Using direct user input in the application can open doors 
+to buffer overflow and SQL injection attacks. 
+User input must be validated before being processed by the application.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+using namespace std;
+void function( int param );
+void foo( int param ) {
+	int var1;
+	int var2=0;
+
+	cin &gt;&gt; var1;
+	function( var1 );		// Violation
+	scanf( "%d", &amp;var2 );
+	function( var2 );		// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+using namespace std;
+void function( int param );
+void foo( ) {
+	int var1 = 0;
+	int var2 = 0;
+
+	cin &gt;&gt; var1;
+	// part of code manipulating var1 without using function with var1 as parameter
+	scanf( "%d", &amp;var2 );
+	// part of code manipulating var2 without using function with var2 as parameter
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+David A. Wheeler, Programming Secure Applications for Unix-like Systems (pdf), 
+<A HREF="http://www.dwheeler.com/secure-programs">http://www.dwheeler.com/secure-programs</A>
+
+</PRE>
+</BODY>
+</HTML>

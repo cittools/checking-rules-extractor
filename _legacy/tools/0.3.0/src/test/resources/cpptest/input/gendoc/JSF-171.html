@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+&gt;, &gt;=, &lt;, &lt;= shall not be applied to pointer types except where they point to the same array
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+&gt;, &gt;=, &lt;, &lt;= shall not be applied to pointer types except where they point to the same array [JSF-171-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Attempting to make comparisons between pointers will produce undefined 
+behaviour."
+
+
+Exceptions:
+
+"Both operands are of the same type and point to the same array"
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+"It is permissible to address the next element beyond the end of an array,
+but accessing this element is not allowed."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+For more complex code rule may not be able to check if there is 
+applied pointer comparison to pointers which point the same array.
+For such cases the rule may report false positives.
+For example:
+void foo( ) {
+    int a[10], i;
+    int* p1,* p2,* p3,* p4,* p5;
+
+    p1 = a; i = p1 &lt; a;    // OK
+    p2 = p1;i = p2 &lt; a;    // OK
+    p3 = p2;i = p3 &lt; a;    // OK
+    p4 = p3;i = p4 &lt; a;    // Violation - false positive
+    p5 = p4;i = p5 &lt; a;    // Violation - false positive
+}
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int a[] ) {
+    int* p1 = 0;
+    int* p2;
+    int* p3 = a;
+    int i;
+
+    i = p1 &lt; p2;   // Violation
+    i = p2 &lt; a;    // Violation
+    i = p3 &lt; a;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not apply pointer comparison to pointers that address elements
+of different arrays
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 17
+
+2. Origin: Misra Guidelines - Rule 103
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.22 Pointers &amp; References, AV Rule 171
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-18
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+.NAME One statement per line
+
+.DESCRIPTION
+
+Definition:
+-----------
+There must not be more than one statement per line. 
+A statement followed by a brace (instr { ) or a brace followed by a statement 
+({ instr ) is allowed in the same line, but not both of them (instr { instr ).
+
+Example:
+--------
+
+// write
+
+x = x0;
+y = y0;
+while (IsOk(x)) {
+x++;
+}
+
+// do not write
+
+x = x0; y = y0;
+while (IsOk(x)) {x++;} 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

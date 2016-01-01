@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not cast pointers to functions to pointers to primitive types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not cast pointers to functions to pointers to primitive types [CODSTA-09-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects if code casts pointers to functions to pointers
+to primitive types. Using a pointer cast in this manner can cause problems.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Casting pointer to function to pointer to primitive 
+type can make code error prone.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Foo(char *ptrC)
+{ 
+    *ptrC = 0;
+    return;
+}
+
+void f()
+{
+    void *ptrV = 0;
+    void (*funPtr) (char*) = 0;		
+    funPtr = &amp;Foo;		
+    ptrV = (void*)funPtr;            // Violation
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Remove all function pointer to primitive type pointer casts.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

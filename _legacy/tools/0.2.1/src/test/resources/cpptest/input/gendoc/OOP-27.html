@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare copy assignment operator for class with reference or const members
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare copy assignment operator for class with reference or const members [OOP-27-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If you want to support assignment in a class containing a reference member,
+you must define the copy assignment operator yourself. Compilers behave
+similarly for classes containing const members. It's not legal to modify const
+members, so compilers are unsure how to treat them during an implicitly
+generated assignment function. Finally, compilers reject implicit copy
+assignment operators in derived classes that inherit from base classes
+declaring the copy assignment operator private. After all, compiler-generated
+copy assignment operators for derived classes are supposed to handle base class
+parts, too but in doing so, they certainly can't invoke member functions
+the derived class has no right to call."
+See also: CODSTA-CPP-02, CODSTA-CPP-21, CODSTA-CPP-24, MRM-04, MRM-37, MRM-40,
+          MRM-47, OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Support assignment in a class containing a reference
+member or const members.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Sample {                            // Violation
+public:
+    Sample( const int value );
+    const int s;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Sample {                               // OK
+public:
+    Sample( const int value );  
+    Sample&amp; operator=( Sample&amp; );
+    const int s;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 2, Item 5
+
+</PRE>
+</BODY>
+</HTML>

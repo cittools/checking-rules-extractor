@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+signed char and unsigned char type shall only be used for the storage and use of numeric values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+signed char and unsigned char type shall only be used for the storage and use of numeric values [MISRA2008-5_0_12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+signed and unsigned char type shall be used only for the storage 
+and use of numeric values. The signedness of the plain char type is 
+implementation-defined and should not be relied upon.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+signed char a = 'A';          /* Violation */
+void foo( ) {
+    unsigned char a = 'B';    /* Violation */
+
+    if (a == 'C')             /* Violation */
+    {
+    }
+    if (a &lt; 'D')             /* Violation */
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+signed char a = 65;           /* OK */
+void foo( ) {
+    unsigned char a = 66;     /* OK */
+    if (a == 67)              /* OK */
+    {
+    }
+    if (a &lt; 68)               /* OK */
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 6
+
+2. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-12
+
+</PRE>
+</BODY>
+</HTML>

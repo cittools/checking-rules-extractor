@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A project shall not contain infeasible paths
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A project shall not contain infeasible paths [MISRA2008-0_1_2_q-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports violation if a result of expression that use a logical
+operator '||' is always 'true' or always 'false'.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"If a Boolean operator yields a result that can be proven to be always 'true'
+or always 'false', it is highly likely that there is a programming error."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void myFunction(int a)
+{
+    if((a &gt; -4)||(a &lt; -3));   // Violation
+    if((-1 &gt; a)||(-3 &lt; a));   // Violation
+    if((a &lt; -3)||(-5 &lt; a));   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void myFunction(int a)
+{
+    if((a &gt; -4)||(a &lt; -13));   // OK
+    if((-11 &gt; a)||(-3 &lt; a));   // OK
+    if((a &lt; -13)||(-5 &lt; a));   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 13
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-2
+
+</PRE>
+</BODY>
+</HTML>

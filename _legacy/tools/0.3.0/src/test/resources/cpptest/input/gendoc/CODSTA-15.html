@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not declare the size of an array when the array is passed into a function as a parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not declare the size of an array when the array is passed into a function as a parameter [CODSTA-15-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects if the size of an array is declared when the array
+is passed into a function as a parameter. Do not declare the
+magnitude of a single dimensional array in the argument declaration.
+The 'C' language will pass an array argument as a pointer to the first
+element in the array.In fact, different invocations of the function
+may pass array arguments with different magnitudes. Therefore,
+specifying the magnitude of an array in a function argument definition
+might complicate software maintenance.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents potential loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo2(int ii[30])                // Violation
+{ 
+}
+void foo3(char a,int ii[30][30][30]) // Violation
+{ 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1(int ii[])                  // OK
+{ 
+}
+void foo4(char a,int ii[][30][30])  // OK
+{ 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards R-7
+
+</PRE>
+</BODY>
+</HTML>

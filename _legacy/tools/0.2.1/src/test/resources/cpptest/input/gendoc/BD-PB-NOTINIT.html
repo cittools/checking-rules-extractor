@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid use before initialization
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid use before initialization [BD-PB-NOTINIT-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases when a variable is used prior to its explicit initialization.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.0
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+The 'Report violation when a non-initialized variable is passed to a function without source 
+code as a const parameter' check box allows you to specify if the rule should trigger when a 
+non-initialized variable is passed as a const parameter to a function whose source code 
+is not available. In case a parameter is a struct or a class, a violation is only reported
+if the object is completely uninitialized. For example, if a struct one of whose fields is initialized
+is passed to a third-party function as a const parameter, a violation won't be reported as the
+struct is partially initialized.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+The rule can detect a variety of erroneous situations. 
+Here are just a few examples where the rule triggers.
+
+1.
+static void useParameter(int *pi)
+{
+	int j = *pi;
+}
+
+static void usageOfUninializedVariablePassedToMethodByAddress()
+{
+	int i;
+	useParameter(&amp;i); // VIOLATION
+}
+
+2.
+static void pointerDerefInLhsOfDefinition()
+{
+    int* notInitializedPointer;
+    *notInitializedPointer = 0; // VIOLATION
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+Always initialize a variable before its use.
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

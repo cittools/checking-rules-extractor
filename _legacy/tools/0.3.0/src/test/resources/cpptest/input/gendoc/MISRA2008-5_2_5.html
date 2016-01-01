@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A cast shall not remove any const or volatile qualification from the type of a pointer or reference
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A cast shall not remove any const or volatile qualification from the type of a pointer or reference [MISRA2008-5_2_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Any attempt to remove the qualification associated with the addressed type by 
+using casting is a violation of the principle of type qualification.
+Notice that the qualification referred to here is not the same as any 
+qualification that may be applied to the pointer itself."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef unsigned short uint16_t;
+void foo( ) 
+{
+    uint16_t *pi, **ppi;
+    uint16_t * const * pcpi;  /* pointer to const pointer */
+    const uint16_t * * ppci;  /* pointer to pointer to const */
+    const uint16_t * pci;     /* pointer to const */
+    volatile uint16_t * pvi;  /* pointer to volatile */
+
+    pi = (uint16_t *)pci;     /* Violation */
+    pi = (uint16_t *)pvi;     /* Violation */
+    ppi = (uint16_t * *)pcpi; /* Violation */
+    ppi = (uint16_t * *)ppci; /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast from 'const' or 'volatile' type adressed by a pointer to 'non-const'
+or 'non-volatile' type.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 11
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-2-5
+
+</PRE>
+</BODY>
+</HTML>

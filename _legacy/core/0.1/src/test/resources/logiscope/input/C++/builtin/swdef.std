@@ -1,0 +1,18 @@
+.NAME default within switch
+
+.DESCRIPTION
+
+Definition:
+-----------
+A default case is mandatory within a switch in order to cover unexpected cases.
+
+Parameters:
+----------
+The character string "last", which, if used, specifies that the default case 
+has to be the last one.
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

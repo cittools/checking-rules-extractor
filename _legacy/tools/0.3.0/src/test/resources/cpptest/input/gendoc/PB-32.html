@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not call 'sizeof' on a pointer type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not call 'sizeof' on a pointer type [PB-32-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Sizeof should not be used on a pointer type.
+Using the pointer of the type as the argument of the sizeof operator
+makes the sizeof operator return the size of pointer
+(which is 4 in a 32-bit platform).
+See also: MRM-45
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents situations in which instead of using the actual type as the
+argument of the sizeof operator, the pointer of the type is mistakenly used.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int * pint;
+
+void myFunction(int* ptr_a)
+{
+    pint ptr_b;
+
+    sizeof(ptr_a);    // Violation
+    sizeof(ptr_b);    // Violation
+    sizeof(pint);     // Violation
+    sizeof(int *);    // Violation
+}
+
+void mySndFunction(char tab10[10], char tabX[], char * ptr) 
+{
+    sizeof tab10;   // Violation
+    sizeof tabX;    // Violation
+    sizeof ptr;     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use sizeof on pointers.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

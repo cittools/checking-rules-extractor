@@ -1,0 +1,16 @@
+.NAME Avoid using templates.
+
+.DESCRIPTION
+
+Definition:
+-----------
+Do not use templates.
+
+Justification:
+--------------
+Improves code efficiency.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

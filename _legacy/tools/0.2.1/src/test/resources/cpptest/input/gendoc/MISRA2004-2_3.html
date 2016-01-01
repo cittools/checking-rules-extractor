@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The character sequence /* shall not be used within a comment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The character sequence /* shall not be used within a comment [MISRA2004-2_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+C does not support the nesting of comments even though 
+some compilers support this as a language extension.
+A comment begins with /* and continues until the first */ is encountered.
+Any /* occurring inside a comment is a violation of this rule.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Nested comments are not supported by C and can lead to confusion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* some comment, end comment marker accidentally omitted
+
+&lt;&lt;New Page&gt;&gt;
+Perform_Critical_Safety_Function(X);
+/* this comment is not compliant - Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* some comment, end comment marker accidentally omitted */
+
+&lt;&lt;New Page&gt;&gt;
+Perform_Critical_Safety_Function(X);
+/* this comment is compliant - OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 2
+
+2. Origin: Misra Guidelines - Rule 9
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-7-1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+using-directives shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+using-directives shall not be used [CODSTA-CPP-75-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"using-directives add additional scopes to the set of scopes searched during
+name lookup. All identifiers in these scopes become visible, increasing the
+possibility that the identifier found by the compiler does not meet developer
+expectations.
+using-declarations or fully qualified names restricts the set of names
+considered to only the name explicitly specified, and so are safer options."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+namespace NS1
+{
+    int32_t i1;
+    int32_t j1;
+    int32_t k1;
+}
+using namespace NS1; // Violation
+
+void f ()
+{
+    ++j1;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+namespace NS1
+{
+    int32_t i1;
+    int32_t j1;
+    int32_t k1;
+}
+using NS1::j1;      // OK
+
+void f ()
+{
+    ++j1;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 7, Rule 7-3-4
+
+</PRE>
+</BODY>
+</HTML>

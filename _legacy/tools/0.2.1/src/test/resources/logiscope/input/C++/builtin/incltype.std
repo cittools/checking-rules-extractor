@@ -1,0 +1,26 @@
+.NAME Included modules type
+
+.DESCRIPTION
+
+Definition:
+-----------
+Only some types of modules are allowed to be included in other modules.
+By default, no inclusion is allowed.
+
+Parameters:
+-----------
+Lists of lists of character strings, each list being comprised of a string 
+representing a type of module (metric type ), followed by strings representing 
+the types of modules that may be included in it.
+
+Example:
+--------
+In CODE modules it is possible to include HEADER modules. 
+So the standard can be expressed as following
+STANDARD incltype ON LIST "CODE" "HEADER" EN LIST END STANDARD 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

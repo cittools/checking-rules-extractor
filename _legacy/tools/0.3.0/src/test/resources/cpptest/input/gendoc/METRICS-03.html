@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Number of blocks of code in a function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Number of blocks of code in a function [METRICS-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This metric measures the number of blocks of code in a function. 
+Rule checks if the number of blocks within the function exceeds 10.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void func(int i) {	// Violation
+  if (1) {
+     // do something;
+  } else {
+     // do another;	
+  }
+
+  if (1) {
+     // do something;
+  } else {
+     // do another;
+  }
+
+  if (1) {
+     // do something;
+  } else {
+     // do another;
+  }
+
+  if (1) {
+     // do something;
+  } else {
+     // do another;
+  }
+  
+  if (1) {
+     // do something;
+  }
+
+  do {
+  } while(1);
+  switch(i) {
+  case 1:
+    break;
+  default:
+    break;
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+The number of blocks within the function should be limited to 10.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, November/December 1999, pg. 34.
+
+</PRE>
+</BODY>
+</HTML>

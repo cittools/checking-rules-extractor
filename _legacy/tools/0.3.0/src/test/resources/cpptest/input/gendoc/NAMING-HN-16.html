@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for dynamically allocated array
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for dynamically allocated array [NAMING-HN-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For dynamically allocated array use "prg" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+const int kiMAX=10;
+
+int *iGrade = new int [kiMAX];           // Violation
+
+void foo()
+{
+	int *p=new int;
+	int *iNote = new int[kiMAX];     // Violation
+	int *iMark;                      // Violation
+	iMark = new int[10];         
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const int kiMAX=10;
+
+int *prgiGrade = new int [kiMAX];        // OK
+
+void foo()
+{
+	int *p=new int;
+	int *prgiNote = new int[kiMAX];  // OK
+	int *prgiMark;                   // OK
+	prgiMark = new int[10];         
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

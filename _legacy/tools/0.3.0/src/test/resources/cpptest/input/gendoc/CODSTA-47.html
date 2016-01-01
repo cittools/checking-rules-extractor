@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All structures should have typedefs
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All structures should have typedefs [CODSTA-47-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+In C language, a structure declaration looks similar to a variable
+declaration of the struct type. Using a typedef for each structure
+makes variable declarations of struct types similar to those for
+built in types, which improves readability of code. Additionally, 
+using typedefs prevents programming errors due to possible typos in
+variable declarations.
+
+
+Exceptions:
+
+This rule applies only to C code. In C++, the keyword struct defines
+a type, and no typedefs are necessary, or should be used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct A {    // Violation - no typedef
+    int i;
+};
+
+struct B {    // Violation - no typedef
+    int i;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef struct A {    // OK
+    int i;
+} A_t;
+
+struct B {                // OK
+    int i;
+};
+typedef struct B B_t;
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Customer guidelines
+
+</PRE>
+</BODY>
+</HTML>

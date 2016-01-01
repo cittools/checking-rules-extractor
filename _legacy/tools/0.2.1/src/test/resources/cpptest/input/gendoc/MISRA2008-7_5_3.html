@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A function shall not return a reference or a pointer to a parameter that is passed by reference or const reference
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A function shall not return a reference or a pointer to a parameter that is passed by reference or const reference [MISRA2008-7_5_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A function shall not return a reference or a pointer to a parameter that is
+passed by reference or const reference. It is implementation-defined behaviour
+whether the reference parameter is a temporary object or a reference to the
+parameter. If the implementation uses a local copy (temporary object), this
+will be destroyed when the function returns. Any attempt to use such an object
+after its destruction will lead to undefined behaviour."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents non-deterministic behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* foo2 ( int&amp; x )
+{
+    return ( &amp;x );     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not return a reference or a pointer to a parameter that is passed by
+reference or const reference
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 - Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 7, Rule 7-5-3
+
+</PRE>
+</BODY>
+</HTML>

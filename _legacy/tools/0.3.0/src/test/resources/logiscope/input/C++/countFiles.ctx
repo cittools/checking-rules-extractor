@@ -1,0 +1,16 @@
+.DESCRIPTION
+This contexts computes the number of times it is executed.  The result is stored as a decimal string in the fileCount index of the context.
+
+.COMMAND tcl
+
+.CODE
+
+# We only define the compute proc,, to count the number of files,
+# The default behavior for the other procs fits our needs.
+
+proc compute {contextName vtpTree} {
+	set count 0
+	catch {set count [::logiscope::get fileCount]}
+	incr count
+	::logiscope::store fileCount $count 
+}

@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+External object should not be declared in more than one file
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+External object should not be declared in more than one file [JSF-139-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+External objects should be declared in header files which are then included in all 
+those source files which use these objects. This rule will inform about multiple 
+declarations of symbols.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability, clarity of code and prevents errornous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* misra_027.h */
+/* Do not declare external object in more than one file. */
+extern int a;           /* Violation */
+
+/* misra_027.c */
+#include "misra_027.h"
+extern int a;
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* misra_027.h */
+extern int a;           /* OK */
+
+/* misra_027.c */
+#include "misra_027.h"
+int a;
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 27
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.15 Declarations and Definitions, AV Rule 139
+
+</PRE>
+</BODY>
+</HTML>

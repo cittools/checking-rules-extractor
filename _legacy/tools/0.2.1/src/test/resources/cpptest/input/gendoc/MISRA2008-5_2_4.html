@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+C-style casts (other than void casts) and functional notation casts (other than explicit constructor calls) shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+C-style casts (other than void casts) and functional notation casts (other than explicit constructor calls) shall not be used [MISRA2008-5_2_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"C-style (cast notation), and functional notation casts that do not invoke
+a converting constructor are capable of performing casts between unrelated
+types."
+
+
+Exceptions:
+
+"A C-style cast to void may be used to signify that the return value
+for a non-void function call is being ignored"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+C++ casts are more specific than C casts and are much easier to locate
+and read.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    Base( );
+    virtual ~Base( );
+};
+
+class Derived : public Base {
+public:
+    Derived( );
+    ~Derived( );
+};
+
+void foo( ) {
+    Base *pB;
+    Derived *pD2 = (Derived *) pB;     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    Base( );
+    virtual ~Base( );
+};
+
+class Derived : public Base {
+public:
+    Derived( );
+    ~Derived( );
+};
+
+void foo( ) {
+    Base *pB;
+    Derived *pD1 = dynamic_cast&lt;Derived*&gt;( pB );   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-2-4
+
+</PRE>
+</BODY>
+</HTML>

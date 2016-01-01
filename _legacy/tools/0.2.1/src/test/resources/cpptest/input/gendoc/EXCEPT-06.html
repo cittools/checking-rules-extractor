@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There should be at least one exception handler to catch all otherwise unhandled exceptions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There should be at least one exception handler to catch all otherwise unhandled exceptions [EXCEPT-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If a program throws an unhandled exception it terminates
+in an implementation-defined manner. In particular, it is
+implementation-defined whether the call stack is unwound, before termination,
+so the destructors of any automatic objects may or may not be executed. 
+By enforcing the provision of a "last-ditch catch-all", the developer can
+ensure that the program terminates in a consistent manner."
+Rule checks if outermost statement of the 'main' function is a try statement
+with catch-all handler. 
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule check if a try statement with catch-all handler is implemented directly
+in 'main' function. Statements which are implemented in functions that are
+called from 'main' function are not detected.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Exception{};
+int main( )
+{
+    try  // Violation
+    { 
+        // ...
+    }
+    catch ( Exception e )
+    {
+        // ...
+    }
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Exception{};
+int main( )
+{
+    try  // OK
+    { 
+        // ...
+    }
+    catch ( Exception e )
+    {
+        // ...
+    }
+    catch ( ... )
+    {
+        // ...
+    }
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-3-2
+
+</PRE>
+</BODY>
+</HTML>

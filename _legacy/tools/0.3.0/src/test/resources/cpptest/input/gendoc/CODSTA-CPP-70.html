@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If loop-counter is not modified by -- or ++, then, within condition, the loop-counter shall only be used as an operand to &lt;=, &lt;, &gt; or &gt;=
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If loop-counter is not modified by -- or ++, then, within condition, the loop-counter shall only be used as an operand to &lt;=, &lt;, &gt; or &gt;= [CODSTA-CPP-70-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When the loop-counter is modified using an operator other than -- or ++,
+then == and != shall not be used, as loop termination may not occur, 
+which may be inconsistent with developer expectations."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+A loop-counter is a loop-control-variable that is:
+- Initialized in, or prior to, for-init-statement; and
+- an operand to a relational operator in condition; and
+- modified in expression.
+A loop-control-variable is any variable occurring in for-init-statement,
+condition or expression.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps to ensure deterministic loop termination.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int i;
+    for ( i = 1; i != 10; i += 2 ){} // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int i;
+    for ( i = 1; i &lt;= 10; i += 2 ){} // OK
+    for ( i = 1; i != 10; ++i ){}    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 6, Rule 6-5-2
+
+</PRE>
+</BODY>
+</HTML>

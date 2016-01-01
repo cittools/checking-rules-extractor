@@ -1,0 +1,110 @@
+.. -*- restructuredtext -*-
+
+======================================
+Sonar Quality Analysis Rules Extractor
+======================================
+
+What is the Sonar Rules Extractor?
+==================================
+
+The extractor is a tool that extracts the violation rules from analysis tools like Cppcheck,
+C++Test, Klocwork, etc. and converts them into Sonar rules.
+
+Why converting those rules into Sonar rules?
+============================================
+
+When we are doing a conformity analysis of coding rules, the output of this analysis gives us
+a link between the line of the source file where the rule has been violated and the ``ID`` of
+this violated rule. An association between a rule ``ID`` and its description has to be given to
+Sonar.
+
+To take into account all the custom rules developed in the quality analysis tools, it is
+necessary to have a utility which exports those tools' rules. **The Sonar Rules Extractor is there 
+for that.**
+
+.. note:: Sonar has by default five kinds of rule severity: ``Blocker``, ``Critical``, ``Major``,
+   ``Minor``, ``Info``. But it is not the case for all the analysis tools. For example, in Klocwork,
+   the severities are represented by numbers : 1 (Critical) to 10 (Info).
+
+   The *Sonar Rules Extractor* will have a mapping of those levels so they mean something to Sonar.
+
+How to install it?
+==================
+
+If you have Python **setuptools** already installed and have a direct internet connection, you just need
+to run the following command: ::
+
+   root@localhost:~# easy_install -O2 sonar-rules-extractor
+
+If Python **setuptools** is not installed, please install it first.
+
+If you don't have a direct connection to the internet, download a package suitable to your distribution
+and install it. ::
+
+   root@localhost:~# tar zxvf sonar-rules-extractor*.tar.gz
+   ...
+   root@localhost:~# cd sonar-rules-extractor*
+   root@localhost:~# python setup.py install -O2
+   ...
+   root@localhost:~#
+
+For windows users who don't want to run the command line installer, there is a native ``.exe`` package.
+
+How to extract rules from code analysis tools?
+==============================================
+
+The **Sonar Rules Extractor** comes with a command line tool ``sonar-rules-extractor``. You can run it
+with the ``--help`` option to get info. ::
+
+   root@localhost:~# sonar-rules-extractor --help
+   Usage: sonar-rules-extractor [options] tool <input args...>
+
+      <input args...> depend on the tool. Generally, if no args are provided,
+      standard input is read.
+
+   Options:
+      --version             show program's version number and exit
+      -h, --help            show this help message and exit
+      -p MODULE, --plugin=MODULE
+                            Before extraction, import the specified module and
+                            look for classes that inherit "Extractor" which can be
+                            used in addtion to the built-in ones. This option can
+                            be used multiple times.
+      -f, --format-xml      Pretty format XML output.
+      -l, --list-tools      List all available tools.
+
+You can get the list of available supported tools with this command: ::
+
+   root@localhost:~# sonar-rules-extractor --list-tools 
+   pylint, klocwork, cpptest, gnatcheck, qac, qacpp, cppcheck, logiscope
+
+Here is an example extraction for PyLint: ::
+
+   root@localhost:~# pylint --list-msgs | sonar-rules-extractor pylint --format-xml > pylint-sonar-rules.xml
+   root@localhost:~# cat pylint-sonar-rules.xml
+   <?xml version="1.0" encoding="utf-8"?>
+   <!--EXTRACTED "pylint" RULES FOR SONAR-->
+   <rules>
+     <rule key="C0102" priority="INFO">
+       <name>
+   <![CDATA[Black listed name "%s"]]>    </name>
+       <configKey>
+   <![CDATA[C0102]]>    </configKey>
+       <category name="Reliability"/>
+       <description>
+   <![CDATA[Used when the name is listed in the black list (unauthorized names).]]>    </description>
+     </rule>
+     <rule key="C0103" priority="INFO">
+       <name>
+   <![CDATA[Invalid name "%s" (should match %s)]]>    </name>
+   .......
+       <name>
+   <![CDATA[Format string dictionary key should be a string, not %s]]>    </name>
+       <configKey>
+   <![CDATA[W1300]]>    </configKey>
+       <category name="Reliability"/>
+       <description>
+   <![CDATA[Used when a format string that uses named conversion specifiers is used with a dictionary whose keys are not all strings.]]>    </description>
+     </rule>
+   </rules>
+

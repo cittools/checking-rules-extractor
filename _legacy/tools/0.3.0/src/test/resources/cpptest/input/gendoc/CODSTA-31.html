@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never use explicit type conversions (casts)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never use explicit type conversions (casts) [CODSTA-31-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Never use explicit type conversions (casts)."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule is limited to primitive types only.
+
+
+Exceptions:
+
+Explicit type conversions may be used to convert a pointer to a base class
+to a pointer of a derived class.
+Explicit type conversion must be used to convert an anonymous bit-stream
+to an object.
+Generally, explicit type conversions are needed for reading an external
+representation of an object.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves clarity and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    const int ci = 0;
+    int i;
+    i = (int) ci;    // Violation
+    i = (int) &amp;i;    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use casts.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 13 Type Conversions - Rule 43
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 183
+
+</PRE>
+</BODY>
+</HTML>

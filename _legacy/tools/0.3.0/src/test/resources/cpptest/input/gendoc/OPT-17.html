@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid inline constructors and destructors
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid inline constructors and destructors [OPT-17-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Functions which invoke other inline functions often become too complex for the
+compiler to be able to make them inline despite their apparent smallness.
+This problem is especially common with constructors and destructors.
+A constructor always invokes the constructors of its base classes and member 
+data before executing its own code.
+Always avoid inline constructors and destructors!"
+See also: OPT-16, OPT-18
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule disallows inlining for constructors, destructors.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This facilitates debugging and binary upgradeability, minimizes potential
+code bloat, and maximizes the chances of greater program speed."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class MyClass {
+public:
+    inline MyClass( ) {};                  // Violation
+    MyClass( const MyClass&amp; ) {};   // Violation
+    ~MyClass( ) {};                // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class MyClass {
+public:
+    MyClass( );                    // OK
+    MyClass( const MyClass&amp; );  // OK
+    ~MyClass( );                   // OK
+};
+
+MyClass::MyClass( ) {}
+MyClass::MyClass( const MyClass&amp; ) {}
+MyClass::~MyClass( ) {}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 5, Item 30
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison Wesley,
+   (C) 2005 Pearson Education, Inc.,
+   Chapter: "Classes and Functions: Implementation", Item 33
+
+3. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 7 Classes - 7.2 Inline Functions - Rec. 31
+
+</PRE>
+</BODY>
+</HTML>

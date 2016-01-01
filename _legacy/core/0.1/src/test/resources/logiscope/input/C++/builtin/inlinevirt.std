@@ -1,0 +1,18 @@
+.NAME Inline Virtual Functions
+
+.DESCRIPTION
+
+Definition:
+-----------
+Virtual functions shall not be declared inline.
+(This rule relates to Item 24 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Improves code efficiency.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Begin class, struct, union, enum, and typedef names with an uppercase letter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Begin class, struct, union, enum, and typedef names with an uppercase letter [NAMING-09-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Begin class, struct, union, enum, and typedef names 
+with an uppercase letter.
+See also: NAMING-10, NAMING-11, NAMING-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class myClass{}; // Violation
+struct myStruct{}; // Violation
+union myUnion{}; // Violation
+enum myEnum{ val1, val2 }; // Violation
+typedef int myInt; // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class MyClass{}; // OK
+struct MyStruct{}; // OK
+union MyUnion{}; // OK
+enum MyEnum{ val1, val2 }; // OK
+typedef int MyInt; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

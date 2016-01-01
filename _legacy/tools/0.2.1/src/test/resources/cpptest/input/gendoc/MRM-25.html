@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Store newed objects in smart pointers in standalone statements
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Store newed objects in smart pointers in standalone statements [MRM-25-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Store newed objects in smart pointers in standalone statements."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevention from subtle resource leaks when exceptions are thrown.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;boost/shared_ptr.hpp&gt;
+#include &lt;boost/tr1/memory.hpp&gt;
+
+class Widget {
+public:
+    Widget( ){}
+    ~Widget( ){}
+    void f( void );
+    int priority( void );
+    void processWidget( std::tr1::shared_ptr&lt;Widget&gt;pw, int priority );
+};
+
+void Widget::f( void ) {
+    processWidget(
+        std::tr1::shared_ptr&lt;Widget&gt;( new Widget ), priority( ) ); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;boost/shared_ptr.hpp&gt;
+#include &lt;boost/tr1/memory.hpp&gt;
+
+class Widget {
+public:
+    Widget( ){}
+    ~Widget( ){}
+    void f( void );
+    int priority( void );
+    void processWidget( std::tr1::shared_ptr&lt;Widget&gt;pw, int priority );
+};
+
+void Widget::f( void ) {
+    std::tr1::shared_ptr &lt;Widget&gt; pw( new Widget );
+    processWidget( pw,priority( ) );                     // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 3, Item 17
+
+</PRE>
+</BODY>
+</HTML>

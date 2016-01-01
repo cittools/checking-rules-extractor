@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid functions that modify global variables
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid functions that modify global variables [CODSTA-27-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule is purely informational and will report a message
+when function modifies global variables.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+In multithread environment using global
+variables makes code extremely error prone.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int theGlob;
+void foo( int iVar )
+{
+    theGlob = -1;       // Violation
+    if (iVar == 0 )
+	{
+        theGlob = 0;    // Violation
+    } else {
+        theGlob = 1;    // Violation 
+    }
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int iVar )
+{
+   static int theLocal;
+    theLocal = -1;       // OK
+    if (iVar == 0 )
+	{
+        theLocal = 0;    // OK
+    } else {
+        theLocal = 1;    // OK
+    }
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://charm.cs.uiuc.edu/manuals/html/tcharm/2_1.html">http://charm.cs.uiuc.edu/manuals/html/tcharm/2_1.html</A>
+
+</PRE>
+</BODY>
+</HTML>

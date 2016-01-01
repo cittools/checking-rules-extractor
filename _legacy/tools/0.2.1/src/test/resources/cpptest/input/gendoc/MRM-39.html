@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Provide error handling for file opening errors right next to the call to fopen
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Provide error handling for file opening errors right next to the call to fopen [MRM-39-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Provide error handling for file opening errors right next to the call to fopen.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents accessing a FILE pointer in case
+of IO error which will lead to a program crash.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+int foo(int c)
+{
+    FILE* data = fopen("data.txt", "r"); // Violation
+
+    do {
+        c = getc(data);
+        /* ... */
+    } while (c != EOF);
+
+    FILE* data2;
+    data2 = fopen("data2.txt", "r");    // Violation
+
+    do {
+        c = getc(data2);
+       /* ... */
+    } while (c != EOF);
+
+    if (!data2)
+    {
+        /* ... */
+        return 0;
+    }
+    return 1;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+int foo(int c) 
+{
+    FILE* data = fopen("data.txt", "r");   // OK
+
+    if (data) {
+        do {
+            c = getc(data);
+            /* ... */
+        } while (c != EOF);
+    } else {
+        printf( "File opening error" );
+        return 0;
+    }
+
+    FILE* data2;
+    data2 = fopen("data2.txt", "r");
+
+    if (!data2) {                           // OK
+        printf( "File opening error" );
+        return 0;
+    } else {
+        do {
+            c = getc(data2);
+            /* ... */
+        } while (c != EOF);
+    }	
+    return 1;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

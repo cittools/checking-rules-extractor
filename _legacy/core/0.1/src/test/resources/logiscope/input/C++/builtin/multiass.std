@@ -1,0 +1,37 @@
+.NAME No multiple assignment.
+
+.DESCRIPTION
+
+Definition:
+-----------
+Assignment operators ( = , += , -=, *=, /= , %= , >>= , <<=, &=, |=, ^= , ++ , -- )
+must not be used more than once in each statement (declarations are also checked).
+
+
+Justification:
+--------------
+Removes ambiguity about the evaluation order.
+
+Example:
+--------
+
+// do not write
+
+b = c = 5;
+a = (b++ *c) + 5;
+
+
+// write
+
+c = 5;
+b = c;
+
+b++;
+a = (b * c) + 5;
+
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

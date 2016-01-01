@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for dword pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for dword pointer, array, or reference types [NAMING-HN-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For unsigned long int pointer, array, or reference variables and parameters use
+"dw" prefix. For signed long int or long int pointer, array, or reference
+variables and parameters use "li" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long* g_plimyVar;                                   // Violation
+long* g_pMyVariable;                                // Violation
+static const long* g_spkMyVariable;                 // Violation
+class A {
+    long* m_pMyVariable;                            // Violation
+    static const long* m_spkMyVariable;             // Violation
+    void foo( long* pMyParam ) {                    // Violation
+        long* pMyVariable;                          // Violation
+        static const long* spkMyVariable;           // Violation
+    }
+};
+
+unsigned long* g_pdwmyVar2;                         // Violation
+unsigned long* g_pMyVariable2;                      // Violation
+static const unsigned long* g_spkMyVariable2;       // Violation
+class B {
+    unsigned long* m_pMyVariable;                   // Violation
+    static const unsigned long* m_spkMyVariable;    // Violation
+    void foo( unsigned long* pMyParam ) {           // Violation
+        unsigned long* pMyVariable;                 // Violation
+        static const unsigned long* spkMyVariable;  // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+long* g_pliMyVar;                                      // OK
+long* g_pliMyVariable;                                 // OK
+static const long* g_spkliMyVariable;                  // OK
+class A {
+    long* m_pliMyVariable;                             // OK
+    static const long* m_spkliMyVariable;              // OK
+    void foo( long* pliMyParam ) {                     // OK
+        long* pliMyVariable;                           // OK
+        static const long* spkliMyVariable;            // OK
+    }
+};
+
+unsigned long* g_pdwMyVar2;                            // OK
+unsigned long* g_pdwMyVariable2;                       // OK
+static const unsigned long* g_spkdwMyVariable2;        // OK
+class B {
+    unsigned long* m_pdwMyVariable;                    // OK
+    static const unsigned long* m_spkdwMyVariable;     // OK
+    void foo( unsigned long* pdwMyParam ) {            // OK
+        unsigned long* pdwMyVariable;                  // OK
+        static const unsigned long* spkdwMyVariable;   // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

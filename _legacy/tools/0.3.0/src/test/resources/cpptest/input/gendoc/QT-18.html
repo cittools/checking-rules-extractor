@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Non-const function should not be called on the Qt object
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Non-const function should not be called on the Qt object [QT-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The violation is reported when the data is pulled out of the object through
+a non-const function for use in a const expression. For example, the 
+QList::at(int) is a const function, whereas operator[] (list_obj[i]) is a
+non-const function. Since a non-const function is used the implicitly
+shared class has no option but to detach its data from the shared data as it
+doesn't know if the user will actually use the data reference to alter it;
+like in
+
+   list_obj[i] = 1234;    // Set new value
+   list_obj.at(i) = 1234; // Not possible, const T &amp; at (int i) const
+
+Note that this really depends on how clever the compiler is, as some compilers
+can understand that you meant the 
+    const T &amp; operator[] (int i) const
+in some cases. But generally it is strongly suggested that developers don't
+rely on this, since if the compiler does not understand this difference they
+will have a potential huge speed loss with too many detachments of the implicit
+data sharing. So, in the cases where the developer knows a const variable is
+what he wants he should use the const-only function
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Qt has many implicitly shared classes. These classes share their data
+(very little overhead), but will detach from one another, and do a deep copy
+(heavy, a "normal" copy and update of internal structures) when a non-const
+function is called on the object.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QList&gt;
+
+// Using the non-const operator[](int) function
+int main(int argc, char **argv)
+{
+    QList&lt;int&gt; list_obj;
+    list_obj &lt;&lt; 10 &lt;&lt; 100 &lt;&lt; 1000;
+    
+    QList&lt;int&gt; copy = list_obj; // Create a shared copy
+    for (int i = 0; i &lt; list_obj.size(); ++i)
+        printf("Index %d: %d\n", i, list_obj[i]); // Violation, detaches
+    
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QList&gt;
+
+// Using the const at(int) function
+int main(int argc, char **argv)
+{
+    QList&lt;int&gt; list_obj;
+    list_obj &lt;&lt; 10 &lt;&lt; 100 &lt;&lt; 1000;                   // OK
+    list_obj[1] = 20;                                // OK  
+    
+    QList&lt;int&gt; copy = list_obj; // Create a shared copy
+    for (int i = 0; i &lt; list_obj.size(); ++i)
+        printf("Index %d: %d\n", i, list_obj.at(i)); // OK
+    
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

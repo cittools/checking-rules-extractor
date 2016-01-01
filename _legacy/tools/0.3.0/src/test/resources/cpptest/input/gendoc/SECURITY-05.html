@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using functions printf/wprintf with only one variable parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using functions printf/wprintf with only one variable parameter [SECURITY-05-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects the use of the functions printf/wprintf with only one 
+variable parameter and no format specifiers.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents security attack using format strings. If a printf functions 
+is passed a variable without format specifiers, the variable can contain 
+a cleverly formatted string (including format characters %n, %x, and %s) 
+that can be used to execute malicious instructions or crash the application.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;wchar.h&gt;
+#include &lt;stdio.h&gt;
+
+void foo( ) {
+    char* caption = "caption";
+    wchar_t widechar = L'x';
+
+    printf( caption );          // Violation
+    wprintf( &amp;widechar );     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;wchar.h&gt;
+#include &lt;stdio.h&gt;
+
+void foo( ) { 
+    char* caption = "caption";
+    wchar_t wch = L'x';
+    int k = 7;
+
+    printf( "char: %s", caption );  // OK
+    printf( "int: %s", k );         // OK
+
+    wprintf( L"wide char:%ls", wch );// OK
+    wprintf( L"int: %d ", k );      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/control-formatting.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/control-formatting.html</A>
+
+</PRE>
+</BODY>
+</HTML>

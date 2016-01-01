@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The condition of an if-statement and the condition of an iteration-statement shall have type bool
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The condition of an if-statement and the condition of an iteration-statement shall have type bool [CODSTA-CPP-64-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If an expression with type other than bool is used in the condition
+of an if-statement or iteration statement, then its result will be
+implicitly converted to bool."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule does not report violations if the condition expression is a call
+to a conversion function that converts to a typedef with a name
+containing 'bool' that names a pointer to member.
+
+
+Exceptions:
+
+"A condition of the form type-specifier-seq declarator is not required
+to have type bool."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The condition expression shall contain an explicit test (yielding a result
+of type bool) in order to clarify the intentions of the developer."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int i;
+    if (i){} // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int i;
+    if (i != 0){} // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-0-13
+
+</PRE>
+</BODY>
+</HTML>

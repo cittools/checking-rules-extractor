@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The static storage class specifier shall be used in definitions and declarations of objects and functions that have internal linkage
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The static storage class specifier shall be used in definitions and declarations of objects and functions that have internal linkage [MISRA2004-8_11-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"It is good practice to apply the static keyword consistently to 
+all declarations of objects and functions with internal linkage."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves good programming style and readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* file.h */
+static int x;
+
+/* file.c */
+#include "file.h"
+extern int x;        /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* file.h */
+static int x;
+
+/* file.c */
+#include "file.h"
+static int x;         /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 8
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.15 Declarations and Definitions, AV Rule 138
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 3, Rule 3-3-2
+
+</PRE>
+</BODY>
+</HTML>

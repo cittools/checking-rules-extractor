@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid unnecessary explicit cast from derived to a base class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid unnecessary explicit cast from derived to a base class [OOP-20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid unnecessary explicit cast from derived to a base class.
+This rule checks if your code contains unnecessary casts. 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+It is unnecessary to explicitly upcast to a base class.
+Avoid unnecessary casts for legibility.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base { /* ... */ };
+class Derived : public Base { /* ... */ };
+void Func() {
+   Derived *d = new Derived();
+   Base *b = (Base *)d;		// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base { /* ... */ };
+class Derived : public Base { /* ... */ };
+void Func() {
+   Derived *d = new Derived();
+   Base *b = d;			// OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.23 Type Conversions, AV Rule 181
+
+</PRE>
+</BODY>
+</HTML>

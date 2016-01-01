@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Parameters and variables of class/parent classes/parent structs should have different name
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Parameters and variables of class/parent classes/parent structs should have different name [CODSTA-45-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule checks if parameters and variables of class/parent classes/
+/parent structs have the same name (case sensitive). 
+If so, then it reports violation message.
+See also: CODSTA-44
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and prevents writing ambiguous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    int member;
+    float var1;
+    float var2;
+    short var3;
+
+    void foo( double var3 ) {  // Violation
+        float member;    
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    int member;
+    float var1;
+    float var2;
+    short var3;
+
+    void foo( double var4 ) {   // OK
+        float member;    
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

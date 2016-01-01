@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The identifiers used in the declaration and definition of a function shall be identical
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The identifiers used in the declaration and definition of a function shall be identical [MISRA2004-16_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If identifiers are given for any of the parameters, then the identifiers used
+in the declaration and definition shall be identical.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and clarity of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int a, int b);  
+void foo(int x, int y ) {}  /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int a, int b);    /* OK */
+void foo(int a, int b) {}
+
+/* Examples of correct code */
+void foo1();               /* OK */
+void foo2(int  , int   );  /* OK */
+void foo2(int x, int y ) {}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 16
+
+2. Origin: Misra Guidelines - Rule 74
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-4-2
+
+</PRE>
+</BODY>
+</HTML>

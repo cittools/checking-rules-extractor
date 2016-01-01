@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The operands of a logical &amp;&amp; or || shall be primary-expressions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The operands of a logical &amp;&amp; or || shall be primary-expressions [MISRA2004-12_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+""Primary expressions" are defined in ISO 9899:1990, section 6.3.1. 
+Essentially they are either a single identifier, or a constant,
+or a parenthesised expression. The effect of this rule is to require
+that if an operand is other than a single identifier or constant then
+it must be parenthesised. Where an expression consists of either
+a sequence of only logical &amp;&amp; or a sequence of only logical ||,
+extra parentheses are not required"
+See also: MISRA2004-12_1_e, CODSTA-90
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Parentheses are important in this situation both for readability 
+of code and for ensuring that the behaviour is as the programmer intended." 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo( int x, int y, int z )
+{
+    if ( x || y &amp;&amp; z );         // Violation
+    if ( x &amp;&amp; !y );             // Violation
+    if ( foo( x, y, z ) &amp;&amp; x ); // Violation
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo( int x, int y, int z )
+{
+    if ( x || ( y &amp;&amp; z ) );         // OK
+    if ( x &amp;&amp; ( !y ) );             // OK
+    if ( ( foo( x, y, z ) ) &amp;&amp; x ); // OK
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. Misra Guidelines - Rule 34
+
+</PRE>
+</BODY>
+</HTML>

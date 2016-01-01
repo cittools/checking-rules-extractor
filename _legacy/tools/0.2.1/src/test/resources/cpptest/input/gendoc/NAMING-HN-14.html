@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for dword types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for dword types [NAMING-HN-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For unsigned long int variables and parameters use "dw" prefix.
+For signed long int or long int variables and parameters use "li" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long g_limyVar;                                 // Violation
+long g_MyVariable;                              // Violation
+static const long g_skMyVariable = 0;           // Violation
+class A {
+    long m_MyVariable;                          // Violation
+    static const long m_skMyVariable;           // Violation
+    void foo( long MyParam ) {                  // Violation
+        long MyVariable;                        // Violation
+        static const long skMyVariable = 0;     // Violation
+    }
+};
+
+unsigned long g_dwmyVar2;                                // Violation
+unsigned long g_MyVariable2;                             // Violation
+static const unsigned long g_skMyVariable2 = 0;          // Violation
+class B {
+    unsigned long m_MyVariable;                          // Violation
+    static const unsigned long m_skMyVariable;           // Violation
+    void foo( unsigned long MyParam ) {                  // Violation
+        unsigned long MyVariable;                        // Violation
+        static const unsigned long skMyVariable = 0;     // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+long g_liMyVar;                                 // OK
+long g_liMyVariable;                            // OK
+static const long g_skliMyVariable = 0;         // OK
+class A {
+    long m_liMyVariable;                        // OK
+    static const long m_skliMyVariable;         // OK
+    void foo( long liMyParam ) {                // OK
+        long liMyVariable;                      // OK
+        static const long skliMyVariable = 0;   // OK
+    }
+};
+
+unsigned long g_dwMyVar2;                                // OK
+unsigned long g_dwMyVariable2;                           // OK
+static const unsigned long g_skdwMyVariable2 = 0;        // OK
+class B {
+    unsigned long m_dwMyVariable;                        // OK
+    static const unsigned long m_skdwMyVariable;         // OK
+    void foo( unsigned long dwMyParam ) {                // OK
+        unsigned long dwMyVariable;                      // OK
+        static const unsigned long skdwMyVariable = 0;   // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

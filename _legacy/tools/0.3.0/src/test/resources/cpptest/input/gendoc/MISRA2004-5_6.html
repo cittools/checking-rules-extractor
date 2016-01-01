@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+No identifier in one name space should have the same spelling as an identifier in another name space, with the exception of structure and union member names
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+No identifier in one name space should have the same spelling as an identifier in another name space, with the exception of structure and union member names [MISRA2004-5_6-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"ISO C defines a number of different name spaces. It is technically
+possible to use the same name in separate name spaces to represent
+completely different items. However this practice is deprecated because
+of the confusion it can cause, and so names should not be reused, even
+in separate name spaces."
+There are four namespaces in the C Language
+1. Label names
+2. Tags of structure, unions and enumerations
+3. Members of structs and unions; each struct/union as a separate namespace
+4. All other identifiers; e.g. enum constants, variables, functions, typedefs
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The output message shows only the first place (line) where the same
+name is used in the other name space.
+
+
+Exceptions:
+
+"An exception to this rule is the naming of members of structures, 
+where members names may be reused within separate structures."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef struct MyStruct  // tags name space
+{
+  int Member;            // members name space
+} MyStruct;              // Violation - identifiers name space
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef struct MyStruct  // tags name space
+{
+  int Member;             // members name space
+} MyStructObj;            // OK - identifiers name space
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 5
+
+2. Origin: Misra Guidelines - Rule 12
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-10-6
+
+</PRE>
+</BODY>
+</HTML>

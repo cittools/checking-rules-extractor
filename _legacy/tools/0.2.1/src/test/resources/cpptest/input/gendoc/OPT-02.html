@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid unused local variables
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid unused local variables [OPT-02-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if all declared local variables are used.
+See also: OPT-06
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Objects can perform some actions in their constructors. Even if they are not
+used later they might have done their job during creation. This rule does not 
+consider such objects as "used" and will report a violation.
+If it is not desired to report a violation messages on local objects 
+rule "OPT-06" should be used instead of this rule.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Eliminating unused local variables increases efficiency and legibility.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Rule can also report false positive when a variable is used only within asm block
+and a file is compiled with gcc.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    void displBalance();
+};
+
+void foo( ) {
+    A a;        // Violation 
+}
+
+void func( ) {
+    int i = 0;  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    void displBalance( );
+};
+
+void foo( ) {
+    A a;
+    a.displBalance( );  // OK
+}
+
+void func( ) {
+    int i = 0;          // OK
+    i++;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-3
+
+</PRE>
+</BODY>
+</HTML>

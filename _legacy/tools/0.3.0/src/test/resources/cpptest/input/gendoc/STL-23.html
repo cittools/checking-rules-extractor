@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Follow remove-like algorithms by erase if you really want to remove something
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Follow remove-like algorithms by erase if you really want to remove something [STL-23-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Follow remove-like algorithms by erase if you really want to remove something.
+The only way to eliminate an element from a container is to invoke a member
+function on that container, and because remove cannot know the container
+holding the elements on which it is operating, it is not possible for remove to
+eliminate elements from a container."
+
+
+Exceptions:
+
+"In fact, remove and erase are so closely allied, the two are merged in the
+list member function remove. This is the only function in the STL named remove
+that eliminates elements from a container"
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and prevents memory leaks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+void foo( ) {
+    vector&lt;int&gt; coll;
+    for ( int i=0; i &lt; 10; i++ ) {
+        coll.push_back( i + 65 );
+    }
+    vector&lt;int&gt;::iterator pos;
+    pos = remove( coll.begin( ), coll.end( ), 5 ); // Violation no erase call
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+void foo( ) {
+    vector&lt;int&gt; coll;
+    for ( int i=0; i &lt; 10; i++ ) {
+        coll.push_back( i + 65 );
+    }
+    vector&lt;int&gt;::iterator pos;
+    pos = remove( coll.begin( ), coll.end( ), 5 );  // OK                      
+    coll.erase( pos, coll.end( ) );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+    Standard Template Library", Chapter 5, item 32
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "STL: Containers", Rule 82
+
+</PRE>
+</BODY>
+</HTML>

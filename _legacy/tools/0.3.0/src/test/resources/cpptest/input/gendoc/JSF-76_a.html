@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare an assignment operator for classes with dynamically allocated memory
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare an assignment operator for classes with dynamically allocated memory [JSF-76_a-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if a class, which uses 'new' to allocate its data member, or
+'delete' to deallocate its data member, has an explicitly defined canonical
+assignment operator. A canonical assignment operator returns a class reference
+type and takes a const reference of the type.
+"An assignment is not inherited like other operators. If an assignment operator
+is not explicitly defined, then one is automatically defined instead.
+If you perform an assignment 'b = a;' (where 'a' and 'b' are pointers) there is
+no client-defined operator= to call, so C++ generates and calls the default
+assignment operator instead.
+This default assignment operator performs memberwise assignment from the
+members of 'a' to the members of 'b', which for pointers is just a bitwise copy.
+There are at least two problems with this state of affairs.
+First, the memory that 'b' used to point to was never deleted;
+it is lost forever. This is a classic example of how a memory leak can arise.
+Second, both 'a' and 'b' now contain pointers to the same character string. 
+When one of them goes out of scope, its destructor will delete the memory
+still pointed to by the other."
+See also: CODSTA-CPP-02, CODSTA-CPP-21, CODSTA-CPP-24, MRM-04, MRM-38,
+MRM-40, MRM-47, OOP-27, OOP-30, OOP-34
+
+
+Exceptions:
+
+Rule does not report violation if there's an assignment operator in a base
+class which prevents implicitly declared assignment operator in this class
+from being used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Bit-wise copying is only performed for member data having primitive types.
+One consequence of this is that bit-wise copying is performed for member data
+having pointer types. If an object manages the allocation of the instance of
+an object pointed to by a pointer member, this will probably lead to problems:
+either by invoking the destructor for the managed object more than once or by
+attempting to use the deallocated object."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class MyClass { // Violation
+public:
+    MyClass( );
+    ~MyClass( ) { delete p; }
+private:
+    int *p;
+};
+
+MyClass::MyClass( ) {
+    p = new int;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class MyClass { // OK
+public:
+    MyClass( );
+    MyClass&amp; operator=( const MyClass&amp; );
+    ~MyClass( ) { delete p; }
+private:
+    int *p;
+};
+
+MyClass::MyClass( ) {
+    p = new int;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 7 Classes - 7.5 AssignmentOperators - Rule 27
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc.,
+   Chapter: "Constructors, Destructors, and Assignment Operators", Item 11
+
+3. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Construction, Destruction, and Copying", Rule 53
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 76
+
+</PRE>
+</BODY>
+</HTML>

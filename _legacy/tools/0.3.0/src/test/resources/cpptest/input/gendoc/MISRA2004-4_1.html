@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Only those escape sequences that are defined in the ISO C standard shall be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Only those escape sequences that are defined in the ISO C standard shall be used [MISRA2004-4_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Only those escape sequences that are defined in the ISO C standard
+shall be used.
+Section 5.2.2 of the ISO C standards defines 7 escape sequences which
+may be used in source code:
+1. \a (alert)
+2. \b (backspace)
+3. \f (form feed)
+4. \n (new line)
+5. \r (carriage return)
+6. \t (horizontal tab)
+7. \v (vertical tab)
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+void foo( ) {
+    printf("ABCD\u1111");     // Violation
+    printf("abcd\hgf");       // Violation
+    printf("\k");             // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use escape sequences not defined in the ISO C standard.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 4
+
+</PRE>
+</BODY>
+</HTML>

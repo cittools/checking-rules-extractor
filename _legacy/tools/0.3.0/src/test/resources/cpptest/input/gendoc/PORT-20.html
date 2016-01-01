@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not declare variables of long type directly
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not declare variables of long type directly [PORT-20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you avoid using long. 
+On win32/unix32/win64, long has 32-bit. On unix64, long has 64-bit. 
+Instead of long, use your own type or specific variable definition.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By following this rule, you can prevent data loss.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define ARCH32 true
+#ifndef __int3264
+#ifdef ARCH32
+#define __int3264 int // 32-bit type on win32 and unix32
+#else //ARCH64
+#ifdef win64 
+#define __int3264 __int64 // 64-bit type on win64
+#else //unix64
+#define __int3264 int64_t // 64-bit type on unix64
+#endif
+#endif
+#endif
+long lVal;        // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define ARCH32 true
+#ifndef __int3264
+#ifdef ARCH32
+#define __int3264 int // 32-bit type on win32 and unix32
+#else //ARCH64
+#ifdef win64 
+#define __int3264 __int64 // 64-bit type on win64
+#else //unix64
+#define __int3264 int64_t // 64-bit type on unix64
+#endif
+#endif
+#endif
+__int3264 newlVal; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

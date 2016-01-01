@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using remove and similar algorithms (i.e., remove_if and unique) on containers of dynamically allocated pointers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using remove and similar algorithms (i.e., remove_if and unique) on containers of dynamically allocated pointers [STL-24-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Be wary of remove-like algorithms on containers of pointers. This makes the
+resource leak especially obvious, and it should now be clear why you should
+try to avoid using remove and similar algorithms (i.e., remove_if and unique)
+on containers of dynamically allocated pointers. In many cases, you'll find
+that the partition algorithm is a reasonable alternative. If you can't avoid
+using remove on such containers, one way to eliminate this problem
+is to delete the pointers and set them to null prior to applying the erase-
+remove idiom, then eliminate all the null pointers in the container. If you're
+willing to replace the container of pointers with a container of smart pointers
+that perform reference counting, the remove-related difficulties wash away, and
+you can use the erase-remove idiom directly."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Be wary of remove-like algorithms on containers of pointers. Failure to heed
+this advice is just asking for resource leaks."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;functional&gt;
+
+using namespace std;
+
+class Widget{
+public:
+     bool isCertified();
+};
+
+void myFunction()
+{
+    vector&lt;Widget*&gt; v;
+    v.push_back(new Widget);
+    v.erase( remove_if(v.begin(), v.end(),                          // Violation
+                       not1(mem_fun(&amp;Widget::isCertified))),v.end());
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget{
+public:
+    bool isCertified();
+};
+
+void delAndNullifyUncertified(Widget*&amp; pWidget)
+{
+  if (!pWidget-&gt;isCertified()) { // delete the pointer
+    delete pWidget;            // and set it to null pWidget
+    pWidget = 0;
+  }
+}
+
+void myFunction()
+{
+  vector&lt;Widget*&gt; v;
+  v.push_back(new Widget);
+   
+  for_each(v.begin(), v.end(), delAndNullifyUncertified);
+  v.erase( remove(v.begin(), v.end(), static_cast&lt;Widget*&gt;(0)), v.end()); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 5, item 33
+
+</PRE>
+</BODY>
+</HTML>

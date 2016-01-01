@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not allocate memory and expect that someone else will deallocate it later
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not allocate memory and expect that someone else will deallocate it later [MRM-19-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If local memory in class is allocated via new it should be deallocated
+in destructor via delete.
+See also: MRM-20, MRM-18
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule helps to ensure that all allocated memory is being cleaned
+up properly.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+private:
+    int* var;
+public:
+    A( ) {
+        var = new int( );   // Violation
+    }
+    ~A( ) {}
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+private:
+    int* var;
+public:
+    A( ) {
+        var = new int( );   // OK
+    }
+    ~A( ) {
+        delete var;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+From: 16 Memory Allocation - Rec. 58
+
+</PRE>
+</BODY>
+</HTML>

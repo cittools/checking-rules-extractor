@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for byte pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for byte pointer, array, or reference types [NAMING-HN-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For unsigned char pointer, array, or reference variables and parameters use
+"by" or "y" prefix. For char or signed char pointer, array, or reference 
+variables and parameters use "c" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+char* g_pcmyVar;                            // Violation
+char* g_pMyVariable;                        // Violation
+static const char* g_spkMyVariable;         // Violation
+class A {
+    char* m_pMyVariable;                    // Violation
+    static const char* m_spkMyVariable;     // Violation
+    void foo( char* pMyParam ) {            // Violation
+        char* pMyVariable;                  // Violation
+        static const char* spkMyVariable;   // Violation
+    }
+};
+
+unsigned char* g_pbymyVar2;                          // Violation
+unsigned char* g_pMyVariable2;                       // Violation
+static const unsigned char* g_spkMyVariable2;        // Violation
+class B {
+    unsigned char* m_pMyVariable;                    // Violation
+    static const unsigned char* m_spkMyVariable;     // Violation
+    void foo( unsigned char* pMyParam ) {            // Violation
+        unsigned char* pMyVariable;                  // Violation
+        static const unsigned char* spkMyVariable;   // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+char* g_pcMyVar;                            // OK
+char* g_pcMyVariable;                       // OK
+static const char* g_spkcMyVariable;        // OK
+class A {
+    char* m_pcMyVariable;                   // OK
+    static const char* m_spkcMyVariable;    // OK
+    void foo( char* pcMyParam ) {           // OK
+        char* pcMyVariable;                 // OK
+        static const char* spkcMyVariable;  // OK
+    }
+};
+
+unsigned char* g_pbyMyVar2;                             // OK
+unsigned char* g_pbyMyVariable2;                        // OK
+static const unsigned char* g_spkbyMyVariable2;         // OK
+class B {
+    unsigned char* m_pbyMyVariable;                     // OK
+    static const unsigned char* m_spkbyMyVariable;      // OK
+    void foo( unsigned char* pbyMyParam ) {             // OK
+        unsigned char* pbyMyVariable;                   // OK
+        static const unsigned char* spkbyMyVariable;    // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using remove algorithm with list and standard associative containers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using remove algorithm with list and standard associative containers [STL-09-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Choose carefully among erasing options.
+If you have a contiguous-memory container (vector, deque, or string),
+the best approach is the erase-remove idiom:
+
+c.erase( remove(c.begin(), c.end(), 1963), c.end());
+
+This approach works for lists, too, but the list member function remove is more
+efficient: 
+
+c. remove(1963);
+
+When c is a standard associative container (i.e.. a set. multiset, map. 
+or multimap), the use of anything named remove is completely wrong. 
+Such containers have no member function named remove, and using the remove
+algorithm might overwrite container values, potentially corrupting the 
+container." Rule disallows usage of remove algorithm with list and standard 
+associative containers.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency of code amd prevents possibility of data corruption.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;algorithm&gt;
+#include &lt;list&gt;
+
+using namespace std;
+
+bool goo( int x );
+
+void foo( ) {
+    list&lt;int&gt; list_int;
+
+    list_int.erase( remove( list_int.begin( ),                     // Violation
+                            list_int.end( ), 1963 ), list_int.end( ) );      
+    list_int.erase( remove_if( list_int.begin( ),                  // Violation
+                               list_int.end( ),  goo ), list_int.end( ) );   
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;algorithm&gt;
+#include &lt;list&gt;
+
+using namespace std;
+
+bool goo( int x );
+
+void foo( ) {
+    list&lt;int&gt; list_int;
+
+    list_int.remove( 1963 );    // OK
+    list_int.remove_if( goo );  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 1, item 09
+
+</PRE>
+</BODY>
+</HTML>

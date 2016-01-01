@@ -1,0 +1,240 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Protect against SQL injection
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Protect against SQL injection [BD-SECURITY-TDSQL-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases of probable SQL injection when possibly tainted data reaches
+functions that execute or prepare SQL queries, retrieve connections, etc.
+
+When an application uses data provided by the user (or by some unverified data source)
+to construct SQL queries and does not verify/validate such data before its use,
+it is possible for an attacker to alter the SQL statements in a way that the developer
+did not intend. As a result, the attacker can take total control of the database or even
+execute commands on the system.
+
+The rule supports the following database APIs: ODBC, ADO, OLE DB.
+
+Data from the following data sources are considered tainted:
+
+   * Parameters of the main() function
+   * Network
+
+Additional sources of tainted data can be defined by parameterizing the rule.
+For details, see the PARAMETERS section.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+Enforces 'A2 - Injection Flaws', #2 from the OWASP Top 10 2007 list.
+
+If data can appear in an SQL query without being validated,
+a malicious user could take control of the database.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+
+This rule can be parameterized so that data from the following data sources are considered tainted
+(in addition to those previously listed in the DESCRIPTION section):
+
+   * Files
+   * Pipes
+   * Stream-oriented APIs (std::istream, CArchive and CFile from MFC)
+   * Low-level input (Windows API, POSIX)
+   * Console
+   * Environment variables
+
+The rule can be parameterized with a list of validating functions.
+Any validating function can be defined as:
+   * returning benign data, and/or;
+   * making its parameter(s) benign, and/or;
+   * making this-object benign.
+
+Validation functions allow this data to be safely passed
+to dangerous functions.
+
+Below is the description of columns which allow to define different aspects of
+functions in validating function table: 
+
+* The 'Enabled' column can be used to temporarily disable some of the defined functions
+  for BugDetective analysis.
+
+* The 'Fully qualified type name' column must be filled with the fully qualified name of the type
+  that declares the function. Use '*' if you want to describe function declared in any type
+  or namespace, or a global function declared outside of any type or namespace.
+
+* The 'Function name' column should contain name of the described function.
+
+* The '+ definitions in subclasses' column is used to indicate whether the current row will
+  apply to functions with the given in name defined in subclasses of the given class. Note that this
+  applies to both instance and non-instance functions.
+  
+Other columns allow to describe which of the data are affected by a given function:
+
+* The '"this" object is validated' column is used to specify that the function cleans object on which
+  it is called.
+
+* The 'returns validated data' column is used to specify that the function cleans its return value.
+
+* The 'Numbers of the parameters that are validated (1-based)' column is used to specify that
+  the function cleans some of its parameters. List parameters' indexes separated by comma
+  or use '*' to specify that all parameters are affected.
+
+Also, there is an option that determines whether numerical data should be considered tainted.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Consider an example where an application reads the user name and
+password from a file and then, for authentication purposes, tries to find that user
+information in a database. The code supporting this  might look as follows:
+
+#include &lt;sql.h&gt;
+#include &lt;stdio.h&gt;
+
+const int BUFFER_SIZE = 1000;
+
+const char* requestBeginning = "SELECT user_id, user_class, rights FROM users WHERE user_name = '";
+const char* requestPassword = "' and password = '";
+const char* requestEnding = "'";
+
+extern char* extractUsername(const char*);
+extern char* extractPassword(const char*);
+
+extern SQLHSTMT statementHandle;
+
+void handleRequest(FILE *file)
+{
+	char parametersString[BUFFER_SIZE];
+	fread(parametersString, 1, BUFFER_SIZE, file);
+    SQLCHAR request[BUFFER_SIZE];
+    strcpy(request, requestBeginning);
+    strcat(request, extractUsername(parametersString));
+    strcat(request, requestPassword);
+    strcat(request, extractPassword(parametersString));
+    strcat(request, requestEnding);
+	SQLExecDirect(statementHandle, request, strlen(request));
+}
+
+If the user enters the following string as both the user name and the password:
+
+' or ''='
+
+then the SQL statement will look like the following:
+
+SELECT user_id, user_class, rights FROM users WHERE user_name = '' or ''='' and password = '' or ''=''
+
+This will get all users' information, so the attacker will be authenticated as the first
+user in the users table -- even though he did not provide the necessary authorization
+information.
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+Using SQLPrepare() function and setting the data from the user via SQLBindParameter() function
+(instead of direct creation of textual query including the parameter values) ensures protection
+from SQL injection:
+
+#include &lt;sql.h&gt;
+#include &lt;sqltypes.h&gt;
+#include &lt;sqlext.h&gt;
+#include &lt;stdio.h&gt;
+
+const int BUFFER_SIZE = 1000;
+
+const char* requestString = "SELECT user_id, user_class, rights FROM users WHERE user_name = '?' and password = '?'";
+
+extern char* extractUsername(const char*);
+extern char* extractPassword(const char*);
+
+extern SQLHSTMT statementHandle;
+SQLINTEGER nameLen = SQL_NTS, passLen = SQL_NTS;
+
+
+void handleRequest(FILE *file)
+{
+	char parametersString[BUFFER_SIZE];
+	fread(parametersString, 1, BUFFER_SIZE, file);
+    
+	char *name = extractUsername(parametersString);
+    char *pass = extractPassword(parametersString);
+	
+	SQLBindParameter(statementHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 20, 0, name, 0, &amp;nameLen);
+	SQLBindParameter(statementHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 20, 0, pass, 0, &amp;passLen);
+	
+	SQLPrepare(statementHandle, requestString, SQL_NTS);
+	SQLExecute(statementHandle);
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+OWASP Top 10 2007 (A2 - Injection Flaws):
+<A HREF="http://www.owasp.org/index.php/Top_10_2007">http://www.owasp.org/index.php/Top_10_2007</A>
+
+Web Application Security Consortium:
+<A HREF="http://www.webappsec.org/projects/threat/classes/sql_injection.shtml">http://www.webappsec.org/projects/threat/classes/sql_injection.shtml</A>
+
+</PRE>
+</BODY>
+</HTML>

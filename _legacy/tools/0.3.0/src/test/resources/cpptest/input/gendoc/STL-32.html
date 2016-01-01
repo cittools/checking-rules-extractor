@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Make sure less&lt;T&gt; means operator&lt;
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Make sure less&lt;T&gt; means operator&lt; [STL-32-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"C++ programmers can be forgiven certain assumptions. (...) they assume that
+using less is tantamount to using operator&lt;. operator&lt; is more than just the
+default way to implement less, it's what programmers expect less to do. Having
+less do something other than call operator&lt; is a gratuitous violation of
+programmers' expectations. You shouldn't do it. If you use less (explicitly
+or implicitly), make sure it means operator&lt;. If you want to sort objects using
+some other criterion, create a special functor class that's not called less."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Having less do something other than call operator&lt; is a gratuitous violation
+of programmers' expectations. It runs contrary to what has been called "the
+principle of least astonishment." It's callous. It's mean. It's bad.(...)
+Don't mislead all those programmers by playing games with the definition of
+less."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget {
+public:
+  
+    size_t weight() const;
+    size_t maxSpeed() const;
+};
+
+bool operator&lt;(const Widget&amp; lhs, const Widget&amp; rhs)
+{
+    return lhs.weight() &lt; rhs.weight();
+}
+
+template&lt;&gt; 
+struct std::less&lt;Widget&gt;:                                // Violation
+public 
+std::binary_function&lt; Widget, Widget, bool&gt; 
+{
+    bool operator()(const Widget&amp; lhs, const Widget&amp; rhs) const  
+    {
+        return lhs.maxSpeed() &lt; rhs.maxSpeed();
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget {
+public:
+  
+    size_t weight() const;
+    size_t maxSpeed() const;
+};
+
+bool operator&lt;(const Widget&amp; lhs, const Widget&amp; rhs)
+{
+    return lhs.weight() &lt; rhs.weight();
+}
+
+struct maxSpeedCompare:                                  // OK
+public binary_function&lt;Widget, Widget, bool&gt; {
+    bool operator()(const Widget&amp; lhs, const Widget&amp; rhs) const
+    {
+        return lhs.maxSpeed() &lt; rhs.maxSpeed();
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 6, item 42
+
+</PRE>
+</BODY>
+</HTML>

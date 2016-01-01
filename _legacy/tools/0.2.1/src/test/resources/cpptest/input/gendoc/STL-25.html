@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If you pass a sorted range to an algorithm that also takes a comparison function, be sure that the comparison function you pass behaves the same as the one you used to sort the range
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If you pass a sorted range to an algorithm that also takes a comparison function, be sure that the comparison function you pass behaves the same as the one you used to sort the range [STL-25-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"(...) the most common is that some algorithms require ranges of sorted values.
+It's important that you adhere to this requirement whenever it applies,
+because violating it leads not to compiler diagnostics, but to undefined
+runtime behavior. (...) list of the algorithms that require the data on which
+they operate to be sorted:
+binary_search, lower_bound, upper_bound, equal_range, set_union,
+set_intersection, set_difference, set_symmetric_difference, 
+merge inplace_merge, includes
+
+With so many different ways to sort things, it's critical that you give the STL
+consistent sorting related information to work with. If you pass a sorted range
+to an algorithm that also takes a comparison function, be sure that the 
+comparison function you pass behaves the same as the one you used to sort the
+range."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The eleven algorithms that require sorted ranges do so in order to offer
+greater efficiency than would otherwise be possible. As long as you remember
+to pass them only sorted ranges, and as long as you make sure that the
+comparison function used by the algorithms is consistent with the one used to
+do the sorting, you'll revel in trouble-free search, set, and merge operations,
+plus you'll find that unique and unique_copy eliminate all duplicate values,
+as you almost certainly want them to."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void myFunction()
+{
+    vector&lt;int&gt; v;
+    sort(v.begin(), v.end(), greater&lt;int&gt;());
+    bool a3exists = binary_search(v.begin(),v.end(),3);           // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void myFunction()
+{
+    vector&lt;int&gt; v;
+    sort(v.begin(), v.end(), greater&lt;int&gt;());
+    bool a3exists = binary_search(v.begin(),v.end(),3, greater&lt;int&gt;()); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 5, item 34
+
+</PRE>
+</BODY>
+</HTML>

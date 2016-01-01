@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider overloading to avoid implicit type conversions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider overloading to avoid implicit type conversions [OPT-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Do not multiply objects beyond necessity (Occam's Razor): Implicit type 
+conversions provide syntactic convenience (but see Item 40). But when the work 
+of creating temporary objects is unnecessary and optimization is appropriate 
+(see Item 8), you can provide overloaded functions with signatures that match 
+common argument types exactly and won't cause conversions."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents from creating temporary objects and improve optimization of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A(int);                 // Violation
+    bool operator==(A);
+};
+
+class C;
+class B {
+public:
+    B(C);                   // Violation
+    bool operator==(B);
+};
+
+class C {
+public:
+    bool operator==(B);
+};
+
+class AR {
+public:
+    AR(int&amp;);               // Violation
+    bool operator==(AR&amp;);
+};
+
+class CR;
+class BR {
+public:
+    BR(CR&amp;);                // Violation
+    bool operator==(BR&amp;);
+};
+
+class CR {
+public:
+    bool operator==(BR&amp;);
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A(int);                 // OK
+    bool operator==(A);
+    bool operator==(int);
+};
+bool operator==(int, A);
+
+class C;
+class B {
+public:
+    B(C);                   // OK
+    bool operator==(B);
+    bool operator==(C);
+};
+
+class C {
+public:
+    bool operator==(B);
+};
+
+class AR {
+public:
+    AR(int&amp;);               // OK
+    bool operator==(AR&amp;);
+    bool operator==(int&amp;);
+};
+bool operator==(int&amp;, AR&amp;);
+
+class CR;
+class BR {
+public:
+    BR(CR&amp;);                // OK
+    bool operator==(BR&amp;);
+    bool operator==(CR&amp;);
+};
+
+class CR {
+public:
+    bool operator==(BR&amp;);
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Functions and Operators", Rule 29
+
+</PRE>
+</BODY>
+</HTML>

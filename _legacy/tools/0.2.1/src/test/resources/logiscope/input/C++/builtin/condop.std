@@ -1,0 +1,13 @@
+.NAME Ternary ?: operator
+
+.DESCRIPTION
+
+Definition:
+-----------
+The conditional operator ? ... : ... must not be used.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

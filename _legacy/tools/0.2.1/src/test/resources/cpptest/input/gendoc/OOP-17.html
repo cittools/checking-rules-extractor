@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Write a using declaration to redeclare overloaded functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Write a using declaration to redeclare overloaded functions [OOP-17-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Beware of inadvertently hiding overloads in the base class.
+If the base class's overloads should be visible, write a using
+declaration to redeclare them in the derived class"
+See also: OOP-15, TEMPL-06
+
+
+Exceptions:
+
+Rule checks the nearest base classes.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents hiding overloads in base function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public: 
+    virtual void foo( float x );
+    virtual void foo( float x, float y );
+};
+
+class B : public A {    // Violation
+public:
+    void foo( float x );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public: 
+    virtual void foo( float x );
+    virtual void foo( float x, float y );
+};
+
+class B : public A {    // OK
+public:
+    void foo( float x );
+    using A::foo;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Class Design and Inheritance", Rule 38
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 6, Item 33
+
+</PRE>
+</BODY>
+</HTML>

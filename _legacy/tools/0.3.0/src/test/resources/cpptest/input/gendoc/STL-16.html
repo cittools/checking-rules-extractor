@@ -1,0 +1,124 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+For associative containers never use comparison function returning true for equal values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+For associative containers never use comparison function returning true for equal values [STL-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Create a set where less_equal is the comparison type, then insert 10 into the
+set:
+set&lt;int, less_equal&lt;int&gt; &gt; s;
+s.insert(10); 
+s.insert(10); // Now try inserting 10 again:
+
+For this call to insert, the set has to figure out whether 10 is already
+present. To make it easier to understand what happens when the set does this,
+we'll call the 10 that was initially inserted 10A and the 10 that we're trying
+to insert 10B. The set runs through its internal data structures looking for
+the place to insert 10B. It ultimately has to check 10B to see if it's the same
+as 10A. The definition of "the same" for associative containers is equivalence,
+so the set tests to see whether 10B is equivalent to 10A. When performing this
+test, it naturally uses the set's comparison function. In this example, that's
+operator&lt;=, because we specified less_equal as the set's comparison function,
+and less_equal means operators. The set thus checks to see whether this 
+expression is true:
+
+!(10A&lt;= 10B)&amp;&amp;!(10B&lt;= 10A) // test 10A and 10B for equivalence
+
+Well, 10A and 10B are both 10, so it's clearly true that 10A &lt;= 10B. Equally
+clearly, 10B &lt;= 10A. The above expression thus simplifies to !(true)&amp;&amp;!(true)
+and that simplifies to false &amp;&amp; false which is simply false. That is, the set
+concludes that 10A and 10B are not equivalent, hence not the same, and it thus
+goes about inserting 10B into the container alongside 10A. Technically, this
+action yields undefined behavior, but the nearly universal outcome is that the
+set ends up with two copies of the value 10, and that means it's not a set any
+longer."
+See also: STL-17
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"By using less_equal as our comparison type, we've corrupted the container!
+Furthermore, any comparison function where equal values return true will do
+the same thing. Equal values are, by definition, not equivalent!"
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;set&gt;
+#include &lt;functional&gt;
+using namespace std;
+
+void myFunction()
+{
+    set&lt; int, less_equal&lt;int&gt; &gt; setInt;  // Violation
+    setInt.insert(1);
+    setInt.insert(10);
+    setInt.insert(10);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;set&gt;
+#include &lt;functional&gt;
+using namespace std;
+
+void myFunction()
+{
+    set&lt; int, less&lt;int&gt; &gt; setInt;        // OK
+    setInt.insert(1);
+    setInt.insert(10);
+    setInt.insert(10);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 3, item 21
+
+</PRE>
+</BODY>
+</HTML>

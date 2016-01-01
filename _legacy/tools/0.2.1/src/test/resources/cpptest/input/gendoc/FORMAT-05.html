@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The length of a macro should not exceed 10 lines
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The length of a macro should not exceed 10 lines [FORMAT-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether the length of a macro exceeds 10 lines. 
+Macros over 10 lines are hard to read.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// Violation
+#define SUM(\
+    PARAMETER_1,\
+    PARAMETER_2,\
+    PARAMETER_3,\
+    PARAMETER_4)\
+    (\
+    PARAMETER_1+\
+    PARAMETER_2+\
+    PARAMETER_3+\
+    PARAMETER_4\
+    )
+
+void main()
+{
+   int val = SUM(1,1,1,1);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// OK
+#define SUM( PARAMETER_1, PARAMETER_2, PARAMETER_3, PARAMETER_4)\
+    (\
+    PARAMETER_1 + PARAMETER_2 + PARAMETER_3 + PARAMETER_4\
+    )
+
+void main()
+{
+   int val = SUM(1,1,1,1);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

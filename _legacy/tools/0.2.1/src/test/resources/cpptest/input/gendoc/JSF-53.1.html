@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The following character sequences shall not appear in header file names: ', \, /*, //, or "
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The following character sequences shall not appear in header file names: ', \, /*, //, or " [JSF-53.1-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The following character sequences shall not appear in header file
+names: ', \, /*, //, or ".
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If any of the character sequences ', \, /*, //, or " appears in a
+header file name (i.e. &lt;h-char-sequence&gt;), the resulting behavior is
+undefined.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include "foo's.h" // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;foo_s.h&gt; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.9 Style, AV Rule 53.1
+
+</PRE>
+</BODY>
+</HTML>

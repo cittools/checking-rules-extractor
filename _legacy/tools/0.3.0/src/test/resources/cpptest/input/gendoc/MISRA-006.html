@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Values of character types shall be restricted to a defined and documented subset of ISO 10646-1
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Values of character types shall be restricted to a defined and documented subset of ISO 10646-1 [MISRA-006-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The chosen implementation of C shall conform to a subset of 
+ISO 10646-1, and the chosen subset shall be documented."
+Explicitly specified numeric value of character may not conform to
+chosen subset of ISO 10646-1.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Values of character types are defined and documented as subset of ISO 10646-1.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    const char * s[] = {"a",
+                        "\012" /* Violation */
+    };
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Define character types as subset of ISO 10646-1.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 006
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.4 Environment, AV Rule 10
+
+</PRE>
+</BODY>
+</HTML>

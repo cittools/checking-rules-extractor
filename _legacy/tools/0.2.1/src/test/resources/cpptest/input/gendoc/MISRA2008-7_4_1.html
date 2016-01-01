@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All usage of assembler shall be documented
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All usage of assembler shall be documented [MISRA2008-7_4_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"All usage of assembler shall be documented. Assembly language code
+is implementation-defined and therefore is not portable."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule assumes that the usage of assembler is documented if there is
+a comment in the same line as 'asm' instruction or in line directly
+before 'asm' instruction.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// Violation in line with 'asm' instruction
+void foo( void )
+{
+   asm ( "NOP" );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( void )
+{
+   // OK - comment before 'asm' instruction
+   asm ( "NOP" );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 7, Rule 7-4-1
+
+</PRE>
+</BODY>
+</HTML>

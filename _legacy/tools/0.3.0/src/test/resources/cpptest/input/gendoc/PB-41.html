@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An identifier with array type passed as a function argument shall not decay to a pointer
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An identifier with array type passed as a function argument shall not decay to a pointer [PB-41-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When a variable with array type decays to a pointer, its bounds are lost."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"If a design requires arrays of different lengths, then a class should
+be used to encapsulate the array objects and so ensure that the dimensionality
+is maintained."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+
+void f1( int32_t p[ 10 ] );
+void f2( int32_t *p );
+
+void b ()
+{
+    int32_t a[ 10 ];
+   
+    f1( a ); // Violation
+    f2( a ); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+
+void f1( int32_t ( &amp;p )[ 10 ] );
+
+void b ()
+{
+    int32_t a[ 10 ];
+    f1( a );          // OK 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-2-12
+
+</PRE>
+</BODY>
+</HTML>

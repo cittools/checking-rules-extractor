@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Physical lines should be less than eighty characters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Physical lines should be less than eighty characters [FORMAT-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that physical lines are less than eighty characters. This rule
+promotes readability across various editors. Additionally, some printers will
+not print columns greater than 80 columns. Tab is counted as one character.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+const int MAXIMUM_LIMIT = 100;
+
+void foo()
+{
+   int someLocalVariableHoldingTheLimit = (MAXIMUM_LIMIT * 10) - (MAXIMUM_LIMIT/2); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const int MAXIMUM_LIMIT = 100;
+
+void foo()
+{
+   int someLocalVariableHoldingTheLimit = (MAXIMUM_LIMIT * 10) -
+                                          (MAXIMUM_LIMIT/2); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

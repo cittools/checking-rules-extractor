@@ -1,0 +1,22 @@
+.NAME Header module content
+
+.DESCRIPTION
+
+Definition:
+-----------
+The header files may not contain some of the language statements (data 
+and function definitions).
+The forbidden language items are function definitions (func-stat-def, 
+func-glob-def) 
+and data definitions (var-stat, var-glob).
+
+Parameters:
+-----------
+A string representing the types of modules (metric type) that should be 
+considered as header files.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

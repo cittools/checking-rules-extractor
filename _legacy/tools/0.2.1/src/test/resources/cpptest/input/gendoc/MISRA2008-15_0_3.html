@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Control shall not be transferred into a try or catch block using a goto or a switch statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Control shall not be transferred into a try or catch block using a goto or a switch statement [MISRA2008-15_0_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A program is ill-formed if control is transferred into a try or catch block
+using a goto or switch statement; however, not all compilers issue
+a diagnostic message."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule detects errors not reported by all compilers
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* The code is compilable with MSVC 6.0 */
+class Exception{};
+void f ( int i )
+{
+    if ( 10 == i )
+    {
+        goto Label_10;
+    }
+    switch ( i )
+    {
+        case 1:
+            try
+            {
+                Label_10: // Violation
+                case 2:   // Violation
+                    break;
+            }
+            catch ( Exception e )
+            {
+            }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* The example of correct code */
+class Exception{};
+void f ( int i )
+{
+    if ( 10 == i )
+    {
+        goto Label_10;
+    }
+    switch ( i )
+    {
+        case 1:   // OK
+            try
+            {
+                  // ... 
+            }
+            catch ( Exception e )
+            {
+            }
+        case 2:   // OK
+            break;
+    }
+    Label_10:     // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-0-3
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for void pointer types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for void pointer types [NAMING-HN-42-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For void pointer variables and parameters use "v" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void* g_pvmy;                                     // Violation
+void* g_pMyVariable;                              // Violation
+static const void* g_skpMyVariable;               // Violation
+class A {
+    void* m_pMyVariable;                          // Violation
+    static const void* m_skpMyVariable;           // Violation
+    void foo( void* pMyParam ) {                  // Violation
+        void* pMyVariable;                        // Violation
+        static const void* skpMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void* g_pvMyV;                                    // OK
+void* g_pvMyVariable;                             // OK
+static const void* g_skpvMyVariable;              // OK
+class A {
+    void* m_pvMyVariable;                         // OK
+    static const void* m_skpvMyVariable;          // OK
+    void foo( void* pvMyParam ) {                 // OK
+        void* pvMyVariable;                       // OK
+        static const void* skpvMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

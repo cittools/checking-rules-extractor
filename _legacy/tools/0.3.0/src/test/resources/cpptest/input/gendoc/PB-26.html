@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Public and protected methods should not be invoked by class constructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Public and protected methods should not be invoked by class constructor [PB-26-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The intent of this rule is to prevent an object from being used before it is in
+a fully initialized state. This may occur when a class constructor invokes
+a public or protected method that requires the object to be fully
+initialized as a pre-condition of method invocation.
+Rule reports a violation message if class constructor invokes public or
+protected method.
+See also: OOP-16, INIT-06
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Public (and in some cases protected) methods assume object initialization
+and class invariants have been established prior to invocation. Thus,
+invocation of such methods during object construction risks the use of
+uninitialized or invalid data since class invariants can not be guaranteed
+before an object is fully constructed.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+  public:
+    A();
+    void foo();
+  private:
+    int obj1;
+};
+
+
+A::A()
+{
+  foo();    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not call public/protected methods from constructor.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.10 Classes, AV Rule 71
+
+</PRE>
+</BODY>
+</HTML>

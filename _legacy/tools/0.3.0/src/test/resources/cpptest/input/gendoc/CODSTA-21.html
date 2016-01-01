@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+When using enum, the values of each member should be explicitly declared
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+When using enum, the values of each member should be explicitly declared [CODSTA-21-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+When using enum, the values of each member should be explicitly declared.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Explicit declarations of each member’s values is valuable documentation
+when using an emulator, logic analyzer or other debugging device.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum my_enum1 
+{
+    a,      // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+enum my_enum2
+{
+    a = 0  // OK       
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards G-15
+
+</PRE>
+</BODY>
+</HTML>

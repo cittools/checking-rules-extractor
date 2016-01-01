@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Follow the Cyclomatic Complexity limit of 10
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Follow the Cyclomatic Complexity limit of 10 [METRICS-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule identifies methods that do not satisfy the user-defined requirement
+for Cyclomatic Complexity.
+
+Cyclomatic Complexity is calculated according to the formula:
+CC = Number of decisions + 1
+By decision we mean every occurrence of:
+-'if'
+-'for'
+-'while'
+-'do-while'
+-'case'
+-'catch'
+-conditional expression 'a?b:c'
+-logical operator '&amp;&amp;' and '||'
+An error is reported if a function have a Cyclomatic Complexity higher than 10.
+See also: METRICS-28, METRICS-29, METRICS-33, METRICS-34, METRICS-35
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+To change the default limit of the Cyclomatic Complexity modify the main
+"Count" expression of the rule (Collector A) from "$$ &gt; 10" to "$$ &gt; N"
+using desired threshold value for N. Rule's header should be also changed
+accordingly.
+
+To ignore switch statements in the computation of the Cyclomatic Complexity,
+modify the "Count" expression for the cases (Collector C) from "$$ &gt; 0" 
+to "$$ == 0".
+
+To ignore switch statements having more than N cases in the computation
+of the Cyclomatic Complexity, modify the "Count" expression for the cases
+(Collector C) from "$$ &gt; 0" to "$$ &lt;= N" using desired threshold value for N.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Studies have found that methods with high Cyclomatic Complexity are error-prone.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int a, int b) // Violation - CC value: 11
+{
+    switch (a)
+    {
+        case 1:        // 1
+            break;        
+        case 2:        // 2
+            break;
+        case 3:        // 3
+            break;
+        default:      
+            break;
+    }
+    if(a||b)           // 4, 5
+    {
+    }
+    if((a||b)&amp;&amp;(a&amp;&amp;b)) // 6, 7, 8, 9
+    {
+    }
+    do                 // 10
+    {
+    }while(0);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Keep a Cyclomatic Complexity value on the level lower than 10.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+McCabe, T., "A Complexity Measure," IEEE Transactions on Software
+Engineering, December 1976.
+
+HIS Source Code Metriken, version 1.3.1
+Metrik "v(G)"
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A base class shall not be both virtual and non-virtual in the same hierarchy
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A base class shall not be both virtual and non-virtual in the same hierarchy [JSF-89-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A base class shall not be both virtual and non-virtual
+in the same hierarchy.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Hierarchy becomes easier to comprehend and use.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {};
+class B : virtual A {};
+class C : B, A {};           // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {};
+class B : virtual A {};
+class C : B, virtual A {};   // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 89 
+
+2. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 10, Rule 10-1-3
+
+</PRE>
+</BODY>
+</HTML>

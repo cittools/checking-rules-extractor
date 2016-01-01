@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A project shall not contain infeasible paths
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A project shall not contain infeasible paths [MISRA2008-0_1_2_y-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Boolean operations whose results are invariant shall not be permitted."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"If a Boolean operator yields a result that can be proven to be always "true"
+or always "false", it is highly likely that there is a programming error."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void myFunctionEnum(){
+    
+  	enum ec1 {BLACK, WHITE, GREY, PINK = 15} col1;
+
+ 	if(15 &lt; col1);  // Violation
+	if(16 &lt; col1);  // Violation 
+	if(0 &lt;= col1);  // Violation
+	if(16 &lt;= col1); // Violation
+	if(0 &gt; col1);   // Violation
+	if(16 &gt; col1);  // Violation 
+ 	if(15 &gt;= col1); // Violation
+	if(16 &gt;= col1); // Violation 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void myFunctionEnum(){
+    
+	enum ec1 {BLACK, WHITE, GREY, PINK = 15} col1;
+
+	if(0 &lt; col1);   // OK
+	if(1 &lt; col1);   // OK
+	if(1 &lt;= col1);  // OK
+ 	if(15 &lt;= col1); // OK
+	if(1 &gt; col1);   // OK
+ 	if(15 &gt; col1);  // OK
+	if(0 &gt;= col1);  // OK
+	if(1 &gt;= col1);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 13
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-2
+
+</PRE>
+</BODY>
+</HTML>

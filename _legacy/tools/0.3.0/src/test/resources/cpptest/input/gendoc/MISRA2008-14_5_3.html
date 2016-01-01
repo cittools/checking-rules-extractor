@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A copy assignment operator shall be declared when there is a template assignment operator with a parameter that is a generic parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A copy assignment operator shall be declared when there is a template assignment operator with a parameter that is a generic parameter [MISRA2008-14_5_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Contrary to possible developer expectations, a template assignment
+operator will not suppress the compiler generated copy assignment operator."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+A template type parameter T is a generic parameter if, in the function
+declaration, it has the (possibly cv-qualified) form T &amp;[opt].
+A user-declared copy assignment operator X::operator= is a non-static
+non-template member function of class X with exactly one parameter
+of type X, X&amp;, const X&amp;, volatile X&amp; or const volatile X&amp;.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents incorrect copy semantics for members requiring deep copies.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef signed int int32_t;
+class A       // Violation
+{
+    public:
+        template &lt;typename T&gt;
+        T &amp; operator= ( T const &amp; rhs )
+        {
+            if ( this != &amp;rhs ) {
+                delete i;
+                i = new int32_t; 
+                *i = *rhs.i;
+            }
+            return *this;
+         }
+    private:
+        int32_t * i;
+};
+void f ( A const &amp; a1, A &amp; a2 )
+{
+    a2 = a1;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef signed int int32_t;
+class A     // OK
+{
+    public:
+        A &amp; operator= ( A const &amp; rhs )
+        {
+            i = rhs.i;
+            return *this; 
+        }
+        template &lt;typename T&gt;
+        T &amp; operator= ( T const &amp; rhs )
+        {
+            if ( this != &amp;rhs ) {
+                delete i;
+                i = new int32_t; 
+                *i = *rhs.i;
+            }
+            return *this;
+         }
+    private:
+        int32_t * i;
+};
+void f ( A const &amp; a1, A &amp; a2 )
+{
+    a2 = a1;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 14, Rule 14-5-3
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Coding Conventions for C++
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+CODSTA-CPP
+</STRONG>
+<PRE>
+Coding Conventions for C++
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="CODSTA-CPP-01.html">Prefer iostream.h to stdio.h [CODSTA-CPP-01-5]</a></code><br>
+<code><a href="CODSTA-CPP-02.html">Have assignment operator returns a reference to *this; make assignment operator's return type a non-const reference to it's class' type [CODSTA-CPP-02-3]</a></code><br>
+<code><a href="CODSTA-CPP-03.html">Bitwise operators, comparison operators, logical operators, comma operator should be const [CODSTA-CPP-03-3]</a></code><br>
+<code><a href="CODSTA-CPP-04.html">Constructors allowing for conversion should be made explicit [CODSTA-CPP-04-1]</a></code><br>
+<code><a href="CODSTA-CPP-05.html">Do not use user-defined conversion functions [CODSTA-CPP-05-1]</a></code><br>
+<code><a href="CODSTA-CPP-06.html">Avoid returning handles to class data from member functions [CODSTA-CPP-06-3]</a></code><br>
+<code><a href="CODSTA-CPP-07.html">Postfix increment and decrement should be implemented in terms of their prefix counterparts [CODSTA-CPP-07-3]</a></code><br>
+<code><a href="CODSTA-CPP-08.html">Avoid overloading &amp;&amp;, || or , (comma) [CODSTA-CPP-08-3]</a></code><br>
+<code><a href="CODSTA-CPP-09.html">Avoid using reinterpret_cast [CODSTA-CPP-09-3]</a></code><br>
+<code><a href="CODSTA-CPP-10.html">Do not define structs that contain member functions [CODSTA-CPP-10-3]</a></code><br>
+<code><a href="CODSTA-CPP-11.html">Prefer C++-style casts [CODSTA-CPP-11-3]</a></code><br>
+<code><a href="CODSTA-CPP-12.html">Put classes that are used as base classes and classes that are used as member variables into separate include files [CODSTA-CPP-12-3]</a></code><br>
+<code><a href="CODSTA-CPP-13.html">Put classes that are used as function return type into separate include files [CODSTA-CPP-13-3]</a></code><br>
+<code><a href="CODSTA-CPP-14.html">Put classes that are used as argument types in function prototypes into separate include files [CODSTA-CPP-14-3]</a></code><br>
+<code><a href="CODSTA-CPP-15.html">Put functions that are used in the body of inline member function into separate include file [CODSTA-CPP-15-3]</a></code><br>
+<code><a href="CODSTA-CPP-16.html">When two operators are opposites (such as == and !=), it is appropriate to define both [CODSTA-CPP-16-3]</a></code><br>
+<code><a href="CODSTA-CPP-17.html">Do not use the 'struct' keyword to declare a variable in C++ [CODSTA-CPP-17-3]</a></code><br>
+<code><a href="CODSTA-CPP-18.html">Encapsulate global variables and constants, enumerated types, and typedefs in a class [CODSTA-CPP-18-5]</a></code><br>
+<code><a href="CODSTA-CPP-19.html">Declare at least one constructor to prevent the compiler from doing so [CODSTA-CPP-19-2]</a></code><br>
+<code><a href="CODSTA-CPP-20.html">If you'd like to support mixed-mode operations make operators a non-member functions [CODSTA-CPP-20-3]</a></code><br>
+<code><a href="CODSTA-CPP-21.html">Assignment operator must return const reference [CODSTA-CPP-21-5]</a></code><br>
+<code><a href="CODSTA-CPP-22.html">Prefer non-member non-friend functions to member functions [CODSTA-CPP-22-3]</a></code><br>
+<code><a href="CODSTA-CPP-23.html">Whenever a global function  is  referenced, use the :: operator [CODSTA-CPP-23-5]</a></code><br>
+<code><a href="CODSTA-CPP-24.html">Avoid making any assignment operator virtual. Do not return const T&amp; from assignment operator [CODSTA-CPP-24-3]</a></code><br>
+<code><a href="CODSTA-CPP-25.html">Consider making virtual functions nonpublic, and public functions nonvirtual [CODSTA-CPP-25-3]</a></code><br>
+<code><a href="CODSTA-CPP-26.html">Keep types and functions in separate namespaces unless they're specifically intended to work together [CODSTA-CPP-26-3]</a></code><br>
+<code><a href="CODSTA-CPP-27.html">Keep a type and its nonmember function interface in the same namespace [CODSTA-CPP-27-3]</a></code><br>
+<code><a href="CODSTA-CPP-28.html">When binary arithmetic operators are defined  ( + , - , * , / , ^ , % , | , &amp; , &gt;&gt; , &lt;&lt; ), assignment versions should be provided too [CODSTA-CPP-28-3]</a></code><br>
+<code><a href="CODSTA-CPP-29.html">Prefer the canonical forms of arithmetic and assignment operators [CODSTA-CPP-29-3]</a></code><br>
+<code><a href="CODSTA-CPP-30.html">Prefer non-member operators than member ones to support mixed-mode arithmetic [CODSTA-CPP-30-3]</a></code><br>
+<code><a href="CODSTA-CPP-31.html">Do not use the keyword 'explicit' for a constructor [CODSTA-CPP-31-5]</a></code><br>
+<code><a href="CODSTA-CPP-32.html">Member functions shall not be defined within the no-template class definition [CODSTA-CPP-32-3]</a></code><br>
+<code><a href="CODSTA-CPP-33.html">Member functions shall not be defined within the template class definition [CODSTA-CPP-33-3]</a></code><br>
+<code><a href="CODSTA-CPP-34.html">Avoid using static_cast on pointers [CODSTA-CPP-34-3]</a></code><br>
+<code><a href="CODSTA-CPP-35.html">Avoid dynamic_casts [CODSTA-CPP-35-3]</a></code><br>
+<code><a href="CODSTA-CPP-36.html">Avoid using global variables, global functions, and class in file outside namespaces [CODSTA-CPP-36-3]</a></code><br>
+<code><a href="CODSTA-CPP-37.html">Do not define class/struct/union inside function implementation [CODSTA-CPP-37-3]</a></code><br>
+<code><a href="CODSTA-CPP-38.html">Conversion operator, operator-&gt;, operator(), operator[] should be const [CODSTA-CPP-38-3]</a></code><br>
+<code><a href="CODSTA-CPP-39.html">Don't write namespace usings in a header file or before an #include [CODSTA-CPP-39-3]</a></code><br>
+<code><a href="CODSTA-CPP-40.html">Limiting the number of objects of a class [CODSTA-CPP-40-5]</a></code><br>
+<code><a href="CODSTA-CPP-41.html">Do not use the 'enum' keyword to declare a variable in C++ [CODSTA-CPP-41-3]</a></code><br>
+<code><a href="CODSTA-CPP-42.html">Do not declare member variables with the 'mutable' keyword [CODSTA-CPP-42-3]</a></code><br>
+<code><a href="CODSTA-CPP-43.html">Declare reference parameters as const references whenever possible [CODSTA-CPP-43-3]</a></code><br>
+<code><a href="CODSTA-CPP-44.html">Have the non-const version call the const version of member function instead of duplicating the const version definition [CODSTA-CPP-44-3]</a></code><br>
+<code><a href="CODSTA-CPP-45.html">In the private section of a class items shall be declared in the following order: Constructors, Destructor, Member Functions, Member Operator Function, Enumerations and others [CODSTA-CPP-45-3]</a></code><br>
+<code><a href="CODSTA-CPP-46.html">Order of scopes in class: public before all others [CODSTA-CPP-46-3]</a></code><br>
+<code><a href="CODSTA-CPP-47.html">Order of scopes in classes: protected before private [CODSTA-CPP-47-3]</a></code><br>
+<code><a href="CODSTA-CPP-48.html">In the protected section of a class items shall be declared in the following order: Constructors, Destructor, Member Functions, Member Operator Function, Enumerations and others [CODSTA-CPP-48-3]</a></code><br>
+<code><a href="CODSTA-CPP-49.html">In the public section of a class items shall be declared in the following order: Constructors, Destructor, Member Functions, Member Operator Function, Enumerations and others [CODSTA-CPP-49-3]</a></code><br>
+<code><a href="CODSTA-CPP-50.html">Do not use static keyword except inside functions and classes [CODSTA-CPP-50-3]</a></code><br>
+<code><a href="CODSTA-CPP-51.html">Do not define inline functions in source files [CODSTA-CPP-51-3]</a></code><br>
+<code><a href="CODSTA-CPP-52.html">Consider using the natural relationship between the assignment version of an operator and the stand-alone version [CODSTA-CPP-52-3]</a></code><br>
+<code><a href="CODSTA-CPP-53.html">Declare parameters or local variable as const whenever possible [CODSTA-CPP-53-3]</a></code><br>
+<code><a href="CODSTA-CPP-54.html">Member functions shall be declared const whenever possible [CODSTA-CPP-54-3]</a></code><br>
+<code><a href="CODSTA-CPP-55.html">Arrays shall not be used in interfaces [CODSTA-CPP-55-2]</a></code><br>
+<code><a href="CODSTA-CPP-56.html">A class, structure, or enumeration will not be declared in the definition of its type [CODSTA-CPP-56-3]</a></code><br>
+<code><a href="CODSTA-CPP-57.html">Namespaces will not be nested more than two levels deep [CODSTA-CPP-57-3]</a></code><br>
+<code><a href="CODSTA-CPP-58.html">The value returned by a function having a non-void return type that is not an overloaded operator shall always be used [CODSTA-CPP-58-3]</a></code><br>
+<code><a href="CODSTA-CPP-59.html">The C library shall not be used [CODSTA-CPP-59-3]</a></code><br>
+<code><a href="CODSTA-CPP-60.html">Only those escape sequences that are defined in ISO/IEC 14882:2003 shall be used [CODSTA-CPP-60-3]</a></code><br>
+<code><a href="CODSTA-CPP-61.html">Objects or functions with external linkage shall be declared in a header file [CODSTA-CPP-61-3]</a></code><br>
+<code><a href="CODSTA-CPP-62.html">NULL shall not be used as an integer value [CODSTA-CPP-62-3]</a></code><br>
+<code><a href="CODSTA-CPP-63.html">Literal zero (0) shall not be used as the null-pointer-constant [CODSTA-CPP-63-3]</a></code><br>
+<code><a href="CODSTA-CPP-64.html">The condition of an if-statement and the condition of an iteration-statement shall have type bool [CODSTA-CPP-64-3]</a></code><br>
+<code><a href="CODSTA-CPP-65.html">The first operand of a conditional-operator shall have type bool [CODSTA-CPP-65-1]</a></code><br>
+<code><a href="CODSTA-CPP-66.html">C-style casts (other than void casts) and functional notation casts (other than explicit constructor calls) shall not be used [CODSTA-CPP-66-3]</a></code><br>
+<code><a href="CODSTA-CPP-67.html">Each operand of the ! operator, the logical &amp;&amp; or the logical || operators shall have type bool [CODSTA-CPP-67-3]</a></code><br>
+<code><a href="CODSTA-CPP-68.html">The unary &amp; operator shall not be overloaded [CODSTA-CPP-68-3]</a></code><br>
+<code><a href="CODSTA-CPP-69.html">A for loop shall contain a single loop-counter which shall not have floating type [CODSTA-CPP-69-3]</a></code><br>
+<code><a href="CODSTA-CPP-70.html">If loop-counter is not modified by -- or ++, then, within condition, the loop-counter shall only be used as an operand to &lt;=, &lt;, &gt; or &gt;= [CODSTA-CPP-70-3]</a></code><br>
+<code><a href="CODSTA-CPP-71.html">The loop-counter shall be modified by one of: --, ++, -=n, or +=n; where n remains constant for the duration of the loop [CODSTA-CPP-71-3]</a></code><br>
+<code><a href="CODSTA-CPP-72.html">A loop-control-variable other than the loop-counter shall not be modified within condition or expression [CODSTA-CPP-72-3]</a></code><br>
+<code><a href="CODSTA-CPP-73.html">A loop-control-variable other than the loop-counter which is modified in statement shall have type bool [CODSTA-CPP-73-3]</a></code><br>
+<code><a href="CODSTA-CPP-74.html">There shall be no unnamed namespaces in header files [CODSTA-CPP-74-3]</a></code><br>
+<code><a href="CODSTA-CPP-75.html">using-directives shall not be used [CODSTA-CPP-75-3]</a></code><br>
+<code><a href="CODSTA-CPP-76.html">Multiple declarations for an identifier in the same namespace shall not straddle a using-declaration for that identifier [CODSTA-CPP-76-3]</a></code><br>
+<code><a href="CODSTA-CPP-77.html">Const member functions shall not return non-const pointers or references to class-data [CODSTA-CPP-77-3]</a></code><br>
+<code><a href="CODSTA-CPP-78.html">If a member function can be made static then it shall be made static, otherwise if it can be made const then it shall be made const [CODSTA-CPP-78-3]</a></code><br>
+</BODY>
+</HTML>

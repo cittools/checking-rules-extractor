@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Exceptions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+EXCEPT
+</STRONG>
+<PRE>
+Exceptions
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="EXCEPT-01.html">Never allow an exception to be thrown from a destructor, deallocation, and swap [EXCEPT-01-1]</a></code><br>
+<code><a href="EXCEPT-02.html">Throw by value, catch by reference [EXCEPT-02-1]</a></code><br>
+<code><a href="EXCEPT-03.html">Do not throw from within destructor [EXCEPT-03-1]</a></code><br>
+<code><a href="EXCEPT-04.html">All exceptions should be rethrown or logged with standard logger [EXCEPT-04-2]</a></code><br>
+<code><a href="EXCEPT-05.html">C++ exceptions shall not be used (i.e. throw, catch and try shall not be used.) [EXCEPT-05-2]</a></code><br>
+<code><a href="EXCEPT-06.html">There should be at least one exception handler to catch all otherwise unhandled exceptions [EXCEPT-06-3]</a></code><br>
+<code><a href="EXCEPT-07.html">An empty throw (throw;) shall only be used in the compound-statement of a catch handler [EXCEPT-07-3]</a></code><br>
+<code><a href="EXCEPT-08.html">Exceptions shall be raised only after start-up and before termination of the program [EXCEPT-08-3]</a></code><br>
+<code><a href="EXCEPT-09.html">An exception object should not have pointer type [EXCEPT-09-3]</a></code><br>
+<code><a href="EXCEPT-10.html">Control shall not be transferred into a try or catch block using a goto or a switch statement [EXCEPT-10-3]</a></code><br>
+<code><a href="EXCEPT-11.html">The assignment-expression of a throw statement shall not itself cause an exception to be thrown [EXCEPT-11-1]</a></code><br>
+<code><a href="EXCEPT-12.html">NULL shall not be thrown explicitly [EXCEPT-12-3]</a></code><br>
+<code><a href="EXCEPT-13.html">Each exception explicitly thrown in the code shall have a handler of a compatible type in all call paths that could lead to that point [EXCEPT-13-3]</a></code><br>
+<code><a href="EXCEPT-14.html">Where a function's declaration includes an exception-specification, the function shall only be capable of throwing exceptions of the indicated type(s) [EXCEPT-14-3]</a></code><br>
+<code><a href="EXCEPT-15.html">A class type exception shall always be caught by reference [EXCEPT-15-3]</a></code><br>
+<code><a href="EXCEPT-16.html">Handlers of a function-try-block implementation of a class constructor or destructor shall not reference nonstatic members from this class or its bases [EXCEPT-16-3]</a></code><br>
+<code><a href="EXCEPT-17.html">Where multiple handlers are provided in a single try-catch statement or function-try-block for a derived class and some or all of its bases, the handlers shall be ordered most-derived to base class [EXCEPT-17-3]</a></code><br>
+<code><a href="EXCEPT-18.html">Each exception explicitly thrown in the code shall have a handler of a compatible type in all call paths that could lead to that point [EXCEPT-18-3]</a></code><br>
+</BODY>
+</HTML>

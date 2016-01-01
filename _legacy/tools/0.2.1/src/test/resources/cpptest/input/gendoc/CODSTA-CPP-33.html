@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Member functions shall not be defined within the template class definition
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Member functions shall not be defined within the template class definition [CODSTA-CPP-33-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Functions defined within the class definition are implicitly inline; however, 
+defining member functions within a class definition also makes the class 
+definition less compact and harder to read. This rule detects if you define 
+member functions in the class definition.
+See also: CODSTA-CPP-32
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule ensure better data hiding by separating interface and implementation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+template &lt;class T&gt;
+class A {
+public:
+    void foo( ) {}      // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+template &lt;class T&gt;
+class A {
+public:
+    void foo( );
+};
+template &lt;class T&gt; void A&lt;T&gt;::foo( ) {}    // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

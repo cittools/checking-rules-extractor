@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a function returns error information, then that error information shall be tested
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a function returns error information, then that error information shall be tested [MISRA2004-16_10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A function (whether it is part of the standard library, a third party library 
+or a user defined function) may provide some means of indicating the occurrence 
+of an error. This may be via an error flag, some special return value or some 
+other means. Whenever such a mechanism is provided by a function the calling 
+program shall check for the indication of an error as soon as the function 
+returns.
+However, note that the checking of input values to functions is considered a 
+more robust means of error prevention than trying to detect errors after the 
+function has completed (see Rule 20.3). Note also that the use of errno (to 
+return error information from functions) is clumsy and should be used with care 
+(see Rule 20.5)."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rules checks usage of function calls which returns char, short int, int, enum, or
+typedef to char, short int, int, or enum value and reports violation when this value 
+is not assigned, checked or cast to void.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps writing safety code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int SomeFunctionReturningError( );
+void foo( )
+{
+    SomeFunctionReturningError( );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int SomeFunctionReturningError( );
+int foo( ) 
+{
+    int x;
+    x = SomeFunctionReturningError( );        // OK
+    (void)SomeFunctionReturningError( );      // OK
+    if (SomeFunctionReturningError( ));       // OK
+    switch (SomeFunctionReturningError( )) {  // OK
+    }
+    return SomeFunctionReturningError( );     // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 16
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-7
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-3-2
+
+4. The Power of Ten - Rules for Developing Safety Critical Code.
+   Rule 7
+
+</PRE>
+</BODY>
+</HTML>

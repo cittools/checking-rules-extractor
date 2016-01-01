@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use arrays of int types instead of dynamic allocated large arrays of longs
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use arrays of int types instead of dynamic allocated large arrays of longs [PORT-23-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Large arrays of long or unsigned long types, can cause serious 
+performance degradation in the LP64 data-type model as compared 
+to arrays of int or unsigned int types. Large arrays of long types cause 
+significantly more cache misses and consume more memory. 
+Therefore, if int works just as well as long for the application purposes, 
+it's better to use int rather than long." 
+See also: PORT-22, PORT-24
+
+
+Note: This rule checks for dynamic allocated arrays of longs that consist over 2^16-1
+         elements.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Reduction of memory consumption and avoiding possible performance degradation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long *arr1 = new long[70000];        // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int *arr1 = new int[70000];           // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Converting 32-bit Applications Into 64-bit Applications: Things to Consider
+    <A HREF="http://developers.sun.com/prodtech/cc/articles/ILP32toLP64Issues.html">http://developers.sun.com/prodtech/cc/articles/ILP32toLP64Issues.html</A>
+     
+2. Multiplatform Porting to 64 Bits
+    <A HREF="http://www.ddj.com/184406427">http://www.ddj.com/184406427</A>
+
+</PRE>
+</BODY>
+</HTML>

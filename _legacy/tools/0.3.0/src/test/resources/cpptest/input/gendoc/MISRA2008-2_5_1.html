@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Digraphs should not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Digraphs should not be used [MISRA2008-2_5_1-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The following digraphs will not be used &lt;%, %&gt;, &lt;:, :&gt;, %:, %:%:
+The use of digraphs listed in this rule can obscure the meaning
+of otherwise simple constructs.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int a &lt;: 2 :&gt; &lt;: 2 :&gt; = &lt;%&lt;%0,1%&gt;,&lt;%2,3%&gt;%&gt;; // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int a[2][2] = { {0,1}, {2,3} };              // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.4 Environment, AV Rule 12
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-5-1
+
+</PRE>
+</BODY>
+</HTML>

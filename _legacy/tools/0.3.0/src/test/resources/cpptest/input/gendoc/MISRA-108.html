@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All members of structure or union should be fully specified
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All members of structure or union should be fully specified [MISRA-108-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+In the specification of a structure or union type, 
+all members of the structure or union shall be 
+fully specified.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using undefined variable types.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct X {
+    int i;
+};
+
+struct Y {
+    struct X* x;    /* Violation */
+    int i;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct X {
+    int i;
+};
+
+struct Y {
+    struct X x;     /* OK */
+    int i;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines rule 108
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a file-level static variable is used/referenced in one function only then include that variable in the function itself
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a file-level static variable is used/referenced in one function only then include that variable in the function itself [OPT-11-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If a file-level static variable is used/referenced in one function only, it is
+better to include that variable in the function itself, as if the function is 
+never called, the memory for variable will not be allocated.
+See also: OPT-12
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+In C++, global variables which are defined as a const are static by default.
+Ref: ISO14882/1998 (3.5 #3, 7.1.5.1 #2)
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Memory optimization and clarity of intent expression/maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static int i = 0;            // Violation
+const  int ci = 0;           // Violation only for C++
+
+void clear( ) {
+    i = ci;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void clear( ) {
+    static int i = 0;        // OK
+    const  int ci = 0;       // OK
+    i = ci;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

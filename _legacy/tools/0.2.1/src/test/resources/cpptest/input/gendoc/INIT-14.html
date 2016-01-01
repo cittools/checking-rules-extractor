@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer initialization to assignment in constructors
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer initialization to assignment in constructors [INIT-14-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks constructors to see if you are assigning data members when 
+you should be initializing them. 
+Assigning to data members causes a default constructor to be called first, 
+and then assignment will be performed later. 
+Initialization eliminates the overhead of performing assignment later.
+Note that constants and references can only be initialized, never assigned.
+See also: INIT-06, INIT-10, MISRA-030
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves code consistency and runtime performance
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using namespace std;
+
+class A {
+public:
+    A( const char* file, const char* path ) {  
+        myFile = file;     // Violation
+        myPath = path;     // Violation
+    }
+private:
+    string myFile;
+    string myPath;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using namespace std;
+
+class A {
+public:
+    A( const char* file, const char* path ) : 
+        myFile(file), myPath(path) {}    // OK
+private:
+    string myFile;
+    string myPath;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Design Style", Rule 09,
+   Chapter: "Construction, Destruction, and Copying", Rule 48
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Constructors, Destructors, and Assignment Operators", Item 12
+
+3. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 4
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 74
+
+</PRE>
+</BODY>
+</HTML>

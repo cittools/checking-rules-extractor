@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not call delete on non-pointers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not call delete on non-pointers [PB-13-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you call delete on non-pointer.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents calling delete on non-pointer what results in an invalid operand.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Rhino {
+public:
+    Rhino( );
+    Rhino( char* );
+    Rhino( const char* );
+    operator char*( );
+};
+
+void func()
+{
+    Rhino r;
+    delete( r );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Rhino {
+public:
+    Rhino( );
+    Rhino( char* );
+    Rhino( const char* );
+    operator char*( );
+};
+
+void func()
+{
+    Rhino *r = new Rhino();
+    delete r ;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

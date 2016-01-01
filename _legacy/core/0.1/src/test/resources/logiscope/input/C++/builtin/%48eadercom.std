@@ -1,0 +1,73 @@
+.NAME HeaderCom
+
+.DESCRIPTION
+HeaderCom
+Definition:
+-----------
+Module must be preceded by a comment.
+It is possible to define a format for this comment depending on the type 
+of the module as it is defined in metric type.
+The format of the comment is defined as a list of regular expressions 
+that shall be found in the header comment in the order of declaration.
+Formats are defined by regular expressions. The regular expression 
+language is a subset of the one defined by the Posix 1003.2 standard 
+(Copyright 1994, the Regents of the University of California). 
+A regular expression is comprised of one or more non-empty branches, 
+separated by the | character.
+A branch is one ore more atomic expressions, concatenated.
+
+Each atom can be followed by the following characters:
+
+* - the expression matches a sequence of 0 or more matches of the atom, 
++ - the expression matches a sequence of 1 or more matches of the atom, 
+? - the expression matches a sequence of 0 or 1 match of the atom, 
+{i} - the expression matches a sequence of i or more matches of the atom, 
+{i,j} - the expression matches a sequence of i through j (inclusive) matches of 
+        the atom. 
+
+An atomic expression can be either a regular expression enclosed in (), or:
+
+[...] - a bracket expression, that matches any single character from the list 
+         enclosed in [], 
+[^...] - a bracket expression that matches any single character not from the rest 
+         of the list enclosed in [], 
+. - it matches any single character, 
+^ - it indicates the beginning of a string (alone it matches the null string at 
+        the beginning of a line), 
+$ - it indicates the end of a string (alone it matches the null string at the end 
+       of a line). 
+
+Example:
+--------
+" .+_Ptr " matches strings like "abc_Ptr", "hh_Ptr", but not "_Ptr",
+" T[a-z]* " matches strings like "Ta", "Tb", "Tz",
+" [A-Z][a-z0-9_]* " matches strings like "B1", "Z0", "Pp", "P_1_a".
+ 
+Parameters:
+----------
+Two lists of character strings: the first one for the header files, 
+and the second for the code files. 
+Each list begins with the string "HEADER" or "CODE" , followed by strings 
+representing the associated regular expressions.
+
+Example:
+--------
+Write
+
+"Name: [a-z]*"
+"Author: [A-Z][a-z]*"
+"Date: [0-9][0-9]/[0-9][0-9]/[0-9][0-9]"
+"Remarks: .*"
+
+For headers like:
+
+////////////////////////////////////////////////
+// Name: program
+// Author: Andrieu
+// Date: 08/07/96
+// Remarks: example of comments
+//////////////////////////////////////////////// 
+
+.SEVERITY Advisory
+
+.COMMAND builtin

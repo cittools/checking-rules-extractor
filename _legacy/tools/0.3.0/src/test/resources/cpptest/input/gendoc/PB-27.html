@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A string literal shall not be modified
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A string literal shall not be modified [PB-27-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A string literal shall not be modified. Rule reports violations if
+a string literal is assigned to non-const variable, parameter or expression.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The effect of attempting to modify a string literal is undefined.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void moo(char * p)
+{
+}
+
+void foo()
+{
+	char* c1 = "Hello";    // Violation
+	char c2[] = "Hello";   // Violation
+	char c3[6] = "Hello";  // Violation
+	char* c12;
+	c12 = "Hello";         // Violation
+	moo("Hello");          // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void moo(const char * p)
+{
+}
+
+void foo()
+{
+	const char* c1 = "Hello";    // OK
+	const char c2[] = "Hello";   // OK
+	const char c3[6] = "Hello";  // OK
+	const char* c12;
+	c12 = "Hello";               // OK
+	moo("Hello");                // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.18 Constants, AV Rule 151.1
+
+</PRE>
+</BODY>
+</HTML>

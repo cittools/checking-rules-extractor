@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for word pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for word pointer, array, or reference types [NAMING-HN-44-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For unsigned int pointer, array, or reference variables and parameters use
+"w" prefix. For signed int or int pointer, array, or reference variables
+and parameters use "i" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* g_pimyVar;                                   // Violation
+int* g_pMyVariable;                              // Violation
+static const int* g_spkMyVariable;         // Violation
+class A {
+    int* m_pMyVariable;                         // Violation
+    static const int* m_spkMyVariable;    // Violation
+    void foo( int* pMyParam ) {              // Violation
+        int* pMyVariable;                         // Violation
+        static const int* spkMyVariable;    // Violation
+    }
+};
+
+unsigned int* g_pwmyVar2;                                 // Violation
+unsigned int* g_pMyVariable2;                             // Violation
+static const unsigned int* g_spkMyVariable2;        // Violation
+class B {
+    unsigned int* m_pMyVariable;                          // Violation
+    static const unsigned int* m_spkMyVariable;      // Violation
+    void foo( unsigned int* pMyParam ) {                // Violation
+        unsigned int* pMyVariable;                           // Violation
+        static const unsigned int* spkMyVariable;      // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int* g_piMyVar;                                  // OK
+int* g_piMyVariable;                            // OK
+static const int* g_spkiMyVariable;       // OK
+class A {
+    int* m_piMyVariable;                        // OK
+    static const int* m_spkiMyVariable;   // OK
+    void foo( int* piMyParam ) {             // OK
+        int* piMyVariable;                        // OK
+        static const int* spkiMyVariable;   // OK
+    }
+};
+
+unsigned int* g_pwMyVar2;                                // OK
+unsigned int* g_pwMyVariable2;                          // OK
+static const unsigned int* g_spkwMyVariable2;      // OK
+class B {
+    unsigned int* m_pwMyVariable;                        // OK
+    static const unsigned int* m_spkwMyVariable;   // OK
+    void foo( unsigned int* pwMyParam ) {             // OK
+        unsigned int* pwMyVariable;                        // OK
+        static const unsigned int* spkwMyVariable;   // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

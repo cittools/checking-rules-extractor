@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for byte types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for byte types [NAMING-HN-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For unsigned char variables and parameters use "by" or "y" prefix.
+For char or signed char variables and parameters use "c" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+char g_cmyVar;                                  // Violation
+char g_MyVariable;                              // Violation
+static const char g_skMyVariable = 'a';         // Violation
+class A {
+    char m_MyVariable;                          // Violation
+    static const char m_skMyVariable = 'a';     // Violation
+    void foo( char MyParam ) {                  // Violation
+        char MyVariable;                        // Violation
+        static const char skMyVariable = 'a';   // Violation
+    }
+};
+
+unsigned char g_bymyVar2;                                // Violation
+unsigned char g_MyVariable2;                             // Violation
+static const unsigned char g_skMyVariable2 = 0;          // Violation
+class B {
+    unsigned char m_MyVariable;                          // Violation
+    static const unsigned char m_skMyVariable = 0;       // Violation
+    void foo( unsigned char MyParam ) {                  // Violation
+        unsigned char MyVariable;                        // Violation
+        static const unsigned char skMyVariable = 0;     // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+char g_cMyVar;                                  // OK
+char g_cMyVariable;                             // OK
+static const char g_skcMyVariable = 'a';        // OK
+class A {
+    char m_cMyVariable;                         // OK
+    static const char m_skcMyVariable = 'a';    // OK
+    void foo( char cMyParam ) {                 // OK
+        char cMyVariable;                       // OK
+        static const char skcMyVariable = 'a';  // OK
+    }
+};
+
+unsigned char g_byMyVar2;                                 // OK
+unsigned char g_byMyVariable2;                            // OK
+static const unsigned char g_skbyMyVariable2 = 0;         // OK
+class B {
+    unsigned char m_byMyVariable;                         // OK
+    static const unsigned char m_skbyMyVariable = 0;      // OK
+    void foo( unsigned char byMyParam ) {                 // OK
+        unsigned char byMyVariable;                       // OK
+        static const unsigned char skbyMyVariable = 0;    // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,146 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer the canonical forms of arithmetic and assignment operators
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer the canonical forms of arithmetic and assignment operators [CODSTA-CPP-29-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Define binary operator @ (where @ is + , - , * , / , ^ , % , | , &amp; , &gt;&gt; , &lt;&lt; )
+in terms of its assignment version @= so a@=b and a=a@b
+have the same meaning. The canonical way of achieving this goal
+is to define @ in terms of @=, as follows:
+
+T&amp; T::operator@=(const T&amp;){
+ // implementation
+ return *this;
+}
+
+T operator@( const T&amp; lhs, const T&amp; rhs){
+ T templ(lhs);
+ return temp @= rhs;
+}
+
+Where possible make operator @= a nonmember function.
+Also it is desired to have operator@ accepting its first
+parameter by value and returning a const value.
+
+Rule checks if declared binary operators @, @= adhere to presented
+above conventions.
+See also: CODSTA-CPP-28, CODSTA-CPP-52
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If operator@ is made a nonmember function, it will have the desirable property
+of accepting the same implicit conversions on its left-hand side and right-hand
+side parameters. By having operator@ accepting its first parameter by value,
+you arrange for compiler itself to perform the copy for you implicitly, and this
+can give the compiler more leeway in applying optimizations.
+Making the operator@ returning a const value has the advantage that it disables
+nonsensical code such as a + b = c, but it does so at the cost of disabling some
+potentially useful constructs such as a = (b + c).replace(pos, n, d)
+- expressive code that, in one shot, concatenates strings b, c, replaces some
+characters, and assigns the final result t a.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A{
+public:
+    A( const A&amp; );
+    A operator+=( A&amp; a ){}
+    A operator-=( A&amp; a ){}
+    A&amp; operator-( A&amp; a ){}   // Violation - Operator method should result
+                             //             class as a direct type
+                             //           - Operator method should be global
+    A operator*=( A&amp; a ){}   // Violation - The function's return type should
+                             //             be a reference to class
+                             //           - The last operation of "*=" function
+                             //             should be return *this
+};
+A operator+( A&amp; a, A&amp; b ){   // Violation - No return statement...
+    return a.operator+=( a );//           - Declare and initialize temporary
+                             //             local variable by first parameter
+};
+
+A operator*( A&amp; a, A&amp; b ){   // Violation - Code does not match with example
+                             //             code from rule description
+    A tmp(a);    
+    return tmp += b;         // Violation - Incorrect operation name
+    return tmp *= b;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A{
+public:
+    A&amp; operator+=( A&amp; a ){  // OK
+        // ... implementation ...
+        return *this;
+    }
+    A&amp; operator-=( A&amp; a ){  // OK
+        // ... implementation ...
+        return *this;
+    }
+    A&amp; operator*=( A&amp; a ){  // OK
+        // ... implementation ...
+        return *this;
+    }
+};
+A operator-( A&amp; a, A&amp; b ){   // OK
+    A tmp(a);                // OK
+    return tmp -= b;         // OK
+}
+
+A operator+( A&amp; a, A&amp; b ){   // OK
+    A tmp(a);                // OK
+    return tmp += b;         // OK
+};
+
+A operator*( A&amp; a, A&amp; b ){   // OK
+    A tmp(a);                // OK
+    return tmp *= b;         // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Functions and Operators", Rule 27
+
+</PRE>
+</BODY>
+</HTML>

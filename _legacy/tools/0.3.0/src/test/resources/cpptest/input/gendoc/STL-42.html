@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Member version of swap should never throw exceptions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Member version of swap should never throw exceptions [STL-42-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The only loose end is my admonition to have the member version of swap never
+throw exceptions. That's because one of the most useful applications of swap
+is to help classes (and class templates) offer the strong exception-safety
+guarantee. (...) the technique is predicated on the assumption that the 
+member version of swap never throws."
+See also: STL-40, STL-41
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"That's because one of the most useful applications of swap is to help classes
+(and class templates) offer the strong exception-safety guarantee."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+class WidgetImpl {};
+
+class Widget { 
+public:
+    void swap( Widget&amp; other ) {            // Violation
+        try {
+            using std::swap;
+            swap( pImpl, other.pImpl );
+        } catch(...) {
+            throw;
+        }
+    }
+private:
+    WidgetImpl *pImpl;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+class WidgetImpl {};
+
+class Widget { 
+public:
+    void swap( Widget&amp; other ) {           // OK
+        try {
+            using std::swap;
+            swap( pImpl, other.pImpl );
+        } catch(...) {
+            // something else than "throw;"
+        }
+    }
+private:
+    WidgetImpl *pImpl;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 4, Item 25
+
+</PRE>
+</BODY>
+</HTML>

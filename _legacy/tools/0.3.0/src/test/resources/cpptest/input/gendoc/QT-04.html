@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The methods inside the SIGNAL and SLOT macros have to exist
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The methods inside the SIGNAL and SLOT macros have to exist [QT-04-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The methods inside the SIGNAL and SLOT macros have to exist (the arguments
+have to match) and they have to be tagged as Q_SLOTS or Q_SIGNALS. 
+Here we have a simple example where we try to output a goodbye message, note 
+that the name of the slot in the connection doesn't match the declaration. 
+The example will compile and run, but not produce the expected result.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+"Q_SLOTS" and "Q_SIGNALS" is equivalent to "slots" and "signals".
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Qt's signal &amp; slot mechanism is very powerful since it offers dynamic
+connections between signals and slots at runtime. This supports development
+of flexible scriptable and dynamic user interfaces, but comes with a price:
+The compiler won't warn you if a signal and slot connection is invalid at
+compile time. You will get a warning at run time, which is usually too late.
+This rule enforces validity of signal and slot connection at code analysis
+time.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+class MyWidget: public QWidget
+{
+    Q_OBJECT
+public:
+    MyWidget( char* initText ) { qDebug() &lt;&lt; initText; }
+public slots:
+    void showGoodByeMessage() { qDebug() &lt;&lt; "GoodBye"; }
+private:
+    Q_DISABLE_COPY(MyWidget)
+};
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    MyWidget w1( "New MyWidget" );
+    MyWidget w2( "New MyWidget" );
+
+    w1.show();
+    w2.show();
+
+    // Violation showGoodBye() is not slot method
+    QObject::connect(&amp;app, SIGNAL(lastWindowClosed()),
+                     &amp;w1, SLOT(showGoodBye()));
+
+    return app.exec();
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+class MyWidget: public QWidget
+{
+    Q_OBJECT
+public:
+    MyWidget( char* initText ) { qDebug() &lt;&lt; initText; }
+public slots:
+    void showGoodByeMessage() { qDebug() &lt;&lt; "GoodBye"; }
+private:
+    Q_DISABLE_COPY(MyWidget)
+};
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    MyWidget w1( "New MyWidget" );
+    MyWidget w2( "New MyWidget" );
+
+    w1.show();
+    w2.show();
+
+    // OK
+    QObject::connect(&amp;app, SIGNAL(lastWindowClosed()),
+                     &amp;w1, SLOT(showGoodByeMessage()));
+
+    return app.exec();
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

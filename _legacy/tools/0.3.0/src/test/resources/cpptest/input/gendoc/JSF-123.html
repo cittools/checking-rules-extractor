@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The number of accessor and mutator functions should be minimized
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The number of accessor and mutator functions should be minimized [JSF-123-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The number of accessor and mutator functions should be minimized
+to number of member variables. Rule reports a violation message
+if number of setter methods or number of getter methods exceeds
+number of member variables.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule assumes that setter/getter (mutator/accessor) methods are methods
+with names starting from get/Get or set/Set prefix and followed by
+underscoring or capitalized letter.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Numerous accessors and mutators may indicate that a class simply serves
+to aggregate a collection of data rather than to embody an abstraction
+with a well-defined state or invariant. In this case, a struct with
+public data may be a better alternative.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Sample // Violation
+{
+ private:
+	int m_var;
+ public:
+    int get_m_var();
+    void set_m_var();
+    void set_m_var(int a);
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Sample // OK
+{
+ private:
+	int m_var;
+ public:
+    int get_m_var();
+    void set_m_var(int a = 0);
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.10 Classes, AV Rule 123
+
+</PRE>
+</BODY>
+</HTML>

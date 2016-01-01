@@ -1,0 +1,258 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Protect against integer overflow/underflow from tainted data
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Protect against integer overflow/underflow from tainted data [BD-SECURITY-INTOVERF-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases where unvalidated input (tainted data) is used in an arithmetic
+operation that can result in numeric overflow (when the mathematical result of an operation
+is greater than the highest value that can be represented by the operation's result type)
+or underflow (when mathematical result of an operation is lower than the lowest value
+that can be represented by the operation's result type) and is later used in a dangerous
+operation.
+
+Since overflow may be expected in many cases, the rule tries to avoid false positives by reporting
+a violation only if a value that can be overflowed is later used in one of the following
+dangerous cases:
+
+ - As a memory buffer size in a memory allocation operation (overflow may cause allocation
+   of a huge memory chunk and possibly denial of service)
+
+ - In a loop condition (overflow may lead to an infinite loop and thus to denial of service)
+
+ - In pointer arithmetic (may cause accessing memory at illegal address and thus undefined
+   behavior, including application crashes)
+
+
+Data from the following data sources are considered tainted:
+
+   * Parameters of the main() function
+   * Network
+
+Additional sources of tainted data can be defined by parameterizing the rule.
+For details, see the PARAMETERS section.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.3
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+Integer overflow is a serious security threat because it can be used to cause application crashes
+and denial of service.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+This rule can be parameterized so that data from the following data sources are considered tainted
+(in addition to those previously listed in the DESCRIPTION section):
+
+   * Files
+   * Pipes
+   * Stream-oriented APIs (std::istream, CArchive and CFile from MFC)
+   * Low-level input (Windows API, POSIX)
+   * Console
+   * Environment variables
+
+The rule can be parameterized with a list of validating functions.
+Any validating function can be defined as:
+   * returning benign data, and/or;
+   * making its parameter(s) benign, and/or;
+   * making this-object benign.
+
+Validation functions allow this data to be safely passed
+to dangerous functions.
+
+Below is the description of columns that allow you to define different aspects of
+functions in validating function table:
+
+* The 'Enabled' column can be used to temporarily disable some of the defined functions
+  for BugDetective analysis.
+
+* The 'Fully qualified type name' column must be filled with the fully qualified name of the type
+  that declares the function. Use '*' if you want to describe a function declared in any type
+  or namespace, or a global function declared outside of any type or namespace.
+
+* The 'Function name' column should contain name of the described function.
+
+* The '+ definitions in subclasses' column is used to indicate whether the current row will
+  apply to functions with the given name defined in subclasses of the given class. Note that this
+  applies to both instance and non-instance functions.
+
+Other columns allow you to describe which of the data are affected by a given function:
+
+* The '"this" object is validated' column is used to specify that the function cleans the object on which
+  it is called.
+
+* The 'returns validated data' column is used to specify that the function cleans its return value.
+
+* The 'Numbers of the parameters that are validated (1-based)' column is used to specify that
+  the function cleans some of its parameters. Use a comma to separate parameters' indexes
+  or use '*' to specify that all parameters are affected.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger violations:
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+
+#define BUFFER_SIZE 64
+char buffer[BUFFER_SIZE];
+
+#define MAX_LEN 1000000L
+
+char decode(char c)
+{
+	/* Decode character */
+	return c;
+}
+
+char* readMessage(int socket, char *header, int len)
+{
+	int i, header_len;
+	long msg_len, total_len;
+	char *msg;
+
+	recv(socket, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
+	msg_len = atol(buffer);
+	header_len = strlen(header);
+	total_len = header_len;
+	total_len += msg_len;
+
+	msg = (char*)malloc(total_len); /* VIOLATION, USAGE OF OVERFLOWED VALUE */
+	if (!msg) {
+		return 0;
+	}
+
+	strcpy(msg, header);
+
+	recv(socket, msg + msg_len, msg_len, MSG_NOSIGNAL);
+
+	for (i = header_len; i &lt; total_len; i++) { /* VIOLATION, USAGE OF OVERFLOWED VALUE */
+		msg[i] = decode(msg[i]);
+	}
+	return msg;
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following code will not trigger a violation:
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+
+#define BUFFER_SIZE 64
+char buffer[BUFFER_SIZE];
+
+#define MAX_LEN 1000000L
+
+char decode(char c)
+{
+	/* Decode character */
+	return c;
+}
+
+char* readMessage(int socket, char *header, int len)
+{
+	int i, header_len;
+	long msg_len, total_len;
+	char *msg;
+
+	recv(socket, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
+	msg_len = atol(buffer);
+	header_len = strlen(header);
+	total_len = header_len;
+	total_len += msg_len;
+
+	if ((total_len &lt; 0) || (total_len &gt; MAX_LEN)) { /* check that total_len is within an acceptable range */
+		return 0;
+	}
+
+	msg = (char*)malloc(total_len); /* NO VIOLATION */
+	if (!msg) {
+		return 0;
+	}
+
+	strcpy(msg, header);
+
+	recv(socket, msg + msg_len, msg_len, MSG_NOSIGNAL);
+
+	for (i = header_len; i &lt; total_len; i++) { /* NO VIOLATION */
+		msg[i] = decode(msg[i]);
+	}
+	return msg;
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.owasp.org/index.php/Integer_overflow">http://www.owasp.org/index.php/Integer_overflow</A>
+
+</PRE>
+</BODY>
+</HTML>

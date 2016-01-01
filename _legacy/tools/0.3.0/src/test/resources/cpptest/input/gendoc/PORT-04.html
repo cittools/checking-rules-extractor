@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't use hex constants
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't use hex constants [PORT-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you are using hex constants to declare a value.
+You should not declare a value in hex constant because in a 32-bit
+architecture 0xFFFFFFFF is -1, but in a 64-bit architecture 0xFFFFFFFF
+is +4294967295.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By following this rule, you can prevent data loss.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#ifdef _WIN64
+#define CONST3264(a) (a##i64)
+#else // unix64/32 &amp; win32
+#define CONST3264(a) (a##L)
+#endif
+
+void foo() {
+   long Val1 = 0xFFFFFFFF;    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifdef _WIN64
+#define CONST3264(a) (a##i64)
+#else // unix64/32 &amp; win32
+#define CONST3264(a) (a##L)
+#endif
+
+void foo() {
+   long Val2 = CONST3264(-1); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

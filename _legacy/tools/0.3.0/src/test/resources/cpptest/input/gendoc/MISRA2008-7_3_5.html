@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Multiple declarations for an identifier in the same namespace shall not straddle a using-declaration for that identifier
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Multiple declarations for an identifier in the same namespace shall not straddle a using-declaration for that identifier [MISRA2008-7_3_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The set of identifiers introduced by a using-declaration does not include any
+declarations that may be added by a subsequent declaration in the namespace.
+Any subsequent declarations will not be found through the using-declaration,
+which may not be consistent with developer expectations."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unexpected behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+namespace NS
+{
+    void foo( unsigned short );
+}
+
+using NS::foo;
+
+namespace NS
+{
+    void foo( unsigned int );  // Violation
+}
+
+void some()
+{
+    foo( 0U );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+namespace NS
+{
+    void foo( unsigned short );
+}
+
+namespace NS
+{
+    void foo( unsigned int );  // OK
+}
+
+using NS::foo;
+
+void some()
+{
+    foo( 0U );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 7, Rule 7-3-5
+
+</PRE>
+</BODY>
+</HTML>

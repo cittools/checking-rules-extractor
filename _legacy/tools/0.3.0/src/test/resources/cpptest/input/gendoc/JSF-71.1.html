@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid calling virtual functions from constructors and destructors
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid calling virtual functions from constructors and destructors [JSF-71.1-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Inside constructors and destructors, virtual functions do not behave
+"virtually." Called while executing a constructor, a virtual function will
+always be resolved to the type of the constructor. The same applies to 
+destructors. Further, a call from a constructor to a pure virtual function
+has undefined behavior.
+ 
+Hence, in general, using virtual functions in constructors and destructors
+is error prone, and may lead to defects ranging from memory leaks to 
+program crashes.
+
+Alternatives to calling virtual functions in these circumstances most often
+include requirements to call a post-constructor function:
+- document the requirements for clients of the code
+- call post-constructor during the first call of a member function
+- use a factory that insures the proper initialization sequence
+
+
+Note:
+
+This rule detects when you call virtual functions from constructors
+and destructors.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves code reliability and maintainability, may identify runtime bugs
+in the application.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    Base( ) {
+        init1( );                  // Violation
+    }
+    virtual void init1( );
+};
+
+class Derived : public Base {
+    Base* base;
+public:
+    Derived( ) {
+        init1( );                    // Violation
+        init3( );                    // Violation
+    }
+    virtual void init3( );
+};
+
+void Derived::init3( ) {}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    Base( ) {                  // OK
+    }
+    virtual void init1( );
+};
+
+class Derived : public Base {
+    Base* base;
+public:
+    Derived( ) {           
+        init4( );                // OK    
+        base-&gt;init1( );          // OK    
+    }
+    virtual void init3( );
+    void init4( );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Construction, Destruction, and Copying", Rule 49
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 2, Item 9
+
+3. Scott Meyers and Martin Klaus, "Examining C++ Program Analyzers", 
+   Dr. Dobbs' Journal, the February 1997, 
+   Chapter: "Constructors/Destructors/Assignment", Item 13
+   <A HREF="http://www.aristeia.com/ddjpaper1_frames.html">http://www.aristeia.com/ddjpaper1_frames.html</A>
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 71.1
+
+</PRE>
+</BODY>
+</HTML>

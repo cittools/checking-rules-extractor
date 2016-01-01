@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A pointer to a class may not be converted to a pointer of a second class unless the first class inherits from the second
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A pointer to a class may not be converted to a pointer of a second class unless the first class inherits from the second [OOP-28-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects if a pointer to a class is converted to a pointer of a second 
+class when the first class does not inherit from the second.
+Such "invalid" downcasting can result in wild pointers and other disasters.
+Use virtual function calls instead.
+See also: MISRA2004-11_4
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents memory and data corruption. 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {}; 
+class B {}; 
+class D : public B {}; 
+
+void main( )
+{ 
+    A *a; 
+    B *b; 
+    D *d; 
+    b = (B*) a; // Violation 
+    d = (D*) b; // Violation 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {}; 
+class B {}; 
+class D : public B {}; 
+
+void main( )
+{ 
+    A *a; 
+    B *b; 
+    D *d; 
+    b = (B*) d; // OK 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

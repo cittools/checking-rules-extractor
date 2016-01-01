@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All structure and union types shall be complete at the end of a translation unit
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All structure and union types shall be complete at the end of a translation unit [MISRA2004-18_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A complete declaration of the structure or union shall be included within
+any translation unit that reads from or writes to that structure.
+A pointer to an incomplete type is itself complete and is permitted,
+and therefore the use of opaque pointers is permitted"
+References are treated the same way as pointers so the use of opaque
+references is permitted as well.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour and improves readability 
+and maintainability of code
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+extern struct st *pst1;
+extern struct st *pst2;
+
+void mc2_1801 ( void )
+{
+//   struct st1 s;       /* Violation - not compilable with all compilers */
+
+   struct {
+      int a;
+      int b [ ];        /* Violation */
+   } mc2_1801_st = { 1, { 2, 3, 4 } };
+
+   pst2 = pst1;         /* OK - Use of opaque pointer */
+
+//   *pst2 = *pst1;       /* Violation - not compilable with all compilers */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct st{
+    int stm;
+};
+
+struct st1{
+    int st1m;
+};
+
+extern struct st *pst1;
+extern struct st *pst2;
+
+void mc2_1801 ( void )
+{
+   struct st1 s;       /* OK */
+
+   struct {
+      int a;
+      int b [3];        /* OK */
+   } mc2_1801_st = { 1, { 2, 3, 4 } };
+
+   pst2 = pst1;         /* OK - Use of opaque pointer */
+
+   *pst2 = *pst1;       /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 18
+
+</PRE>
+</BODY>
+</HTML>

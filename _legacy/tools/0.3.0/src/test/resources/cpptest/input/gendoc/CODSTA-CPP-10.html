@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not define structs that contain member functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not define structs that contain member functions [CODSTA-CPP-10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Member functions should be contained in classes, not structs, because classes 
+support both multiple instances and encapsulation. Structs are also often 
+entirely public: whereas the default access level for members and base classes 
+of a class is private. This rule detects if you define structs that contain 
+member functions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability. It is generally expected that types with member functions 
+are classes, and many programmers still think of structs in terms
+of their original meaning in C.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct A
+{
+    public:
+        int foo( );     // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+    public:
+        int foo( );     // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

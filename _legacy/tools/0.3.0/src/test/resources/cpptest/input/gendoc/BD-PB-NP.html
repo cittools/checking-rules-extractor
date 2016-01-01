@@ -1,0 +1,204 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid null pointer dereferencing
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid null pointer dereferencing [BD-PB-NP-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases where there is a danger of a null pointer being dereferenced.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.0
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+"Report violations where variable is known to be null due to a null check" check box:
+This check box allows you to specify which violations should be reported:
+
+   * Only those where BD can prove that a certain variable gets assigned a null value;
+   * Violations in the above category, plus violations where there is no null value assignment but a check
+     for a null value that stipulates null pointer dereferencing at the point of use.
+
+Here is sample code for the latter case:
+
+    int b = (ptr == 0); // null check that stipulates null dereferencing at violation point
+    ...
+    if (b) {
+        ...
+        int i = *ptr; // violation reported if the check box is ticked
+    }
+
+"Functions that do not accept NULL as their parameters" table:
+Allows you to enumerate functions whose parameters are not allowed to accept null.
+Parameterization details:
+'Enabled' column: 
+Should be used to include/exclude an already defined function from taking 
+into account during the analysis.
+
+'Fully qualified type name or namespace' column:
+Allows for the specification of the entity the function is declared within. 
+If this field is left empty, only the global function with the name specified 
+in 'Function name' column will be considered.
+If this field is filled with '*', function declared in any type
+or namespace, or a global function declared outside of any type or namespace will be
+considered.
+
+'Function name' column:
+The name of the function should be specified here.
+
+'+ definitions in subclasses' column:
+This is to indicate whether the function definitions in subclasses should be considered 
+as well. This applies to both instance and non-instance functions and makes sense only 
+if the declaring type is specified.
+
+'Numbers of the parameters not allowing NULL (1-based, comma-separated)' column:
+Allows you to specify the list of ordinal numbers of the function parameters that are not 
+allowed to accept null. These numbers should be 1-based and separated by comma (Example: 1,3),
+or '*' can be used to specify that all parameters are not allowed to accept null.
+
+
+"External functions that may return NULL" table:
+This rule can also be parameterized to consider functions that can potentially
+return null. To achieve better results, the rule provides a predefined set of such
+null returners from standard libraries. Those predefined functions are used by
+default. They can not be edited or removed from the list, but can be enabled/disabled by using 
+check box in the 'Enabled' column.
+Additionally, you can extend the set of null returners to include additional functions that
+you assume being capable to return null.
+
+Parameterization details:
+Similar to those for "Functions that do not accept NULL as their parameters" table described above
+except there is no 'Numbers of the parameters not allowing NULL (1-based, comma-separated)' column.
+
+A step-by-step example of how to create your own null returner is provided in the 'EXAMPLE' 
+section of this help page.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Example#1 - Some code excerpts for which the rule reports a violation:
+
+static void nullPointerDereference()
+{
+    int* pointerToNull = 0;
+    int variable = *pointerToNull; // VIOLATION
+}
+
+static void zeroTracking()
+{
+    int pointerValue = 0;
+    int* pointerToNull = pointerValue;
+    int variable = *pointerToNull; // VIOLATION
+}
+
+static void multiPointer()
+{
+    int* zero = 0;
+    int** ppi = &amp;zero;
+    int* pi = *ppi;
+    int k = *pi; // VIOLATION
+}
+
+
+Example#2 - custom null returner creation:
+Consider the following code assuming createInstance() being potential null returner:
+
+namespace mySpace {
+    class MyClass
+    {
+        public:
+            int getNumber();
+            static MyClass* createInstance();
+    };
+}
+
+static void usingFactory()
+{
+    mySpace::MyClass* instance = mySpace::MyClass::createInstance();
+    int num = instance-&gt;getNumber(); // VIOLATION
+}
+
+In order to detect possible null pointer dereferencing in the code above, 
+the rule should be parameterized as follows:
+
+ - Add custom null returner:
+       'Fully qualified type name or namespace' field value: "mySpace::MyClass";
+       'Function name' field value: "createInstance";
+       Use '+ definitions in subclasses' if createInstance() defined in subclasses
+       of mySpace::MyClass may return null as well.
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+Avoid null pointer dereferencing.
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

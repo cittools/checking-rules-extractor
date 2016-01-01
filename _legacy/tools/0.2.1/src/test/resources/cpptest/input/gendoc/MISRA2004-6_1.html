@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The plain char type shall be used only for the storage and use of character values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The plain char type shall be used only for the storage and use of character values [MISRA2004-6_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The plain char type shall be used only for the storage and use of 
+character values.
+The only permissible operators on plain char types are assignment 
+and equality operators (=, ==, != )"
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+char a = 65;     /* Violation */
+void foo( ) {
+    a = 66;     /* Violation */
+    a++;        /* Violation */
+    if (a &lt; 67) /* Violation */ 
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+char a = 'A';     /* OK */
+void foo( ) {
+    a = 'B';      /* OK */
+    if (a == 'C') /* OK */ 
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 6
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-11
+
+</PRE>
+</BODY>
+</HTML>

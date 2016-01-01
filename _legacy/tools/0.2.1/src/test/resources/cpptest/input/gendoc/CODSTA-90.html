@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Each operand of a logical '&amp;&amp;' or '||' shall be a postfix-expression
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Each operand of a logical '&amp;&amp;' or '||' shall be a postfix-expression [CODSTA-90-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The rule reports a violation if an operand other than a single identifier,
+constant or function call is not parenthesised.
+"Parentheses are important in this situation both for readability
+of code and for ensuring that the behaviour is as the developer intended."
+See also: MISRA2004-12_1_e, MISRA2004-12_5
+
+
+Exceptions:
+
+"Where an expression consists of either a sequence of only logical '&amp;&amp;'
+or a sequence of only logical '||', extra parentheses are not required.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The effect of this rule is to require that operands are appropriately
+parenthesized." 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo( int x, int y, int z )
+{
+    if ( x || y &amp;&amp; z );         // Violation
+    if ( x &amp;&amp; !y );             // Violation
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo( int x, int y, int z )
+{
+    if ( x || ( y &amp;&amp; z ) );         // OK
+    if ( x &amp;&amp; ( !y ) );             // OK
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-2-1
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule 158
+
+</PRE>
+</BODY>
+</HTML>

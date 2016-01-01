@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not allow relative path names in #include statements
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not allow relative path names in #include statements [PREPROC-06-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not allow relative path names in #include statements.
+Rule disallows usage of:
+- any "/" symbols in user include directive ("pathname")
+- "/" symbols at the beginning of include file in system
+  include directive (&lt;pathname&gt;)
+- any ".." symbols
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents specifying relative file names in #include directives.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include "inc/foo.hh"       // OK
+#include "inc/../foo.hh"    // Violation
+#include &lt;sys/../time.h&gt;    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include "inc/foo.hh"       // OK
+#include "inc/foo.hh"       // OK
+#include &lt;sys/time.h&gt;       // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 4 Source Code in Files - 4.4 Include Files - Rule 10
+
+</PRE>
+</BODY>
+</HTML>

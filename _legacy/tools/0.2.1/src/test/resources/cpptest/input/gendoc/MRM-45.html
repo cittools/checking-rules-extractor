@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use sizeof operator on pointer type to specify the size of the memory to be allocated via 'malloc', 'calloc' or 'realloc' function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use sizeof operator on pointer type to specify the size of the memory to be allocated via 'malloc', 'calloc' or 'realloc' function [MRM-45-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message if any of the following functions:
+'malloc', 'calloc', or 'realloc' is used to allocate memory and the size
+of required memory is calculated using a sizeof operator with the pointer
+to the type instead of actual type. Using a pointer to the type instead of
+actual type as sizeof argument makes the sizeof operator return the size
+of pointer (which is 4 in a 32-bit platform).
+See also: PB-32
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents incorrect memory allocation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+typedef struct Str
+{
+   int m1;
+   int m2;
+}*pS;
+   
+void foo(int n) 
+{
+   pS var = (pS) malloc(n * sizeof(pS));  // Violation
+   free(var);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+typedef struct Str
+{
+   int m1;
+   int m2;
+}*pS;
+   
+void foo(int n) 
+{
+   pS var = (pS) malloc(n * sizeof(Str));  // OK
+   free(var);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

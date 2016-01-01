@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In the private section of a class items shall be declared in the following order: Constructors, Destructor, Member Functions, Member Operator Function, Enumerations and others
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In the private section of a class items shall be declared in the following order: Constructors, Destructor, Member Functions, Member Operator Function, Enumerations and others [CODSTA-CPP-45-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Following the above ordering convention makes it easier for those unfamiliar 
+with a class to figure out its functionality.
+See also: CODSTA-CPP-46, CODSTA-CPP-47, CODSTA-CPP-48, CODSTA-CPP-49
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes source code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A   // Violation
+{    
+    private:
+        A( );
+        int foo( );
+        ~A( );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A    // OK
+{   
+    private:
+        A( );
+        ~A( );
+        int foo( );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

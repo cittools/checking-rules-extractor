@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Assembly language shall be encapsulated and isolated
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Assembly language shall be encapsulated and isolated [MISRA2004-2_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Where assembly language instructions are required it is recommended 
+that they be encapsulated and isolated in either (a) assembler functions,
+(b) C functions or (c) macros."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* compilable by cl.exe g++*/
+void asmCall( ) {      /* Violation */
+    int g = 0;
+
+    #ifdef _MSC_VER
+        __asm {
+            mov eax, 01h
+            int 10h
+        }
+    #elif __GNUC__
+        __asm (
+            "mov %eax, 0x01\n\t"
+            "int $0x10"
+        );
+    #endif
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void asmCall( ) {       /* OK */
+    #ifdef _MSC_VER
+        __asm {
+            mov eax, 01h
+            int 10h
+        }
+    #elif __GNUC__
+         __asm (
+            "mov %eax, 0x01\n\t"
+            "int $0x10"
+        );
+    #endif
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 2
+
+2. Misra Guidelines - Rule 3
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-4-3
+
+</PRE>
+</BODY>
+</HTML>

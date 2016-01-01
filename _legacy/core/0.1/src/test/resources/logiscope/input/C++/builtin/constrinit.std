@@ -1,0 +1,19 @@
+.NAME Prefer Initialization to Assignment in Constructors
+
+.DESCRIPTION
+
+Definition:
+-----------
+Non static data members must be initialized inside the member initialization list 
+of the constructor(s) of the class.
+(This rule relates to Item 12 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Improves code efficiency.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

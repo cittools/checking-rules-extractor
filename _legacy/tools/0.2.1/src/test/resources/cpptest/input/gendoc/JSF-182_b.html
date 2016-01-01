@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A cast should not convert an integral type to a pointer type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A cast should not convert an integral type to a pointer type [JSF-182_b-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Integral types shall not be cast to pointers. Problems can arise when
+an arbitrary integer is converted to a pointer.
+
+
+Exceptions:
+
+The rule allows to cast integer constant '0' to pointer type.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined or implementation-defined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int* pi;
+    int i;
+    pi = (int*)i;    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast non-pointers to pointers.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines rule 45
+
+2. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 11
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 182
+
+</PRE>
+</BODY>
+</HTML>

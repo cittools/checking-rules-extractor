@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not call new on QMutexLocker
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not call new on QMutexLocker [QT-09-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not call new on QMutexLocker. The example shows the wrong usage
+of QMutexLocker, the example compiles and works, but contains
+a timebomb (deadlock after INT_MAX iterations). The code can be
+fixed by putting the QMutexLocker on the stack.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+QMutexLocker is only a convenience class for locking and unlocking a mutex.
+The whole point is to keep the class on the stack, so an exception in your code
+will also release the mutex, should something fail.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QMutex&gt;
+#include &lt;limits.h&gt;
+
+QMutex mutex;
+int i = 0;
+
+void increaseCounter()
+{
+    QMutexLocker *locker = new QMutexLocker(&amp;mutex);   // Violation
+
+    if (i == INT_MAX) {
+        qDebug("WARNING: Maximum count reached!!");
+        return;
+    }
+    ++i;
+    delete locker;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QMutex&gt;
+#include &lt;limits.h&gt;
+
+QMutex mutex;
+int i = 0;
+
+void increaseCounter()
+{
+    QMutexLocker locker(&amp;mutex);   // OK
+
+    if (i == INT_MAX) {
+        qDebug("WARNING: Maximum count reached!!");
+        return;
+    }
+    ++i;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/4.2/qmutexlocker.html">http://doc.trolltech.com/4.2/qmutexlocker.html</A>
+
+</PRE>
+</BODY>
+</HTML>

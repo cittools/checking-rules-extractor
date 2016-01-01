@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Objects shall be defined at block scope if they are only accessed from within a single function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Objects shall be defined at block scope if they are only accessed from within a single function [MISRA2004-8_7-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The scope of objects shall be restricted to functions where possible. 
+It is considered good practice to avoid making identifiers global 
+except where necessary. Whether objects are declared at the outermost 
+or innermost block is largely a matter of style."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only variables with internal linkage.
+No violation is reported if variable is not used at all.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static int max = 10; /* Violation */
+void foo( ) {    
+    while(max &gt;= 0) {
+        max--;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {    
+    int max = 10; /* OK */    
+    while(max &gt;= 0) {
+        max--;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 8
+
+</PRE>
+</BODY>
+</HTML>

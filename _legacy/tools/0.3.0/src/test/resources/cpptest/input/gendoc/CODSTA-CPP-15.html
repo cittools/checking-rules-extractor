@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Put functions that are used in the body of inline member function into separate include file
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Put functions that are used in the body of inline member function into separate include file [CODSTA-CPP-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When the following kinds of definitions are used (in implementation files or in
+other include files), they must be included as separate include files:
+- function prototypes for function/member function used in inline member 
+  function are defined in the file."
+See also: CODSTA-CPP-14, CODSTA-CPP-13, CODSTA-CPP-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void moo( );
+class A 
+{
+    inline void foo( )
+    {
+        moo( );             // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// header.h
+void moo( );
+
+// source.cpp
+#include "header.h"
+class A 
+{
+    inline void foo( )
+    {
+        moo( );             // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+From: 4 Source Code in Files - 4.4 Include Files - Rule 8
+
+</PRE>
+</BODY>
+</HTML>

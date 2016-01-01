@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for long double-precision floating point pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for long double-precision floating point pointer, array, or reference types [NAMING-HN-27-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For long double-precision floating point pointer, array, 
+or reference variables and parameters use "ld" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long double* g_pldmyVar;                                 // Violation
+long double* g_pMyVariable;                              // Violation
+static const long double* g_spkMyVariable;               // Violation
+class B {
+    long double* m_pMyVariable;                          // Violation
+    static const long double* m_spkMyVariable;           // Violation
+    void foo( long double* pMyParam ) {                  // Violation
+        long double* pMyVariable;                        // Violation
+        static const long double* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+long double* g_pldMyVar;                                  // OK
+long double* g_pldMyVariable;                             // OK
+static const long double* g_spkldMyVariable;              // OK
+class A {
+    long double* m_pldMyVariable;                         // OK
+    static const long double* m_spkldMyVariable;          // OK
+    void foo( long double* pldMyParam ) {                 // OK
+        long double* pldMyVariable;                       // OK
+        static const long double* spkldMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

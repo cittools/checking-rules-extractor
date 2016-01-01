@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+More than one 'enum' type shall not be used as a switch condition or a label in a case statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+More than one 'enum' type shall not be used as a switch condition or a label in a case statement [PB-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Using labels with different enum types in a switch statement may cause
+problem because enum members from different enum types could have the
+same value but different meanings. Using different enum types in a switch
+statement expression and labels may lead to unreachable code because the
+two enum types could be in different ranges.
+Rule reports a violation message in situations where enum type used as a switch
+expression is different than enums type used as labels in a switch statement
+or more than one enum type is used as labels in a switch statement.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unreachable code and improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Rule may not detect all violation cases in C code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef enum E1 {EA, EB, EC} E1;
+typedef enum F1 {FA = 3, FB = 4, FC = 5} F1;
+
+void MyFunction(E1 e, int i) {
+    switch(e) 
+    {
+    case FA :            // Violation  
+        i++; 
+    case FB :            // Violation
+        break; 
+    default:            
+    i++; 
+    break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef enum E1 {EA, EB, EC} E1;
+typedef enum F1 {FA = 3, FB = 4, FC = 5} F1;
+
+void MyFunction(E1 e, int i) {
+    switch(e) 
+    {
+    case EA :            // OK
+        i++; 
+    case EB :            // OK
+        break; 
+    default:            
+    i++; 
+    break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The controlling expression of a for statement shall not contain any objects of floating type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The controlling expression of a for statement shall not contain any objects of floating type [MISRA2004-13_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The controlling expression may include a loop counter, whose value is tested to
+determine termination of the loop. Floating-point variables shall not be used 
+for this purpose. Rounding and truncation errors can be propagated through the 
+iterations of the loop, causing significant inaccuracies in the loop variable, 
+and possibly giving unexpected results when the test is performed. For example 
+the number of times the loop is performed may vary from one implementation to 
+another, and may be unpredictable."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unpredictable behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( float max )  {
+    float y;
+    for (y = 0; y &lt; max; y++);  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int max )  {
+    int y;
+    for (y = 0; y &lt; max; y++);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 13
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer member functions to algorithms with the same names
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer member functions to algorithms with the same names [STL-34-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Some containers have member functions with the same names as STL algorithms.
+The associative containers offer count, find, lower_bound. upper_bound, and
+equal_range, while list offers remove, remove_if, unique, sort, merge, and
+reverse. Most of the time, you'll want to use the member functions instead of
+the algorithms. There are two reasons for this. First, the member functions are
+faster. Second, they integrate better with the containers (especially the
+associative containers) than do the algorithms. That's because algorithms and
+member functions that share the same name typically do not do exactly the same
+thing.(...)"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and stability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;set&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+void myFunction( ) {
+   set&lt;int&gt; s; 
+   list&lt;int&gt; l;
+   list&lt;int&gt;::iterator begin = l.begin();
+   list&lt;int&gt;::iterator end = l.end();
+   set&lt;int&gt;::iterator i = find(s.begin(), s.end(), 727);  // Violation
+   reverse(begin,end);                                    // Violation
+   reverse(l.begin(),l.end());                            // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;set&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+void myFunction( ) {
+   set&lt;int&gt; s;
+   list&lt;int&gt; l;
+   set&lt;int&gt;::iterator i = s.find(727); // OK
+   l.reverse();                        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 7, item 44
+
+</PRE>
+</BODY>
+</HTML>

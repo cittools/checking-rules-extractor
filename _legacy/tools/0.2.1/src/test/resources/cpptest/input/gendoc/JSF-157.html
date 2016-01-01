@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The right-hand operand of a logical &amp;&amp; or || operator shall not contain side effects
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The right-hand operand of a logical &amp;&amp; or || operator shall not contain side effects [JSF-157-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"There are some situations in C or C++ where certain parts of expressions may
+not be evaluated. If these sub-expressions contain side effects then those side
+effects may or may not occur, depending on the values of other sub expressions.
+The operators which can lead to this problem are &amp;&amp; and || where the evaluation
+of the right-hand operand is conditional on the value of the left-hand operand.
+The operations that cause side effects are accessing a volatile object,
+modifying an object, modifying a file, or calling a function that does
+any of those operations, which cause changes in the state of the execution
+environment of the calling function."
+See also: MISRA2004-12_2_a, MISRA2004-12_4_b
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only three nested level of fuction call.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents conditional evaluation of the right-hand operand that can easily
+cause problems if the developer relies on a side effect occurring.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int i;
+    int j;
+    if ((j == i) || (0 == i++)) ; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int i;
+    int j;
+    if ((j == i) || (0 == i)) i++; // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 33
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule 157
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-14-1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The #include pre-processor directive will only be used to include header (*.h) files
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The #include pre-processor directive will only be used to include header (*.h) files [PREPROC-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The #include pre-processor directive will only be used to include
+header (*.h) files.
+
+
+Exceptions:
+
+In the case of template class or function definitions, the code may be
+partitioned into separate header and implementation files. In this
+case, the implementation file may be included as a part of the header
+file. Rule allows for mentioned exception if the implementation file
+has the same name as a header file.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves the clarity of code.
+The only files included in a .cpp file should be the relevant
+header (*.h) files.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file.cpp
+#include &lt;file2.cpp&gt;  // Violation
+#include &lt;file3.hh&gt;   // Violation
+
+// file.h
+#include &lt;file2.cpp&gt;  // Violation
+#include &lt;file3.hh&gt;   // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file.cpp
+#include &lt;file2.h&gt;    // OK - header (*.h) file
+#include &lt;file3.h&gt;    // OK - header (*.h) file
+
+// file.h
+#include &lt;file.cpp&gt;   // OK - corresponding to file.h implementation file file.cpp
+#include &lt;file2.h&gt;    // OK - header (*.h) file
+#include &lt;file3.h&gt;    // OK - header (*.h) file
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.6 Pre-Processing Directives, AV Rule 32
+
+</PRE>
+</BODY>
+</HTML>

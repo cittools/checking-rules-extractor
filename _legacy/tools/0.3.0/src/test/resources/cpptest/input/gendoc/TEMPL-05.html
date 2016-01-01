@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In template classes use 'typename' to identify nested dependent type names
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In template classes use 'typename' to identify nested dependent type names [TEMPL-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use typename to identify nested dependent type names, except in base class 
+lists or as a base class identifier in a member initialization list."
+See also: TEMPL-04
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Nested dependent names can lead to parsing difficulties. (...) if the parser
+encounters a nested dependent name in a template, it assumes that the name is
+not a type unless you tell it otherwise. By default, nested dependent names are
+not types. The general rule is simple: anytime you refer to a nested dependent
+type name in a template, you must immediately precede it by the word typename."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+template&lt;class T&gt;
+class Base {
+public:
+    class Nested {
+    public:
+        Nested( int a );
+        Nested( );
+        void foo( );
+    };
+};
+
+template&lt;typename T&gt;
+class Derived2: public Base&lt;T&gt;::Nested {
+public:
+    explicit Derived2( int x ): Base&lt;T&gt;::Nested( x ) {
+        Base&lt;T&gt;::Nested temp;           // Violation
+        temp.foo( );
+    }
+    void goo(Base&lt;T&gt;::Nested temp){}    // Violation 
+};
+
+void test( ) {
+    Derived2&lt;int&gt; obj(1);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+template&lt;class T&gt;
+class Base {
+public:
+    class Nested {
+    public:
+        Nested( int a );
+        Nested( );
+        void foo( );
+    };
+};
+
+template&lt;typename T&gt;
+class Derived2: public Base&lt;T&gt;::Nested {
+public:
+    explicit Derived2( int x ): Base&lt;T&gt;::Nested( x ) {
+        typename Base&lt;T&gt;::Nested temp;           // OK
+        temp.foo( );
+    }
+    void goo( typename Base&lt;T&gt;::Nested temp ){}    // OK 
+};
+
+void test( ) {
+    Derived2&lt;int&gt; obj(1);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 7, Item 42
+
+</PRE>
+</BODY>
+</HTML>

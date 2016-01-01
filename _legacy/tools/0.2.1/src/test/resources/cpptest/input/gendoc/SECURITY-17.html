@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid passing non-const parameters or variables into exec
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid passing non-const parameters or variables into exec [SECURITY-17-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that passes dynamically created strings in to exec.
+Note: Rule checks if parameter or variable passed to exec is not const
+See also: SECURITY-18
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+An attacker can potentially insert a malicious string fragment 
+into a dynamically created string. 
+Such fragment may allow the attacker to execute a specified command, 
+resulting in a security breach.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#ifdef __GNUC__
+#include &lt;unistd.h&gt;
+#define _execl execl
+#else
+#include &lt;process.h&gt;
+#endif
+
+void foo( ) {
+    char *param = "C:\\command.com";
+    _execl( param, "", "_execl", "", NULL );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#ifdef __GNUC__
+#include &lt;unistd.h&gt;
+#define _execl execl
+#else
+#include &lt;process.h&gt;
+#endif
+
+void foo( ) {
+    _execl( "C:\\command.com", "", "_execl", "", NULL ); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

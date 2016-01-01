@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use the same form in corresponding calls to new/malloc and delete/free
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use the same form in corresponding calls to new/malloc and delete/free [MRM-06-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Use the same form in corresponding calls to new/malloc and delete/free.
+This rule checks calls to new, delete, malloc, and free to make sure that they 
+use the same form; it reports a violation if you call new and free( ).
+If you do not use the same form in corresponding calls to to new, delete, 
+malloc, and free, an incorrect number of destructors may be called.
+See also: MRM-08, MRM-09, MRM-10, MRM-11, MRM-30
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule will trigger if the same variable is allocated memory in two different 
+incompatible ways in the same function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using different kinds of 'new/malloc' and 'delete/free' calls.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+void foo( ) {
+    char* ptr1 = (char*) malloc( 19 );
+    char* ptr2 = new char[ 10 ];
+    delete ptr1;                     // Violation
+    free( ptr2 );                    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+void foo( ) {
+    char* ptr1 = (char*) malloc( 19 );
+    char* ptr2 = new char[ 10 ];
+    free( ptr1 );                    // OK
+    delete[] ptr2;                   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

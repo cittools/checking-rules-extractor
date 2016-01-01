@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Pointer dereference operations may not be hidden in macro definitions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Pointer dereference operations may not be hidden in macro definitions [PREPROC-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The use of pointers should be restricted. Pointer dereference operations
+may not be hidden in macro definitions"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Pointers are easily misused, even by experienced programmers. They can make it
+hard to follow or analyze the flow of data in a program, especially by toolbased
+static analyzers."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MAC1(a, b)  *a + b      // Violation
+#define MAC2(a, b) (a + *b)     // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use pointer dereference operations in macro definitions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 9
+
+</PRE>
+</BODY>
+</HTML>

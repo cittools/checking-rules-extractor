@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not directly access global data from a constructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not directly access global data from a constructor [OOP-08-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Directly accessing global data from a constructor is risky because the global
+object may not yet exist when the "other" static object is initialized.
+This rule detects if you directly access global data from a constructor.
+See also: OOP-09, OOP-10
+
+
+Exceptions:
+
+Global constants can be used in a constructor.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The order of initialization of static objects defined in different compilation
+units is not defined in the C++ language definition. Therefore, accessing global
+data from a constructor may result in reading from uninitialized objects.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int globalVar;
+class A {
+public:
+    A( ) {              // Violation
+        b = globalVar;
+    }
+private:
+    int b;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use global variables in constructors.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+from: 7 Classes - 7.5 Constructors and Destructors - Rec. 33
+
+</PRE>
+</BODY>
+</HTML>

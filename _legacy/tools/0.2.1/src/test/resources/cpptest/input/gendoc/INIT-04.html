@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Initialize all pointer variables
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Initialize all pointer variables [INIT-04-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if all of your pointer variables are initialized.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule enforces a good coding standard practice: always initialize pointer 
+variables, even if you're going to change (assign) the variable  at once.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Initializing pointer variables prevents dereferencing of uninitialized pointers.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int y, int * p)
+{
+   int *i;  // Violation
+   int *j;  // Violation
+   if (y) {
+      j = 0;
+   } else {
+      j = p;
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int y, int * p)
+{
+   int *i = 0;            // OK
+   int *j = y ? 0 : p;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Coding Style", Rule 19
+
+</PRE>
+</BODY>
+</HTML>

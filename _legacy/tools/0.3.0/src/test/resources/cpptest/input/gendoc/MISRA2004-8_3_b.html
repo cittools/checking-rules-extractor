@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use identical types in declaration and definition
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use identical types in declaration and definition [MISRA2004-8_3_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For each function parameter the type given in the declaration and
+definition shall be identical, and the return types shall also be identical.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour and improves readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int MyInt1;
+typedef MyInt1 MyInt2;
+
+void foo1( MyInt1 a, int b );	/* Violation */
+void foo1( int a, MyInt1 b ) {}
+void foo2( int a, MyInt1 b );	/* Violation */
+void foo2( int a, MyInt2 b ) {}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int MyInt1;
+typedef MyInt1 MyInt2;
+
+void foo1( MyInt1 a, int b );   /* OK */
+void foo1( MyInt1 a, int b ) {}
+void foo2( int a, MyInt2 b );   /* OK */
+void foo2( int a, MyInt2 b ) {}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 8
+
+2. Origin: Misra Guidelines - Rule 72
+
+</PRE>
+</BODY>
+</HTML>

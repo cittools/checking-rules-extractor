@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use vector and string instead of arrays
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use vector and string instead of arrays [STL-37-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Avoid implementing array abstractions with C-style arrays, pointer arithmetic, 
+and memory management primitives." Using vector or string helps you write safer 
+and more scalable software.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps writing safer and more scalable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A{};
+void foo( ) {
+  A arrayA[10]; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+class A{};
+
+void foo( ) {
+  A obj;
+  vector &lt;A&gt; vectorA; // OK
+  vectorA.push_back(obj);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "STL: Containers", Rule 77
+
+</PRE>
+</BODY>
+</HTML>

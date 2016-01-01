@@ -1,0 +1,20 @@
+.NAME Prefer C++-style Casts
+
+.DESCRIPTION
+
+Definition:
+-----------
+Use the C++-style casts (static_cast, const_cast, dynamic_cast and reinterpret_cast)
+instead of the general-purpose C-style cast.
+(This rule relates to Item 2 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+The C-style cast does not allow to make a distinction between the different types
+of casts and it is not easy to detect.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,20 @@
+.NAME Inline functions declarations and definitions
+
+.DESCRIPTION
+
+Definition:
+-----------
+Inline functions must be declared in their class and defined outside of it.
+
+Parameters:
+----------
+The optional string "private". 
+When the parameter is used, private inline functions must be defined in the 
+class definitions file (.cpp file), other inline functions must de defined in
+the class declaration file (.h file). 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

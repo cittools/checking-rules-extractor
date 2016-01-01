@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Braces "{}" which enclose a block should be placed in the same column
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Braces "{}" which enclose a block should be placed in the same column [FORMAT-34-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule checks if opening and closing braces are placed in the same column.
+See also: FORMAT-02, FORMAT-03
+
+
+Exceptions:
+
+Rule does not adhere to enums, initializations and empty blocks.
+enum E {EN1 = 2, EN2 = 1};  // OK
+int array[] = {1,2,3,4,5};  // OK
+class FooBar{};             // OK
+Rule does not report violation if in line with brace 'tab' is used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foobar {   // Violation
+   int a;
+};
+
+struct S1 {      // Violation
+    int a;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Foobar 
+{                // OK
+    int a;
+};
+
+struct S1
+{                // OK
+    int a;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+from: 6 Style Classes - 6.3 Compound Statements- Rec. 24
+
+</PRE>
+</BODY>
+</HTML>

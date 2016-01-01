@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid switch statements with only one case
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid switch statements with only one case [CODSTA-41-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A switch statement should not be used with only one case statement in its body.
+Such a switch statement can be described using an if statement.
+See also: CODSTA-54
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Avoids improper use of switch.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo ()
+{
+    int i = 0;
+    switch(i)            // Violation 
+    {
+        case 0:  break;
+        default:  break;
+    } 
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo ()
+{
+    int i = 0;
+    if(i==0)            // OK
+    {    } 
+    else { }
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

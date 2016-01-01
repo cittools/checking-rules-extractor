@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Classes containing at least one non-static member variable should declare the copy constructor or contain appropriate comment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Classes containing at least one non-static member variable should declare the copy constructor or contain appropriate comment [MRM-48-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Classes which have at least one non-static member variable should declare
+the copy constructor. When behavior of the compiler-generated version
+of copy constructor is correct it should be commented. Comment should contain
+string "copy constructor" which is checked insensitive.
+See also: CODSTA-CPP-19, MRM-05, MRM-38, MRM-40, MRM-47, OOP-27, OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using compiler-generated copy constructor by accident.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A   // Violation
+{
+public:
+    A();
+private:
+    int* ptr;
+};
+
+class B   // Violation
+{
+private:
+    int var;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A   // OK
+{
+public:
+    A();
+    A(const A&amp;);
+private:
+    int* ptr;
+};
+
+class B   // OK
+{
+	// Copy constructor is compiler generated
+private:
+    int var;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

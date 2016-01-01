@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+EOS should be used to terminate a string rather than NULL
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+EOS should be used to terminate a string rather than NULL [CODSTA-20-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that EOS is used to terminate a string. 
+EOS should be used to terminate a string rather than NULL,
+since NULL is not guaranteed to be defined as zero.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Promotes the use of defined constants rather than hard coded values.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stddef.h&gt;
+#define EOS '\0'
+
+void foo( ) {
+    char str[30] = "Sample text.";
+    str[7] = NULL;                        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stddef.h&gt;
+#define EOS '\0'
+void foo( ) {
+    char str[30] = "Sample text.";
+    str[7] = EOS;                          // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards G-11
+
+</PRE>
+</BODY>
+</HTML>

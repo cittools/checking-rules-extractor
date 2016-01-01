@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Make base class destructors public and virtual, or protected and nonvirtual
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Make base class destructors public and virtual, or protected and nonvirtual [OOP-31-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If deletion through a pointer to a base class should be allowed, 
+then base class destructor must be public and virtual.
+Otherwise, it should be protected and nonvirtual."
+See also: OOP-22, OOP-23, OOP-24
+
+
+Exceptions:
+
+Base class has no virtual functions and is not meant to be used polymorphically.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour of the delete calls on base class 
+pointers pointing to a derived object.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    virtual int foo();
+    ~Base();  // Violation
+};
+class Derived : public Base {};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    virtual int foo();
+protected:
+    ~Base();  // OK
+};
+class Derived : public Base {};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Construction, Destruction, and Copying", Rule 50
+
+</PRE>
+</BODY>
+</HTML>

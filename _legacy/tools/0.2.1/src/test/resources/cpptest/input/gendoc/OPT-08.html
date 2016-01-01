@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer "a @= b" than "a = a @ b", where "@" is &amp;, |, ^, &lt;&lt;, &gt;&gt;
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer "a @= b" than "a = a @ b", where "@" is &amp;, |, ^, &lt;&lt;, &gt;&gt; [OPT-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Prefer "a @= b" than "a = a @ b", where "@" is &amp;, |, ^, &lt;&lt;, &gt;&gt;.
+See also: OPT-07
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves legibility and increases efficiency of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x, int y ) {
+    x = x &amp; 2; // Violation
+    x = x | 2; // Violation
+    x = x ^ 2; // Violation
+    x = x &lt;&lt; 2; // Violation
+    x = x &gt;&gt; 2; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int x, int y ) {
+    x &amp;= 2;    // OK
+    x |= 2;    // OK
+    x ^= 2;    // OK
+    x &lt;&lt;= 2;    // OK
+    x &gt;&gt;= 2;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

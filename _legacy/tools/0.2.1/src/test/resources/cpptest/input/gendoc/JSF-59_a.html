@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The statement forming the body of a 'switch', 'while', 'do...while' or 'for' statement shall be a compound statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The statement forming the body of a 'switch', 'while', 'do...while' or 'for' statement shall be a compound statement [JSF-59_a-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+" The statement that forms the body of a switch statement or a while,
+do ... while or for loop, shall be a compound statement (enclosed within
+braces), even if that compound statement contains a single statement."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x ) {
+    int i;
+
+    switch(i)             // Violation
+    ;
+
+    for (i=0; i&lt; 10; i++) // Violation 
+        foo( x );
+    while (1)             // Violation
+        foo( x );
+
+    do                    // Violation
+    foo( x );
+    while(1);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int x ) {
+    int i;
+
+    switch(i)             // OK
+    {
+    }
+
+    for (i=0; i&lt; 10; i++) // OK
+            {foo( x );}
+    while (1)             // OK
+        {foo( x );}
+
+    do                    // OK
+        {foo( x );}
+    while(1);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 14
+
+2. Origin: Misra Guidelines - Rule 59
+
+3. Origin: Ellemtel Coding Standards 
+    <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+    from: 6 Style - 6.4 Flow Control Statements - Rec. 25
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.9 Style, AV Rule 59
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-3-1
+
+</PRE>
+</BODY>
+</HTML>

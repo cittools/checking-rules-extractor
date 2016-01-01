@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Braces shall be used to indicate and match the structure in the non-zero initialization of arrays and structures
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Braces shall be used to indicate and match the structure in the non-zero initialization of arrays and structures [MISRA2004-9_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"ISO C requires initializer lists for arrays, structures and union types to be 
+enclosed in a single pair of braces (though the behaviour if this is not done
+is undefined). The rule given here goes further in requiring the use 
+of additional braces to indicate nested structures.
+The zero initialization of arrays or structures shall only be applied
+at the top level. The non-zero initialization of arrays or structures
+requires an explicit initializer for each element."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only up to three-level nested bracket initialization.
+
+
+Exceptions:
+
+"All the elements of arrays or structures can be initialized (to zero or NULL)
+by giving an explicit initializer for the first element only. If this method
+of initialization is chosen then the first element should be initialized
+to zero (or NULL), and nested braces need not be used."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This forces the programmer to explicitly consider and demonstrate the order
+in which elements of complex data types are initialized"
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int y[3][2] = { 1, 2, 3, 4, 5, 6 }; // Violation
+
+struct S {
+    int i;
+    struct T {
+        int j;
+    }t;
+} s = {1, 2}; // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int y[3][2] = { { 1, 2 }, { 3, 4 }, { 5, 6 } }; // OK
+
+struct S {
+    int i;
+    struct T {
+        int j;
+    }t;
+} s = {1, { 2 }}; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 9
+
+2. Misra Guidelines - Rule 31
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.16 Initialization, AV Rule 144
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-5-2
+
+</PRE>
+</BODY>
+</HTML>

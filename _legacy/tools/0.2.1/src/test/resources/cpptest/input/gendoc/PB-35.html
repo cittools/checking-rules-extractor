@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Assignment operators shall not be used in conditions without brackets
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Assignment operators shall not be used in conditions without brackets [PB-35-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Assignment operators shall not be used in conditions without brackets.
+Missing the brackets causes that only one branch is executed and the
+assignment may lead to unexpected program behavior.
+See also: MISRA2004-13_1
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unexpected program behavior.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+   void foo();
+};
+
+void A::foo()
+{
+   int i = 1;
+   int j = 0;
+   if(i = j)j++;   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+   void foo();
+};
+
+void A::foo()
+{
+   int i = 1;
+   int j = 0;
+   if( (i = j) )j++;   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

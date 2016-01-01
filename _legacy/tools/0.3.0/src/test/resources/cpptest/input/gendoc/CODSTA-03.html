@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not define constants via #define
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not define constants via #define [CODSTA-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Constants are to be defined using const or enum; never using #define. The
+preprocessor performs a textual substitution for macros in the source code 
+which is then compiled. This has a number of negative consequences. For 
+example, if a constant has been defined using #define, the name of the 
+constant is not recognized in many debuggers. If the constant is represented 
+by an expression, this expression may be evaluated differently for different
+instantiations, depending on the scope of the name. In addition, macros are,
+at times, incorrectly written."
+See also: MISRA2004-19_7, CODSTA-37, CODSTA-38, CODSTA-39, CODSTA-40
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Code is easier to debug. Prevents incorrectly macro writing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define PI 3.1416    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const float PI = 3.1416; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 2
+
+2. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 10 Constants - Rule 36
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.6 Pre-Processing Directives, AV Rule 30
+
+</PRE>
+</BODY>
+</HTML>

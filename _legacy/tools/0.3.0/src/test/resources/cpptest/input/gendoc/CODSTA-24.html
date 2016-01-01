@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If FALSE is to be defined, and is not already defined, #define FALSE should be 0
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If FALSE is to be defined, and is not already defined, #define FALSE should be 0 [CODSTA-24-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you defined FALSE as 0.
+See also: CODSTA-25
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Any use of FALSE-- other than defining FALSE as 0-- is misleading
+and will not be guaranteed to work predictably.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define FALSE 1 // Violation
+#undef FALSE
+#define FALSE   // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define FALSE 0 // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.research.att.com/~bs/glossary.html#Gfalse">http://www.research.att.com/~bs/glossary.html#Gfalse</A>
+
+</PRE>
+</BODY>
+</HTML>

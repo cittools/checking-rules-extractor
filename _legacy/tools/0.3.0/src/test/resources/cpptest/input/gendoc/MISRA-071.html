@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Functions shall always have visible prototype at both the function definition and call
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Functions shall always have visible prototype at both the function definition and call [MISRA-071-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Functions shall always have visible prototype at both the function definition 
+and call. According to the ISO/IEC 9989:1999 C standard, a function prototype 
+is a declaration of a function that declares the types of its parameters.  MISRA 
+rule 71 requires that any function must be declared before its is called or 
+defined.  This means that function prototype must appear before the definition 
+or call. The example below illustrates cases verified by this rule.
+This rule is active for C code only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents disabling the compiler's ability to pick up certain errors in 
+function calls what happens when prototypes are not used.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* file *.c */
+
+/* definition without prototype */
+void case2goo(void) {       /* Violation */
+}
+
+
+/* call without prototype */
+void case3goo(void);
+void case3foo(void) {       /* Violation */
+}
+void case3goo(void) {
+	case3foo();         /* Violation */ 
+}
+
+/* definition with prototype declared after function definition */
+void case6goo(void) {       /* Violation */
+}
+void case6goo(void);
+
+
+/* call with prototype declared after function call */
+void case7goo(double x);
+void case7goo(double x) {
+	case7foo(x);         /* Violation */
+}
+
+int case7foo(double);
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* file *.c */
+
+/* both function call and definition have visible prototype */
+void case1foo(void);       /* prototype */
+void case1goo(void);       /* prototype */
+void case1goo(void) {      /* OK */ 
+	case1foo();        /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 71
+2. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 8, Rule 8.1
+
+</PRE>
+</BODY>
+</HTML>

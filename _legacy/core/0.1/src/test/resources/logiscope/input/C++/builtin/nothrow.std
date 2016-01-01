@@ -1,0 +1,16 @@
+.NAME No exceptions may be raised by the user
+
+.DESCRIPTION
+
+Definition:
+-----------
+No exceptions may be raised by the user (the key-word throw may not be used).
+
+Justification:
+--------------
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

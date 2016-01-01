@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The continue statement shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The continue statement shall not be used [JSF-190-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Avoid the use of continue. continue can be used to exit from loops. 
+However, code may be more comprehensible by using an else clause instead."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using 'continue' which can lead to errors and confusion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int bar( int );
+void foo( int i ) {
+    while (i--) {
+        if (bar( i )) {
+            continue;     /* Violation */
+        }
+        i /= 2;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int bar( int );
+void foo( int i ) {
+    while (i--) {
+        if (bar( i )) {
+            /* OK - code was changed and does not use continue anymore */
+        } else {
+            i /= 2;
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 14
+
+2. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 14 Flow Control Structures - Rec. 53
+
+3. Origin: Misra Guidelines - Rule 57
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 190
+
+</PRE>
+</BODY>
+</HTML>

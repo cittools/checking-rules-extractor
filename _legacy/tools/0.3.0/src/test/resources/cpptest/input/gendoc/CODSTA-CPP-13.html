@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Put classes that are used as function return type into separate include files
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Put classes that are used as function return type into separate include files [CODSTA-CPP-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When the following kinds of definitions are used (in implementation files or in
+other include files), they must be included as separate include files:
+- classes that appear as return types
+See also: CODSTA-CPP-15, CODSTA-CPP-14, CODSTA-CPP-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {};
+A* moo( );               // Violation
+class B {
+    A* foo( );           // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// header.h
+class A {};
+
+// source.cpp
+#include "header.h"
+A* moo( );               // OK
+class B {
+    A* foo( );           // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+From: 4 Source Code in Files - 4.4 Include Files - Rule 8
+
+</PRE>
+</BODY>
+</HTML>

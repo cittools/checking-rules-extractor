@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A pointer parameter in a function shall be declared as pointer to const if the corresponding object is not modified
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A pointer parameter in a function shall be declared as pointer to const if the corresponding object is not modified [MISRA2008-7_1_2_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A pointer parameter in a function prototype should be declared as pointer to
+const if the pointer is not used to modify the addressed object. The const
+qualification should be applied to the object pointed to, not to the pointer,
+since it is the object itself that is being protected."
+See also: CODSTA-14, CODSTA-CPP-43, CODSTA-CPP-53, MISRA-104, 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unintentional change of data and improves precision in the
+definition of the function interface.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int function(int* ptr)       // Violation
+{
+    return (*ptr) + 1;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int function(const int* ptr) // OK
+{
+    return (*ptr) + 1;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 3
+
+2. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 16
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 118
+
+4. Origin: Misra Guidelines - Rule 81
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-1-2
+
+</PRE>
+</BODY>
+</HTML>

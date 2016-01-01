@@ -1,0 +1,136 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Trivial accessor and mutator functions should be inlined
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Trivial accessor and mutator functions should be inlined [JSF-122-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Trivial accessor and mutator functions should be inlined.
+Rule reports a violation message if accessor/mutator which does not have:
+- loop statements
+- virtual function calls
+- recursion
+- more than 5 statements
+
+is not inline.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Inlining short, simple functions can save both time and space.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Rule assumes that getter/setter (accessor/mutator) methods are methods with names
+starting from get/Get or set/Set prefix followed by underscoring or capitalized
+letter and:
+- get method returns member variable or reference to it
+- set method sets the value to member variable
+
+
+Exceptions:
+
+Template methods, virtual methods.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+ 	int m_var;
+ 
+ public:
+ 	 int get_m_var();
+ 	 void set_m_var();
+};
+
+
+int A::get_m_var()    // Violation
+{
+   return m_var;
+}
+
+void A::set_m_var()   // Violation
+{
+   m_var = 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+ 	int m_var;
+ 
+ public:
+ 	inline int get_m_var();
+ 	inline void set_m_var();
+};
+
+
+inline int A::get_m_var()   // OK
+{
+   return m_var;
+}
+
+inline void A::set_m_var()  // OK
+{
+   m_var = 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.13 Functions, AV Rule 122
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,42 @@
+.NAME Hidden class uses
+
+.DESCRIPTION
+
+Definition:
+-----------
+This standard prevents from calling a class method not known in the user class 
+(hidden use), through calls in series.
+
+Following expressions are not allowed:
+
+u.v.a
+u.v.f()
+u.g().a
+u.g().f()
+
+As for expressions using the -> operator.
+
+Example:
+--------
+
+myWindow.itsButton.push(); 
+
+You manipulate the myWindow object from the Window class; you access to the 
+itsButton attribute; 
+you directly call the push method on it. 
+But only the Window class and its interface, containing itsButton , are normaly 
+known, and not the itsButton attribute class, neither its public methods 
+(including push).
+
+Example:
+--------
+
+Error->pos.line;
+
+There is a hidden use of line , which is not known from Error.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

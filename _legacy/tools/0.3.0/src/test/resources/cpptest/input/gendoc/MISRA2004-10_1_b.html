@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid implicit conversions between integer and floating types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid implicit conversions between integer and floating types [MISRA2004-10_1_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The value of an expression of integer type shall not be implicitly
+converted to a different underlying type.
+The term 'underlying type' is defined as describing the type that would
+be obtained from evaluating an expression if it were not for the effects
+of integral promotion."
+Rule checks if implicit conversions between integer and floating types are used.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"By observing the principle whereby all operations are performed in 
+a consistent (underlying) type, it is possible to avoid programmer confusion 
+and some of the dangers associated with integral promotion."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Conv1_int( ) {
+    float f32a;
+    unsigned int u32a;
+
+    f32a = u32a;                /* Violation */
+    f32a = f32a + u32a;         /* Violation */
+    f32a = u32a + 2.5f;         /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void Conv1_int( ) {
+    float f32a;
+    unsigned int u32a;
+
+    f32a = (float)u32a;         /* OK */
+    f32a = f32a + (float)u32a;  /* OK */
+    f32a = (float)u32a + 2.5f;  /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 10
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-5
+
+</PRE>
+</BODY>
+</HTML>

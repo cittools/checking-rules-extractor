@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+QObject must not be inherited more than one time
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+QObject must not be inherited more than one time [QT-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+QObject must not be inherited more than one time.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The meta-object system cannot properly merge the meta-information from two
+QObject derived classes. The resulting meta-object file may or may not compile,
+and you will not be able to access all the signals and slots from both super
+classes. You will also not be able to cast the object to both super classes.
+Multiple inheritance from QObjects would also mean duplication of internal
+data structures.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+#include &lt;QtGui/QWidget&gt;
+
+class ClipboardInterface : public QObject
+{
+    Q_OBJECT
+
+public slots:
+    void cut();
+    void copy() const;
+    void paste();
+
+private:
+    Q_DISABLE_COPY(ClipboardInterface)
+};
+
+class CustomWidget : public QWidget, public ClipboardInterface // Violation
+{                                             // inherits from two QObjects
+    Q_OBJECT
+
+private:
+    Q_DISABLE_COPY(CustomWidget) 
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// for workaround detailed description visit:
+// <A HREF="http://doc.trolltech.com/qq/qq15-academic.html">http://doc.trolltech.com/qq/qq15-academic.html</A>
+#include &lt;QtCore/QObject&gt;
+#include &lt;QtGui/QWidget&gt;
+
+class ClipboardInterface
+{
+public:
+    virtual void cut() = 0;
+    virtual void copy() const = 0;
+    virtual void paste() = 0;
+};
+
+class ClipboardWrapper;
+
+class CustomWidget : public QWidget, public ClipboardInterface  // OK
+{
+    Q_OBJECT
+
+public:
+    CustomWidget(QWidget *parent = 0);
+
+    void cut();
+    void copy() const;
+    void paste();
+
+private:
+    ClipboardWrapper *wrapper;
+    Q_DISABLE_COPY(CustomWidget)
+};
+
+class ClipboardWrapper : public QObject, public ClipboardInterface
+{
+    Q_OBJECT
+
+public:
+    ClipboardWrapper(QObject *parent): QObject(parent)
+    {
+        Q_ASSERT(parent);
+        wrappedObject = qobject_cast&lt;CustomWidget *&gt;(parent);
+        Q_ASSERT(wrappedObject);
+    }
+
+public slots:
+    void cut() { wrappedObject-&gt;cut(); }
+    void copy() const { wrappedObject-&gt;copy(); }
+    void paste() { wrappedObject-&gt;paste(); }
+
+private:
+    ClipboardInterface *wrappedObject;
+    Q_DISABLE_COPY(ClipboardWrapper)
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/qq/qq15-academic.html#multipleinheritance">http://doc.trolltech.com/qq/qq15-academic.html#multipleinheritance</A>
+
+</PRE>
+</BODY>
+</HTML>

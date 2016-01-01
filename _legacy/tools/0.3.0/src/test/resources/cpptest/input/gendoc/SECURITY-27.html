@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't use chmod(), chown(), chgrp()
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't use chmod(), chown(), chgrp() [SECURITY-27-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Don't use chmod(), chown(), chgrp().
+Use fchmod(), fchown() instead.
+fchmod() is more efficient because it does not have to do 
+a separate look-up of the name, whereas chmod() must do so.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using unsafe chmod(), chown(), chgrp() functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+
+void foo(const char* path)
+{
+	chmod(path, S_IRWXU);     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+
+void goo(int fildes)
+{
+	fchmod(fildes, S_IRWXU);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

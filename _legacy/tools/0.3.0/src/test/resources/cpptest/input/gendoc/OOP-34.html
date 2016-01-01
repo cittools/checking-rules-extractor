@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Check for assignment to self in operator=
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Check for assignment to self in operator= [OOP-34-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks your code for aliasing in assignment operators. Not checking
+for assignment to self in operator= can free resources that might be needed
+during the process of allocating new resources.
+See also: CODSTA-CPP-02, CODSTA-CPP-21, CODSTA-CPP-24, MRM-04, MRM-37, MRM-40,
+          MRM-47, OOP-27, OOP-30
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Checking for assignment to self may also save you a lot of work that you
+would otherwise have to do to implement assignments.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A  {
+public:
+    A( ) { }
+    A&amp; operator=( A&amp; a ) {  // Violation
+        return *this;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A  {
+public:
+    A( ) { }
+    A&amp; operator=( A&amp; a ) {  // OK
+        if (&amp;a != this) {
+            // ...
+        }
+        return *this;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 2, Item 11
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Constructors, Destructors, and Assignment Operators", Item 17
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 81
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,26 @@
+.NAME Identifier format
+
+.DESCRIPTION
+
+Definition:
+-----------
+The identifier of a function, type or variable declared in a module 
+must have a format corresponding to the category of the declaration.
+In the case of the Ada rule, checking is limited to the objects exported 
+by the compilation unit.
+
+It is possible to define a format for specific categories in each language.
+For a complete description of the available categories, please refer to each manual.
+
+Parameters:
+----------
+A list of couples of character strings; the first string of the 
+couple represents the declaration category name, the second one the regular 
+expression associated to that declaration category (see Headercom: Module 
+header comments).
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

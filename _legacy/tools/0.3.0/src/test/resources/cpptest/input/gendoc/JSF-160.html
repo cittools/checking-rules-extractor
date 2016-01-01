@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Assignment operators shall not be used in expressions that yield a Boolean value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Assignment operators shall not be used in expressions that yield a Boolean value [JSF-160-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"No assignments are permitted in any expression which is considered to have a 
+Boolean value. This precludes the use of both simple and compound assignment 
+operators in the operands of a Boolean-valued expression. However, it does not 
+preclude assigning a Boolean value to a variable. If assignments are required 
+in the operands of a Boolean-valued expression then they must be performed 
+separately outside of those operands. This helps to avoid getting "=" and "==" 
+confused, and assists the static detection of mistakes."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+An expression is considered to represent a Boolean value either because
+it appears in a position where a Boolean value is expected or because it
+uses an operator that gives rise to a Boolean value. Boolean values are
+expected in the following contexts:
+- the controlling expression of an if statement
+- the controlling expression of an iteration statement
+- the first operand of the conditional operator ?
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents getting "=" and "==" confused.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    int x;
+    int y;
+    int z;
+    z = !(x = y);                // Violation
+    if ((x &gt; y) &amp;&amp; (x = 4));  // Violation
+    if (!(x = y));                // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    int x;
+    int y;
+    int z;
+    z = !(x == y);               // OK
+    if ((x &gt; y) &amp;&amp; (x == 4)); // OK
+    if (!(x == y));               // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Misra Guidelines - Rule 35
+
+2. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 13
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule  160
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-2-1
+
+</PRE>
+</BODY>
+</HTML>

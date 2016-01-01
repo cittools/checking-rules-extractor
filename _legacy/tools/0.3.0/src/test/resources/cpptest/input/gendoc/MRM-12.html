@@ -1,0 +1,124 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Adhere to convention when writing new and delete
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Adhere to convention when writing new and delete [MRM-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"For operator delete, things are simpler. About all you need to remember is
+that C++ guarantees it's always safe to delete the null pointer, so you need
+to honor that guarantee.
+The member version of this function is simple, too, except you've got to be
+sure to check the size of what's being deleted. Assuming your class-specific
+operator new forwards requests of the "wrong" size to ::operator new, you've
+got to forward "wrongly sized" deletion requests to ::operator delete."
+See also: MRM-13
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Insures your 'delete' function(s) behavior that is consistent with the
+default operator delete.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+#include &lt;cstddef&gt;
+
+class Base {
+public:
+    static void* operator new( size_t size ) throw( std::bad_alloc );
+    static void operator delete( void* rawMemory, size_t size ) throw( );
+};
+
+void Base::operator delete( void* rawMemory, size_t size ) throw( ) {   // Violation
+    if (rawMemory == 0) return;
+    // deallocate the memory pointed to by rawMemory;
+    return;
+}
+
+void operator delete( void* rawMemory ) throw( ) {                      // Violation
+    // deallocate the memory pointed to by rawMemory;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+#include &lt;cstddef&gt;
+
+class Base {
+public:
+    static void* operator new( size_t size ) throw( std::bad_alloc );
+    static void operator delete( void* rawMemory, size_t size ) throw( );
+};
+
+
+void Base::operator delete( void* rawMemory, size_t size ) throw( ) {   // OK
+    if (rawMemory == 0) return; 
+    if (size != sizeof( Base )) { 
+        ::operator delete( rawMemory );
+        return;
+    }
+    // deallocate the memory pointed to by rawMemory;
+    return;
+}
+
+void operator delete( void* rawMemory ) throw( ) {                      // OK
+    if (rawMemory == 0) return; 
+    
+    // deallocate the memory pointed to by rawMemory;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 8, Item 51
+
+</PRE>
+</BODY>
+</HTML>

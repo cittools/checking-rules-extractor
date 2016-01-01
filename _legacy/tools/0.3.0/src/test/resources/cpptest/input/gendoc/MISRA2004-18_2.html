@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An object shall not be assigned to an overlapping object
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An object shall not be assigned to an overlapping object [MISRA2004-18_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The behaviour is undefined when two objects are created 
+which have some overlap in memory and one is copied to the other."
+Rule detects if two different members of the same union are assigned to 
+each other using the same object.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour and data loss.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+union U {
+    int         iValue; 
+    long        lValue;
+    double      dValue;
+};
+
+void main( ) {
+    union U a, b;
+    union U *p;
+
+    a.dValue  = a.lValue;    /* Violation */
+    p-&gt;dValue = p-&gt;iValue;   /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+union U {
+    int         iValue; 
+    long        lValue;
+    double      dValue;
+};
+
+void main( ) {
+    union U a, b;
+    union U *p, *q;
+    a.dValue  = b.lValue;     /* OK */
+    p-&gt;dValue = q-&gt;iValue;    /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 18
+
+</PRE>
+</BODY>
+</HTML>

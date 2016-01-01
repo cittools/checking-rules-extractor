@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Eliminate unused private member variables
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Eliminate unused private member variables [OPT-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks for unused private member variables. 
+This rule applies only to the C++ programming language.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Eliminating unused private member variables
+improves legibility and increases efficiency.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo {
+public:
+   Foo(): x(0), y(0) { }
+   int getX() {
+       return x;
+   }
+private:
+   int x;
+   int y;  // Violation        
+   int z;  // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Foo {
+public:
+   Foo(): x(0), y(0), z(1) { }
+   int getX() {
+       return x;
+   }
+   int getY() {
+       return y;
+   }
+   int getZ() {
+       return z;
+   }
+private:
+   int x;
+   int y;  // OK
+   int z;  // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

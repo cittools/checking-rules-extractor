@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Explicitly declare char type as signed or unsigned
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Explicitly declare char type as signed or unsigned [MISRA-014-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The type 'char' may be implemented as a signed or an unsigned type depending
+on the compiler. Rather than making any assumptions about the compiler,
+it is preferable (and more portable) to always specify whether the required
+use of 'char' is signed or unsigned."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef char CH;          // Violation
+void foo()
+{
+   char a;                // Violation
+}
+void bar(char d);         // Violation
+char bar3();              // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef unsigned char UC; // OK
+void foo()
+{
+   signed char b;         // OK
+}
+void bar1(signed char d); // OK
+unsigned char bar5();     // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 14
+
+</PRE>
+</BODY>
+</HTML>

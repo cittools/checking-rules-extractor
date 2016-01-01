@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use lowercase letters for structure and union member names
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use lowercase letters for structure and union member names [NAMING-28-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+All structure and union members shall be lowercase proper. This convention will 
+make the recognition of structure/union members easier.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Makes code more readable
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct date_foo2 { 
+    int datemonth;
+    int DateDay;    // Violation
+    int Dateyear;   // Violation  
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct date_foo1 {
+    int dateMonth;
+    int dateDay;    // OK
+    int dateYear;   // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards R-19
+
+</PRE>
+</BODY>
+</HTML>

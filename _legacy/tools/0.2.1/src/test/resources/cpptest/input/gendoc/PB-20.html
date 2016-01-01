@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid slicing function arguments / return value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid slicing function arguments / return value [PB-20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects where an object of classs with virtual methods has been 
+passed or returned by value instead of by reference. Passing / returning
+objects by reference is more efficient than passing by value because no
+new objects are being created and because it avoids the "slicing problem."
+See also: OPT-14, PB-23
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents slicing problem, improves code consistency
+and runtime performance.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    virtual void someFun();
+    const A violation( A a ) {       // Violation - passing parameter by value
+        return a;                    
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    virtual void someFun();
+    const A&amp; valid( const A &amp;a ) {   // OK
+        return a;                    
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Design Style", Rule 09
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 4, Item 20
+
+3. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc.,
+   Chapter: "Classes and Functions: Design and Declaration", Item 22
+
+4. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 3
+
+5. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 9 Function - 9.1 Function Arguments - Rec. 43
+
+6. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Functions, AV Rule 117
+
+</PRE>
+</BODY>
+</HTML>

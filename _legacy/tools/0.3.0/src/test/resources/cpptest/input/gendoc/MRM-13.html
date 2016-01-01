@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Adhere to convention when writing new
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Adhere to convention when writing new [MRM-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+When you write operator new, this rule checks to make sure that you are
+consistent with the default new. "In practical terms, this means having the
+right return value, calling an error-handling function when insufficient
+memory is available, and being prepared to cope with requests for no memory.
+
+Curiously, C++ requires that operator new return a legitimate pointer even
+when zero bytes are requested. That being the case, pseudocode for a
+non-member operator new looks like this:
+
+void * operator new(std::size_t size) throw(std::bad_alloc)
+{ // your operator new might
+  using namespace std; // take additional params
+
+  if (size == 0) { // handle 0-byte requests
+     size = 1;     // by treating them as
+  }                // 1-byte requests
+
+/* ... */
+}
+
+(...) given an operator new for a class X, the behavior of that function is
+typically tuned for objects of size sizeof(X)—nothing larger and nothing
+smaller. Because of inheritance, however, it is possible that the operator new
+in a base class will be called to allocate memory for an object of a derived
+class:
+
+class Base {
+ public:
+    static void * operator new(std::size_t size) throw(std::bad_alloc);
+ ...
+};
+
+class Derived: public Base // Derived doesn't declare
+{ ... }; // operator new
+
+Derived *p = new Derived; // calls Base::operator new!
+
+If Base's class-specific operator new wasn't designed to cope with this — and
+chances are that it wasn't — the best way for it to handle the situation is to
+slough off calls requesting the "wrong" amount of memory to the standard
+operator new, like this:
+
+void * Base::operator new(std::size_t size) throw(std::bad_alloc)
+{
+   if (size != sizeof(Base))       // if size is "wrong,"
+      return ::operator new(size); // have standard operator
+                                   // new handle the request
+   ... 
+}
+See also: MRM-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If you do not adhere to convention when you write new, you may cause 
+confusing inconsistencies for users of your new and delete operators.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+class A {
+public:
+    A( );
+    void* operator new(size_t size) {           // Violation
+        // missing ifs checking proper memory allocation
+        return (int *)(new int);
+    };
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+class A {
+public:
+    A( );
+    void* operator new(size_t size) {           // OK
+        if (size !=sizeof(A) ) {
+            return ::operator new(size);
+        }
+
+        if (size==0) { 
+            size=1; 
+        }
+
+        return (int *)(new int);
+    };
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 8, Item 51
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Memory Management", Item 8
+
+</PRE>
+</BODY>
+</HTML>

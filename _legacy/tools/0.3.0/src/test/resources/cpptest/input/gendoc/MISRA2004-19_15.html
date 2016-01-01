@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Precautions shall be taken in order to prevent the contents of a header file being included twice
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Precautions shall be taken in order to prevent the contents of a header file being included twice [MISRA2004-19_15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When a translation unit contains a complex hierarchy of nested header files
+it can happen that a particular header file is included more than once.
+This can be, at best, a source of confusion. If it leads to multiple or 
+conflicting definitions, the result can be undefined or erroneous behaviour."
+Rule checks if any of described below mechanisms preventing the file contents 
+from being included more than once is present.
+
+#ifndef AHDR_H
+#define AHDR_H
+/* The following lines will be excluded by the
+preprocessor if the file is included more
+than once */
+...
+#endif
+
+Alternatively, the following may be used:
+
+#ifdef AHDR_H
+#error Header file is already included
+#else
+#define AHDR_H
+/* The following lines will be excluded by the
+preprocessor if the file is included more
+than once */
+...
+#endif
+
+See also: PFO-02, PFO-07, and PFO-08.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined and erroneous behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* foo.h */
+/* Violation - file contains no multi inclusion mechanism */
+
+/* foo.hh */
+/* Violation - file contains no multi inclusion mechanism */
+
+/* foo.c */
+#include "foo.h"
+#include "foo.hh"
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* foo.h */
+/* OK */
+#ifndef FOO_H
+#define FOO_H
+/* code here */
+#endif
+
+/* foo.hh */
+/* OK */
+#ifdef FOO_HH
+#error Header file is already included
+#else
+#define FOO_HH
+#endif
+
+/* foo.c */
+#include "foo.h"
+#include "foo.hh"
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 19
+
+</PRE>
+</BODY>
+</HTML>

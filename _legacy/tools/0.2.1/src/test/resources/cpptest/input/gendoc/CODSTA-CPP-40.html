@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Limiting the number of objects of a class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Limiting the number of objects of a class [CODSTA-CPP-40-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects the need to limit the number of objects in a class.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Limiting the number of objects in a class can reduce code complexity.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {                         // Violation
+public:
+    class X {}; // exception definition
+    Base( ) {
+        // limit missing
+        // constructor stuff here
+        ++numObjects;
+    }
+    ~Base( ) {
+        --numObjects;
+        // destructor stuff here
+    }
+private:
+    static int numObjects;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {                         // OK
+public:
+    class X {}; // exception definition
+    Base( ) {
+        if (numObjects &gt;= 1) throw X( );
+        // constructor stuff here
+        ++numObjects;
+    }
+    ~Base( ) {
+        --numObjects;
+        // destructor stuff here
+    }
+private:
+    static int numObjects;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+Chapter: "Techniques", Item 26
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The address of an object with automatic storage shall not be assigned to another object that may persist after the first object has ceased to exist
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The address of an object with automatic storage shall not be assigned to another object that may persist after the first object has ceased to exist [MISRA2008-7_5_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If the address of an automatic object is assigned to another automatic object 
+of larger scope, or to a static object, or returned from a function then the 
+object containing the address may exist beyond the time when the original object
+ceases to exist (and its address becomes invalid). For example:
+
+int * foo( void ) {
+    int local_auto;
+    return (&amp;local_auto);
+}"
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents loss of data
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* global;
+int* foo() {
+    int iLocal;
+    static int* siLocal;
+
+    siLocal = &amp;iLocal;       // Violation
+    global = &amp;iLocal;        // Violation
+    return &amp;iLocal;          // Violation
+}
+void goo() {
+    int* piLocal;
+    {
+        int iiLocal;
+        piLocal = &amp;iiLocal;  // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not assign local address of object to more global, 
+or static object or return from function.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 17
+
+2. Origin: Misra Guidelines - Rule 106
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.22 Pointers &amp; References, AV Rule 173
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-5-2
+
+</PRE>
+</BODY>
+</HTML>

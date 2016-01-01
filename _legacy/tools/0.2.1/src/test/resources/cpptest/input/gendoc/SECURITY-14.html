@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use scanf and fscanf functions without specifying variable size in format string
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use scanf and fscanf functions without specifying variable size in format string [SECURITY-14-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that uses 'scanf' and 'fscanf' functions 
+without specifying variable size in format string.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Typically, scanf functions are used to read user-specified parameters
+into arrays of variables. 
+Unless the size of variables in format strings is specified, 
+an attacker may use crafted strings to exploit buffer overflows 
+with fixed size arrays. 
+By requiring to constrain the format specification using variable sizes,
+the rule prevents this security vulnerability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void  main( ) {
+    char tcChar[10];
+    char cChar;
+    float fFloat;
+    FILE *stream;
+    stream = fopen( "fprintf.out", "w" );
+
+    scanf("%s",&amp;tcChar);                  // Violation
+    scanf("%f",&amp;fFloat);                  // Violation
+
+    fscanf(stream,"%s",&amp;tcChar);          // Violation
+    fscanf(stream,"%c%f",&amp;cChar,&amp;fFloat); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void  main( ) {
+    char tcChar[10];
+    char cChar;
+    float fFloat;
+    FILE *stream;
+    stream = fopen( "fprintf.out", "w" );
+
+    scanf("%c",&amp;cChar);                  // OK
+    scanf("%10s",&amp;tcChar);               // OK
+    scanf("%5f",&amp;fFloat);                // OK
+
+    fscanf(stream,"%c",&amp;cChar);          // OK
+    fscanf(stream,"%10s",&amp;tcChar);       // OK
+    fscanf(stream,"%5f",&amp;fFloat);        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/c-cpp.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/c-cpp.html</A>
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO</A>
+     /control-formatting.html
+<A HREF="https://buildsecurityin.us-cert.gov/portal/article/knowledge">https://buildsecurityin.us-cert.gov/portal/article/knowledge</A>
+      /coding_rules/RULE_0119.xml
+
+</PRE>
+</BODY>
+</HTML>

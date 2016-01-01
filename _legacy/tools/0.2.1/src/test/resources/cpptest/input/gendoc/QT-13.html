@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never mix const and non-const iterators in assignment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never mix const and non-const iterators in assignment [QT-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Never mix const and non-const iterators in assignment.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+When mixing const and non-const iterators you loose the benefits of using
+const iterators, as the non-const iterator may detach the data it iterates on.
+Also, using non-const iterators on a const data set will not work, and will
+result in a compile error.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QWidget&gt;
+
+void myFunction()
+{
+    QList&lt;int&gt; nonConstList;
+
+    for (QList&lt;int&gt;::ConstIterator it = nonConstList.begin(); ; ) // Violation
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QWidget&gt;
+
+void myFunction()
+{
+    QList&lt;int&gt; nonConstList;
+    const QList&lt;int&gt; constList;
+    for (QList&lt;int&gt;::ConstIterator it = nonConstList.constBegin(); ; )   // OK
+    {
+    }
+
+    for (QList&lt;int&gt;::ConstIterator cit = constList.begin(); ; )          // OK
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using global data in member functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using global data in member functions [OOP-10-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid using global data in member functions.
+"Global references tend to break encapsulation and inhibit reuse. While global 
+references may be difficult to eliminate entirely, they should be used as 
+sparingly as possible." 
+This rule applies only to the C++ programming language.
+See also: OOP-08, OOP-09
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using global references.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int globalVar = 1;
+class A {
+public:
+    void foo( ) {       // Violation
+        memberVar = globalVar;
+    }
+private:
+    int memberVar;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use global variables in member functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, Novemeber/December, 1999, pg. 33.
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A for loop shall contain a single loop-counter which shall not have floating type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A for loop shall contain a single loop-counter which shall not have floating type [CODSTA-CPP-69-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A for loop without exactly one loop-counter is simply a while loop.
+If this is the desired behaviour, then a while loop is more appropriate."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+A loop-counter is a loop-control-variable that is:
+- Initialized in, or prior to, for-init-statement; and
+- an operand to a relational operator in condition; and
+- modified in expression.
+A loop-control-variable is any variable occurring in for-init-statement,
+condition or expression.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps to ensure deterministic loop termination.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int x = 0;
+    int y;
+    y = 0;
+    for (x = 0; x &lt; y; x = y++){} // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo3()
+{
+    int x = 0;
+    int y;
+    y = 0;
+    x = 0;
+    while(x &lt; y) // OK
+    {
+        x = y++;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 6, Rule 6-5-1
+
+</PRE>
+</BODY>
+</HTML>

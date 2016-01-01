@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+For associative containers never use comparison function returning true for equal values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+For associative containers never use comparison function returning true for equal values [STL-17-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"(...) suppose you're in need of a comparison function for a container of
+string* pointers that sorts in descending order. The natural thing to do is to
+grab the existing code and modify it. If you're not careful, you might come up
+with this (...):
+
+struct StringPtrGreater:                               // this code is flawed!
+public binary_function&lt;const string*, const string*, bool&gt; 
+{
+   bool operator()(const string *ps1, const string *ps2) const
+   {
+       return !(*ps1 &lt;*ps2); //just negate the old test;
+   }                         // this is incorrect!
+};
+
+The idea here is to reverse the sort order by negating the test inside the
+comparison function. Unfortunately, negating "&lt;" doesn't give you "&gt;" (which
+is what you want), it gives you "&gt;=". And you now understand that "&gt;=", because
+it will return true for equal values, is an invalid comparison function for
+associative containers. To avoid falling into this trap, all you need to
+remember is that the return value of a comparison function indicates whether
+one value precedes another in the sort order defined by that function. Equal
+values never precede one another, so comparison functions should always return
+false for equal values."
+See also: STL-16
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Unless your comparison functions always return false for equal values, you
+break all standard associative containers, regardless of whether they are
+allowed to store duplicates."
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;set&gt;
+using namespace std;
+
+struct IntGreater:
+public binary_function&lt;const int,const int, bool&gt; {
+    bool operator()(const int ps1, const int ps2) const
+    {
+        return !(ps1 &lt; ps2);
+    }
+};
+
+void myFunction()
+{
+    set&lt; int, IntGreater&gt; setInt; // Violation
+    setInt.insert(1);
+    setInt.insert(10);
+    setInt.insert(10);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;set&gt;
+using namespace std;
+
+struct IntGreater:
+public binary_function&lt;const int,const int, bool&gt; {
+    bool operator()(const int ps1, const int ps2) const
+    {
+        return (ps1 &gt; ps2);
+    }
+};
+
+void myFunction()
+{
+    set&lt; int, IntGreater&gt; setInt; // OK
+    setInt.insert(1);
+    setInt.insert(10);
+    setInt.insert(10);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 3, item 21
+
+</PRE>
+</BODY>
+</HTML>

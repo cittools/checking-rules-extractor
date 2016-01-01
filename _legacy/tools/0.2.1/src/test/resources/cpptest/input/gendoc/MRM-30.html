@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use allocation by declaration rather than by new or malloc
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use allocation by declaration rather than by new or malloc [MRM-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If new/delete is used on a pointer in the same function, use allocation 
+by declaration instead.
+See also: MRM-06, MRM-08, MRM-09, MRM-10, MRM-11
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The user need to be aware, because the rule may promote security flaws
+and may be not a best practice on stack short devices.
+In small systems stack size is critical. It should not be defined arrays
+on the stack in case of critical importance to the system.
+The change of code may cause that it will be more vulnerable to a buffer
+overflow attack.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency of code and prevents memory leaks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using std::string;
+
+void foo( ) {
+    string* pStr = new string();  // Violation
+
+    // some operation on pStr
+    delete pStr;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using std::string;
+
+void foo( ) {
+    string pStr = "something";    // OK
+
+    // some operation on pStr
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

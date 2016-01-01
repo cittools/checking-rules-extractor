@@ -1,0 +1,13 @@
+.NAME Use // comments
+
+.DESCRIPTION
+
+Definition:
+-----------
+C-like comments (/* */) are forbidden. Use only C++-like comments (//).
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

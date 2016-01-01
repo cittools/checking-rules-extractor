@@ -1,0 +1,21 @@
+.NAME Avoid Hiding the "Normal" Form of "new"
+
+.DESCRIPTION
+
+Definition:
+-----------
+If operator new is declared one or several times inside a class, at least one of
+these declarations shall follow the "normal" form:
+- the type of the first parameter shall be size_t;
+- all other parameters, if any, shall have a default value.
+(This rule relates to Item 9 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Lets the usual invocation form of new available.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

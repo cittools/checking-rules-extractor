@@ -1,0 +1,40 @@
+.NAME Break and continue forbidden
+
+.DESCRIPTION
+
+Definition:
+-----------
+Break and continue instructions are forbidden inside conditional expressions 
+in control statements ( for, do, while ).
+Nevertheless, the break instruction is allowed in the block instruction 
+of the switch statement.
+
+Parameters:
+-----------
+
+C++:
+====
+None.
+
+JAVA:
+=====
+A string identifying the type of checking:
+
+* "in_switch" (or no parameter) means that the break are allowed in switch 
+statements, break and continue are forbidden everywhere else,
+
+* "without_label" means that any break or continue without a label is allowed,
+
+* "with_label" means that any break and continue with a label is allowed,
+break and continue without a label is forbidden everywhere.
+
+Justification:
+--------------
+Like a goto, these instructions break down code structure. Prohibiting them
+in loops makes the code easier to understand.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

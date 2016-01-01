@@ -1,0 +1,141 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid overflow due to reading a not zero terminated string
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid overflow due to reading a not zero terminated string [BD-PB-OVERFNZT-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+The rule detects cases of possible overflow due to running a string function on a string that
+was not properly zero terminated.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+The possibility of buffer overflow is a severe security threat.
+If an application has a vulnerability of this kind, it can be exploited to
+execute arbitrary code and gain full control over the application.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+char *header, *header2; /* initialized somewhere */
+
+void process(int flag, char* body)
+{
+	char buffer[100], buffer2[100];
+	strcpy(buffer, header);
+	if (flag) {
+		buffer2[0] = 'a';
+		buffer2[1] = 'b';
+		strcat(buffer, buffer2);
+	} else {
+		strncpy(body, "abc", 2);
+		strcat(buffer, body);
+	}
+	/* ... */
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following code will not trigger a violation since the zero terminator symbol is properly added:
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+char *header, *header2; /* initialized somewhere */
+
+void process(int flag, char* body)
+{
+	char buffer[100], buffer2[100];
+	strcpy(buffer, header);
+	if (flag) {
+		buffer2[0] = 'a';
+		buffer2[1] = 'b';
+		buffer2[2] = 0;
+		strcat(buffer, buffer2);
+	} else {
+		strcpy(body, "ab");
+		strcat(buffer, body);
+	}
+	/* ... */
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.owasp.org/index.php/Buffer_Overflow">http://www.owasp.org/index.php/Buffer_Overflow</A> (security relevance)
+
+</PRE>
+</BODY>
+</HTML>

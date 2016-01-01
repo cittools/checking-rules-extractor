@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Identifiers (internal and external) shall not rely on the significance of more than 31 characters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Identifiers (internal and external) shall not rely on the significance of more than 31 characters [MISRA2004-5_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Identifiers shall not have more than 31 characters.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule ensures porting of code between compilers/linkers without requiring 
+modification (shortening) of identifier names.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void this_is_not_ok_11111111111111111( );   /* Violation */
+
+struct ThisClassHasANameThatIsTooBig11111   /* Violation */
+{
+    int a;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void this_is_ok_11111111111( );             /* OK */
+
+struct ThisClassHasANameThatIsOK            /* OK */
+{
+    int a;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 5
+
+2. Origin: Misra Guidelines - Rule 11
+
+</PRE>
+</BODY>
+</HTML>

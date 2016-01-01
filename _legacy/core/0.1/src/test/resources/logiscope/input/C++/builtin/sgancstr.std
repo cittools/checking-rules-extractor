@@ -1,0 +1,19 @@
+.NAME All classes must have a same direct or indirect ancestor.
+
+.DESCRIPTION
+
+Definition:
+-----------
+All classes must have a same direct or indirect ancestor. The ancestor can be 
+specified as a parameter.
+
+Parameters:
+-----------
+A string representing the name of the ancestor. The parameter is optional. 
+
+.REQUIRED use_graph
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

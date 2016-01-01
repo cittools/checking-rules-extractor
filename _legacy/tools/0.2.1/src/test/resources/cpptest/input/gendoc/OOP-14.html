@@ -1,0 +1,146 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider use composition instead of private inheritance
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider use composition instead of private inheritance [OOP-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use composition whenever you can, and use private inheritance whenever you
+must. When must you? Primarily when protected members and/or virtual functions
+enter the picture, though there's also an edge case where space concerns can
+tip the scales toward private inheritance.(...) it applies only when you're
+dealing with a class that has no data in it. Such classes have no non-static
+data members; no virtual functions (because the existence of such functions
+adds a vptr to each object — see Item 7); and no virtual base classes (because
+such base classes also incur a size overhead — see Item 40)."
+See also: OOP-37
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Private inheritance means nothing during software design, only during
+software implementation. And it is useful only in some edge cases."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class BaseEmpty {};
+
+class BaseWithOnlyStaticData
+{
+    public:
+        static int sd;
+};
+
+class BaseWithNonVirtualFunction
+{
+    public:
+        int foo();
+};
+
+class Derived1: private BaseEmpty                        // Violation
+{
+    public:
+        int v;
+};
+
+class Derived2: private BaseWithOnlyStaticData      // Violation
+{
+    public:
+        int v;
+};
+
+class Derived3: private BaseWithNonVirtualFunction // Violation
+{
+    public:
+        int v;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class BaseEmpty {};
+
+class BaseWithNonStaticData
+{
+    public:
+        int sd;
+};
+
+class BaseWithVirtualFunction
+{
+    public:
+        virtual int foo();
+};
+
+class Intermediate: public virtual BaseEmpty {};
+
+class Derived4: private BaseWithNonStaticData     // OK
+{
+    public:
+        int v;
+};
+
+class Derived5: private Intermediate                     // OK
+{
+    public:
+        int v;
+};
+
+class Derived6: private BaseWithVirtualFunction     // OK
+{
+    public:
+        int v;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 6, Item 39
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider using op= instead of stand-alone op
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider using op= instead of stand-alone op [JSF-125_b-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+When you define stand-alone version of operators:
++ , - , * , / ,  ^, % , | , &amp; , &gt;&gt; , &lt;&lt; (e.g., operator+), the assignment 
+version of an operator (e.g., operator+=) should be also defined.
+"Offering assignment versions of operators as well as stand-alone versions, 
+you allow clients of your classes to make the difficult trade-off between 
+efficiency and convenience."
+"You should consider using assignment versions of operators instead
+of stand-alone versions whenever performance is at a premium."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Assignment versions of operators are more efficient than stand-alone versions, 
+because stand-alone versions must typically return a new object, and that costs 
+us the construction and destruction of a temporary. Assignment versions of 
+operators write to their left-hand argument, so there is no need to generate
+a temporary to hold the operator's return value."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+};
+
+A&amp; operator+( A&amp; a, A&amp; b );      // Violation
+A&amp; operator-( A&amp; a, A&amp; b );      // Violation
+
+class B {
+public:
+    B&amp; operator+=( B&amp; b );
+};
+B&amp; operator+( B&amp; a, B&amp; b );
+void foo( ) {
+    B ba, bb ,bc, bd;
+    bb = ba + bc + bd;          // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A&amp; operator+=( A&amp; a );
+    A&amp; operator-=( A&amp; a );
+};
+
+A&amp; operator+( A&amp; a, A&amp; b );      // OK
+A&amp; operator-( A&amp; a, A&amp; b );      // OK
+class B {
+public:
+    B&amp; operator+=( B&amp; b );
+};
+B&amp; operator+( B&amp; a, B&amp; b );
+void foo( ) {
+    B ba, bb ,bc, bd;
+    bb = ba;                    // OK
+    bb += bc;                   // OK
+    bb += bd;                   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+   Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+   Chapter: "Efficiency", Item 22
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Functions, AV Rule 125
+
+</PRE>
+</BODY>
+</HTML>

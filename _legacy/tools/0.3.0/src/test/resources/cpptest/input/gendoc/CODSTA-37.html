@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use a #define that prevents the compiler from checking types except ones used only in #ifs and #elifs conditions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use a #define that prevents the compiler from checking types except ones used only in #ifs and #elifs conditions [CODSTA-37-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you use a #define that the compiler cannot check type. 
+Using a #define prevents the compiler from checking the type . 
+See also: MISRA2004-19_7, CODSTA-03, CODSTA-38
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule skips #defines which are used only in #ifs and #elifs conditions.
+Rule works only within file scope. 
+It means that each source and header files are parsed one by one.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By following this rule, you prevent the compiler from disabling type checking.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define V1 20      // Violation
+#define V2 1       // OK
+#if V2
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const int V1 = 20; // OK
+#define V2 1       // OK
+#if V2
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 1, Item 2
+
+</PRE>
+</BODY>
+</HTML>

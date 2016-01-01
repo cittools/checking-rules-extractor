@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not abandon unreleased mutexes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not abandon unreleased mutexes [BD-TRS-MUTEX-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases where a mutex is locked but not unlocked at an
+appropriate place, which could cause an application deadlock.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+The rule can be customized to check for unlocked mutexes of certain common APIs
+(from the list of supported APIs), it also possible to specify multithreading
+functions from any third-party API by providing specification of relevant functions.
+To view the list of all the supported APIs, configure the APIs that the rule will
+check as well as to define functions from a third-party API to be checked by the rule,
+please visit "Multithreading" sub-tab on the "BugDetective options" tab for your test
+configuration.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+Prevents application deadlocks.
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+#include &lt;pthread.h&gt;
+
+pthread_mutex_t *mutex;
+bool preconditionHolds();
+
+void exclusivelyCompute()
+{
+    pthread_mutex_lock(mutex);
+    if (preconditionHolds()) {
+        /* perform some computations */
+        pthread_mutex_unlock(mutex);
+    }
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The example can be repaired by performing unlocking on all the branches:
+
+#include &lt;pthread.h&gt;
+
+pthread_mutex_t *mutex;
+bool preconditionHolds();
+
+void exclusivelyCompute()
+{
+    pthread_mutex_lock(mutex);
+    if (preconditionHolds()) {
+        /* perform some computations */
+    }
+    pthread_mutex_unlock(mutex);
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

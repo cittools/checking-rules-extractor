@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Properly terminate character strings
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Properly terminate character strings [PB-21-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Programmers may sometimes by mistake use a string "\0" when they indeed 
+intend to use the NULL character '\0' for string termination. While most 
+C++ compilers will not compile assigning such a string to an array element, 
+C compilers allow that. This mistake, while easy to detect, may cause memory 
+corruption and program crash.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents a possible program crash by checking proper string termination.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct S {
+    char pc[10];
+}* ps = 0;
+void foo( ) {
+    char pc[10];
+    
+    ps-&gt;pc[0] = "\0";           // Violation
+    pc[0] = "\0";               // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct S {
+    char pc[10];
+}* ps = 0;
+void foo( ) {
+    char pc[10];
+    
+    ps-&gt;pc[0] = '\0';           // OK
+    pc[0] = '\0';               // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+ParaSoft best practice.
+
+</PRE>
+</BODY>
+</HTML>

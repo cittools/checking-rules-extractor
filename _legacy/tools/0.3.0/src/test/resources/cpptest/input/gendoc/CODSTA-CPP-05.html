@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use user-defined conversion functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use user-defined conversion functions [CODSTA-CPP-05-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Be wary of user-defined conversion functions. This rule warns you when it finds
+user-defined conversion functions. Such calls may in the best case result in
+creating and destroying temporary objects, affecting runtime, and in the worst,
+allow the most meaningless code to compile. In the latter case, problems that
+could be detected at compile time are pushed to run-time testing.
+See also: CODSTA-CPP-04
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Generally improves runtime performance and predictability of program
+behavior. May detect severe coding defects masked by the compiler.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    operator const char*( ) const;  // Violation
+};
+
+void foo(){
+	A a;
+	const char* ch_ptr = a; // implicit conversion
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    const char* asPointerToConstChar( ) const; // OK
+};
+
+void foo(){
+	A a;
+	const char* ch_ptr = a.asPointerToConstChar(); // explicit conversion
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+   Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+   Chapter: "Operators", Item 5
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Class Design and Inheritance", Rule 40
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 177
+
+</PRE>
+</BODY>
+</HTML>

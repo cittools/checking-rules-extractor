@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Only functions with 1 or 2 statements should be considered candidates for inline functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Only functions with 1 or 2 statements should be considered candidates for inline functions [JSF-121-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Only functions with 1 or 2 statements should be considered
+candidates for inline functions.
+Rule reports a violation message if inlined function has more
+than 2 statements.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Inlining complex functions may lead to significant code bloat
+as well as to complicate debugging efforts.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Each declared variable is counted as a separate statement.
+
+int a, b, c;  // counted as 3 statements
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+inline int foo(int a)   // Violation
+{
+  int b = 0;
+  b = (b-a)/a;
+  return b;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo(int a)          // OK
+{
+  int b = 0;
+  b = (b-a)/a;
+  return b;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.13 Functions, AV Rule 121
+
+</PRE>
+</BODY>
+</HTML>

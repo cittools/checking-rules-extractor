@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not rely on the conversion of count()'s nonzero values to true and zero to false
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not rely on the conversion of count()'s nonzero values to true and zero to false [STL-35-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Using count as an existence test, count returns either zero or a positive
+number, so we rely on the conversion of nonzero values to true and zero to
+false. It would arguably be clearer to be more explicit about what we
+are doing."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+void foo()
+{
+    list&lt;int&gt; lw;
+    int w;
+    
+    if(count(lw.begin(), lw.end(), w))      // Violation
+    {
+        /*...*/
+    } 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+void foo()
+{
+    list&lt;int&gt; lw;
+    int w;
+
+    if(count(lw.begin(), lw.end(), w) == 0) // OK
+    {
+        /*...*/
+    } 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 7, item 45
+
+</PRE>
+</BODY>
+</HTML>

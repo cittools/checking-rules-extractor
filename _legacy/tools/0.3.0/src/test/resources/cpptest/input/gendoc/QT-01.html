@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Every QObject subclass should contain a Q_OBJECT macro
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Every QObject subclass should contain a Q_OBJECT macro [QT-01-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Every QObject subclass should contain a Q_OBJECT macro.
+Otherwise the Qt meta type system won't work with that class.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+While it is possible to use QObject as a base class without the Q_OBJECT macro
+and without meta-object code, neither signals and slots nor any of the other
+features meta type based features (Properties, class name, inheritance
+checking, I18N, dynamic QObject casting) will be available if the Q_OBJECT
+macro is not used. From the meta-object system's point of view, a QObject
+subclass without meta code is equivalent to its closest ancestor with
+meta-object code. This means for example, that QMetaObject::className() will
+not return the actual name of your class, but the class name of this ancestor.
+Also, using the dynamic casting function
+    T qobject_cast ( QObject * object )
+will only be able to cast to the ancestor class type.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+
+class QFigure: public QObject
+{
+    Q_OBJECT
+
+private:
+    Q_DISABLE_COPY(QFigure)
+};
+
+class QCircle: public QFigure       // Violation - no Q_OBJECT macro present
+{
+private:
+    Q_DISABLE_COPY(QCircle)
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+
+class QFigure: public QObject
+{
+    Q_OBJECT
+
+private:
+    Q_DISABLE_COPY(QFigure)
+};
+
+class QCircle: public QFigure       // OK
+{
+    Q_OBJECT
+
+private:
+    Q_DISABLE_COPY(QCircle)
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/4.2/metaobjects.html">http://doc.trolltech.com/4.2/metaobjects.html</A>
+
+</PRE>
+</BODY>
+</HTML>

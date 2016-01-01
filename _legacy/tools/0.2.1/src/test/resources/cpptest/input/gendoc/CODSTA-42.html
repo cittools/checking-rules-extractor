@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If TRUE is to be defined, and is not already defined, #define TRUE should be 1
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If TRUE is to be defined, and is not already defined, #define TRUE should be 1 [CODSTA-42-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether preprocessor 
+definition of TRUE is 1. Any other use of TRUE is 
+misleading and cannot be guaranteed to work 
+predictably.
+See also: CODSTA-43
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define TRUE 0 // Violation
+#undef TRUE
+#define TRUE   // Violation
+#undef TRUE
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define TRUE 1 // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.research.att.com/~bs/glossary.html#Gtrue">http://www.research.att.com/~bs/glossary.html#Gtrue</A>
+
+</PRE>
+</BODY>
+</HTML>

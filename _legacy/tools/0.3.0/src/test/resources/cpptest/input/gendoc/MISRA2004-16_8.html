@@ -1,0 +1,163 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All exit paths from a function with non-void return type shall have an explicit return statement with an expression
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All exit paths from a function with non-void return type shall have an explicit return statement with an expression [MISRA2004-16_8-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"All exit paths from a function with non-void return type shall have an explicit
+return statement with an expression.
+This expression gives the value that the function returns. The absence of a 
+return with an expression leads to undefined behaviour (and the compiler may not
+give an error)."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+"goto" statement is considered as exit point.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rules prevents unpredictable function behaviour.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Rule skips "while", "for", and "catch" sections.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo1(int x){ // Violation 
+                 // in second if statement, return statement is missing
+    if (x==0) {
+        if (x==0) {
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+}
+
+int foo2(int x){ // Violation 
+                 // in switch statement, default statement is missing
+    switch(x){
+        case 0: return 1;
+        case 1: return 1;
+        case 2: return 1;
+    }
+}
+
+int foo3(int x){ // Violation 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo1(int x){ // OK
+    if (x==0) {
+        if (x==0) {
+            return 0;
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+}
+
+int foo2(int x){ // OK
+    switch(x){
+        case 0: return 1;
+        case 1: return 1;
+        case 2: return 1;
+        default: return 1;
+    }
+}
+
+int foo3(int x){ // OK
+    return 0;
+}
+
+int foo4(int x){ // OK
+    if (x==0) {
+        return 0;
+    }
+    return 0;
+}
+
+int foo5(int x){ // OK
+    if (x==0) {
+        if (x==0) {
+            return 0;
+        } else {
+            return 0;
+        }
+    } else {
+        switch(x){
+            case 0: return 1;
+            case 1: return 1;
+            case 2: return 1;
+            default: return 1;
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 16
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 114
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-4-3 
+
+</PRE>
+</BODY>
+</HTML>

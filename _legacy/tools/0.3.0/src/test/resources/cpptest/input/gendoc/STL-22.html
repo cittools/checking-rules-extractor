@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Make sure destination ranges are big enough
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Make sure destination ranges are big enough [STL-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The problems arise when programmers think about inserting objects into
+containers, but don't tell the STL what they're thinking. Here's a common way
+this can manifest itself:
+
+ vector&lt;int&gt; values;
+ vector&lt;int&gt; results;
+ transform( values.begin(), values.end(), results.end(), transmogrify);
+
+In this example, transform is told that the beginning of its destination range
+is results.end(), so that's where it starts writing the results of invoking
+transmogrify on every element of values. Like every algorithm that uses a
+destination range, transform writes its results by making assignments to the
+elements in the destination range, transform will thus apply transmogrify to
+values[0] and assign the result to *results.end(). It will then apply
+transmogrify to values[1] and assign the result to *(results.end()+1). The call
+to transform is wrong, because it's asking for assignments to be made to
+objects that don't exist. (...) the way to say "please put transform's results
+at the end of the container called results" is to call back_inserter to
+generate the iterator specifying the beginning of the destination range."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This can lead only to disaster, because there is no object at *results.end(),
+much less at *(results.end()+1)! The call to transform is wrong, because it's
+asking for assignments to be made to objects that don't exist."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int transmogrify(int x);
+
+void myFunction()
+{
+    vector&lt;int&gt; values;
+    vector&lt;int&gt; results;
+    // put values to vector
+    transform(values.begin(), values.end(),        // Violation
+              results.end(), transmogrify); 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int transmogrify(int x);
+
+void myFunction()
+{
+    vector&lt;int&gt; values;
+    vector&lt;int&gt; results;
+    // put values to vector
+    transform(values.begin(), values.end(),           // OK
+              back_inserter(results), transmogrify); 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 5, item 30
+
+</PRE>
+</BODY>
+</HTML>

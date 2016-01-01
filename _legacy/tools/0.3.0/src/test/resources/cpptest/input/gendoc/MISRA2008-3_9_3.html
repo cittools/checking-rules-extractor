@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The underlying bit representations of floating-point values shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The underlying bit representations of floating-point values shall not be used [MISRA2008-3_9_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The storage layout used for floating-point values may vary from one compiler to
+another, and therefore no floating-point manipulations shall be made which rely 
+directly on the way the values are stored. The in-built operators and functions,
+which hide the storage details from the programmer, should be used."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+In many cases floating point bit fields will be flagged as syntax errors.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents implementation-defined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct S {
+	float f:6; // Violation
+};
+
+union U {
+	float f:6; // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct S {
+	int f:6; // OK
+};
+
+union U {
+	int f:6; // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 3-9-3
+
+</PRE>
+</BODY>
+</HTML>

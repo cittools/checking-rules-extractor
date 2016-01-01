@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Provisions should be made for appropriate run-time checking
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Provisions should be made for appropriate run-time checking [MISRA-004_a-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Ensure that array indices are within the bounds of the array size before using them to index the array.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents from getting/putting values which are out of range.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    int j;
+    int k[10]; 
+    int m;
+	m = k[j]; /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void moo() 
+{
+    int j;
+    int k[10];
+    int m;
+
+    if ((j &lt; 10) &amp;&amp; (j &gt;= 0)) /* OK */
+	{
+	m = k[j];
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 4
+
+</PRE>
+</BODY>
+</HTML>

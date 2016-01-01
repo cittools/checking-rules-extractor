@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Exceptions shall be raised only after start-up and before termination of the program
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Exceptions shall be raised only after start-up and before termination of the program [EXCEPT-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Before the program starts executing the body of main, it is in a start-up
+phase, constructing and initializing static objects. Similarly, after main has
+returned, it is in a termination phase where static objects are being
+destroyed. If an exception is thrown in either of these phases it leads to the
+program being terminated in an implementation-defined manner."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only one level of nested function calls.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Throwing an exception during start-up or termination results in the program
+being terminated in an implementation-defined manner."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class C
+{
+public:
+    C ( )
+    {
+        throw ( 0 ); // Violation – thrown before main starts
+    }
+    ~C ( )
+    {
+        throw ( 0 ); // Violation – thrown after main exits
+    }
+};
+C c;
+
+int main( ... )
+{ 
+	// ...
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Exceptions should not be throwing during start-up or termination phase.   
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-3-1
+
+</PRE>
+</BODY>
+</HTML>

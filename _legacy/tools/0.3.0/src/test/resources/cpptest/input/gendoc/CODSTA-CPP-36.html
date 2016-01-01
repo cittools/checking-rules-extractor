@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using global variables, global functions, and class in file outside namespaces
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using global variables, global functions, and class in file outside namespaces [CODSTA-CPP-36-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects the use of global variables, classes,
+and global functions outside of namespaces.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of global variables, classes, and global functions
+outside namespaces. All data and functions in a file should be inside
+one or more namespaces.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int var = 0;        // Violation
+
+void globalfoo( ) { // Violation
+}
+
+class A {           // Violation
+    int i;
+    void foo( );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+namespace name1 {
+    int var = 0;        // OK
+
+    void globalfoo( ) { // OK
+    }
+
+    class A {           // OK
+        int i;
+        void foo();
+    };
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.11 Namespaces, AV Rule 98
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-3-1
+
+</PRE>
+</BODY>
+</HTML>

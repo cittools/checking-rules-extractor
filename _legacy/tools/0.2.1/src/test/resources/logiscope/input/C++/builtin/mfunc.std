@@ -1,0 +1,24 @@
+.NAME Inline functions instead of macro functions
+
+.DESCRIPTION
+
+Definition:
+-----------
+Use inline functions instead of macro-functions.
+
+Example:
+--------
+
+// write
+inline char *GetName(aClass &object) {
+return(object.name);
+}
+
+// do not write
+#define GetName(s) ((s)->name) 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

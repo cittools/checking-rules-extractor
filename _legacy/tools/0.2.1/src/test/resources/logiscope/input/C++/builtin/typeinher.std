@@ -1,0 +1,23 @@
+.NAME Inheritence type.
+
+.DESCRIPTION
+
+Definition:
+-----------
+The inheritence type (public, protected, private) must be specified.
+
+Justification:
+--------------
+Removes ambiguity.
+
+Example:
+--------
+class inherclass: public Base1, private Base2
+{ ...
+
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

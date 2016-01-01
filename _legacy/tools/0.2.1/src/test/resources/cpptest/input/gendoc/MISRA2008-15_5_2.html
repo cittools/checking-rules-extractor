@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Where a function's declaration includes an exception-specification, the function shall only be capable of throwing exceptions of the indicated type(s)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Where a function's declaration includes an exception-specification, the function shall only be capable of throwing exceptions of the indicated type(s) [MISRA2008-15_5_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If a function declared with an exception-specification throws an exception
+of a type not included in the specification, the function unexpected()
+is called. The behaviour of this function can be overridden within a project,
+but by default causes an exception of std::bad_exception to be thrown.
+If std::bad_exception is not listed in the exception-specification,
+then terminate() will be called, leading to implementation-defined 
+termination of the program."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only two levels of nested function calls
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Exception{};
+void foo ( )
+{
+    throw ( 21 );
+}
+void goo ( ) throw ( Exception )  // Violation
+{
+    foo ( );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Exception{};
+void foo ( )
+{
+    throw ( 21 );
+}
+void goo ( ) throw ( Exception, int ) // OK
+{
+    foo ( );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-5-2
+
+</PRE>
+</BODY>
+</HTML>

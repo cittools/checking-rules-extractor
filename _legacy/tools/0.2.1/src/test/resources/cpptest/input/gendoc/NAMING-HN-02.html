@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for bool types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for bool types [NAMING-HN-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For bool variables and parameters use "b" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+bool g_bmyVar;                                  // Violation
+bool g_MyVariable;                              // Violation
+static const bool g_skMyVariable = true;        // Violation
+class A {
+    bool m_MyVariable;                          // Violation
+    static const bool m_skMyVariable = true;    // Violation
+    void foo( bool MyParam ) {                  // Violation
+        bool MyVariable;                        // Violation
+        static const bool skMyVariable = true;  // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+bool g_bMyVar;                                  // OK
+bool g_bMyVariable;                             // OK
+static const bool g_skbMyVariable = true;       // OK
+class A {
+    bool m_bMyVariable;                         // OK
+    static const bool m_skbMyVariable = true;   // OK
+    void foo( bool bMyParam ) {                 // OK
+        bool bMyVariable;                       // OK
+        static const bool skbMyVariable = true; // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

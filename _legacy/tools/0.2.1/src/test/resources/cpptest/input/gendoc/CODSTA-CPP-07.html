@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Postfix increment and decrement should be implemented in terms of their prefix counterparts
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Postfix increment and decrement should be implemented in terms of their prefix counterparts [CODSTA-CPP-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The prefix and postfix forms of these operators return different types.
+In particular, prefix forms return a reference, postfix forms return
+a const object. Let us make one more observation about the prefix and postfix
+increment operators. Except for their return values, they do the same thing:
+they increment a value. That is, they're supposed to do the same thing. 
+How can you be sure the behavior of postfix increment is consistent with
+that of prefix increment? What guarantee do you have that their implementations
+won't diverge over time, possibly as a result of different programmers
+maintaining and enhancing them? Unless you've followed the design principle 
+embodied by the code below, you have no such guarantee. That principle is that
+postfix increment and decrement should be implemented in terms of their prefix
+counterparts. You then need only maintain the prefix versions, 
+because the postfix versions will automatically behave in a consistent fashion."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents errornous code and increase power and flexibility of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    explicit A( int i = 0 ) : _i( i ) {}
+    ~A( ) {}
+    A operator++( )                  // Violation - return type is not reference
+    {
+        ++_i;
+        return *this;
+    }
+    A operator++( int )              // Violation - return type is non const
+    {
+        A temp = *this;
+        ++(*this);
+        return temp;
+    }
+private:
+    int _i;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    explicit A( int i = 0 ) : _i( i ) {}
+    ~A( ) {}
+    A&amp; operator++( ) {              // OK    Prefix  increment operator
+        ++_i;
+        return *this;
+    }
+    const A operator++( int ) {   // OK    Postfix increment operator
+        A temp = *this;
+        ++(*this);
+        return temp;
+    }
+private:
+    int _i;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+Chapter: "Operators", Item 6
+
+</PRE>
+</BODY>
+</HTML>

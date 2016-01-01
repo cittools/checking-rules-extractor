@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Define non-member functions inside templates when type conversions are desired
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Define non-member functions inside templates when type conversions are desired [TEMPL-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Define non-member functions inside templates when type conversions are
+desired. When writing a class template that offers functions related to the
+template that support implicit type conversions on all parameters, define those
+functions as friends inside the class template."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Defining functions related to the template that support implicit type 
+conversions on all parameters as friend prevent from improper using of those
+functions."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+template&lt;typename T&gt;
+class Rational {
+public:
+    Rational( const T&amp; ); 
+};
+
+template&lt;typename T&gt;
+const Rational&lt;T&gt; operator*( // Violation
+const Rational&lt;T&gt;&amp; lhs, const Rational&lt;T&gt;&amp; rhs ) 
+{ /* ... */ }
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+template&lt;typename T&gt;
+class Rational {
+public:
+    Rational( const T&amp; ); 
+
+    friend
+    const Rational&lt;T&gt; operator*( // OK
+    const Rational&lt;T&gt;&amp; lhs, const Rational&lt;T&gt;&amp; rhs ) 
+    { /* ... */ }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 7, Item 46
+
+</PRE>
+</BODY>
+</HTML>

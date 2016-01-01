@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a member function can be made static then it shall be made static, otherwise if it can be made const then it shall be made const
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a member function can be made static then it shall be made static, otherwise if it can be made const then it shall be made const [MISRA2008-9_3_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Declaring a member function static or const limits its access
+to the non-static data members."
+See also: CODSTA-CPP-54
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unintentional modification of the data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+    int foo1 ()         // Violation - can be static
+    {
+        return m_s;
+    }
+    int foo2 ()         // Violation - can be const
+    {
+        return m_i;
+    }
+    
+private:
+    int m_i;
+    static int m_s;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+    static int foo1 ()        // OK
+    {
+        return m_s;
+    }
+    int foo2 () const         // OK
+    {
+        return m_i;
+    }
+    
+private:
+    int m_i;
+    static int m_s;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 9, Rule 9-3-3
+
+</PRE>
+</BODY>
+</HTML>

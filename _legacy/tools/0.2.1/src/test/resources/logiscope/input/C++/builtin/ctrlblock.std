@@ -1,0 +1,36 @@
+.NAME Blocks in control statements
+
+.DESCRIPTION
+
+Definition:
+-----------
+Block statements shall always be used in control statements (if , for , while , do).
+
+Justification:
+--------------
+Removes ambiguity about the scope of instructions and makes the code easier to read
+and to modify.
+
+Example:
+--------
+
+// do not write
+if (x == 0) return;
+else 
+while (x > min) 
+  x--;
+
+// write
+if (x == 0) {
+  return;
+} else {
+  while (x > min) {
+    x--;
+  }
+} 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

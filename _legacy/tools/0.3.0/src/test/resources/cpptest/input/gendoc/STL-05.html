@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Almost all uses of copy where the destination range is specified using an insert iterator should be replaced with calls to range member functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Almost all uses of copy where the destination range is specified using an insert iterator should be replaced with calls to range member functions [STL-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"(...) almost all uses of copy where the destination range is specified using
+an insert iterator (i.e.. via inserter, back_inserter. or front_inserter) can
+be — should be — replaced with calls to range member functions. Too many STL
+programmers overuse copy, so the advice I just gave bears repeating: Almost all
+uses of copy where the destination range is specified using an insert iterator
+should be replaced with calls to range member functions."
+See also: STL-04
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"In short, range member functions yield code that is easier to write and
+easier to understand. (...) It would be helpful to have a more universally
+agreed-upon criterion for establishing the superiority of range member
+functions to their single-element counterparts. For the standard sequence
+containers, we have one: efficiency. When dealing with the standard sequence
+containers, application of single-element member functions makes more demands
+on memory allocators, copies objects more frequently, and/or performs redundant
+operations compared to range member functions that achieve the same end."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+class Widget{};
+
+void  myFunction()
+{
+    vector&lt;Widget&gt; v1, v2;
+    v1.clear();
+    copy(v2.begin() + v2.size() / 2, v2.end(), back_inserter(v1 )); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+class Widget{};
+
+void  myFunction()
+{
+    vector&lt;Widget&gt; v1, v2;
+    v1.clear();
+    v1 .insert(v1 .end(), v2.begin() + v2.size() / 2, v2.end());   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 1, item 5
+
+</PRE>
+</BODY>
+</HTML>

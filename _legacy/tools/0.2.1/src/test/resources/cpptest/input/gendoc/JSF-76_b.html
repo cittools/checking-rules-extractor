@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare a copy constructor for classes with dynamically allocated memory
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare a copy constructor for classes with dynamically allocated memory [JSF-76_b-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if a class, which uses 'new' to allocate its data member,
+or 'delete' to deallocate its data member, has an explicitly defined copy
+constructor.
+See also: CODSTA-CPP-19, MRM-05, MRM-37, MRM-40, MRM-48, OOP-27, OOP-30, OOP-34
+
+
+Exceptions:
+
+Rule does not report violation if there's an copy constructor in a base
+class which prevents implicitly declared copy constructor in this class 
+from being used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"A copy constructor is recommended to avoid surprises when an object
+is initialized using an object of the same type. If an object manages
+the allocation and deallocation of an object on the heap (the managing
+object has a pointer to the object to be created by the class' constructor),
+only the value of the pointer will be copied. This can lead to two invocations
+of the destructor for the same object (on the heap), probably resulting
+in a run-time error."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class MyClass{ // Violation
+public:
+    MyClass();
+    ~MyClass(){ delete p; }
+private:
+    int *p;
+};
+
+MyClass::MyClass() {
+    p = new int;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class MyClass{ // OK
+public:
+    MyClass();
+    MyClass(MyClass&amp;);
+    ~MyClass(){ delete p; }
+private:
+    int *p;
+};
+
+MyClass::MyClass() {
+    p = new int;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 7 Classes - 7.5 Constructors and Destructors - Rule 25
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Constructors,
+   Destructors, and Assignment Operators", Item 11
+
+3. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Construction, Destruction, and Copying", Rule 53
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 76
+
+</PRE>
+</BODY>
+</HTML>

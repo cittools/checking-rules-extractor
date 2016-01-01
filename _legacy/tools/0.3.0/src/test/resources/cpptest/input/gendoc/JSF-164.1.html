@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The left-hand operand of a right-shift operator shall not have a negative value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The left-hand operand of a right-shift operator shall not have a negative value [JSF-164.1-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message if left-hand operand of right-shift operator 
+is signed type, negative constant, or is preceded by "-" operator (-a).
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+For e1 &gt;&gt; e2, if e1 has a signed type and a negative value, the value
+of (e1 &gt;&gt; e2) is implementation-defined.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(signed int param)
+{
+    int i = 1, j = 1, k = 1;
+    signed int m = -1;
+
+    k = param &gt;&gt; j;          // Violation
+    k = i &gt;&gt; j;              // Violation
+    k = -i &gt;&gt; j;             // Violation
+    k = -1 &gt;&gt; j;             // Violation
+    k = m &gt;&gt; j;              // Violation
+    m&gt;&gt;=j;                   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void zoo(unsigned int param)
+{
+    int i = 1, j = 1, k = 1;
+    unsigned int m = 1;
+    
+    k = param &gt;&gt; j;         // OK
+    k = 1 &gt;&gt; j;             // OK
+    k = m &gt;&gt; j;             // OK
+    m&gt;&gt;=j;                  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.21 Operators, AV Rule 164.1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,13 @@
+.NAME Parse error
+
+.DESCRIPTION
+
+Definition:
+-----------
+This standard identifies module parts that could not be parsed.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

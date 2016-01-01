@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare reference parameters as const references whenever possible
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare reference parameters as const references whenever possible [CODSTA-CPP-43-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if you declared your reference parameters as const references.
+When your function is not going to modify the argument it is referencing, you 
+should use const to protect variables from unintended modifications when the 
+function returns.
+See also: CODSTA-CPP-03, CODSTA-CPP-38, CODSTA-CPP-44, 
+          MISRA-104, MISRA2004-16_7, OPT-21
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Declaring parameters which are not modified as const reference instead of 
+reference improves legibility. It also prevents future revisions from 
+unintentional changing the caller's data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct Foo {
+    int x;
+    int y;
+};
+
+int Bar( Foo &amp;f ) {  // Violation
+    return f.x;
+}
+
+int FooBar( Foo &amp;f ) { // OK
+    return f.x++;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct Foo {
+    int x;
+    int y;
+};
+
+int Bar( const Foo &amp;f ) {  // OK
+    return f.x;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 3
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-1-2
+
+</PRE>
+</BODY>
+</HTML>

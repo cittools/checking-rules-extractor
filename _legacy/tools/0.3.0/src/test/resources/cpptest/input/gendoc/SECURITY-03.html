@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Usage of system properties should be restricted
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Usage of system properties should be restricted [SECURITY-03-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that uses system properties, or environment variables.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By controlling use of environment variables in the applications, they are made 
+more secure. Environment variables can be used as security holes. 
+If a malicious user passes a specifically crafted string into a running program 
+via an environment variable, a buffer overflow attack can be launched. 
+On the other hand, if a program writes sensitive information 
+(such as a password) into an environment variable with putenv, it can be 
+captured and used to gain unauthorized privileges or access to sensitive data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+void foo( void ) {
+    char *envvar;
+    envvar = getenv( "LIB" );                   // Violation
+    putenv( "LIB=c:\\mylib;c:\\yourlib" );      // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use system properties and environment variables in source code.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0051.xml">https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0051.xml</A>
+
+</PRE>
+</BODY>
+</HTML>

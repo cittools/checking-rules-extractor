@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Invalid range of the right hand operand of a shift operator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Invalid range of the right hand operand of a shift operator [MISRA-038-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The right hand operand of a shift operator shall lie between zero
+and one less than the width in bits of the left hand operand (inclusive).
+Rule makes assumptions about size of types: char has 8 bits, short has 16 bit,
+int has 32 bit, long has 64 bit.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#ifndef uint8_t
+    typedef unsigned char   uint8_t;
+#endif
+#ifndef uint16_t
+    typedef unsigned short  uint16_t;
+#endif
+#ifndef uint32_t
+    typedef unsigned int    uint32_t;
+#endif
+
+void foo( ) {
+    uint8_t  it8;
+    uint16_t it16;
+    uint32_t it32;
+
+    it8  &lt;&lt; 8;  // Violation
+    it16 &lt;&lt; 16; // Violation
+    it32 &gt;&gt; 32; // Violation
+    it16 &gt;&gt; it8;// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifndef uint8_t
+    typedef unsigned char   uint8_t;
+#endif
+#ifndef uint16_t
+    typedef unsigned short  uint16_t;
+#endif
+#ifndef uint32_t
+    typedef unsigned int    uint32_t;
+#endif
+
+void foo( ) {
+    uint8_t  it8;
+    uint16_t it16;
+    uint32_t it32;
+
+    it8  &lt;&lt; 7;  // OK
+    it16 &lt;&lt; 15; // OK
+    it32 &gt;&gt; 31; // OK
+    if (it8 &gt; 0 &amp;&amp; it8 &lt; sizeof( it8 ))
+        it16 &gt;&gt; it8; // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 38
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using thread-unsafe functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using thread-unsafe functions [SECURITY-25-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Thread-unsafe functions should not be used in the code.
+Functions from thread-safe libraries should be used instead of e.g:
+
+char *ttyname(int fildes);
+int ttyname_r(int fildes, char *name, size_t namesize);
+
+'ttyname_r' is safe thread and should be preferred.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule is dedicated to the UNIX-like systems.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using thread-unsafe functions which may
+behave incorrectly when used in multi-threading programs.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+
+void foo()
+{
+  char *name = ttyname(1);   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+
+void foo1()
+{
+  char name[100];
+  int status = ttyname_r(1,name,100);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://docs.sun.com/app/docs/doc/816-5137/6mba5vpk6?a=view">http://docs.sun.com/app/docs/doc/816-5137/6mba5vpk6?a=view</A>
+
+</PRE>
+</BODY>
+</HTML>

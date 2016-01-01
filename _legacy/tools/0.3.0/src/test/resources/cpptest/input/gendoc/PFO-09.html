@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+"#pragma once" preprocessor directive should not be used in source files
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+"#pragma once" preprocessor directive should not be used in source files [PFO-09-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+#pragma once is a non-standard but widely supported preprocessor directive
+designed to cause the current header file to be included only once in a single
+compilation. Using #pragma once in source files is useless because source files
+are not meant to be included by other files. However, if source file with
+#pragma once directive is meant to be included by other files one should 
+reconsider if this file should not be a header file.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves maintainability and optimization of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file foo.cpp
+#pragma once    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file foo.h
+#pragma once    // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

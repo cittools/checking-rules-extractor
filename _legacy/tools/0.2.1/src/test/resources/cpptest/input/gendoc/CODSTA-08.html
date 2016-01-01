@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use break in for loops
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use break in for loops [CODSTA-08-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if there are breaks in for loops. Breaks which
+are in direct context of do/while, while and switch are skipped.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Avoiding breaks in the for loop makes your code easier to follow.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void func() 
+{
+  for (int j = 0; j &lt; 10; j++) {        
+    if (j==5) 
+    {
+      break;                 // Violation
+    }
+   break;                    // Violation		
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void func() 
+{
+  for (int j = 0; j &lt; 10; j++) {        
+    while (true) 
+    {
+      break;        // OK - 'break' in while context           
+    }	
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using functions fprintf/fwprintf with only two parameters, when second parameter is a variable
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using functions fprintf/fwprintf with only two parameters, when second parameter is a variable [SECURITY-08-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects the use of the functions fprintf/wfprintf with two parameters 
+and no format specifiers, when second parameter is a variable parameter.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents security attack using format strings. 
+If a fprintf functions is passed a variable without format specifiers, 
+the variable can contain a cleverly formatted string 
+(including format characters %n, %x, and %s) that can be used to execute 
+malicious instructions or crash the application.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#include &lt;wchar.h&gt;
+
+void foo( ) {
+   FILE *stream;
+   char   c = '\n';
+   wchar_t d=8;
+   stream = fopen( "fprintf.out", "w" );
+
+   fprintf( stream, &amp;c );           // Violation
+   fwprintf( stream, &amp;d );          // Violation
+
+   fclose( stream );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#include &lt;wchar.h&gt;
+
+void foo( ) {
+   FILE *stream;
+   int    i = 10;
+   char   s[] = "example string";
+   char   c = '\n';
+   unsigned short d=8;
+   stream = fopen( "fprintf.out", "w" );
+
+   fprintf( stream,"abcd");        // OK
+   fprintf( stream, "%s%c", s, c );// OK
+   fprintf( stream, "%d\n", i );   // OK
+ 
+   fwprintf(stream,L"abc:%d",i);   // OK
+   fwprintf(stream,L"abcd");       // OK
+  
+   fclose( stream );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/control-formatting.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/control-formatting.html</A>
+
+</PRE>
+</BODY>
+</HTML>

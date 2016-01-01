@@ -1,0 +1,154 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Untrusted data is used as a loop boundary
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Untrusted data is used as a loop boundary [SECURITY-38-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message if user input is directly used
+as a loop boundary. Use of user input for a loop condition can
+lead to a denial of service condition.
+The following functions and objects are considered to return
+untrusted user data:
+  extern istream cin;
+  int scanf(const char *format, ...);
+  int fscanf( FILE *stream, ...);
+  int fwscanf( FILE *stream, ...);
+
+The rule does not report violation message if:
+
+* the user input is used indirectly (e.g., num value from below
+example is assigned to limit variable and the limit variable is
+used for a loop condition)
+
+/* ... */
+scanf("%u",&amp;num);
+limit = num;
+  
+for (i = 0; i &lt; limit; i++)  // user input is not directly used
+{
+
+}
+
+* the user input is passed to function as pointer or reference
+or it's value is changed in assignment statement
+
+
+bool validateData(int, float, char*);
+    
+void example()
+{    
+    int n, i; float x; char name[50];
+    n = scanf("%d%f%s", &amp;i, &amp;x, name);      // user input
+
+    validateData(i, x, name)                // 'name' passed to validateData as pointer
+    while(name[param]);                     // OK
+    while(name[i]);                         // Violation 'i'
+ 
+    x = 10;
+    while(name[x]);                         // OK - user input x with new value
+
+}
+
+See also: SECURITY-20.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents potential buffer overflow and SQL injection attacks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void foo();
+
+void iterateFoo()
+{
+  unsigned num;
+  int i;
+  scanf("%u",&amp;num);
+  
+  for (i = 0; i &lt; num; i++){  // Violation
+    foo();
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void foo();
+
+bool validate(unsigned int param);
+
+void iterateFoo()
+{
+  unsigned int num;
+  int i, limit;
+  scanf("%u",&amp;num);
+
+  if(validate(num))
+  {
+    limit = num;
+  }else{
+  
+   limit = 0;
+  }
+  
+  for (i = 0; i &lt; limit; i++){  // OK
+    foo();
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Limited dependence should be placed on C++ operator precedence rules in expressions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Limited dependence should be placed on C++ operator precedence rules in expressions [MISRA2008-5_0_2_d-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In addition to the use of parentheses to override default operator precedence,
+parentheses should also be used to emphasise it. It is easy to make a mistake 
+with the rather complicated precedence rules of C, and this approach helps to 
+avoid such errors, and helps to make the code easier to read. However, do not 
+add too many parentheses so as to clutter the code and make it unreadable."
+"If all operators are the same, parentheses may be used to control the order of 
+operation. Some operators (e.g. addition and multiplication) that are 
+associative in algebra are not necessarily associative in C. Similarly, integer 
+operations involving mixed types (prohibited by several rules) may produce 
+different results because of the integral promotions. The following example 
+written for a 16-bit implementation demonstrates that addition is not 
+associative and that it is important to be clear about the structure of an 
+expression:"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule increases safety in arithmetic operations.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#ifdef _MSC_VER
+typedef unsigned __int16 uint16;
+typedef unsigned __int32 uint32;
+#elif __GNUC__
+#include &lt;sys/types.h&gt;
+typedef u_int16_t uint16;
+typedef u_int32_t uint32;
+#endif
+
+void fooPlus( ) {
+    uint16 a = 10;
+    uint16 b = 65535;
+    uint32 c = 0;
+    uint32 d;
+    d = (a + b) + c; /* Violation d is 9; a + b wraps modulo 65536 */ 
+}
+
+void fooMultiply( ) {
+    uint16 a = 10;
+    uint16 b = 65535;
+    uint32 c = 0;
+    uint32 d;
+    d = (a * b) * c; /* Violation d is 65526; a * b wraps modulo 65536 */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifdef _MSC_VER
+typedef unsigned __int16 uint16;
+typedef unsigned __int32 uint32;
+#elif __GNUC__
+#include &lt;sys/types.h&gt;
+typedef u_int16_t uint16;
+typedef u_int32_t uint32;
+#endif
+
+void fooPlus( ) {
+    uint16 a = 10;
+    uint16 b = 65535;
+    uint32 c = 0;
+    uint32 d;
+    d = a + (b + c); /* OK d is 65545 */
+}
+
+void fooMultiply( ) {
+    uint16 a = 10;
+    uint16 b = 65535;
+    uint32 c = 0;
+    uint32 d;
+    d = a * (b * c); /* OK d is 655350 */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.28 Portable Code, AV Rule 213
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-2
+
+4. Origin: Misra Guidelines - Rule 47
+
+</PRE>
+</BODY>
+</HTML>

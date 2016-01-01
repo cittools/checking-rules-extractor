@@ -1,0 +1,18 @@
+.NAME A single class definition per header file
+
+.DESCRIPTION
+
+Definition:
+-----------
+A header file must not contain more than one class definition.
+Nested classes are tolerated.
+
+Parameters:
+----------
+A string representing the types of modules (metric type) that should be 
+considered as header files.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

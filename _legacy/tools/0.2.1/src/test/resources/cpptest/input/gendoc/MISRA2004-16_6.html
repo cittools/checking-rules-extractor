@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The number of arguments passed to a function shall match the number of parameters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The number of arguments passed to a function shall match the number of parameters [MISRA2004-16_6-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The number of parameters passed to a function shall match the function 
+prototype. According to the ISO/IEC 9989:1999 C standard, a function prototype 
+is a declaration of a function that declares the types of its parameters.
+This rule requires that the number of arguments passed to a function match 
+the number declared in the prototype. Rule is retained since compilers may not 
+flag this constraint error.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability and prevents erroneous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void myFunction(int p)
+{
+    foo(1);    /* Violation - no foo() prototype */
+    foo(2,p);  /* Violation - inconsistent number of parameters:
+                     first foo() call is treated here as foo() declaration */
+}
+
+void foo0( void );
+void foo3( int, int, int );
+
+void goo( ) {
+    foo0( 7 );             /* Violation */
+    foo3( 6, 6, 6, 6);     /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void myFunction(int p)
+{
+    int foo(int, int);    /* OK prototype */
+    foo(2,p);             /* OK */
+}
+
+void foo0( void );
+void foo2( int, int, ... );
+void foo3( int, int, int );
+
+void goo( ) {
+    foo0( );                /* OK */
+    foo2( 6, 6 );           /* OK */
+    foo2( 6, 6, 6, 6 );     /* OK */
+    foo3( 6, 6, 6 );        /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 16
+
+2. Misra Guidelines - Rule 78
+
+</PRE>
+</BODY>
+</HTML>

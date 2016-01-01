@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Opening curly brace '{' shall appear on a line by themselves
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Opening curly brace '{' shall appear on a line by themselves [FORMAT-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that open curly braces "{" appear on a line by themselves. 
+See also: FORMAT-03, FORMAT-34
+
+
+Exceptions:
+
+Rule does not adhere to enums, initializations and empty blocks.
+enum E {EN1 = 2, EN2 = 1};  // OK
+int array[] = {1,2,3,4,5};  // OK
+class FooBar{};             // OK
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A1
+{ int a;                      // Violation
+};
+
+struct S1 {                   // Violation
+    int a;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A1
+{
+    int a;                    // OK
+};
+
+struct S1
+{                             // OK
+    int a;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+from: 6 Style Classes - 6.3 Compound Statements- Rec. 24
+
+</PRE>
+</BODY>
+</HTML>

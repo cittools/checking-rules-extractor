@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A class, union or enum name (including qualification, if any) shall be a unique identifier
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A class, union or enum name (including qualification, if any) shall be a unique identifier [MISRA2008-2_10_4_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"No tag name shall be reused to define a different tag.
+ISO 9899:1990 does not define the behaviour when an aggregate declaration uses
+a tag in different forms of type specifier. Either all uses of the tag should
+be in structure type specifiers, or all uses should be in union type specifiers"
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Reuse of tag names can lead to errors and confusion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct stag { int a; int b; };
+
+void foo1()
+{
+    union stag  { int a; float b; }; // Violation
+}
+
+void foo2(void)
+{
+    struct stag { int a; };          // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct stag { int a; int b; };
+
+void foo1()
+{
+    union union_tag  { int a; float b; }; // OK
+}
+
+void foo2(void)
+{
+    struct new_stag { int a; };          // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 5
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-10-4
+
+</PRE>
+</BODY>
+</HTML>

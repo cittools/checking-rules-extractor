@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for floating point pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for floating point pointer, array, or reference types [NAMING-HN-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For floating point pointer, array, or reference 
+variables and parameters use "f" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+float* g_pfmyVar;                                  // Violation
+float* g_pMyVariable;                              // Violation
+static const float* g_spkMyVariable;               // Violation
+class B {
+    float* m_pMyVariable;                          // Violation
+    static const float* m_spkMyVariable;           // Violation
+    void foo( float* pMyParam ) {                  // Violation
+        float* pMyVariable;                        // Violation
+        static const float* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+float* g_pfMyVar;                                  // OK
+float* g_pfMyVariable;                             // OK
+static const float* g_spkfMyVariable;              // OK
+class A {
+    float* m_pfMyVariable;                         // OK
+    static const float* m_spkfMyVariable;          // OK
+    void foo( float* pfMyParam ) {                 // OK
+        float* pfMyVariable;                       // OK
+        static const float* spkfMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All 'if' statements should have an 'else' clause
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All 'if' statements should have an 'else' clause [CODSTA-23-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if each of your 'if' statements has an 'else' clause.
+See also: MISRA2004-14_10
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Writing 'if' and 'else' in concert improves readability and reliability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Foo(bool b) {
+  int i = 0;
+  int j = 0;
+  if (b) {       // Violation
+    i += j;
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void Foo(bool b) {
+  int i = 0;
+  int j = 0;
+  if (b) {            
+    j += i;
+  } else {	// OK
+    i++;
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 14
+
+2. Origin: Misra Guidelines - Rule 60
+
+</PRE>
+</BODY>
+</HTML>

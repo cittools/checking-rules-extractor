@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Limited dependence should be placed on C's operator precedence rules in expressions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Limited dependence should be placed on C's operator precedence rules in expressions [MISRA2004-12_1_f-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In addition to the use of parentheses to override default operator precedence,
+parentheses should also be used to emphasise it. It is easy to make a mistake
+with the rather complicated precedence rules of C, and this approach helps to
+avoid such errors, and helps to make the code easier to read. However, do not
+add too many parentheses so as to clutter the code and make it unreadable."
+If parentheses are nested too deeply then you may hit a translation limit but
+if this happens the expression is probably too complicated anyway and should be
+split. The rule checks the number of nested parentheses - if the nesting level
+exceeds 10 rule reports a violation message.
+
+
+Note:
+
+Nested parentheses level is set on 10 but can be changed. To change the
+default level of the nested parentheses modify the main "Count" expression
+of the rule (Collector A) from "$$ &gt; 9" to "$$ &gt; N" using desired threshold
+value for N. Rule's header should be also changed accordingly.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( )
+{
+   int a, b,c,d;
+   a=(((((((((((b+1)+1)+c)*d)/2)+1)*b)+c)*d)+8)/(b+d))+3; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( )
+{
+    int a, b,c,d;
+    int h;
+    h = (((((((((b+1)+1)+c)*d)/2)+1)*b)+c)*d)+8;   // OK
+    a =(h*(b+d))+3;                                // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.28 Portable Code, AV Rule 213 
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-2
+
+4. Origin: Misra Guidelines - Rule 47
+
+</PRE>
+</BODY>
+</HTML>

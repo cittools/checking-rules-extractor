@@ -1,0 +1,35 @@
+.NAME Assignement in conditions
+
+.DESCRIPTION
+
+Definition:
+-----------
+Assignment operators ( = , += , -=, *=, /= , %= , >>= , <<=, &=, |=, ^= , ++ , -- ) 
+must not be used inside conditional expression in control statements if, while, 
+for and switch.
+
+Justification:
+--------------
+An instruction such as "if (x=y) { ..." is ambiguous and unclear.
+One might think the author wanted to write "if (x==y) {...".
+
+Example:
+--------
+
+// do not write
+
+if (x -= dx) { ...
+for (i=j=n; --i > 0; j--) { ..
+
+// write
+
+x -= dx;
+if (x) { ...
+
+for (i=j=n; i > 0; i--, j--) { ... 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

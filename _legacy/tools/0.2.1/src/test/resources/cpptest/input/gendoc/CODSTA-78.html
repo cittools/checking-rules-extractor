@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Any label referenced by a goto statement shall be declared in the same block, or in a block enclosing the goto statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Any label referenced by a goto statement shall be declared in the same block, or in a block enclosing the goto statement [CODSTA-78-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Any label referenced by a goto statement shall be declared in the same block,
+or in a block enclosing the goto statement. Unconstrained use of goto can
+lead to programs that are extremely difficult to comprehend, analyse and,
+for C++, can also lead to the program exhibiting unspecified behaviour.
+However, in many cases a total ban on goto requires the introduction of
+flags to ensure correct control flow, and it is possible that these flags
+may themselves be less transparent than the goto they replace.
+Therefore, the restricted use of goto is allowed where that use will not lead
+to semantics contrary to developer expectations. Jumping in to nested blocks is
+prohibited as it may lead to complex flow graphs."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents unspecified behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void f1 ( )
+{
+	int j = 0;
+	goto L1;
+	
+	for ( j = 0; j &lt; 10 ; ++j )
+	{
+		/* ... */
+		L1: 				// Violation
+			j;
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void f1 ( )
+{
+	int j = 0;
+	goto L1;
+	
+	for ( j = 0; j &lt; 10 ; ++j )
+	{
+		/* ... */
+	}
+
+	L1: 					// OK
+		j;
+
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 6, Rule 6-6-1
+
+</PRE>
+</BODY>
+</HTML>

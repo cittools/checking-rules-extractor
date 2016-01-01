@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An identifier declared to be an object or type shall be defined in a block that minimizes its visibility
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An identifier declared to be an object or type shall be defined in a block that minimizes its visibility [MISRA2008-3_4_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A variable ought to be declared with the smallest possible scope to improve 
+the readability of the code and so that variables are not unnecessarily 
+allocated. When a variable that is declared at the beginning of a function is 
+used somewhere in the code, it is not easy to directly see the type of 
+the variable. 
+In addition, there is a risk that such a variable is inadvertently hidden 
+if a local variable, having the same name, is declared in an internal block.
+
+Many local variables are only used in special cases which seldom occur. 
+If a variable is declared at the outer level, 
+memory will be allocated even if it is not used. In addition, when variables
+are initialized upon declaration, more efficient code is obtained than if 
+values are assigned when the variable is used."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents from making the program harder to understand and maintain.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int a;      // Violation
+    {
+        a = 0;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    {
+        int a;  // OK
+        a = 0;
+    }
+    int b;      // OK
+    if (b&gt;0) {
+        b = -1;
+    } else {
+        b = 1;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards  
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11</A>
+   From: 11 Variables - Rule 41
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Coding Style", Rule 18
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 3, Rule 3-4-1
+
+4. The Power of Ten - Rules for Developing Safety Critical Code.
+   Rule 6
+
+</PRE>
+</BODY>
+</HTML>

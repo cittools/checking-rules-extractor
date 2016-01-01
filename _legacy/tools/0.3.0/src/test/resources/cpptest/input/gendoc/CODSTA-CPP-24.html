@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid making any assignment operator virtual. Do not return const T&amp; from assignment operator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid making any assignment operator virtual. Do not return const T&amp; from assignment operator [CODSTA-CPP-24-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Avoid making any assignment operator virtual."
+If you need virtual assignment, prefer to provide a named function 
+instead (e.g. virtual void Assign(const &amp;T)). "Don't return const T&amp;. 
+Although this has the benefit of preventing odd code like (a=b)=c, it has the 
+drawback that you wouldn't be able to put T objects into standard 
+library containers; the containers require that assignment return plain T&amp;."
+See also: CODSTA-CPP-02, CODSTA-CPP-21, MRM-04, MRM-37, MRM-40, MRM-47, OOP-27,
+          OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents lack of error safety and improves good programming style.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    virtual int&amp; operator=(const int&amp;); // Violation
+    const A&amp; operator=(const A&amp;);       // Violation
+};
+
+template&lt;class T&gt; class B {
+public:
+    virtual T&amp; operator=(const T&amp;);     // Violation
+    const B&lt;T&gt;&amp; operator=(B&lt;T&gt;&amp;);       // Violation
+};
+
+template&lt;class T&gt; class C {
+public:
+    const C&lt;T&gt;&amp; operator=(const C&lt;T&gt;&amp;); // Violation
+    virtual T&amp; operator=(T&amp;);           // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    const int&amp; operator=(const int&amp;);   // OK
+    A&amp; operator=(const A&amp;);             // OK
+};
+
+template&lt;class T&gt; class B {
+public:
+    T&amp; operator=(const T&amp;);             // OK
+    B&lt;T&gt;&amp; operator=(B&lt;T&gt;&amp;);             // OK
+};
+
+template&lt;class T&gt; class C {
+public:
+    C&lt;T&gt;&amp; operator=(const C&lt;T&gt;&amp;);       // OK
+    T&amp; operator=(T&amp;);                   // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Construction, Destruction, and Copying", Rule 55
+
+</PRE>
+</BODY>
+</HTML>

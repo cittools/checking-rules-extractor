@@ -1,0 +1,19 @@
+.NAME Do not return pointer to member data
+
+.DESCRIPTION
+
+Definition:
+-----------
+Member functions must not return a pointer or a non-const reference to
+member data.
+
+Justification:
+--------------
+Helps to ensure that data encapsulation is respected.
+
+.REQUIRED classdata
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

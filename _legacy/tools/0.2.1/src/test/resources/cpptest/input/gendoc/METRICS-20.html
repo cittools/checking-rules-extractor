@@ -1,0 +1,141 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid too long functions (declarations and statements)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid too long functions (declarations and statements) [METRICS-20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Long functions have disadvantages:
+"If a function is too long, it can be difficult to comprehend. 
+Generally, it can be said that a function should not be longer 
+than two pages, since that is about how much that can be comprehended 
+at one time. 
+If an error situation is discovered at the end of an extremely long function,
+it may be difficult for the function to clean up after itself and 
+to "undo" as much as possible before reporting the error to 
+the calling function. "
+See also: METRICS-01, METRICS-21, METRICS-22
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule triggers when the number of declarations and statements within
+function body exceeds 50.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By always using short functions, such an error can be more exactly localized.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void too_long_function() {	// Violation
+    int a1;
+    int a2;
+    int a3;
+    int a4;
+    int a5;
+    int a6;
+    int a7;
+    int a8;
+    int a9;
+    int a10;
+    int a11;
+    int a12;
+    int a13;
+    int a14;
+    int a15;
+    int a16;
+    int a17;
+    int a18;
+    int a19;
+    int a20;
+    int a21;
+    int a22;
+    int a23;
+    int a24;
+    int a25;
+    int a26;
+    int a27;
+    int a28;
+    int a29;
+    int a30;
+    int a31;
+    int a32;
+    int a33;
+    int a34;
+    int a35;
+    int a36;
+    int a37;
+    int a38;
+    int a39;
+    int a40;
+    int a41;
+    int a42;
+    int a43;
+    int a44;
+    int a45;
+    int a46;
+    int a47;
+    int a48;
+    int a49;
+    int a50;
+    int a51;
+    int a52;
+    int a53;
+    int a54;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Number of declarations and statements within function body
+should be limited to 50.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 9 Functions - 9.7 General - Rec 47
+
+</PRE>
+</BODY>
+</HTML>

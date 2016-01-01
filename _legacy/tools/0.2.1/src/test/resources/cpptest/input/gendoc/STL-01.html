@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Instead of trying to write the container-independent code use class encapsulation
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Instead of trying to write the container-independent code use class encapsulation [STL-01-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Given the inevitability of having to change container types from time to time,
+you can facilitate such changes in the usual manner: by encapsulating,
+encapsulating, encapsulating. One of the easiest ways to do this is through the
+liberal use of typedefs for container and iterator types.(...) A typedef is
+just a synonym for some other type, so the encapsulation it affords is purely
+lexical. A typedef doesn't prevent a client from doing (or depending on)
+anything they couldn't already do (or depend on). You need bigger ammunition
+if you want to limit client exposure to the container choices you've made. 
+You need classes. To limit the code that may require modification if you 
+replace one container type with another, hide the container in a class, and
+limit the amount of container-specific information visible through the class 
+interface. For example, if you need to create a customer list, don't use a
+list directly. Instead, create a CustomerList class, and hide a list in its 
+private section"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"When you consider this kind of change, you still have to check every
+CustomerList member function and every friend to see how they'll be affected
+(in terms of performance and iterator/pointer/reference invalidation, etc.),
+but if you've done a good job of encapsulating CustomerList's implementation
+details, the impact on CustomerList clients should be small. You can't write
+container-independent code, but they might be able to."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+
+using namespace std;
+
+class Customer{};
+
+list&lt;Customer&gt; customers1;                                // Violation
+
+typedef list&lt;int&gt; CustomersContainer;                  // Violation
+CustomersContainer customers2;
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+
+using namespace std;
+
+class Customer{};
+
+class CustomerList {
+private:
+    typedef list&lt;Customer&gt; CustomerContainer;
+    typedef CustomerContainer::iterator CCIterator;
+    CustomerContainer customers;                        // OK
+public:
+                     // limit the amount
+                     // information visible
+};                   // in this interface
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 1, item 2
+
+</PRE>
+</BODY>
+</HTML>

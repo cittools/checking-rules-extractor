@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Usage of functions which do not properly handle non-NULL terminated strings is not allowed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Usage of functions which do not properly handle non-NULL terminated strings is not allowed [SECURITY-33-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Usage of functions which do not properly handle 
+non-NULL terminated strings is not allowed.
+This does not result in exploitable code, 
+but can lead to access violations.
+Rule checks if the following functions are used strlen, 
+_tcslen, _mbslen, and wcslen.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using functions 
+which do not properly handle non-NULL terminated strings.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;mbstring.h&gt;
+#include &lt;tchar.h&gt;
+
+void goo()
+{
+ char buffer[61] = "string example";
+ int  len;
+ len = strlen( buffer );                                         // Violation
+ len = _tcslen( buffer );                                        // Violation
+ len = _mbslen(reinterpret_cast&lt;const unsigned char*&gt;(buffer));  // Violation
+ len = wcslen( reinterpret_cast&lt;const unsigned short*&gt;(buffer)); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use strlen, _tcslen, _mbslen, and wcslen functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0153.xml">https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0153.xml</A>
+
+</PRE>
+</BODY>
+</HTML>

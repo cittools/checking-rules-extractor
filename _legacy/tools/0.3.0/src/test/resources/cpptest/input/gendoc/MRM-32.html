@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid hiding the global new
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid hiding the global new [MRM-32-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects when the global new is hidden by an operator new. 
+By declaring a function called "operator new" inside the class,
+you inadvertently block access to the "normal" form of new
+See also: MRM-14
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If you hide the global new, normal new operator functionality 
+will be unavailable to maintainers of your code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+void ErrorHandler() {};
+class A {        // Violation
+public:
+    void* operator new(size_t size, void (*pehf)()) {
+        return new int[size];
+    }
+    void operator delete(void *A) {
+        delete A;
+    }
+};
+
+template&lt;class T&gt; class D {    // Violation
+public:
+    void* operator new(size_t size, T (*pehf)()) {
+        return new int[size];
+    }
+    void operator delete(void *d) {
+        delete d;
+    }
+};
+
+void foo() {
+    D&lt;void&gt; *a = new (ErrorHandler) D&lt;void&gt;;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+void ErrorHandler() {};
+class B {        // OK
+public:
+    void* operator new(size_t size, void (*pehf)()) {
+        return new int[size];
+    }
+    void* operator new(size_t size) {
+        return new int[size];
+    }
+    void operator delete(void *A) {
+        delete A;
+    }
+};
+
+class C {        // OK
+public:
+    void* operator new(size_t size, void (*pehf)()) {
+        return new int[size];
+    }
+    void* operator new(size_t size, int aa=0) {
+        return new int[size];
+    }
+    void operator delete(void *A) {
+        delete A;
+    }
+};
+
+template&lt;class T&gt; class E {	// OK
+public:
+    void* operator new(size_t size, T (*pehf)()) {
+        return new int[size];
+    }
+    void* operator new(size_t size) {
+        return new int[size];
+    }
+    void operator delete(void *e) {
+        delete e;
+    }
+};
+
+template&lt;class T&gt; class F {	// OK
+public:
+    void* operator new(size_t size, T (*pehf)()) {
+        return new int[size];
+    }
+    void* operator new(size_t size, int aa=0) {
+        return new int[size];
+    }
+    void operator delete(void *f) {
+        delete f;
+    }
+};
+
+void foo() {
+    E&lt;void&gt; *a = new (ErrorHandler) E&lt;void&gt;;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+Your Programs and Design", Second Edition, Addison-Wesley,
+(C) 2005 Pearson Education, Inc., Chapter: "Memory Management", Item 9
+
+</PRE>
+</BODY>
+</HTML>

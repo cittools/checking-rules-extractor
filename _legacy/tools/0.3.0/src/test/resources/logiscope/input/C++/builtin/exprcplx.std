@@ -1,0 +1,30 @@
+.NAME Expressions complexity
+
+.DESCRIPTION
+
+Definition:
+-----------
+Expressions complexity must be smaller than a limit given as a parameter. 
+This complexity is calculated with the associated syntactic tree, and its number 
+of nodes.
+By default, the maximum authorized complexity level is 10.
+
+Parameters:
+----------
+A number representing the authorized complexity level.
+
+Example:
+--------
+
+For instance, this expression: 
+(b+c*d) + (b*f(c)*d) 
+is composed of 8 operators and 7 operands.
+
+The associated syntactic tree has 16 nodes, so if the limit is under 16, 
+there will be a standard violation. 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

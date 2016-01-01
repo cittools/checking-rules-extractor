@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never provide brackets ([]) for delete when deallocating non-arrays
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never provide brackets ([]) for delete when deallocating non-arrays [MRM-35-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Use the same form in corresponding calls to new and delete.
+This rule checks calls to new and delete to make sure that
+they use the same form; it reports a violation if you call
+new and you [] when calling delete. If you do not use the
+same form in corresponding calls to new and delete, 
+an incorrect number of destructors may be called.
+See also: MRM-36
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using different kinds of 'new' and 'delete' calls.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( ) {}
+};
+
+void foo( ) {
+    A *a = new A;
+    delete[] a;        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( ) {}
+};
+
+void foo( ) {
+    A *a = new A;
+    delete a;          // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 3, Item 4
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Memory Management", Item 5
+
+</PRE>
+</BODY>
+</HTML>

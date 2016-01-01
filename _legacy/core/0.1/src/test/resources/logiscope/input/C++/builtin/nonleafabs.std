@@ -1,0 +1,18 @@
+.NAME Make non-leaf classes abstract
+
+.DESCRIPTION
+
+Definition:
+-----------
+Non-leaf classes shall be abstract.
+(This rule relates to Item 33 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Helps assignment do what most programmers expect and improves the design of classes.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

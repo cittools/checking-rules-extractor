@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If FALSE is to be defined, and is not already defined, enum value FALSE should be 0
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If FALSE is to be defined, and is not already defined, enum value FALSE should be 0 [CODSTA-25-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if FALSE is defined as 0. 
+See also: CODSTA-24, CODSTA-43
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Any use of FALSE-- other than defining FALSE as 0-- is misleading
+and will not be guaranteed to work predictably.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#ifndef FALSE
+typedef enum
+{
+    TRUE = 1,
+    FALSE = -1  // Violation
+} BOOL ;
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifndef FALSE
+typedef enum
+{
+    TRUE = 1,
+    FALSE = 0   // OK
+} BOOL ;
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.research.att.com/~bs/glossary.html#Gfalse">http://www.research.att.com/~bs/glossary.html#Gfalse</A>
+
+</PRE>
+</BODY>
+</HTML>

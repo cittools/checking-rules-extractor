@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Line should be indented by a multiple of four spaces
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Line should be indented by a multiple of four spaces [FORMAT-27-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Each line should be indented by a multiple of four spaces.
+See also: FORMAT-34, FORMAT-36, FORMAT-37
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+- Rule treats tab characters as alignment to correct column indentation.
+- Rule does not check indentation for lines which are in context 
+  of "()" or "[]" or line which starts with preprocessor directives.
+- Rule can be parameterized by changing values of the following variables
+  in Python scripts:
+  - Variable "IndentSize" contains the size of indentation in spaces.
+  - Variable "TabSize" contains the size of tab character in spaces.
+  - Both variables are set to 4.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+ };            // Violation
+
+ void foo(){   // Violation
+   }           // Violation
+class B {
+   int a;      // Violation
+     int b;    // Violation
+};
+
+ /** Violation - Incorrect first line of comment indentation
+ * ...
+ */
+void koo( int x){
+    if (x == 0 ||
+      x == 1){    // OK - in context of "()"
+       x = 1;     // Violation
+         x = 2;   // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+};             // OK
+
+void foo(){    // OK
+}              // OK
+class B {
+    int a;     // OK
+    int b;     // OK
+};
+
+/** OK - Correct first line of comment indentation
+ * ...
+ */
+void koo( int x){
+    if (x == 0 || 
+      x == 1){    // OK - in context of "()"
+        x = 1;    // OK
+        x = 2;    // OK
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Every switch statement will have at least two cases and a potential default
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Every switch statement will have at least two cases and a potential default [CODSTA-54-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Every switch statement will have at least two cases and a potential default.
+See also: CODSTA-41, MISRA2004-15_5
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+An if statement provides a more natural representation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int i) 
+{
+    switch(i)      // Violation
+    {
+        default:
+            ;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int i) 
+{
+    switch(i)      // OK
+    {
+      case 1:
+      	break;
+      case 2:
+      	break;
+      default:
+            ;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.24 Flow Control Structures, AV Rule 196
+
+</PRE>
+</BODY>
+</HTML>

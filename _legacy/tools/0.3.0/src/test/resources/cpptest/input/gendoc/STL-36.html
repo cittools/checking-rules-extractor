@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use an iterator range that isn't really a range
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use an iterator range that isn't really a range [STL-36-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use an iterator range that isn't really a range.
+There are two common ways to use an iterator range that isn't really a range:
+"The first way arises when two iterators that delimit the range point into 
+the same container, but the first iterator doesn't actually precede the second.
+The second common case arises when the iterators point into different 
+containers."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and prevents memory leaks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+void setElem( int elem ) {
+    elem = 1;
+}
+
+void foo( ) {
+    vector&lt;int&gt; coll;
+    vector&lt;int&gt; moll;
+	
+    for_each( coll.begin( ), moll.end( ), setElem );  // Violation    
+    for_each( moll.begin( ), coll.end( ), setElem );  // Violation    
+    for_each( coll.end( ), coll.begin( ), setElem );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+void setElem( int elem ) {
+    elem = 1;
+}
+
+void foo( ) {
+    vector&lt;int&gt; coll;
+    for_each( coll.begin( ), coll.end( ), setElem );  // OK       
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "STL: Algorithms", Rule 83
+
+</PRE>
+</BODY>
+</HTML>

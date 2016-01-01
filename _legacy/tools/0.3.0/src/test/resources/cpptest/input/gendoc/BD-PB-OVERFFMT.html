@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid buffer overflow due to defining incorrect format limits
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid buffer overflow due to defining incorrect format limits [BD-PB-OVERFFMT-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+The rule detects cases of possible overflow due to an incorrectly defined format specifier for
+the scanf family of functions. A violation is reported when the format string implies
+that the read operation can overflow the given buffer.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+The possibility of buffer overflow is a severe security threat.
+If an application has a vulnerability of this kind, it can be exploited to
+execute arbitrary code and gain full control over the application.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+FILE* file;
+
+void read(char* buff, int buffSize)
+{
+	char formatString[100];
+	char sizeString[100];
+	strcpy(formatString, "%");
+	strcat(formatString, itoa(buffSize, sizeString, 10));
+	strcat(formatString, "s");
+	fscanf(file, formatString, buff);
+}
+
+void test()
+{
+	char buffer[100];
+	read(buffer, 101);
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+If the value passed as the "buffSize" parameter of the read() function is changed
+to correspond to the real buffer size, no violation is reported:
+
+void test()
+{
+	char buffer[100];
+	read(buffer, 100);
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.owasp.org/index.php/Buffer_Overflow">http://www.owasp.org/index.php/Buffer_Overflow</A> (security relevance)
+
+</PRE>
+</BODY>
+</HTML>

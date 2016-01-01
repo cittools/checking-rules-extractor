@@ -1,0 +1,20 @@
+.NAME the key-word struct is not allowed
+
+.DESCRIPTION
+
+Definition:
+-----------
+The keyword struct may not be used. If the parameter is specified, only C-style 
+structs may be used.
+
+Parameters:
+-----------
+An optional string may be used (cstruct) to enable C-style structs to be used. 
+When the cstruct rule is used, the possibilities allowed in C++ in a struct 
+(such as access specifiers: private for example, or methods) are not to be used.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

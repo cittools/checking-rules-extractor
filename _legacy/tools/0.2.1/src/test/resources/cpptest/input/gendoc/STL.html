@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+STL Best Practices
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+STL
+</STRONG>
+<PRE>
+STL Best Practices
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="STL-01.html">Instead of trying to write the container-independent code use class encapsulation [STL-01-5]</a></code><br>
+<code><a href="STL-02.html">To make copying efficient, correct, and immune to the slicing problem create containers of pointers instead of containers of objects [STL-02-3]</a></code><br>
+<code><a href="STL-03.html">Call empty instead of checking size() against zero [STL-03-3]</a></code><br>
+<code><a href="STL-04.html">Avoid using iterative calls to insert in an explicit loop [STL-04-3]</a></code><br>
+<code><a href="STL-05.html">Almost all uses of copy where the destination range is specified using an insert iterator should be replaced with calls to range member functions [STL-05-3]</a></code><br>
+<code><a href="STL-06.html">Instead of anonymous istream_iterator objects use istream_iterator names when used as function parameters [STL-06-3]</a></code><br>
+<code><a href="STL-07.html">When using containers of newed pointers, remember to delete the pointers before the container is destroyed [STL-07-3]</a></code><br>
+<code><a href="STL-08.html">Never create containers of auto_ptrs [STL-08-3]</a></code><br>
+<code><a href="STL-09.html">Avoid using remove algorithm with list and standard associative containers [STL-09-3]</a></code><br>
+<code><a href="STL-10.html">Prefer vector and string to dynamically allocated arrays [STL-10-3]</a></code><br>
+<code><a href="STL-11.html">Consider using vector&lt;char&gt; instead of string [STL-11-4]</a></code><br>
+<code><a href="STL-12.html">Use reserve to avoid unnecessary reallocations [STL-12-3]</a></code><br>
+<code><a href="STL-13.html">Each vector and string should be checked if it is not empty before it is passed to C function [STL-13-3]</a></code><br>
+<code><a href="STL-14.html">Avoid using vector&lt;bool&gt; [STL-14-3]</a></code><br>
+<code><a href="STL-15.html">Specify comparison types for associative containers of pointers [STL-15-3]</a></code><br>
+<code><a href="STL-16.html">For associative containers never use comparison function returning true for equal values [STL-16-3]</a></code><br>
+<code><a href="STL-17.html">For associative containers never use comparison function returning true for equal values [STL-17-3]</a></code><br>
+<code><a href="STL-18.html">Prefer iterator to const iterator, reverse_iterator, and const_reverse_iterator [STL-18-3]</a></code><br>
+<code><a href="STL-19.html">Use distance and advance to convert a container's const_iterators to iterators [STL-19-3]</a></code><br>
+<code><a href="STL-20.html">It is necessary to be careful when using reverse_iterator's base iterator for erasure purposes [STL-20-4]</a></code><br>
+<code><a href="STL-21.html">Consider istreambuf_iterators for character-by-character input [STL-21-4]</a></code><br>
+<code><a href="STL-22.html">Make sure destination ranges are big enough [STL-22-3]</a></code><br>
+<code><a href="STL-23.html">Follow remove-like algorithms by erase if you really want to remove something [STL-23-3]</a></code><br>
+<code><a href="STL-24.html">Avoid using remove and similar algorithms (i.e., remove_if and unique) on containers of dynamically allocated pointers [STL-24-3]</a></code><br>
+<code><a href="STL-25.html">If you pass a sorted range to an algorithm that also takes a comparison function, be sure that the comparison function you pass behaves the same as the one you used to sort the range [STL-25-4]</a></code><br>
+<code><a href="STL-26.html">Proper implementation of copy_if should not be based on returning the remove_copy_if with a not1 in front of the predicate [STL-26-3]</a></code><br>
+<code><a href="STL-27.html">If accumulate() is used on a container of floating point values, use floating point value as initial one [STL-27-3]</a></code><br>
+<code><a href="STL-28.html">Design functor classes for pass-by-value [STL-28-3]</a></code><br>
+<code><a href="STL-29.html">Make predicates const pure functions [STL-29-3]</a></code><br>
+<code><a href="STL-30.html">Each functor class should has only one operator() function, and it's parameter and return types should be passed to unary_function or binary_function [STL-30-3]</a></code><br>
+<code><a href="STL-31.html">You must employ ptr_fun, mem_fun, or mem_fun_ref whenever you pass a function to an STL component [STL-31-3]</a></code><br>
+<code><a href="STL-32.html">Make sure less&lt;T&gt; means operator&lt; [STL-32-3]</a></code><br>
+<code><a href="STL-33.html">Prefer algorithm calls to hand-written loops [STL-33-3]</a></code><br>
+<code><a href="STL-34.html">Prefer member functions to algorithms with the same names [STL-34-3]</a></code><br>
+<code><a href="STL-35.html">Do not rely on the conversion of count()'s nonzero values to true and zero to false [STL-35-3]</a></code><br>
+<code><a href="STL-36.html">Do not use an iterator range that isn't really a range [STL-36-3]</a></code><br>
+<code><a href="STL-37.html">Use vector and string instead of arrays [STL-37-3]</a></code><br>
+<code><a href="STL-38.html">Use != instead of &lt; to compare iterators [STL-38-3]</a></code><br>
+<code><a href="STL-39.html">Use traits classes in conjunction with overloading [STL-39-3]</a></code><br>
+<code><a href="STL-40.html">When calling swap, employ a using declaration for std::swap, then call swap without namespace qualification [STL-40-3]</a></code><br>
+<code><a href="STL-41.html">Do not declare the non-member to be an overloading of std::swap [STL-41-3]</a></code><br>
+<code><a href="STL-42.html">Member version of swap should never throw exceptions [STL-42-3]</a></code><br>
+</BODY>
+</HTML>

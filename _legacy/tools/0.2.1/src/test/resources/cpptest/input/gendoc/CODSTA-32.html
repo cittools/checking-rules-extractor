@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not write logical expressions of the type if(test) or if(!test)  when test is a pointer
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not write logical expressions of the type if(test) or if(!test)  when test is a pointer [CODSTA-32-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Do not write logical expressions of the type if(test) or if(!test) 
+when test is a pointer.(...)
+We do not recommend logical tests such as if(pointer) 
+if pointer is a variable of pointer-type. 
+The only reason is readability, many programmers find it difficult to read
+such code."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int* ptr;
+    if (ptr) {  // Violation
+    }
+    if (!ptr) { // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int* ptr;
+    if (ptr == 0) { // OK
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 14 Flow Control Structures - Rec. 55
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid assigning out-of-range value to char type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid assigning out-of-range value to char type [PB-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether constants are greater than the char type's 
+legal range. Rule checks assigning and initialization.
+Range of values of char type is -128 to 127.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using illegal values as chars.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+  char c1, c2;  
+  char c3 = 170;   // Violation
+  char c4 = -130;  // Violation
+  c1 = 145;        // Violation     
+  c2 = -154;       // Violation     
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void fooOK()
+{
+  char c1, c2;
+  char c3 = 70;    // OK
+  char c4 = -30;   // OK
+  c1 = 45;         // OK
+  c2 = -54;        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

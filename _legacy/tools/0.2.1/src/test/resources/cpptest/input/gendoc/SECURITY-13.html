@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using unsafe string functions that do not check bounds
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using unsafe string functions that do not check bounds [SECURITY-13-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that uses unsafe string functions:
+scanf, fscanf, sscanf, vscanf, vsscanf, vfscanf, realpath,
+getopt, getpass, streadd, strecpy, strtrns, getwd, snprintf
+According to David A. Wheeler (see reference below), 
+"C functions users must avoid using dangerous functions 
+that do not check bounds unless they've ensured 
+that the bounds will never get exceeded. 
+The function strlen() should be avoided 
+unless you can ensure that there will be a terminating NIL character to find. 
+The scanf() family (scanf(), fscanf(), sscanf(), vscanf(), vsscanf(), 
+and vfscanf()) is often dangerous to use; 
+do not use it to send data to a string without controlling the maximum length 
+(the format %s is a particularly common problem).
+Other dangerous functions that may permit buffer overruns 
+(depending on their use) include realpath(), getopt(), getpass(), streadd(), 
+strncpy(), and strtrns(). 
+You must be careful with getwd(); 
+the buffer sent to getwd() must be at least PATH_MAX bytes long.
+The select() helper macros FD_SET(), FD_CLR(), and FD_ISSET() 
+do not check that the index fd is within bounds; 
+make sure that fd &gt;= 0 and fd &lt;= FD_SETSIZE 
+(this particular one has been exploited in pppd). 
+Unfortunately, snprintf()'s variants have additional problems. 
+Officially, snprintf() is not a standard C function 
+in the ISO 1990 (ANSI 1989) standard,
+though sprintf() is, so not all systems include snprintf() 
+others call sprintf directly what could make horrible thing."
+See also: SECURITY-07,SECURITY-12, SECURITY-16
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of functions which may cause overflows. 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void main( void ) {
+    char* str = 0;
+    scanf( "%s", str );   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Remove usage of unsafe string functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/dangers-c.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/dangers-c.html</A>
+
+</PRE>
+</BODY>
+</HTML>

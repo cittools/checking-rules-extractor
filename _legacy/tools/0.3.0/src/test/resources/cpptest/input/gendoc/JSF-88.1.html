@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A stateful virtual base shall be explicitly declared in each derived class that accesses it
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A stateful virtual base shall be explicitly declared in each derived class that accesses it [JSF-88.1-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A stateful virtual base shall be explicitly declared 
+in each derived class that accesses it.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Explicitly declaring a stateful virtual base at each level in a hierarchy
+(where that base is used), documents that fact that no assumptions 
+can be made with respect to the exclusive use of the data contained 
+within the virtual base."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class AA {};
+class BB : virtual AA {};
+class CC : virtual AA {};
+class DD : BB{};          // Violation
+class EE : CC{};          // Violation
+class FF : DD{};          // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class AA {};
+class BB : virtual AA {};
+class CC : virtual AA {};
+class DD : BB, virtual AA {};     // OK
+class EE : CC, virtual AA {};     // OK
+class FF : DD, EE, virtual AA {}; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.10 Classes, AV Rule 88.1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Trigraphs shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Trigraphs shall not be used [MISRA2004-4_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message if trigraphs are used.
+All occurrences in a source file of the following sequences of three 
+characters (called trigraph sequences) are replaced with the corresponding 
+single character.
+??= #
+??( [
+??/ \
+??) ]
+??' ^
+??&lt; {
+??! |
+??&gt; }
+??- ~
+
+If the compiler has a switch to ignore trigraphs then this
+option should be used, or alternatively ensure that two
+adjacent question marks are never used in the code.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Trigraphs can cause accidental confusion with other uses of two question
+marks and lead to unexpected behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+??=define TEST 1	/* Violation */
+void foo() {
+    const char * s = "(Date should be in the form ??-??-??)";	           /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define TEST 1	/* OK */
+void foo() {
+    const char * s = "(Date should be in the form " "??" "-??" "-??" ")";  /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 4
+
+2. Origin: Misra Guidelines - Rule 7
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.4 Environment, AV Rule 11
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-3-1
+
+</PRE>
+</BODY>
+</HTML>

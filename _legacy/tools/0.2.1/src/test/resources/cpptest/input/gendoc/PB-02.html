@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use assignments inside a(b), a[b], and cast
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use assignments inside a(b), a[b], and cast [PB-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use assignments inside a(b), a[b], and cast.
+See also: MISRA2004-12_3 (operator sizeof), PB-22 (increment and decrement expression)
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule increases legibility, efficiency and prevents possible bugs 
+related to aftereffects of unnecessary shortcuts in the code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int i ) 
+{
+    int* x;
+    x[ i = 0 ];        // Violation
+    foo( i = 0 );      // Violation
+    i = (int) (x = 0); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use assignments inside a(b), a[b] and cast.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Always provide a default branch for switch statements
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Always provide a default branch for switch statements [JSF-194-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A switch statement must always contain a default branch 
+which handles unexpected cases."
+This rule detects if you fail to provide a default branch
+for switch statements. If all desired cases are handled
+outside of default, then default can be used for error
+checking.
+See also: MISRA2004-15_3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents possibility of erroneous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int tag;
+    switch ( tag ) {	// Violation
+    case 0: {
+        break;
+            }
+    case 1: {
+        foo( );
+        break;
+            }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int tag;
+    switch ( tag ) {	// OK
+    case 0: {
+        break;
+            }
+    case 1: {
+        foo( );
+        break;
+            }
+    default: break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 14 Flow Control Structures - Rule 48
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 194
+
+</PRE>
+</BODY>
+</HTML>

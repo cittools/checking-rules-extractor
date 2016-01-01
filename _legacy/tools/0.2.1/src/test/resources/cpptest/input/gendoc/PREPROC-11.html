@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Only the following pre-processor directives shall be used: #ifndef, #define, #endif, #include
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Only the following pre-processor directives shall be used: #ifndef, #define, #endif, #include [PREPROC-11-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Only the following pre-processor directives shall be used: #ifndef,
+#define, #endif, #include
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Limit the use of the pre-processor to those cases where it is necessary.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#pragma once // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifndef FOO_H              // OK
+#define FOO_H
+/* ... */
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.6 Pre-Processing Directives, AV Rule 26
+
+2. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-2-1
+
+3. The Power of Ten - Rules for Developing Safety Critical Code.
+   Rule 8
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't use hard coded value of offset in structures
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't use hard coded value of offset in structures [PORT-03-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you are using the hardcoded value of offset in
+structures. On a 32-bit architecture, offset has 4 bytes (4*8bit=32 bit),
+but if the architecture is changed to 64-bit, the offset will increase to 
+8 bytes (*8*bit=64bit). Let the compiler calculate the field.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+By following this rule, you let the compiler calculate the field of offset.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stddef.h&gt;
+#define ARCH32 true
+#ifdef ARCH32
+#define __int3264 int //32-bit type on win32 and unix32
+#else //ARCH64
+#ifdef win64 
+#define __int3264 __int64 //64-bit type on win64 
+                          //(warning: long on win64 is 32-bit type)
+#else //unix64
+#define __int3264 long //64-bit type on unix64 (long on unix64 is 64-bit type)
+#endif
+#endif
+struct myStruct {
+   void *ptr;
+   int i;
+};
+
+void foo() {
+   myStruct s; 
+   myStruct *ps = new myStruct();
+   int j;
+   s.i = 22;      
+   ps-&gt;i = 22;
+   j= *(int *)((unsigned __int3264)&amp;s + sizeof(void*));        // Violation
+   j= *(int *)((unsigned __int3264)&amp;s + 4 );                   // Violation
+   j= *(int *)((unsigned __int3264)&amp;s.i + 0 );                 // Violation
+   j= *(int *)((unsigned __int3264)ps + sizeof(void*));        // Violation
+   j= *(int *)((unsigned __int3264)ps + 4);                    // Violation
+   j= *(int *)((unsigned __int3264)&amp;ps-&gt;i + 0);                // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stddef.h&gt;
+#define ARCH32 true
+#ifdef ARCH32
+#define __int3264 int //32-bit type on win32 and unix32
+#else //ARCH64
+#ifdef win64 
+#define __int3264 __int64 //64-bit type on win64
+                          //(warning: long on win64 is 32-bit type)
+#else //unix64
+#define __int3264 long //64-bit type on unix64 (long on unix64 is 64-bit type)
+#endif
+#endif
+struct myStruct {
+   void *ptr;
+   int i;
+};
+
+void foo() {
+   myStruct s; 
+   myStruct *ps = new myStruct();
+   int j;
+   s.i = 22;      
+   ps-&gt;i = 22;
+   j= *(int *)((unsigned __int3264)&amp;s + offsetof(myStruct,i)); // OK
+   j= *(int *)((unsigned __int3264)ps + offsetof(myStruct,i)); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

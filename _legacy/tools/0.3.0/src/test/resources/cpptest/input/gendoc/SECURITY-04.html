@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid loading Dynamic Link Libraries
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid loading Dynamic Link Libraries [SECURITY-04-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that explicitly loads Dynamic Link Libraries.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This practice reduces the vulnerability to “proxy DLL” attack. 
+Up until recently (Microsoft Windows XP SP1 and Windows Server 2003), 
+LoadLibrary() function used the current application directory as the first 
+in loading order in search for DLLs. A malicious DLL placed in the application 
+run directory could then be used to execute hacker code or gain unauthorized 
+access to protected data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;windows.h&gt;
+void main( void )
+{
+  LoadLibrary("mydll.dll");   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not load Dynamic Link Libraries in source code.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0069.xml">https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0069.xml</A>
+
+</PRE>
+</BODY>
+</HTML>

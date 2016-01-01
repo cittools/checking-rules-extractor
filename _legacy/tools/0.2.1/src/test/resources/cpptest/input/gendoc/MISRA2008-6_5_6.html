@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A loop-control-variable other than the loop-counter which is modified in statement within a body of the loop shall have type bool
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A loop-control-variable other than the loop-counter which is modified in statement within a body of the loop shall have type bool [MISRA2008-6_5_6-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A loop-control-variable other than the loop-counter which is modified
+in statement shall have type bool.
+A loop-control-variable is any variable occurring in for-init-statement,
+condition or expression.
+A loop-counter is a loop-control-variable that is:
+  - Initialized in, or prior to, for-init-statement; and
+  - an operand to a relational operator in condition; and
+  - modified in expression.
+loop-control-variables are typically used to terminate a for loop early.
+The code is easier to understand if this is done with the use
+of Boolean values"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule assumes that variable or parameter might be modified by passing
+its non-const pointer or reference to an external function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int x, unsigned int u8a, bool flag)
+{
+    for ( x = 0; ( x &lt; 10 ) &amp;&amp; ( u8a != 3U ); ++x )
+    {
+        u8a = 5;                         // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int x, unsigned int u8a, bool flag)
+{
+    for ( x = 0; ( x &lt; 10 ) &amp;&amp; flag; ++x )
+    {
+        u8a = 5;                         // OK
+        flag = u8a != 3U;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 6, Rule 6-5-6
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,39 @@
+.DESCRIPTION
+It is not recommended to use multiple inheritence
+
+.COMMAND tcl
+
+.CODE
+
+proc compute {standardName tree} {
+	# find the operators in the tree that are generic_name operators
+	# generic name are forbidden and can be present only in an import
+	filterTree $tree [list opNameIs base_classes]
+}
+
+# opNameIs adds a rule violation if the operator of the tree is one of opNameLst
+proc opNameIs {opName tree} {
+	set op [::logiscope::treeOperator $tree]
+	if { [string equal $opName [::logiscope::opName $op]]} {
+		# we are on the set of base classes, check that we have only one
+		set nb 0
+		::logiscope::forobj son $tree treeChild {
+			incr nb
+		}
+		if { $nb > 1 } {
+			# add a violation.
+			::logiscope::addViolation [::logiscope::treeParent $tree]
+			return 0
+		}
+	}
+	return 1
+}
+
+# filterTree applies callback to tree, and recurses on tree's sons
+proc filterTree {tree callback} {
+	if {[eval $callback [list $tree]]} {
+		::logiscope::forobj son $tree treeChild {
+			filterTree $son $callback
+    	}
+	}
+}

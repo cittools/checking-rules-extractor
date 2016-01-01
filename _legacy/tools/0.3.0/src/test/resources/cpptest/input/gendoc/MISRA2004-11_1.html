@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Conversions shall not be performed between a pointer to a function and any type other than an integral type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Conversions shall not be performed between a pointer to a function and any type other than an integral type [MISRA2004-11_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Conversion of a function pointer to a different type of pointer 
+results in undefined behaviour.
+This means, for example, that a pointer to a function cannot be converted 
+to a pointer to a different type of function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents undefined behaviour and loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int (*func_t)(char *);
+typedef float (*func_t2)(char *);
+
+int foo(char *x) 
+{
+	return 1;
+}
+
+float goo(char *x) 
+{
+	return 1.1;
+} 
+
+void moo()
+{
+	func_t p = foo;
+	func_t2 p2 = goo;
+	p= (func_t)p2;     /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef float (*func_t2)(char *);
+
+float goo(char *x) 
+{
+	return 1.1;
+} 
+
+float goo2(char *x) 
+{
+	return 0.0;
+} 
+
+void moo()
+{
+	func_t2 p2 = goo;
+	func_t2 p3 = goo2;
+	p2= (func_t2)p3;    /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 11
+
+</PRE>
+</BODY>
+</HTML>

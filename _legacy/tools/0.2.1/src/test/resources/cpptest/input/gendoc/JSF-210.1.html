@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Algorithms shall not make assumptions concerning the order of allocation of nonstatic data members separated by an access specifier
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Algorithms shall not make assumptions concerning the order of allocation of nonstatic data members separated by an access specifier [JSF-210.1-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule is intended to prohibit an application from making assumptions
+concerning the order in which non-static data members, separated by an
+access specifier, are ordered.
+Rule reports a violation message if static_cast type is pointer to class
+with non-static data members separated by an access specifier.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The order of allocation of nonstatic data members, separated by an
+access-specifier, is unspecified.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+   protected: // a could be stored before b, or vice versa
+      int a;
+   private:
+      int b;
+};
+
+
+class M: A
+{
+};
+
+void foo(M* message_buffer_ptr)
+{
+   A* a_ptr = static_cast&lt;A*&gt;(message_buffer_ptr);     // Violation
+                                                       // application assumes that objects of
+                                                       // type A will always have attribute a
+                                                       // stored before attribute b.
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct A
+{
+    int a;
+    int b;
+};
+
+class M: A
+{
+};
+
+void foo(M* message_buffer_ptr)
+{
+   A* a_ptr = static_cast&lt;A*&gt;(message_buffer_ptr);     // OK
+                                                       // attributes in B not separated
+                                                       // by an access specifier
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.28 Portable Code, AV Rule 210.1
+
+</PRE>
+</BODY>
+</HTML>

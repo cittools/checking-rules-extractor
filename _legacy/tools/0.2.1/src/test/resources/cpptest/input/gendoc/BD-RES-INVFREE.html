@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not free resources using invalid pointers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not free resources using invalid pointers [BD-RES-INVFREE-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects attempts to free resources using an invalid pointer.
+A violation is reported when the pointer used to free a resource meets any of
+the following conditions:
+
+   * It is a pointer to a string constant.
+   * It is acquired as a result of a cast of an integer constant to pointer type (wild pointer).
+   * It is acquired via an address operation applied to a parameter, local, global
+     or static variable (attempt to free resource in non-heap memory).
+   * It does not point to the beginning of the allocated chunk.
+
+The rule can identify violations at calls to deallocation functions for any type of resource.
+The set of resources and corresponding deallocation functions are defined at
+"Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation. (Please note that in order for BugDetective
+to find violations in the example, "Memory (standard C)" must be turned on in the resource
+table on "Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab):
+
+#include &lt;stdlib.h&gt;
+
+#define SIZE 100
+
+int buffer[SIZE];
+
+void process(int size)
+{
+	int* data = buffer;
+	if (size &gt; SIZE) {
+		data = (int*)malloc(size*sizeof(int));
+	}
+	/* do something with the data buffer */
+	free(data);
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following code will not trigger a violation:
+
+#include &lt;stdlib.h&gt;
+
+#define SIZE 100
+
+int buffer[SIZE];
+
+void process(int size)
+{
+    int* data = buffer;
+    if (size &gt; SIZE) {
+        data = (int*)malloc(size*sizeof(int));
+    }
+	/* do something with the data buffer */
+    if (size &gt; SIZE) {
+        free(data);
+    }
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

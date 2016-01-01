@@ -1,0 +1,30 @@
+.NAME Use real boolean expressions
+
+.DESCRIPTION
+
+Definition:
+-----------
+The tests in control structures must contain proper boolean expressions.
+
+Justification:
+--------------
+Makes the code easier to understand.
+
+Example:
+--------
+// Do not write
+while (1) {
+    if (test) {
+        for (i=1; function_call(i); i++) {
+// Write 
+AlwaysTrue = true;
+while (AlwaysTrue == true) {
+    if (test==true) {
+        for (i=1; function_call(i)==1; i++) {
+
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

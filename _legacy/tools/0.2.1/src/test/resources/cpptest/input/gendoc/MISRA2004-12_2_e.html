@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The value of an expression shall be the same under any order of evaluation that the standard permits
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The value of an expression shall be the same under any order of evaluation that the standard permits [MISRA2004-12_2_e-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Apart from a few operators (notably the function call operator (), &amp;&amp;, ||, ?: 
+and , (comma)) the order in which sub-expressions are evaluated is unspecified 
+and can vary. This means that no reliance can be placed on the order of 
+evaluation of sub-expressions, and in particular no reliance can be placed on 
+the order in which side effects occur. 
+
+Assignments nested within expressions cause additional side effects. The best 
+way to avoid any chance of this leading to a dependence on order of evaluation 
+is to not embed assignments within expressions."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents evaluation of expression dependent on compiler version.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x, int y, int z ) {
+    x = y = z / 3;  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int x, int y, int z ) {
+    y = z / 3;  // OK
+    x = y;      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 46
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-1
+
+</PRE>
+</BODY>
+</HTML>

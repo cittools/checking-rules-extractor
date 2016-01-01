@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid assigning out-of-range value to unsigned char type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid assigning out-of-range value to unsigned char type [PB-17-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether constants are greater than the unsigned 
+char type's legal range. Rule checks assigning and initialization.
+Range of values of unsigned char type is 0 to 255.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using illegal values as chars.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+  unsigned char uc1, uc2 = 0;
+  unsigned char uc3 = 298;    // Violation
+  unsigned char uc4 = -15;    // Violation
+  uc1 = 289;                  // Violation
+  uc2 = (-5);                 // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void fooOK()
+{
+  unsigned char uc1, uc2 = 0;
+  unsigned char uc3 = 98;     // OK
+  unsigned char uc4 = 15;     // OK
+  uc1 = 89;                   // OK
+  uc2 = (5);                  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

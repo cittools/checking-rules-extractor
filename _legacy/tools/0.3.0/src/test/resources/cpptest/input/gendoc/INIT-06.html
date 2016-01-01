@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All member variables should be initialized in constructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All member variables should be initialized in constructor [INIT-06-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Constructors should initialize all member variables.
+The rule checks if a member variable is initialized:
+- in constructor initialization list
+- inside body of constructor
+- inside body of function called from constructor (three levels of nested
+  function's calls are checked).
+See also: INIT-10, INIT-14, MISRA-030
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule assumes that member variable might be initialized
+by passing its non-const pointer to an external function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents reading from uninitialized variables.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class C
+{
+public:
+    C( );
+
+private:
+    int mem_a;
+    int mem_b;
+    int mem_c;
+    int mem_d;
+    int mem_e;
+};
+
+C::C( ) // Violation - mem_a, mem_b, mem_c, mem_d, mem_e - not initialized
+{
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class C
+{
+public:
+    C( );
+    void init();
+    void init2();
+    void getPtr(int *);
+private:
+    int mem_a;  // initialized in constructor initialization list
+    int mem_b;  // initialized inside constructor body
+    int mem_c;  // initialized inside function 'init' called from constructor
+    int mem_d;  // initialized inside function 'init2' called from 'init'
+    int mem_e;  // its non-const pointer is passed to an external function.
+};
+
+void C::init()
+{
+    mem_c = 2;
+    init2();
+}
+
+void C::init2()
+{
+    mem_d = 2;
+}
+
+
+C::C( ) : mem_a( 0 ) // OK - all members are initialized
+{
+    mem_b = 1;
+    init();
+    getPtr(&amp;mem_e);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 1, Item 4
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Sections of code should not be "commented out"
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Sections of code should not be "commented out" [MISRA2004-2_4-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Where it is required for sections of source code not to be compiled then 
+this should be achieved by use of conditional compilation (e.g. #if or 
+#ifdef constructs with a comment)."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+There are situations where rule may report false positive or false negative.
+Such situations are caused by similarity between source code and comment text. 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Using start and end comment markers for this purpose is dangerous 
+because C does not support nested comments, and any comments already 
+existing in the section of code would change the effect."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int x = 5;
+    /*  Section of code     // Violation
+        commented out
+    if (x==0){
+        x++;
+    }
+    */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int x = 5;
+/* Comment without          // OK
+   code within */
+#if 0                       
+    if (x==0){
+        x++;
+    }
+#endif
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 2
+
+2. Origin: Misra Guidelines - Rule 10
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.14 Comments, AV Rule 127
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-7-2
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-7-3
+
+</PRE>
+</BODY>
+</HTML>

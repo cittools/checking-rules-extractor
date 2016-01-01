@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Each vector and string should be checked if it is not empty before it is passed to C function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Each vector and string should be checked if it is not empty before it is passed to C function [STL-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"(...) Still, obstacles remain, and one of the most common is the existence of
+legacy C APIs that traffic in arrays and char* pointers instead of vector and
+string objects. Such APIs will exist for a long time, so we must make peace
+with them if we are to use the STL effectively. Fortunately, it's easy. If
+you have a vector v and you need to get a pointer to the data in v that can be
+viewed as an array, just use &amp;v[0]. The only sticking point is if v is empty.
+If it is, v.size() is zero, and &amp;v[0] attempts to produce a pointer to
+something that does not exist."
+Rule enforces checking if vector/string is not empty before it is passed to C
+function.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined results.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file.c
+#include &lt;stddef.h&gt;
+void doSomething( const int* pInts, size_t numlnts ) {
+    /*...*/
+}
+
+// file.cpp
+#include "file.c"
+#include &lt;vector&gt;
+
+using namespace std;
+
+void foo( ) {
+    vector&lt;int&gt; v;
+    doSomething( &amp;v[ 0 ], v.size( ) ); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file.c
+#include &lt;stddef.h&gt;
+void doSomething( const int* pInts, size_t numlnts ) {
+    /*...*/
+}
+
+// file.cpp
+#include "file.c"
+#include &lt;vector&gt;
+
+using namespace std;
+
+void foo( ) {
+    vector&lt;int&gt; v;
+
+    if (!v.empty( )) {
+        doSomething( &amp;v[ 0 ], v.size( ) ); // OK
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 2, item 16
+
+</PRE>
+</BODY>
+</HTML>

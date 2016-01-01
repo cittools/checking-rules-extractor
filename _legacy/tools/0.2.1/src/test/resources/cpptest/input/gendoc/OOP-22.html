@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Define a virtual destructor in classes used as base classes which have virtual functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Define a virtual destructor in classes used as base classes which have virtual functions [OOP-22-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+All classes which are used as base classes and which have virtual functions 
+must define a virtual destructor. If a class, having virtual functions but 
+without virtual destructors, is used as a base class, there may be a surprise
+if pointers to the class are used. If such a pointer is assigned to an instance
+of a derived class and if delete is then used on this pointer, only the base
+class' destructor will be invoked. If the program depends on the derived class'
+destructor being invoked, the program will fail.
+See also: OOP-23, OOP-24, OOP-31
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Define a virtual destructor in order to prevent data corruption.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base            // Violation
+{
+    public:
+        virtual void foo( );
+        ~Base( );
+};
+
+class Derived : public Base{};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base           // OK
+{
+    public:
+        virtual void foo( );
+        virtual ~Base( );
+};
+
+class Derived : public Base{};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 7 Classes - 7.5 Constructors and Destructors - Rule 26
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 78
+
+</PRE>
+</BODY>
+</HTML>

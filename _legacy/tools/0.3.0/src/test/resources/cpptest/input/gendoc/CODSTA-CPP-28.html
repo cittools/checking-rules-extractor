@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+When binary arithmetic operators are defined  ( + , - , * , / , ^ , % , | , &amp; , &gt;&gt; , &lt;&lt; ), assignment versions should be provided too
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+When binary arithmetic operators are defined  ( + , - , * , / , ^ , % , | , &amp; , &gt;&gt; , &lt;&lt; ), assignment versions should be provided too [CODSTA-CPP-28-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+When binary arithmetic operators are defined 
+( + , - , * , / , ^ , % , | , &amp; , &gt;&gt; , &lt;&lt; ), assignment versions 
+should be provided too.
+This rule warns you whenever it finds binary operator without 
+canonical assignment version.
+See also: CODSTA-CPP-29
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Assignment versions of operator are more efficient than stand-alone versions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A{};
+A operator+( A&amp; a, A&amp; b );  // Violation operator+ without operator+=
+
+class B{
+    B operator+( B&amp; a );    // Violation operator+ without operator+=
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A{};
+A operator+( A&amp; a, A&amp; b );  // OK
+A operator+=( A&amp; a, A&amp; b ); // OK
+
+class B{
+    B operator+( B&amp; a );    // OK
+    B operator+=( B&amp; a );   // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Functions and Operators", Rule 27
+
+</PRE>
+</BODY>
+</HTML>

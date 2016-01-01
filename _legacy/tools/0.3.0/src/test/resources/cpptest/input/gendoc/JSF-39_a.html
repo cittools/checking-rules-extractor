@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't define entities with linkage in a header file
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't define entities with linkage in a header file [JSF-39_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Header files should be used to declare objects, functions, inline functions,
+function templates, typedefs, macros, classes, and class templates and shall
+not contain or produce definitions of objects or functions (or fragment of
+functions or objects) that occupy storage."
+See also: MISRA2004-8_5
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+As a headers rule detects files with extensions ".h", ".hh", ".hxx", ".i"
+(e.g. "file.h", "file.hh", "file.hxx", "file.i").
+
+
+Exceptions:
+
+The following definitions are allowed in a header file:
+- inline functions
+- function templates
+- static data members of class templates
+- const variables if they have internal or no linkage (C++ mode)
+- static const variables
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+By not having definitions in header files it's possible to 
+include headers in multiple translation units.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* file.h */
+void f1(){}            // Violation
+int var;               // Violation
+class C {
+   void f2();
+};
+void C::f2() {}        // Violation
+
+/* file.cpp */
+#include "file.h"
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* file.h */
+void f1();             // OK
+extern int var;        // OK
+class C {
+   void f2();
+};
+template &lt;typename T&gt;
+void f3 ( T ) { }      // OK
+
+/* file.cpp */
+#include "file.h"
+void f1(){}
+int var;
+void C::f2() {}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 3, Rule 3-1-1
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Namespaces and Modules", Rule 61
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.7 Header Files, AV Rule 39
+
+</PRE>
+</BODY>
+</HTML>

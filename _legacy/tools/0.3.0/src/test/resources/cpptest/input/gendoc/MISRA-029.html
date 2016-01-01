@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The use of a tag shall agree with its declaration
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The use of a tag shall agree with its declaration [MISRA-029-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The use of a tag shall agree with its declaration. 
+This rule will report violation when tag initializers do not agree with the structure declared for that tag. 
+This rule is active for C code only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability, clarity of code and prevents error prone code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct tagSTRUCT {
+    int _x;
+};
+
+struct tagSTRUCT t = { "abc" }; /* Violation - 'char *' initialiser does not match type of field _x: */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct tagSTRUCT {
+    int _x;
+};
+
+struct tagSTRUCT s = { 123 }; /* OK - initialiser of type int matches type of field _x: */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 29
+
+</PRE>
+</BODY>
+</HTML>

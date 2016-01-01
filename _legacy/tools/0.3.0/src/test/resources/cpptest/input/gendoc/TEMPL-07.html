@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A copy constructor shall be declared when there is a template constructor with a single parameter that is a generic parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A copy constructor shall be declared when there is a template constructor with a single parameter that is a generic parameter [TEMPL-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Contrary to possible developer expectations, a template constructor
+will not suppress the compiler generated copy constructor."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+A template type parameter T is a generic parameter if, in the function
+declaration, it has the (possibly cv-qualified) form T &amp;[opt].
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents incorrect copy semantics for members requiring deep copies.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef signed int int32_t;
+class A                        // Violation
+{
+    public:
+        A ( );
+        template &lt;typename T&gt;
+        A ( T const &amp; rhs )
+        : i ( new int32_t )
+        {
+            *i = *rhs.i;
+        }
+    private:
+            int32_t * i;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef signed int int32_t;
+class A                         // OK
+{
+    public:
+        A ( );
+        A ( A const &amp; rhs );
+        template &lt;typename T&gt;
+        A ( T const &amp; rhs )
+        : i ( new int32_t )
+        {
+            *i = *rhs.i;
+        }
+    private:
+            int32_t * i;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 14, Rule 14-5-2
+
+</PRE>
+</BODY>
+</HTML>

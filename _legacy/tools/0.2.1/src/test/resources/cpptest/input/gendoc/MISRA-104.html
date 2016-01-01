@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use non-constant pointers to functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use non-constant pointers to functions [MISRA-104-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Non-constant pointers to functions shall not be used.
+See also: CODSTA-CPP-03, CODSTA-CPP-38, CODSTA-CPP-43, CODSTA-CPP-44, MISRA2004-16_7, OPT-21
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using non-constant pointers to functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( );
+typedef void (*PFUNC) (void);
+const PFUNC pf = foo;
+
+void bar( ) {
+    PFUNC f1 = foo;         /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( );
+typedef void (*PFUNC) (void);
+const PFUNC pf = foo; 
+
+void bar( ) {
+    const PFUNC f1 = foo;   /* OK */ 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Misra Guidelines - Rule 104
+
+</PRE>
+</BODY>
+</HTML>

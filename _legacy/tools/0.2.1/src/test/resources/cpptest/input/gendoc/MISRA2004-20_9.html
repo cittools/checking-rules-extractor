@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The input/output library stdio.h shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The input/output library stdio.h shall not be used [MISRA2004-20_9-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Streams and file I/O have a large number of unspecified, 
+undefined and implementation-defined behaviours associated with them.
+It is assumed that they will not normally be needed in production 
+code in embedded systems.
+If any of the features of stdio.h need to be used in production code, 
+then the issues associated with the feature need to be understood."
+The rule prevents inclusion of &lt;stdio.h&gt;, and &lt;cstdio&gt; headers.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents form problems associated with a large number of unspecified,
+undefined and implementation-defined behaviour associated 
+with streams and file I/O.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;  /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use &lt;stdio.h&gt; library.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. Origin: Misra Guidelines - Rule 124
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.5 Libraries, AV Rule 22
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 27, Rule 27-0-1
+
+</PRE>
+</BODY>
+</HTML>

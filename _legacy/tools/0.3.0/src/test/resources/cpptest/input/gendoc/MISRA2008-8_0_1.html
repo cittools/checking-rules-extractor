@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An init-declarator-list or a member-declarator-list shall consist of a single init-declarator or member-declarator respectively
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An init-declarator-list or a member-declarator-list shall consist of a single init-declarator or member-declarator respectively [MISRA2008-8_0_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Each variable is to be declared in a separate declaration statement."
+Determining the types of variables becomes confusing when pointers and access
+specifiers are used for multiple declarations in the same statement.
+See also: FORMAT-29
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents confusion and makes source code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( )
+{
+    int* a, b;   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) 
+{
+    int* a;      // OK
+    int b;      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11</A>
+   From: 11 Variables - Rule 39, 6 Style - 6.5 Pointers and References - Rec. 26
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-0-1
+
+</PRE>
+</BODY>
+</HTML>

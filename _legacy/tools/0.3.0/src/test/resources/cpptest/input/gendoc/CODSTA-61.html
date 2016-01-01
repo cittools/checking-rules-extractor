@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The final clause of a switch statement shall be the default-clause
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The final clause of a switch statement shall be the default-clause [CODSTA-61-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The final clause of a switch statement shall be the default-clause.
+The requirement for a final default-clause is defensive programming.
+This clause shall either take appropriate action, or else contain a suitable
+comment as to why no action is taken."
+
+
+Exceptions:
+
+"If the condition of a switch statement is of type enum, and all the
+enumerators are listed in case labels, then the default-clause is not required
+as the rules associated with enums are intended to ensure that the enum cannot
+be assigned values outside of its set of enumerators."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of 'switch' statement.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum Colours { RED, BLUE, GREEN } colour;
+
+void foo(int i)
+{
+	switch( i )              // Violation
+	{
+		case 0:
+			break;
+		case 1:
+		case 2:
+			break;
+	}
+
+	switch( colour )         // Violation
+	{
+		case RED:
+			break;
+		case GREEN:
+			break;
+			
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+enum Colours { RED, BLUE, GREEN } colour;
+
+void foo(int i)
+{
+	switch( i )              // OK
+	{
+		case 0:
+			break;
+		case 1:
+		case 2:
+			break;
+		default:
+			break;
+	}
+
+	switch( colour )         // OK
+	{
+		case RED:
+			break;
+		case BLUE:
+			break;
+		case GREEN:
+			break;
+
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-6
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-3
+
+</PRE>
+</BODY>
+</HTML>

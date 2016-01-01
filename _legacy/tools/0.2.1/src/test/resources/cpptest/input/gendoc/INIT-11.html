@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Assign to all data members in operator=
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Assign to all data members in operator= [INIT-11-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If you write operator=, this rule ensures that you assigned to every
+data member of your object.
+The rule checks if a member variable is initialized:
+- inside body of assignment operator
+- inside body of function called from assignment operator
+  (three levels of nested function's calls are checked).
+See also: MRM-43
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule assumes that member variable might be initialized 
+by passing its non-const pointer to an external function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Assign to all member variables in operator= function in order to prevent
+data corruption.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class C
+{
+public:
+    C&amp; operator=(const C&amp;);
+private:
+    int mem_a;
+    int mem_b;
+    int mem_c;
+    int mem_d;
+};
+
+C&amp; C::operator=(const C&amp;) // Violation - mem_a, mem_b, mem_c, mem_d - not assigned
+{
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class C
+{
+public:
+    C&amp; operator=(const C&amp;);
+    void init();
+    void init2();
+    void getPtr(int *);
+private:
+    int mem_a;  // assigned inside operator= body
+    int mem_b;  // assigned inside function 'init' called from operator=
+    int mem_c;  // assigned inside function 'init2' called from 'init'
+    int mem_d;  // its non-const pointer is passed to an external function.
+};
+
+void C::init()
+{
+    mem_b = 2;
+    init2();
+}
+
+void C::init2()
+{
+    mem_c = 2;
+}
+
+C&amp; C::operator=(const C&amp;) // OK - all members are assigned
+{
+    mem_a = 1;
+    init();
+    getPtr(&amp;mem_d);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 2, Item 12
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Constructors, Destructors, and Assignment Operators", Item 16
+
+</PRE>
+</BODY>
+</HTML>

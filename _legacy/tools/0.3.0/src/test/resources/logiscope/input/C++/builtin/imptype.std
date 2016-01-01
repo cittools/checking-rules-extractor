@@ -1,0 +1,13 @@
+.NAME Do not use implicit typing
+
+.DESCRIPTION
+
+Definition:
+-----------
+Function, parameter, attribute or variable types must be declared explicitly.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

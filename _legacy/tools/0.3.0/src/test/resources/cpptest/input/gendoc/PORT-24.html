@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't use large arrays of pointers to bool, char, short, int and float types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't use large arrays of pointers to bool, char, short, int and float types [PORT-24-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Large arrays of long or unsigned long types, can cause serious 
+performance degradation in the LP64 data-type model as compared 
+to arrays of int or unsigned int types. Large arrays of long types cause 
+significantly more cache misses and consume more memory(...)
+This is also an argument for using  arrays of int types instead of arrays
+of pointers. Some C applications suffer from serious performance
+degradation after conversion to the LP64 data-type model because 
+they rely on many, large, arrays of pointers"
+See also: PORT-22, PORT-23
+
+
+Note: Rule report violation large (over 2^16 elements) arrays to pointers 
+      to bool, char, short, int and float types.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Reduction of memory consumption and avoiding possible performance degradation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* arr1[100000];       // Violation
+float* arr2[100000];     // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int arr1[100000];       // OK
+float arr2[100000];     // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Converting 32-bit Applications Into 64-bit Applications: Things to Consider
+    <A HREF="http://developers.sun.com/prodtech/cc/articles/ILP32toLP64Issues.html">http://developers.sun.com/prodtech/cc/articles/ILP32toLP64Issues.html</A>
+     
+2. Multiplatform Porting to 64 Bits
+    <A HREF="http://www.ddj.com/184406427">http://www.ddj.com/184406427</A>
+
+</PRE>
+</BODY>
+</HTML>

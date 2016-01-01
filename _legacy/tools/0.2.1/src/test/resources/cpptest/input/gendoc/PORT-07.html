@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not pass long casted to an int in function call
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not pass long casted to an int in function call [PORT-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Do not assume that int and long have the same size."
+Assigning a long int to an int may result in truncation
+when porting from 32 bit to 64 bit applications.
+See also: PORT-05, PORT-06, PORT-08, PORT-10, PORT-11, PORT-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int iVal){
+    long lVal;
+    foo(lVal);		// Violation
+    foo((int)lVal);	// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not assign a long int to an int.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.2">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.2</A>
+From: 18 Portable Code - 18.2 Sizes of Types - Port. Rec. 2
+
+</PRE>
+</BODY>
+</HTML>

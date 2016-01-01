@@ -1,0 +1,168 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The assignment operator must assign all members, including those in base classes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The assignment operator must assign all members, including those in base classes [JSF-83-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A class may contain many data members as well as exist within
+an inheritance hierarchy. Hence the assignment operator must
+assign all members, including those in base classes. 
+Rule reports a violation message if base class assignment 
+operator is not called or not all base classes' member variables
+are assigned within derived class assignment operator.
+See also: INIT-11
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Assign to all member variables in operator= function
+in order to prevent data corruption.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef unsigned int int32;
+
+class Base
+{
+public:
+    Base (int32 x) : base_member (x) {}
+    Base &amp;operator=(const Base&amp; rhs)
+    {
+        if (this != &amp;rhs)
+        {
+            base_member = rhs.base_member;
+        }
+        else
+        {
+        }
+        return *this;
+    }
+private:
+    int32 base_member;
+};
+
+
+class Derived : public Base
+{
+public:
+    Derived (int32 x, int32 y, int32 z) : Base (x),
+        derived_member_1 (y),
+        derived_member_2 (z) {}
+    Derived&amp; operator=(const Derived&amp; rhs)           // Violation
+    {
+        if (this != &amp;rhs)
+        {
+            derived_member_1 = rhs.derived_member_1;
+            derived_member_2 = rhs.derived_member_2;
+        }
+        else
+        {
+        }
+        return *this;
+    }
+private:
+    int32 derived_member_1;
+    int32 derived_member_2;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef unsigned int int32;
+
+class Base
+{
+public:
+    Base (int32 x) : base_member (x) {}
+    Base &amp;operator=(const Base&amp; rhs)
+    {
+        if (this != &amp;rhs)
+        {
+            base_member = rhs.base_member;
+        }
+        else
+        {
+        }
+        return *this;
+    }
+private:
+    int32 base_member;
+};
+
+
+class Derived : public Base
+{
+public:
+    Derived (int32 x, int32 y, int32 z) : Base (x),
+        derived_member_1 (y),
+        derived_member_2 (z) {}
+    Derived&amp; operator=(const Derived&amp; rhs)
+    {
+        if (this != &amp;rhs) // Check for self-assignment
+        {
+            Base::operator=(rhs);                            // OK
+            derived_member_1 = rhs.derived_member_1;
+            derived_member_2 = rhs.derived_member_2;
+        }
+        else
+        {
+        }
+        return *this;
+    }
+private:
+    int32 derived_member_1;
+    int32 derived_member_2;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.10 Classes, AV Rule 83
+
+</PRE>
+</BODY>
+</HTML>

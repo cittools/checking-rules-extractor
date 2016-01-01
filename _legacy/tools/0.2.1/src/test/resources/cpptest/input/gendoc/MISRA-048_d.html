@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use explicit casts in mixed precision arithmetic
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use explicit casts in mixed precision arithmetic [MISRA-048_d-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Mixed precision arithmetic should use explicit casting to generate 
+the desired result.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents of loss data
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo48b()
+{
+    int iVar = 2;
+    long lVar = 1;
+    float fVar = 1.0;
+    iVar = (((iVar==2) ? fVar : lVar) + 22); /* Violation */
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo48b()
+{
+    int iVar = 2;
+    long lVar = 1;
+    float fVar = 1.0;
+    iVar = (((iVar==2) ? (int)fVar : (int)lVar) + 22); /* OK */
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 48
+
+</PRE>
+</BODY>
+</HTML>

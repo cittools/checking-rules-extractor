@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid functions with over 75 lines of code
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid functions with over 75 lines of code [METRICS-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Excessively long functions and nested code blocks are often caused by failing
+ to give one function one  cohesive responsibility, and both are usually solved
+ by better refactoring."
+See also: METRICS-01, METRICS-20, METRICS-21
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves  readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A 
+{
+    void foo( int x )     // Violation
+    {
+        // ...
+        // more than 75 lines of constants, declarations, expressions, 
+        // statements, types
+        // ...
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not type functions longer than 75 lines of code.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Coding Style", Rule 20
+
+</PRE>
+</BODY>
+</HTML>

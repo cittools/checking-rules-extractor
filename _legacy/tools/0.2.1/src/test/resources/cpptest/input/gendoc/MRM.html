@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Memory and Resource Management
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+MRM
+</STRONG>
+<PRE>
+Memory and Resource Management
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="MRM-01.html">Do not allocate resources in function argument list because the order of evaluation of a function's parameters is undefined [MRM-01-1]</a></code><br>
+<code><a href="MRM-02.html">Do not allocate more than one resource in a single statement [MRM-02-3]</a></code><br>
+<code><a href="MRM-04.html">All classes should contain the assignment operator or appropriate comment [MRM-04-3]</a></code><br>
+<code><a href="MRM-05.html">All classes should contain the copy constructor or appropriate comment [MRM-05-3]</a></code><br>
+<code><a href="MRM-06.html">Use the same form in corresponding calls to new/malloc and delete/free [MRM-06-1]</a></code><br>
+<code><a href="MRM-07.html">Don't memcpy or memcmp non-PODs [MRM-07-3]</a></code><br>
+<code><a href="MRM-08.html">Do not invoke malloc/realloc for objects having constructors [MRM-08-1]</a></code><br>
+<code><a href="MRM-09.html">Always assign a new value to a pointer that points to deallocated memory [MRM-09-3]</a></code><br>
+<code><a href="MRM-10.html">Always assign a new value to a pointer that points to deallocated memory [MRM-10-3]</a></code><br>
+<code><a href="MRM-11.html">Always assign a new value to a pointer that points to deallocated memory [MRM-11-3]</a></code><br>
+<code><a href="MRM-12.html">Adhere to convention when writing new and delete [MRM-12-3]</a></code><br>
+<code><a href="MRM-13.html">Adhere to convention when writing new [MRM-13-3]</a></code><br>
+<code><a href="MRM-14.html">If a class defines any overload of operator new, it should provide overloads of all three of plain, in-place, and non-throwing operator new [MRM-14-3]</a></code><br>
+<code><a href="MRM-15.html">If a class defines any overload of operator new[], it should provide overloads of all three of plain, in-place, and non-throwing operator new[] [MRM-15-3]</a></code><br>
+<code><a href="MRM-16.html">If a class defines any overload of operator delete, it should provide overloads of all three of plain, in-place, and non-throwing operator delete [MRM-16-3]</a></code><br>
+<code><a href="MRM-17.html">If a class defines any overload of operator delete[], it should provide overloads of all three of plain, in-place, and non-throwing operator delete[] [MRM-17-3]</a></code><br>
+<code><a href="MRM-18.html">Do not allocate memory and expect that someone else will deallocate it later [MRM-18-3]</a></code><br>
+<code><a href="MRM-19.html">Do not allocate memory and expect that someone else will deallocate it later [MRM-19-3]</a></code><br>
+<code><a href="MRM-20.html">Do not allocate memory and expect that someone else will deallocate it later [MRM-20-3]</a></code><br>
+<code><a href="MRM-21.html">Use objects to manage resources [MRM-21-3]</a></code><br>
+<code><a href="MRM-22.html">Use objects to manage resources [MRM-22-3]</a></code><br>
+<code><a href="MRM-23.html">Never return a dereferenced local pointer initialized by new in this function scope [MRM-23-2]</a></code><br>
+<code><a href="MRM-24.html">Never return a reference to a local object [MRM-24-1]</a></code><br>
+<code><a href="MRM-25.html">Store newed objects in smart pointers in standalone statements [MRM-25-3]</a></code><br>
+<code><a href="MRM-26.html">Write operator delete if you write operator new [MRM-26-3]</a></code><br>
+<code><a href="MRM-27.html">Write operator delete[] if you write operator new[] [MRM-27-3]</a></code><br>
+<code><a href="MRM-28.html">Always provide new and delete together [MRM-28-3]</a></code><br>
+<code><a href="MRM-29.html">Always provide new[] and delete[] together [MRM-29-3]</a></code><br>
+<code><a href="MRM-30.html">Use allocation by declaration rather than by new or malloc [MRM-30-3]</a></code><br>
+<code><a href="MRM-31.html">Freed memory shouldn't be accessed under any circumstances. Destructor should not be called manually [MRM-31-3]</a></code><br>
+<code><a href="MRM-32.html">Avoid hiding the global new [MRM-32-1]</a></code><br>
+<code><a href="MRM-33.html">Call delete on pointer members in destructors [MRM-33-2]</a></code><br>
+<code><a href="MRM-34.html">Check the return value of new [MRM-34-3]</a></code><br>
+<code><a href="MRM-35.html">Never provide brackets ([]) for delete when deallocating non-arrays [MRM-35-3]</a></code><br>
+<code><a href="MRM-36.html">Always provide empty brackets ([]) for delete when deallocating arrays [MRM-36-3]</a></code><br>
+<code><a href="MRM-37.html">Declare an assignment operator for classes with dynamically allocated memory [MRM-37-1]</a></code><br>
+<code><a href="MRM-38.html">Declare a copy constructor for classes with dynamically allocated memory [MRM-38-1]</a></code><br>
+<code><a href="MRM-39.html">Provide error handling for file opening errors right next to the call to fopen [MRM-39-2]</a></code><br>
+<code><a href="MRM-40.html">Copy and destroy consistently [MRM-40-3]</a></code><br>
+<code><a href="MRM-41.html">A copy constructor shall copy all data members and bases [MRM-41-2]</a></code><br>
+<code><a href="MRM-42.html">Call fclose() on pointer member in destructor if the pointer was used to open a file [MRM-42-2]</a></code><br>
+<code><a href="MRM-43.html">The assignment operator must assign all members, including those in base classes [MRM-43-2]</a></code><br>
+<code><a href="MRM-44.html">Avoid passing address of auto variable into caller space [MRM-44-2]</a></code><br>
+<code><a href="MRM-45.html">Do not use sizeof operator on pointer type to specify the size of the memory to be allocated via 'malloc', 'calloc' or 'realloc' function [MRM-45-3]</a></code><br>
+<code><a href="MRM-46.html">Do not use calloc, malloc, realloc and free functions [MRM-46-3]</a></code><br>
+<code><a href="MRM-47.html">Classes containing at least one non-static member variable should declare the assignment operator or contain appropriate comment [MRM-47-3]</a></code><br>
+<code><a href="MRM-48.html">Classes containing at least one non-static member variable should declare the copy constructor or contain appropriate comment [MRM-48-3]</a></code><br>
+</BODY>
+</HTML>

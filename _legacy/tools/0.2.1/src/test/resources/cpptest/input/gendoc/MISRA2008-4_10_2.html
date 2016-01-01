@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Literal zero (0) shall not be used as the null-pointer-constant
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Literal zero (0) shall not be used as the null-pointer-constant [MISRA2008-4_10_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In C++, the literal 0 is both an integer type and the null-pointer-constant.
+To meet developer expectations, NULL should be used as the
+null-pointer-constant, and 0 for the integer zero."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"As a result of this rule, NULL is considered to have pointer type."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;cstddef&gt;
+
+void f1( int* );
+
+void foo( )
+{
+	f1( 0 ); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;cstddef&gt;
+
+void f1( int* );
+
+void foo( )
+{
+	f1( NULL ); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 4, Rule 4-10-2
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Number of data member(s) per class should not exceed 15
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Number of data member(s) per class should not exceed 15 [METRICS-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This metric measures the number of data members per class. 
+Rule checks if number of declared data members per class exceeds 15.
+See also: METRICS-17
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule applies only to the C++ programming language.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo { // Violation
+public:
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+
+protected:
+  int j1;
+  int j2;
+  int j3;
+  int j4;
+  int j5;
+  int j6;
+  int j7;
+
+private:
+  int k1;
+  int k2;
+  int k3;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit the number of data members to 15 per class.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, Novemeber/December, 1999, pg. 33.
+
+</PRE>
+</BODY>
+</HTML>

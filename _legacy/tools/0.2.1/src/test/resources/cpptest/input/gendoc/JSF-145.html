@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In an enumerator list, the "=" construct shall not be used to explicitly initialise members other than the first, unless all items are explicitly initialised
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In an enumerator list, the "=" construct shall not be used to explicitly initialise members other than the first, unless all items are explicitly initialised [JSF-145-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In enumerator list, the '=' construct shall not be used 
+to explicitly initialize members other than the first,
+unless all items are explicitly initialized."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Helps avoid errors and confusion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum TEST { /* Violation */
+    X = 1,
+    Y,
+    Z = 3,
+};
+
+enum TEST2 { /* Violation */
+    X2,
+    Y2 = 2,
+    Z2,
+};
+
+enum TEST3 { /* Violation */
+    X3,
+    Y3,
+    Z3 = 3,
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+enum TEST { /* OK */
+    X,
+    Y,
+    Z,
+};
+
+enum TEST2 { /* OK */
+    X2 = 1,
+    Y2,
+    Z2,
+};
+
+enum TEST3 { /* OK */
+    X3 = 1,
+    Y3 = 2,
+    Z3 = 3,
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 9
+
+2. Origin: Misra Guidelines - Rule 32
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-5-3
+
+</PRE>
+</BODY>
+</HTML>

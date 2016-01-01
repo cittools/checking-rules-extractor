@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't memcpy or memcmp non-PODs
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't memcpy or memcmp non-PODs [MRM-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Don't use memcpy or memcmp to copy or compare anything more structured than raw
+ memory. Memcpy and memcmp violate the type system. Using memcpy is a serious
+ violation of information hiding, and often leads to memory and resource leaks,
+ crashes, or undefined behavior."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves safety and reliability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;memory.h&gt;
+class A {
+    int *p;
+};
+
+class B {
+    int *p;
+};
+
+void foo( ) {
+    A p1;
+    B p2;
+    memcpy( &amp;p1, &amp;p2, sizeof( p1 ) );    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Memcpy and memcmp should not be used.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Type Safety", Rule 96
+
+</PRE>
+</BODY>
+</HTML>

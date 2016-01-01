@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Qt Best Practices
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+QT
+</STRONG>
+<PRE>
+Qt Best Practices
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="QT-01.html">Every QObject subclass should contain a Q_OBJECT macro [QT-01-3]</a></code><br>
+<code><a href="QT-02.html">QObject must not be inherited more than one time [QT-02-3]</a></code><br>
+<code><a href="QT-03.html">It's only possible to connect a signal to a slot or a signal to another signal [QT-03-3]</a></code><br>
+<code><a href="QT-04.html">The methods inside the SIGNAL and SLOT macros have to exist [QT-04-1]</a></code><br>
+<code><a href="QT-05.html">Mark signal emissions with the keyword "emit" to distinguish a signal emission from a normal method call [QT-05-3]</a></code><br>
+<code><a href="QT-06.html">Do not set Idle or Critical priority to QThreads. Use High/Low/Med only [QT-06-3]</a></code><br>
+<code><a href="QT-07.html">Do not force thread termination by calling QThread::terminate() [QT-07-1]</a></code><br>
+<code><a href="QT-08.html">If using lock on a mutex in a function, release the lock in the same function [QT-08-3]</a></code><br>
+<code><a href="QT-09.html">Do not call new on QMutexLocker [QT-09-1]</a></code><br>
+<code><a href="QT-10.html">Declare a copy constructor and operator= for any Qt - inherited objects that have pointers [QT-10-3]</a></code><br>
+<code><a href="QT-11.html">Do not use setWindowFlags function on a Widget [QT-11-4]</a></code><br>
+<code><a href="QT-12.html">Do not directly set specific Widget attributes that are set by Qt kernel [QT-12-1]</a></code><br>
+<code><a href="QT-13.html">Never mix const and non-const iterators in assignment [QT-13-3]</a></code><br>
+<code><a href="QT-14.html">If you use Q_DECLARE_FLAGS, you must also use Q_DECLARE_OPERATORS_FOR_FLAGS [QT-14-3]</a></code><br>
+<code><a href="QT-15.html">Q_DECLARE_OPERATORS_FOR_FLAGS must be in the global namespace, Q_DECLARE_FLAGS inside the enum's namespace [QT-15-3]</a></code><br>
+<code><a href="QT-16.html">The getters and setters of a Q_PROPERTY must exist and the types must match [QT-16-3]</a></code><br>
+<code><a href="QT-17.html">Properties of enum types must use Q_ENUMS [QT-17-3]</a></code><br>
+<code><a href="QT-18.html">Non-const function should not be called on the Qt object [QT-18-3]</a></code><br>
+</BODY>
+</HTML>

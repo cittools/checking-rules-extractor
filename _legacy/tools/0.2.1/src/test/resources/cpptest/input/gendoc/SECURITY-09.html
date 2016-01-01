@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using data() function from 'string' class of standard library
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using data() function from 'string' class of standard library [SECURITY-09-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that uses the data() member function from string class 
+of standard library.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+String::data() returns the character string contained in the string object 
+without a terminating character. In certain contexts, especially when 
+interfacing with C-style legacy code, this may lead to buffer overflows 
+and other string-related security vulnerabilities. 
+Instead of using the data() function, use c_str(), 
+which always returns a terminated string.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string&gt; 
+
+void bar(const char* param);
+ 
+void  foo()
+{
+    using namespace std; 
+    string str1 ( "example string" ); 
+    bar(str1.data());                 // Violation
+ 
+    string *ptr;
+    ptr=&amp;str1;
+    const char *ptr2 = 	 ptr-&gt;data();  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string&gt; 
+
+void bar(const char* param);
+ 
+void  foo()
+{
+    using namespace std; 
+    string str1 ( "example string" ); 
+    bar(str1.c_str());                 // OK
+ 
+    string *ptr;
+    ptr=&amp;str1;
+    const char *ptr2 = 	 ptr-&gt;c_str();  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/library-c.html#STD-STRING">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/library-c.html#STD-STRING</A>
+
+</PRE>
+</BODY>
+</HTML>

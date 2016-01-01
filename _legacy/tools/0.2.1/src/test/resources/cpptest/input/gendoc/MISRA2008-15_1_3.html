@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An empty throw (throw;) shall only be used in the compound statement of a catch handler
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An empty throw (throw;) shall only be used in the compound statement of a catch handler [MISRA2008-15_1_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"An empty throw re-throws the temporary object that represents an exception.
+Its use is intended to enable the handling of an exception to be split across
+two or more handlers.
+However, syntactically, there is nothing to prevent throw; being used outside
+a catch handler, where there is no exception object to re-throw. This may lead
+to an implementation-defined program termination."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents implementation-defined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Exception{};
+void foo(int a) 
+{
+    Exception E;
+    if(a)
+    {
+        throw;   // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Exception{};
+void foo(int a) 
+{
+    Exception E;
+    if(a)
+    {
+        throw E;       // OK
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-1-3
+
+</PRE>
+</BODY>
+</HTML>

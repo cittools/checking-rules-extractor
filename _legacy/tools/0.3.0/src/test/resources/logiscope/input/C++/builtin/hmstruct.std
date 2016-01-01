@@ -1,0 +1,44 @@
+.NAME Header module structure
+
+.DESCRIPTION
+
+Definition:
+-----------
+To prevent multiple inclusions of header files, the main structure of 
+these files should be:
+
+#ifndef &lt;IDENT&gt;
+#define &lt;IDENT&gt;
+...
+#endif
+ 
+where &lt;IDENT&gt; is an identifier built from the name of the header file.
+
+The comparison is made only on alphanumeric characters and is not case sensitive.
+The part of the filename taken into account is between the MINth and the MAXth 
+characters (including them). This character string should be found in the 
+identifier according to the above comparison rules.
+
+Parameters:
+----------
+A MINMAX couple of values giving the part of the filename to take into account, 
+and a list of character strings giving the list of file types to be considered as 
+header files for this rule.
+The types are those defined by the metric type .
+
+Example:
+--------
+
+// if the parameter is MINMAX 4 9,the following content 
+// of file div_audit_env.h is correct
+
+#ifndef AUDIT_H
+#define AUDIT_H
+...
+#endif 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

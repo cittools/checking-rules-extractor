@@ -1,0 +1,11 @@
+.DESCRIPTION
+Total number of statements computed by the preprocessor in
+the application .c/.cpp... files (#include, #if, #define, ...).
+
+.COMMAND tcl
+
+.CODE
+
+::logiscope::include -once common loc.tcl
+
+loc::declare application

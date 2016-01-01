@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The continue statement shall only be used within a well formed for loop
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The continue statement shall only be used within a well formed for loop [CODSTA-80-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Over-use of the continue statement can lead to unnecessary complexity within
+the code. This complexity may impede effective testing as extra logic must be
+tested. The required testing may not be achievable due to control flow
+dependencies."
+
+
+Exceptions:
+
+Rule does not report a violation if the 'continue' is used within 'for' loop.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule eliminates unnecessary complexity within the code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+	int x = 0;
+	int y;
+	y = 10;
+	
+        while(x &lt; y)
+	{
+          x++;
+
+	  /* ... */
+	  continue;             // Violation
+
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use 'continue' statement outside 'for' loop.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 6, Rule 6-6-3
+
+</PRE>
+</BODY>
+</HTML>

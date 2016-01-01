@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare the copy constructor and copy assignment operator private not in class itself, but in a specifically designed base class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare the copy constructor and copy assignment operator private not in class itself, but in a specifically designed base class [JSF-68-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"It's possible to move the link-time error up to compile time (always a good
+thing — earlier error detection is better than later) by declaring the copy
+constructor and copy assignment operator private not in class itself,
+but in a base class specifically designed to prevent copying.
+This works, because compilers will try to generate a copy constructor
+and a copy assignment operator if anybody — even a member or friend
+function — tries to copy a class object."
+See also: CODSTA-CPP-02, CODSTA-CPP-19, CODSTA-CPP-21, CODSTA-CPP-24, MRM-04,
+          MRM-05, MRM-37, MRM-38, MRM-40, MRM-47, MRM-48, OOP-27, OOP-34
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The compiler-generated versions of these functions will try
+to call their base class counterparts, and those calls will be
+rejected, because the copying operations are private in the
+base class."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class HomeForSale {
+    public:
+        HomeForSale();
+    private:
+        HomeForSale(const HomeForSale&amp;);            // Violation
+        HomeForSale&amp; operator=(const HomeForSale&amp;);  // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Uncopyable {
+    protected: 
+        Uncopyable() {} 
+        ~Uncopyable() {} 
+    private:
+        Uncopyable(const Uncopyable&amp;);              // OK
+        Uncopyable&amp; operator=(const Uncopyable&amp;);   // OK
+};
+
+class HomeForSale2 : private Uncopyable { };    
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 2, Item 6
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 68
+
+</PRE>
+</BODY>
+</HTML>

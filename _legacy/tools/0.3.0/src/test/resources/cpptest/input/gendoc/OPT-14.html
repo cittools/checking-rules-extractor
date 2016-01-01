@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Pass objects by reference instead of by value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Pass objects by reference instead of by value [OPT-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects where an object has been passed by value instead
+of by reference. Passing objects by reference is more efficient 
+than passing by value because no new objects are being created
+and because it avoids the "slicing problem."
+See also: PB-20, PB-23, OPT-33
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves code consistency and runtime performance.
+
+
+Exceptions:
+
+There also may be a situation where the object is so small that it would be 
+more efficient to pass by value instead of by reference.
+Due to C++'s type system and the fact that QString, RWCString and CString  
+are implicitly shared, they may be treated like ints or other basic types.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    const A violation( A a ) {       // Violation - passing parameter by value
+        return a;                    // Violation - returning by value
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    const A&amp; valid( const A &amp;a ) {   // OK
+        return a;                    // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Design Style", Rule 09
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 4, Item 20
+
+3. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Design and Declaration", Item 22
+
+4. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 3
+
+5. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 9 Function - 9.1 Function Arguments - Rec. 43
+
+6. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Functions, AV Rule 125
+
+</PRE>
+</BODY>
+</HTML>

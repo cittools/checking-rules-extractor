@@ -1,0 +1,135 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Ensure resources are freed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Ensure resources are freed [BD-RES-LEAKS-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule helps to ensure that allocated resources are deallocated on all paths.
+Violations of the rule identify execution paths in an application where resources
+are leaked.
+
+The rule can identify leaks of any type of resource. The set of resources whose
+leaks are to be detected is defined at
+"Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.0
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+Failure to close resources may lead to starvation, which could have
+security implications.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+
+The "Assume third-party functions could store resource references"
+parameter allows you to determine how strict the rule is when a reference
+to a resource may be stored by a third-party function. For example, if there is a
+third-party function SpecialCollection.add() and a resource is passed as a parameter
+to this function, it will be stored in a collection and may later be closed by iterating
+over the collection. Since BugDetective does not know the exact behavior of arbitrary
+third-party functions, it behaves in either of the following ways:
+
+   * With this parameter enabled (the default), BugDetective assumes that any
+     third-party function may store reference to a resource if the resource is
+     passed into the function. This prevents it from reporting false positives if
+     the resource is later closed using the stored reference.
+     However, this may also lead to false negatives (real leaks are not reported
+     as violations).
+
+   * With this parameter disabled, BugDetective takes a more aggressive approach: It
+     assumes that third-party functions do not affect resources in any way. This
+     approach may lead to some false positives, but it will not overlook some
+     of the real leaks that the default approach may miss.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+Having a strict policy with respect to closing resources helps to make an application more
+robust by preventing resource starvation.
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that triggers violations. (Please note that in order for BugDetective
+to find violations in the example, "Files (stdio.h)" must be turned on in the resource
+table on "Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab):
+
+#include &lt;stdio.h&gt;
+
+static void fileAllocation()
+{
+	FILE* p = fopen("file.name", "r");
+}
+
+static void fileReallocation()
+{
+	FILE* p = fdopen(0, "file.name");
+	p = freopen("file.name", "r", p);
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following code will not trigger violations:
+
+#include &lt;stdio.h&gt;
+
+static void fileAllocation()
+{
+	FILE* p = fopen("file.name", "r");
+	fclose(p);
+}
+
+static void fileReallocation()
+{
+	FILE* p = fdopen(0, "file.name");
+	p = freopen("file.name", "r", p);
+	fclose(p);
+}
+
+</PRE>
+</BODY>
+</HTML>

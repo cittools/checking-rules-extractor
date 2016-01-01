@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for short int pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for short int pointer, array, or reference types [NAMING-HN-37-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For short int pointer, array, or reference 
+variables and parameters use "si" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+short int* g_psimyVar;                                 // Violation
+short int* g_pMyVariable;                              // Violation
+static const short int* g_spkMyVariable;               // Violation
+class B {
+    short int* m_pMyVariable;                          // Violation
+    static const short int* m_spkMyVariable;           // Violation
+    void foo( short int* pMyParam ) {                  // Violation
+        short int* pMyVariable;                        // Violation
+        static const short int* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+short int* g_psiMyVar;                                 // OK
+short int* g_psiMyVariable;                            // OK
+static const short int* g_spksiMyVariable;             // OK
+class A {
+    short int* m_psiMyVariable;                        // OK
+    static const short int* m_spksiMyVariable;         // OK
+    void foo( short int* psiMyParam ) {                // OK
+        short int* psiMyVariable;                      // OK
+        static const short int* spksiMyVariable;       // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

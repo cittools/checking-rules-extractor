@@ -1,0 +1,34 @@
+.NAME Multiple inheritance is only allowed for inheriting abstract classes.
+
+.DESCRIPTION
+
+Definition:
+-----------
+If multiple inheritance is used, the classes inherited must be abstract, that is 
+to say that they must contain at least one pure virtual method.
+
+Justification:
+--------------
+Makes the overall design less complicated and the code easier to understand.
+
+Example:
+--------
+1st case:
+A and B are not abstract classes (they contain no pure virtual methods). 
+C inherits A and B: the rule is violated.
+
+2nd case:
+A and B are abstract classes (they contain at least one pure virtual method each). 
+C inherits A and B: the rule is not violated.
+
+3rd case: 
+A is abstract, B is not, C is (has a pure virtual function), and inherits A et B.
+C violates the rule, but is abstract for inheriting classes.
+
+
+.REQUIRED absclass browser
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

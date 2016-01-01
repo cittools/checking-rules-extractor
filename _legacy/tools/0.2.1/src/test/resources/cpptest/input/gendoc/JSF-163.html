@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Unsigned arithmetic shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Unsigned arithmetic shall not be used [JSF-163-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Unsigned arithmetic shall not be used.
+Rule reports a violation message if type of 
+arithmetic expression operand is unsigned type.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Over time, unsigned values will likely be mixed with signed values what
+is error prone as it subjects operations to numerous arithmetic
+conversion and integral promotion rules.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(unsigned p)
+{
+   unsigned int a = 0;
+   int b = 0;
+  
+   b = p + a;         // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(signed p)
+{
+   signed int a = 0;
+   int b = 0;
+  
+   b = p + a;         // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.21 Operators, AV Rule 163
+
+</PRE>
+</BODY>
+</HTML>

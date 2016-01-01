@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Pointers to pointers should be avoided whenever possible
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Pointers to pointers should be avoided whenever possible [JSF-169-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects if code uses pointers to pointers.
+"Pointers to pointers should whenever possible be avoided.
+By improving the readability of code, the probability of failure is reduced."
+
+
+Exceptions:
+
+"One exception to this rule is represented by functions which provide 
+interfaces to other languages (such as C). These are likely to only allow
+pre-defined data types to be used as arguments in the interface, in which
+case pointers to pointers are needed. Another example is the second argument
+to the main function, which must have the type char*[]."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves the readability of the code and encourages data abstraction.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() {
+    int** a;  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Instead, declare a class that has
+a member variable of the pointer type.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#12">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#12</A>
+   From: 12 Pointers and References - Rec. 48
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.22 Pointers &amp; References, AV Rule 169
+
+</PRE>
+</BODY>
+</HTML>

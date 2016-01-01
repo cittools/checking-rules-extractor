@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Initialize all variables
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Initialize all variables [INIT-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A variable must always be initialized before use. Normally, the compiler gives 
+a warning if a variable is undefined. It is then sufficient to take care of 
+such cases. Instances of a class are usually initialized even if no arguments 
+are provided in the declaration (the empty constructor is invoked). To declare 
+a variable that has been initialized in another file, the keyword extern 
+is always used.
+By always initializing variables, instead of assigning values to them before 
+they are first used, the code is made more efficient since no temporary objects 
+are created for the initialization. For objects having large amounts of data, 
+this can result in significantly faster code."
+
+
+Exceptions:
+
+Exception to this rule are 'volatile' data, non-primitive types, and arrays.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents reading from uninitialized variables.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int a;             // Violation
+
+void foo( ) {
+    int b;         // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int a = 0;        // OK
+
+void foo( ) {
+    int b = 0;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards
+    <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11</A>
+    From: 11 Variables - Rule 41
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Coding Style", Rule 19
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.16 Initialization, AV Rule 142
+
+</PRE>
+</BODY>
+</HTML>

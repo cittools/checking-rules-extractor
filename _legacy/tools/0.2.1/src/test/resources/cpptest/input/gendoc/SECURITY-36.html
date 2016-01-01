@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never use unfiltered data from an untrusted user as the format parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never use unfiltered data from an untrusted user as the format parameter [SECURITY-36-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Never use unfiltered data from an untrusted user as 
+a format parameter. Failing this guideline usually results
+in a format string vulnerability. A particularly nasty case 
+is printf's %n conversion specification, which writes 
+the number of characters written so far into the pointer 
+argument; using this, an attacker can overwrite a value
+ that was intended for printing.
+Rule checks if format parameter is used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents attempts of overwriting a value that 
+was intended for printing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+void foo( char* stringFromUntrustedUser ) {
+    printf( stringFromUntrustedUser );          // Violation
+    printf( "stringFromUntrustedUser" );        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+void foo( char* stringFromUntrustedUser ) {
+    const char *format = "%s";
+
+    printf( "%s",stringFromUntrustedUser );     // OK
+    printf( format, stringFromUntrustedUser );  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+David A. Wheeler, Programming Secure Applications for Unix-like Systems (pdf), 
+<A HREF="http://www.dwheeler.com/secure-programs">http://www.dwheeler.com/secure-programs</A>
+
+</PRE>
+</BODY>
+</HTML>

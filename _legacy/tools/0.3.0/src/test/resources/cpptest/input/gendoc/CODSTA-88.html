@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Function pointers are not permitted
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Function pointers are not permitted [CODSTA-88-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The use of pointers should be restricted. Function pointers are not permitted.
+Pointers are easily misused, even by experienced programmers. They can make it
+hard to follow or analyze the flow of data in a program, especially by toolbased
+static analyzers."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule improves readability of code and causes that the code can be easier
+checked by static analyzers.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef void (*FP)();
+extern FP x[];             /* Violation - variable x */
+void foo1(FP * y) {        /* Violation - param x */
+    int (*z)(void) = 0;    /* Violation - variable z */
+    foo1(y);               /* OK - usage is ignored */
+}
+void foo2(FP) {}    /* OK - unnamed parameter ignored */
+void foo3(FP p);    /* OK - function declarations are ignored */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not declare pointers to functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 9
+
+</PRE>
+</BODY>
+</HTML>

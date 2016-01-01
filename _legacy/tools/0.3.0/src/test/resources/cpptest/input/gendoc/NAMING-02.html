@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In an enumerated list, list members (elements) shall be in uppercase and names or tags for the list shall be in lowercase
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In an enumerated list, list members (elements) shall be in uppercase and names or tags for the list shall be in lowercase [NAMING-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+In an enumerated list, list members (elements) shall be in uppercase.
+The name or tag for the list shall be in lowercase. The members of a list
+are equivalent to a defined constant, only the compiler is doing the definition.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Because members of enum are equivalent to a defined constant, 
+allows to keep naming convention of constants.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum Color {    // Violation
+    red,        // Violation
+    blue,       // Violation
+    green       // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+enum color {    // OK
+    RED,        // OK
+    BLUE,       // OK
+    GREEN       // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards R-18
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Copy and destroy consistently
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Copy and destroy consistently [MRM-40-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If you define any of the copy constructor, copy assignment operator,
+or destructor, you might need to define one or both of the others."
+See also: CODSTA-CPP-02, CODSTA-CPP-19, CODSTA-CPP-21, CODSTA-CPP-24, MRM-04,
+          MRM-05, MRM-37, MRM-38, MRM-47, MRM-48, OOP-27, OOP-30, OOP-34
+
+
+Exceptions:
+
+"When any of the special functions are declared only to make
+them private or virtual, but without special semantics, it doesn't
+imply that the others are needed."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents from memory management problems.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {       // Violation - copy constructor is missing
+public:
+    A( ) {}
+
+    A&amp; operator=( const A&amp; f ) {
+        return *this;
+    }
+
+    ~A( ) {}
+};
+
+class B {       // Violation - assignment operator is missing
+public:
+    B( ) {}
+
+    B( B&amp; ) {}
+
+    ~B( ) {}
+};
+
+class C {       // Violation - destructor is missing
+public:
+    C( ) {}
+
+    C( C&amp; ) {}
+
+    C&amp; operator=( const C&amp; f ) {
+        return *this;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {       // OK - copy constructor, assignment operator and destructor
+public:
+    A( ) {}
+
+    A( A&amp; ) {}
+
+    A&amp; operator=( const A&amp; f ) {
+        return *this;
+    }
+
+    ~A( ) {}
+};
+
+class B {  // OK no defined copy constructor, assignment operator and destructor
+};
+
+class C {  // OK - copy constructor, assignment operator and destructor
+public:
+    C( ) {}
+
+    C( C&amp; ) {}
+
+    C&amp; operator=( const C&amp; f ) {
+        return *this;
+    }
+
+    ~C( ) {}
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Construction, Destruction, and Copying", Rule 52
+
+</PRE>
+</BODY>
+</HTML>

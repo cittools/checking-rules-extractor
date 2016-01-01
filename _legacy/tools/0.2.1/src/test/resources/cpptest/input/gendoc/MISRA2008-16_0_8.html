@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If the # token appears as the first token on a line, then it shall be immediately followed by a preprocessing token
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If the # token appears as the first token on a line, then it shall be immediately followed by a preprocessing token [MISRA2008-16_0_8-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When a section of source code is excluded by preprocessor directives,
+the content of each excluded statement is ignored until a #else, #elif 
+or #endif directive is encountered (depending on the context). 
+If one of these excluded directives is badly formed, it may be ignored
+without warning by a compiler with unfortunate consequences.
+The requirement of this rule is that all preprocessor directives shall be
+syntactically valid even when they occur within an excluded block of code.
+Compilers are not always consistent in enforcing this ISO requirement."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents erroneous behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MAX 2
+
+int foo(void)
+{
+	int x = 0;
+	
+#ifndef MAX
+	x = 1;
+#else1              /* Violation */
+	x = MAX;
+#endif
+	return x;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define MAX 2
+
+int foo(void)
+{
+	int x = 0;
+	
+#ifndef MAX
+	x = 1;
+#else              /* OK */
+	x = MAX;
+#endif
+	return x;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-0-8
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,47 @@
+.NAME File names
+
+.DESCRIPTION
+
+Definition:
+-----------
+A file name and the name of the class declared or defined in this file must be 
+closely related.
+The comparison is made only on alphanumeric characters and is not case sensitive.
+The extension of the file name is not taken into account.
+The part of the file name taken into account to correspond to the name of the class
+is between the MIN and the MAX characters (these included).
+This character string should be found in the identifier 
+according to the above comparison rules.
+
+Parameters:
+----------
+A MINMAX couple of values giving the part of the file name to take into account.
+
+Example:
+--------
+
+if the MINMAX parameters are 4 and 10, and the file name
+is My_Graph_Node.h
+then the part of the file name that should be found in
+the class name is: GRAPHN
+(the first 10 characters: My_Graph_N, minus the first 3: Graph_N, minus non 
+alphanumeric characters: GraphN)
+
+Then, the class name that the file is based upon could
+be one of the following declarations
+
+class CLA_Graph_Node { ...}
+class Graph_Node { ...}
+class Graph_Node_Def { ...}
+class graphnode { ...}
+
+But not the following ones
+
+class Graph { ...}
+class NodeGraph { ...}
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

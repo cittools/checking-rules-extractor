@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer vector and string to dynamically allocated arrays
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer vector and string to dynamically allocated arrays [STL-10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The minute you decide to use new for a dynamic allocation, you adopt 
+the following responsibilities:
+1. You must make sure that somebody will later delete the allocation. 
+2. You must ensure that the correct form of delete is used. For 
+  an allocation of a single object, "delete" must be used. 
+  For an array allocation, "delete []" is required. 
+3. You must make sure that delete is used exactly once. 
+Any time you find yourself getting ready to dynamically allocate an array,
+you should consider using a vector or a string instead.(...) vector and string
+eliminate the burdens above, because they manage their own memory. Their
+memory grows as elements are added to these containers, and when a vector or
+string is destroyed, its destructor automatically destroys the elements in the
+container and deallocates the memory holding those elements."
+See also: STL-11
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps writing safer and more scalable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+class A{};
+void foo()
+{
+  A *p;
+  p = new A[10]; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+class A{};
+
+void foo()
+{
+  A obj;
+  vector &lt;A&gt; vectorA; // OK
+  vectorA.push_back(obj);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 2, item 13
+
+</PRE>
+</BODY>
+</HTML>

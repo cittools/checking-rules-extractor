@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An object's dynamic type shall not be used from the body of its constructor or destructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An object's dynamic type shall not be used from the body of its constructor or destructor [MISRA2008-12_1_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"During construction and destruction of an object, its final type
+may be different to that of the completely constructed object."
+"Member functions (including virtual member functions) can be called for an
+object under construction. Similarly, an object under construction can be the
+operand of the typeid operator or of a dynamic_cast. However, if these
+operations are performed in a ctor-initializer (or in a function called
+directly or indirectly from a ctor-initializer) before all the mem-initializers
+for base classes have completed, the result of the operation is undefined."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The result of using an object's dynamic type in a constructor or
+destructor may not be consistent with developer expectations."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* Examples of incorrect code */
+#include &lt;typeinfo&gt;
+class B2
+{
+    public:
+        virtual ~B2 ( );
+        virtual void foo ( );
+        B2 ( )
+        {
+            typeid ( B2 );                // Violation
+            foo ( );                      // Violation
+            dynamic_cast&lt; B2* &gt; ( this ); // Violation
+        }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* Examples of correct code */
+#include &lt;typeinfo&gt;
+class B1
+{
+    public:
+        B1 ( )
+        {
+            typeid ( B1 ); // OK - B1 not polymorphic
+        }
+};
+class B2
+{
+    public:
+        virtual ~B2 ( );
+        virtual void foo ( );
+        B2 ( )
+        {
+            B2::foo ( );   // OK - not a virtual call
+        }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 12, Rule 12-1-1
+
+</PRE>
+</BODY>
+</HTML>

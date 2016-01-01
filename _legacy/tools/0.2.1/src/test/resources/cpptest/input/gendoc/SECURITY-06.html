@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid functions which use time from MFC library
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid functions which use time from MFC library [SECURITY-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects usage of time-related functions from MFC library.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of functions from MFC library, which may open security holes. 
+Getting the current system time might be suspicious and could lead to security
+problems if used as a key for accessing sensitive information or allow access
+to specific functions. Do not use the following functions:
+- GetTime
+- GetYear
+- GetMonth
+- GetDay
+- GetHour
+- GetMinute
+- GetSecond
+- GetDayOfWeek
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;afx.h&gt;
+void dangerFunction(time_t t);
+int main () {
+    CTime t(NULL);
+    time_t Time = t.GetTime(); // Violation
+    t.GetHour();               // Violation 
+    t.GetMinute();             // Violation
+    dangerFunction(Time);
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Remove usage of functions from MFC library, which may open security hole.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+David A. Wheeler, Programming Secure Applications for Unix-like Systems (pdf),
+<A HREF="http://www.dwheeler.com/secure-programs">http://www.dwheeler.com/secure-programs</A>
+
+</PRE>
+</BODY>
+</HTML>

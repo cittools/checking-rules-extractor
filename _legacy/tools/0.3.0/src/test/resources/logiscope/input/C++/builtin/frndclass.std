@@ -1,0 +1,13 @@
+.NAME Friend classes.
+
+.DESCRIPTION
+
+Definition:
+-----------
+If friend classes are used, they must be declared at the beginning of the class 
+(before member declaration).
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use != instead of &lt; to compare iterators
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use != instead of &lt; to compare iterators [STL-38-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use the most generic and abstract means to implement a piece of 
+functionality: Use != instead of &lt; to compare iterators. 
+Using != is more general and so applies to a larger class of objects; 
+using &lt; asks for ordering."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and prevents memory leaks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+void foo( ) {
+    vector&lt;int&gt; coll;
+    vector&lt;int&gt; moll;
+
+    vector&lt;int&gt;::iterator c_pos = coll.begin( );
+    vector&lt;int&gt;::iterator m_pos = moll.begin( );
+    if (c_pos &lt; m_pos) {}                       // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+void foo( ) {
+    vector&lt;int&gt; coll;
+    vector&lt;int&gt; moll;
+
+    vector&lt;int&gt;::iterator c_pos = coll.begin( );
+    vector&lt;int&gt;::iterator m_pos = moll.begin( );
+    if (c_pos != m_pos) {}                      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Templates and Genericity", Rule 67
+
+</PRE>
+</BODY>
+</HTML>

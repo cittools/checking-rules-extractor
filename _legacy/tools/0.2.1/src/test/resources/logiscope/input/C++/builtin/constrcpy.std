@@ -1,0 +1,22 @@
+.NAME Copy contructor
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each class must contain its copy constructor explicitly.
+
+Parameters:
+-----------
+The string "dynalloc" which, if used, indicates that the rule has to be checked
+only if there is a class member which is a pointer
+
+Justification:
+--------------
+Makes sure the author has thought about the way to copy an object of the class.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

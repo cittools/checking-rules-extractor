@@ -1,0 +1,32 @@
+.NAME No pre-processing instructions may be used
+
+.DESCRIPTION
+
+Definition:
+-----------
+No pre-processing instructions may be used, except for those specified in the 
+parameter list.
+
+Parameters:
+-----------
+A list of strings defining the exceptions to this rule. The list can be empty.
+"define": #define may be used
+"include": #include may be used
+"if": #if, #ifdef and #ifndef structures may be used
+"pragma": #pragma may be used
+"undef": #undef may be used
+"line": #line may be used
+"error": #error may be used
+"none": # may be used alone
+
+By default, only #line and # alone may not be used.
+
+Justification:
+--------------
+Makes the code easier to read and understand.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

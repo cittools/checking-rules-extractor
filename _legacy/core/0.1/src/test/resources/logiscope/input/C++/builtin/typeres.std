@@ -1,0 +1,38 @@
+.NAME Reserved types
+
+.DESCRIPTION
+
+Definition:
+-----------
+Some types may be forbidden for variables or functions.
+It is possible to define the list of types that are forbidden for variables 
+(extern , static , and automatic variables) and the list of types that are 
+forbidden for functions.
+The type specifiers and qualifiers are forbidden in any order and even if 
+they are merged with other specifiers or qualifiers.
+These types are allowed in typedef definition.
+
+Parameters:
+-----------
+Two lists of strings beginning by the keywords "data" or "function".
+The other items of the list are strings containing the forbidden groups 
+of type specifiers or type qualifiers separated by spaces.
+
+Justification:
+--------------
+Not relying on predefined types improves code portability.
+
+Example:
+--------
+The standard may be specified as following:
+
+STANDARD typeres ON 
+LIST "data" "int" "char" "register double" END LIST
+LIST "function" "unsigned int" "double" END LIST 
+END STANDARD 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Call empty instead of checking size() against zero
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Call empty instead of checking size() against zero [STL-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Call empty instead of checking size() against zero. You should prefer
+the construct using empty, and the reason is simple: empty is a constant-time
+operation for all standard containers, but for some list implementations,
+size takes linear time."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+int foo()
+{
+    std::vector&lt;char&gt; vVector;
+	
+    if(vVector.size() == 0) // Violation
+        return 1;
+	
+    if(vVector.size())      // Violation
+        return 1;
+
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+int foo()
+{
+    std::vector&lt;char&gt; vVector;
+	
+    if(vVector.empty() == 0) // OK
+        return 1;
+	
+    if(vVector.empty())      // OK
+        return 1;
+
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 1, item 4
+
+</PRE>
+</BODY>
+</HTML>

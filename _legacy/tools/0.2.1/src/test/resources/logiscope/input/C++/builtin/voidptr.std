@@ -1,0 +1,12 @@
+.NAME No void pointer
+
+.DESCRIPTION
+
+Definition:
+-----------
+The void pointer (void *) should not be used.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

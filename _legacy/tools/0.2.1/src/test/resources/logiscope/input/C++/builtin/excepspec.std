@@ -1,0 +1,18 @@
+.NAME Exception Specifications
+
+.DESCRIPTION
+
+Definition:
+-----------
+Do not use exception specifications.
+(This rule relates to Item 14 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Prevents violations of exception specifications, which are dangerous.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

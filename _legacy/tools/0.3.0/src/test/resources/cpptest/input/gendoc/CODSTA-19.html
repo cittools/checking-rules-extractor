@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use the ctype.h facilities for character test
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use the ctype.h facilities for character test [CODSTA-19-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that code uses the ctype.h facilities for character test.
+The ctype.h facilities for character tests and upper-lower conversions
+(isalnum, isalpha, iscntrl, isdigit, isgraph, islower, isprint, ispunct,
+isspace, isupper, isxdigit, tolower, toupper) are portable across different
+character code sets, are usually very efficient, and promote international
+flexibility.  However, other similarly named functions 
+(such as _tolower, _toupper, _isascii) are not universally portable.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Using function from ctype.h for char testing makes
+code more portable across different character code sets.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;ctype.h&gt;
+void test(char c) {
+   if( 'a' &lt;= c &amp;&amp; c &lt;= 'z') {       // Violation
+   }
+  
+   while( 'A' &lt;= c &amp;&amp; c &lt;= 'Z') {	// Violation
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;ctype.h&gt;
+void test(char c) {
+   if(islower(c))	                // OK
+    {
+    }
+   while(isupper(c))           // OK
+    {
+    }  
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.gnu.org/software/libc/manual/html_node/Character-Handling.html">http://www.gnu.org/software/libc/manual/html_node/Character-Handling.html</A>
+
+</PRE>
+</BODY>
+</HTML>

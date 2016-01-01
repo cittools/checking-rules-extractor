@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using iterative calls to insert in an explicit loop
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using iterative calls to insert in an explicit loop [STL-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Using iterative calls to insert in an explicit loop, it would probably look 
+more or less like this:
+
+   vector&lt;int&gt;::iterator insertLoc(v.begin());
+   for (int i = 0; i &lt; numValues; ++i) {
+   insertLoc = v.insert(insertLoc, data[i]);
+   }
+
+Notice how we have to be careful to save the return value of insert for the next
+loop iteration. If we didn't update insertLoc after each insertion, we'd have 
+two problems. First, all loop iterations after the first would yield undefined 
+behavior, because each insert call would invalidate insertLoc. Second, even if 
+insertLoc remained valid, we'd always insert at the front of the vector 
+(i.e., at v.begin()), and the result would be that the ints copied into v would 
+end up in reverse order. If we follow the lead of Item 43 and replace the 
+loop with a call to copy, we get something like this:
+
+   copy(data. data + numValues, inserter(v, v.begin()));
+
+By the time the copy template has been instantiated, the code based on copy and 
+the code using the explicit loop will be almost identical, so for purposes of 
+an efficiency analysis, we'll focus on the explicit loop, keeping in mind that 
+the analysis is equally valid for the code employing copy. Looking at the 
+explicit loop just makes it easier to understand where the efficiency hits come 
+from. Yes, that's "hits." plural, because the code using the single-element 
+version of insert levies up to three different performance taxes on you, none 
+of which you pay if you use the range version of insert.(...)"
+See also: STL-05
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves performance and protects from undefined behavior in case of 
+improper updating of insert location.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void foo()
+{
+    vector&lt;int&gt; v;
+    const int numValues = 10;
+    int data[numValues]={0,1,2,3,4,5,6,7,8,9};
+
+    vector&lt;int&gt;::iterator insertLoc(v.begin());
+       
+    for (int i = 0; i &lt; numValues; i++)
+    {
+        insertLoc = v.insert(insertLoc, data[i]);     // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void foo()
+{
+    vector&lt;int&gt; v;
+    const int numValues = 10;
+    int data[numValues]={0,1,2,3,4,5,6,7,8,9};
+
+    v.insert(v.begin(),data,data+numValues);           // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 1, item 5
+
+</PRE>
+</BODY>
+</HTML>

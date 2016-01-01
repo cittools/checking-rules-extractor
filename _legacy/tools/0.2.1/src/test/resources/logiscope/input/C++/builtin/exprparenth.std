@@ -1,0 +1,46 @@
+.NAME Parenthesis in expressions
+
+.DESCRIPTION
+
+Definition:
+-----------
+In expressions, every binary and ternary operator has to be put in parenthesis, 
+so that the evaluation priorities are not ambiguous.
+Use the partpar option to allow the following rules: when the right operand of 
+a + or * operator uses the same operator, you can omit parenthesis for it. 
+In the same way, you can omit parenthesis in the case of the right operand of an 
+assignment operator. Moreover, you can omit parenthesis at the first level of 
+the expression.
+
+Parameters:
+----------
+The character string "partpar", which, if used, allows programmers not to put 
+systematically parenthesis, according to the rule above. 
+
+Justification:
+--------------
+Removes ambiguity about the evaluation priorities.
+
+Example:
+--------
+
+// do not write
+result = fact / 100 + rem;
+
+// write
+result = ((fact / 100) + rem);
+
+// or write, with the partpar option
+result = (fact / 100) + rem;
+
+// with the partpar option, write
+result = (fact * ind * 100) + rem + 10 + (coeff ** c);
+
+// instead of 
+result = ((fact * (ind * 100)) + (rem + (10 + (coeff ** c)))); 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

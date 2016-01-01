@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+User-defined constructor must be provided to ensure the proper initialization of dynamically allocated class objects
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+User-defined constructor must be provided to ensure the proper initialization of dynamically allocated class objects [INIT-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule verifies that dynamically allocated class objects are properly 
+initialized by checking if user-defined constructor is provided. If you 
+do not write at least one constructor in a class, the compiler will 
+write a public constructor for you by default. 
+This rule detects if you do not define at least one constructor.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Classes that have only static members or no members at all are omitted 
+by this rule.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If you follow this rule, you will make class initialization explicit and 
+prevent the compiler from initializing members improperly, especially 
+pointer members.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class B
+{
+    public:
+        static int s;
+        int b;
+        int a;
+};
+B* foo(B* b)
+{
+    B* a=new B(); // Violation
+    return new B(); // Violation
+}
+
+int main() 
+{
+    foo(new B()); // Violation
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+    public:
+        A(){}
+        static int w;
+        int b;
+        int a;
+};
+
+A* foo2()
+{
+    A* a=new A(); // OK
+    return new A(); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

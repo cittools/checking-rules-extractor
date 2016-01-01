@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The NULL pointer shall not be dereferenced
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The NULL pointer shall not be dereferenced [MISRA-107_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Where a function returns a pointer and that pointer is subsequently 
+de-referenced, the program should first check that the pointer is not NULL."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+int* foo();
+struct T
+{
+    int _i;
+};
+void bar() {
+    int* p;
+    int j;
+    struct T * tPtr;
+    p = foo();
+    j=*p;
+    tPtr = malloc(sizeof(struct T));
+    tPtr-&gt;_i = 1;     /* violation */
+    free(tPtr);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+int* fooOK();
+struct TOK
+{
+    int _i;
+};
+void barOK() {
+    int* p;
+    int j;
+    struct TOK * tPtr;
+    p = fooOK();
+    if (p != 0) {
+        j=*p;         /* OK */
+        j= (*p) + 1;  /* OK */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 107
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.22 Pointers &amp; References, AV Rule 174
+
+</PRE>
+</BODY>
+</HTML>

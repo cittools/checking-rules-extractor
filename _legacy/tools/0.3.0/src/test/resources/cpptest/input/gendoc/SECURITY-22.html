@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use mbstowcs() function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use mbstowcs() function [SECURITY-22-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Function mbstowcs() should not be used.
+Internal stack allocated buffer can be overflown in some versions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using unsafe mbstowcs() function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+void main( void )
+{
+    int i;
+    char    *pmbhello = (char *)malloc( MB_CUR_MAX );
+    wchar_t *pwc      = (wchar_t *)malloc( sizeof( wchar_t ));
+	
+    i = mbstowcs( pwc, pmbhello, MB_CUR_MAX );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use mbstowcs().
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0072.xml">https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0072.xml</A>
+
+</PRE>
+</BODY>
+</HTML>

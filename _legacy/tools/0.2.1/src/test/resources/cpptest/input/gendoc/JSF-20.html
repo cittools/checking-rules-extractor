@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The setjmp macro and the longjmp function shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The setjmp macro and the longjmp function shall not be used [JSF-20-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"setjmp and longjmp allow the normal function call mechanisms to be bypassed,
+and shall not be used."
+Rule reports a violation message if setjmp or longjmp is used and the file
+includes any of the following headers: setjmp.h, setjmp, or csetjmp.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents normal function call mechanisms from being bypassed.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;setjmp.h&gt;
+jmp_buf mark;              /* Address for long jump to jump to */
+int     fperr;             /* Global error number */
+
+void foo( void ) {
+    int jmpret;
+    jmpret = setjmp( mark );        /* Violation */
+}
+
+void fphandler( int sig, int num ) {
+    longjmp( mark, -1 );            /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use the setjmp macro and the longjmp function.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. Origin: Misra Guidelines - Rule 122
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.5 Libraries, AV Rule 20
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 17, Rule 17-0-5
+
+5. The Power of Ten - Rules for Developing Safety Critical Code.
+   Rule 1
+
+</PRE>
+</BODY>
+</HTML>

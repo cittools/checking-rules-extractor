@@ -1,0 +1,20 @@
+.NAME Try Blocks in Destructors
+
+.DESCRIPTION
+
+Definition:
+-----------
+If it is not empty, the definition of a constructor must contain a "try" 
+and "catch" block.
+(This rule relates to Item 11 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Prevents the call of terminate in case of exception propagation, and helps ensure
+that destructors do everything they are supposed to do.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

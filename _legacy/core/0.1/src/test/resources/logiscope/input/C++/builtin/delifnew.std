@@ -1,0 +1,19 @@
+.NAME Operator "delete" if you Write Operator "new"
+
+.DESCRIPTION
+
+Definition:
+-----------
+If operator new is declared  inside a class, then operator delete shall be also 
+declared inside the same class.
+(This rule relates to Item 10 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+"new" and "delete" operators work together.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

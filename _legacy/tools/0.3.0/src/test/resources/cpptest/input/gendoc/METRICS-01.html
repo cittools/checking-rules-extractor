@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid functions with over 50 lines
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid functions with over 50 lines [METRICS-01-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Programs should be designed so that most of the functions will be smaller 
+than 50 lines of source listening. Algorithms are easier to create and to
+understand if they are built of pieces small enough to be grasped as one
+concept.
+See also: METRICS-20, METRICS-21, METRICS-22
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void too_long_function() {	// Violation
+  int a1;
+  int a2;
+  int a3;
+  int a4;
+  int a5;
+  int a6;
+  int a7;
+  int a8;
+  int a9;
+  int a10;
+  int a11;
+  int a12;
+  int a13;
+  int a14;
+  int a15;
+  int a16;
+  int a17;
+  int a18;
+  int a19;
+  int a20;
+  int a21;
+  int a22;
+  int a23;
+  int a24;
+  int a25;
+  int a26;
+  int a27;
+  int a28;
+  int a29;
+  int a30;
+  int a31;
+  int a32;
+  int a33;
+  int a34;
+  int a35;
+  int a36;
+  int a37;
+  int a38;
+  int a39;
+  int a40;
+  int a41;
+  int a42;
+  int a43;
+  int a44;
+  int a45;
+  int a46;
+  int a47;
+  int a48;
+  int a49;
+  int a50;
+  int a51;
+  int a52;
+  int a53;
+  int a54;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit the size of the function to 50 lines.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

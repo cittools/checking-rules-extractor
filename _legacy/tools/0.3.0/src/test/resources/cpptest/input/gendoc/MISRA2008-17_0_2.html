@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The names of standard library macros and objects shall not be reused
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The names of standard library macros and objects shall not be reused [MISRA2008-17_0_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Where new versions of standard library macros, objects or functions are used
+by the programmer (e.g. enhanced functionality or checks of input values) the
+modified macro, object or function shall have a new name. This is to avoid any
+confusion as to whether a standard macro, object or function is being used or
+whether a modified version of that function is being used. So, for example, if
+a new version of the sqrt function is written to check that the input is not
+negative, the new function shall not be named “sqrt”, but shall be given a new
+name."
+Rule checks if the following reserved names are used:
+- macro, function, and typedef names from C standard library headers: assert.h,
+  complex.h, ctype.h, errno.h, float.h, iso646.h, limits.h, locale.h, math.h,
+  setjmp.h, signal.h, stdarg.h, stddef.h, stdio.h, stdlib.h, string.h, time.h,
+  wchar.h, wctype.h, stdint.h, inttypes.h, fenv.h, stdbool.h, tgmath.h
+- identifiers that begin with the underscore character
+See also: NAMING-33
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int memset();    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int my_memset(); // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 17, Rule 17-0-2
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 17, Rule 17-0-3
+
+</PRE>
+</BODY>
+</HTML>

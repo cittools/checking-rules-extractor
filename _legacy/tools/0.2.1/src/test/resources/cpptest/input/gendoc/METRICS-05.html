@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Class inheritance level
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Class inheritance level [METRICS-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This metric measures the class inheritance level by calculating the number
+of base classes. 
+Rule triggers if the class inheritance level exceeds 10.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule applies only to the C++ programming language.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"An unnecessarily deep class hierarchy adds to complexity and can represent 
+a poor use of the inheritance mechanism."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {};			// OK
+class Dev1 : public Base {};	// OK
+class Dev2 : public Dev1 {};	// OK
+class Dev3 : public Dev2 {};	// OK
+class Dev4 : public Dev3 {};	// OK
+class Dev5 : public Dev4 {};	// OK
+class Dev6 : public Dev5 {};	// OK
+class Dev7 : public Dev6 {};	// OK
+class Dev8 : public Dev7 {};	// OK
+class Dev9 : public Dev8 {};	// OK
+class Dev10 : public Dev9 {};	// OK
+class Dev11 : public Dev10 {};	// Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit he number of base classes to 10.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, Novemeber/December, 1999, pg. 33.
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Comment every function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Comment every function [COMMENT-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Write some descriptive comments before every function."
+Rule reports a violation message on:
+
+1) function prototype if no function definition is visible and prototype is
+   not preceded with a comment, 
+
+2) function definition if:
+-  there is no prototype and function definition is not preceded with a
+   comment
+-  there is visible prototype but neither prototype nor function definition is
+   preceded with a comment
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1();     // Violation
+
+int foo2(int x){ // Violation
+    return x++;
+}
+
+int foo3(int x);
+int foo3(int x){ // Violation
+    return x++;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// Comment with description for the function.
+void foo1(); 
+
+// Comment with description for the function.
+int foo2(int x){ 
+    return x++;
+}
+
+// Comment with description for the function.
+int foo3(int x);
+
+int foo3(int x){ 
+    return x++;
+}
+
+int foo4(int x);
+
+// Comment with description for the function.
+int foo4(int x){
+    return x++;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   from: 4 Source Code in Files - 4.3 Comments - Rec. 8
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.14 Comments, AV Rule 134
+
+</PRE>
+</BODY>
+</HTML>

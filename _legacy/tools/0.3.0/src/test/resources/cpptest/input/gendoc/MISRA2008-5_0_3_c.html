@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A cvalue expression shall not be implicitly converted to a different underlying type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A cvalue expression shall not be implicitly converted to a different underlying type [MISRA2008-5_0_3_c-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The value of an expression of integer type shall not be implicitly
+converted to a different underlying type.
+The term 'underlying type' is defined as describing the type that would
+be obtained from evaluating an expression if it were not for the effects
+of integral promotion."
+"The intention when restricting implicit conversion of complex expressions is
+to require that in a sequence of arithmetic operations within an expression, 
+all operations should be conducted in exactly the same arithmetic type."
+Rule checks if implicit conversions of complex expressions are used.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"By observing the principle whereby all operations are performed in 
+a consistent (underlying) type, it is possible to avoid programmer confusion 
+and some of the dangers associated with integral promotion."
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Rule checks only the simple expressions. Rule does not report any violations
+if an expression is more complex.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Conv1_int( )
+{
+    unsigned short u16a,u16b;
+    unsigned int u32a = u16b + u16a;                      /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void Conv1_int( )
+{
+    unsigned short u16a,u16b;
+    unsigned int u32a = (unsigned int)(u16b + u16a);      /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 10
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-3
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not compare a pointer to NULL or assign NULL to a pointer; use 0 instead
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not compare a pointer to NULL or assign NULL to a pointer; use 0 instead [JSF-175-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that compares a pointer to NULL or assigns NULL
+to a pointer. "Do not compare a pointer to NULL or assign NULL to a
+pointer; use 0 instead."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+According to the ANSI-C standard, NULL is defined either as (void*)0 or as 0.
+If this definition remains in ANSI-C++, problems may arise.
+If NULL is defined to have the type void*, it cannot be assigned an arbitrary
+pointer without an explicit type conversion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stddef.h&gt;
+void foo( ) {
+    int *lp = NULL; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stddef.h&gt;
+void foo( ) {
+    int *lp = 0; // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 12 Pointers and References - Rule 42
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.22 Pointers &amp; References, AV Rule 175
+
+</PRE>
+</BODY>
+</HTML>

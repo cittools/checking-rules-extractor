@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If accumulate() is used on a container of floating point values, use floating point value as initial one
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If accumulate() is used on a container of floating point values, use floating point value as initial one [STL-27-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If accumulate is performed for i.e. list of doubles and the initial value
+would be the int 0, the accumulate would internally use an int to store the
+value it was computing. "That int would ultimately become accumulate's return 
+value, and it would be used to initialize the variable sum. The code would
+compile and run, but sum's value would be incorrect. Instead of holding the
+true sum of a list of doubles, it would hold the result of adding all the
+doubles together, but converting the result to an int after each addition."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;numeric&gt;
+
+using namespace std;
+void foo()
+{
+	list&lt;double&gt; li; 
+	double sum = accumulate(li.begin(), li.end(), 0);      // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;numeric&gt;
+
+using namespace std;
+void foo()
+{
+	list&lt;double&gt; li; 
+	double sum = accumulate(li.begin(), li.end(), 0.0);    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 5, item 37
+
+</PRE>
+</BODY>
+</HTML>

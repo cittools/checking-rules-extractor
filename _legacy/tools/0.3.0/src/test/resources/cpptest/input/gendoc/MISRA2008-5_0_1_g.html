@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The value of an expression shall be the same under any order of evaluation that the standard permits
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The value of an expression shall be the same under any order of evaluation that the standard permits [MISRA2008-5_0_1_g-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Apart from a few operators (notably the function call operator (), &amp;&amp;, ||, ?: 
+and , (comma)) the order in which sub-expressions are evaluated is unspecified 
+and can vary. This means that no reliance can be placed on the order of 
+evaluation of sub-expressions, and in particular no reliance can be placed on 
+the order in which side effects occur.
+Functions may have additional effects when they are called (e.g. modifying some
+global data). Dependence on order of evaluation could be avoided by invoking the
+function prior to the expression that uses it, making use of a temporary 
+variable for the value."
+
+The rule reports a violation if in one expression are called two functions that
+use the same global or static variable and at least one function modifies this 
+variable.
+
+
+Exceptions:
+
+Only one level of function calls is checked.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents evaluation of expression dependent on compiler version.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int global;
+
+int modify_global()
+{
+    global++;
+    return global;
+}
+int use_global()
+{
+    return global;
+}
+
+void expr1()
+{
+    int a = modify_global() + use_global();  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int global;
+
+int modify_global()
+{
+    global++;
+    return global;
+}
+int use_global()
+{
+    return global;
+}
+
+void expr1()
+{
+    int a = modify_global();
+    a += use_global();           // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 46
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-1
+
+</PRE>
+</BODY>
+</HTML>

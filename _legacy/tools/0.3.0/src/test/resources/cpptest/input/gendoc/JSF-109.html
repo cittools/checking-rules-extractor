@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Member functions shall not be defined within the no-template class definition
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Member functions shall not be defined within the no-template class definition [JSF-109-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Functions defined within the class definition are implicitly inline; however,
+defining member functions within a class definition also makes the class
+definition less compact and harder to read. This rule detects if you define
+member functions in the class definition.
+See also: CODSTA-CPP-33
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule ensure better data hiding by separating interface and implementation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    int foo( ) {};      // Violation
+    inline int bar( );
+};
+
+inline int A::bar( ) {
+    return 0;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    int foo( );         // OK
+    inline int bar( );
+};
+
+int A::foo( ) {};
+inline int A::bar( ) {
+    return 0;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   From: 6 Style  - 6.1 Classes - Rule 21
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Functions, AV Rule 109
+
+</PRE>
+</BODY>
+</HTML>

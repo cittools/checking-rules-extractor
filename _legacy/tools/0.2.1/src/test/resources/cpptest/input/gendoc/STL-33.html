@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer algorithm calls to hand-written loops
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer algorithm calls to hand-written loops [STL-33-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Prefer algorithm calls to hand-written loops.
+For many C++ programmers, writing the loop is more natural than
+calling the algorithm, and reading the loop is more comfortable (...).
+Yet this Item argues that the algorithm call is preferable.
+In fact, this Item argues that calling an algorithm is usually 
+preferable to any hand-written loop. Why?
+
+There are three reasons:
+-  Efficiency: Algorithms are often more efficient than the loops 
+programmers produce.
+-  Correctness: Writing loops is more subject to errors than is calling 
+algorithms.
+-  Maintainability: Algorithm calls often yield code that is clearer 
+and more straightforward than the corresponding explicit loops."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency, correctness and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+void foo()
+{
+    const int VECTOR_SIZE = 8 ;
+    vector&lt;int&gt; Numbers(VECTOR_SIZE) ;
+    vector&lt;int&gt;::iterator start, end, it ;
+    start = Numbers.begin() ;   
+    end = Numbers.end() ;       
+	
+    for(it = start; it != end; it++)  // Violation
+        cout &lt;&lt; *it;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+void print(int n)
+{
+    cout &lt;&lt; n;
+}
+
+void foo()
+{
+    const int VECTOR_SIZE = 8 ;
+    vector&lt;int&gt; Numbers(VECTOR_SIZE) ;
+    vector&lt;int&gt;::iterator start, end, it ;
+    start = Numbers.begin() ;   
+    end = Numbers.end() ;       
+    
+    for_each(start, end, print) ;     // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 7, item 43
+
+</PRE>
+</BODY>
+</HTML>

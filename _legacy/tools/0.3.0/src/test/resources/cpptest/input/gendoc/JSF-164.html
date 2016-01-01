@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The right-hand operand of a shift operator shall lie between zero and one less than the width in bits of the underlying type of the left-hand operand
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The right-hand operand of a shift operator shall lie between zero and one less than the width in bits of the underlying type of the left-hand operand [JSF-164-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If, for example, the left-hand operand of a left-shift or right-shift is a 
+16-bit integer, then it is important to ensure that this is shifted only by a 
+number between 0 and 15 inclusive.
+
+There are various ways of ensuring this rule is followed. The simplest is for 
+the right-hand operand to be a constant (whose value can then be statically 
+checked). Use of an unsigned integer type will ensure that the operand is 
+non-negative, so then only the upper limit needs to be checked (dynamically at
+run-time or by review). Otherwise both limits will need to be checked."
+Rule makes assumptions about size of types: char has 8 bits, short has 16 bit,
+int has 32 bit, long has 64 bit.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#ifndef uint8_t
+    typedef unsigned char   uint8_t;
+#endif
+#ifndef uint16_t
+    typedef unsigned short  uint16_t;
+#endif
+
+void foo( ) 
+{
+   uint8_t u8a;
+   uint16_t u16a;
+
+   u8a = (uint8_t) (u8a &lt;&lt; 9); /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifndef uint8_t
+    typedef unsigned char   uint8_t;
+#endif
+#ifndef uint16_t
+    typedef unsigned short  uint16_t;
+#endif
+
+void foo( ) 
+{
+   uint8_t u8a;
+   uint16_t u16a;
+
+   u16a = (uint16_t)((uint16_t) u8a &lt;&lt; 9); /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule  164
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-8-1
+
+</PRE>
+</BODY>
+</HTML>

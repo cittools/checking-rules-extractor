@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid functions which use random numbers from standard C library
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid functions which use random numbers from standard C library [SECURITY-02-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects the use of the following functions from standard C library, 
+which generate random numbers: 
+-rand
+-random
+-randomize
+-srand
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of functions that use random numbers from standard C library. 
+Since rand() and similar functions use the last generated number 
+as the seed to create the next number, 
+it is possible to guess or calculate the next number. 
+Quite frequently, random session IDs for Web sessions 
+are generated with random number generator.
+Since the random number generators from Standard C library 
+are not sufficiently strong, 
+hackers can guess the next number and “spoof” the sessions, 
+gaining access to privileged data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+
+void main( void )
+{
+  srand((unsigned)time( NULL ));  // Violation
+  int y = rand();                 // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Remove usage of rand(), random(), randomize(), srand() functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/flawfinder/">http://www.dwheeler.com/flawfinder/</A>
+
+</PRE>
+</BODY>
+</HTML>

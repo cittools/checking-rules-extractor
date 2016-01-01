@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid overflow when writing to a buffer
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid overflow when writing to a buffer [BD-PB-OVERFWR-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+The rule detects when code writes to a buffer and the write operation can go beyond
+the buffer boundary.
+
+Specifically, a violation is reported if an execution path with obvious buffer overflow
+is possible. This occurs when a value of the 'size' parameter is negative or greater than
+the actual buffer size.
+
+This rule checks for buffer overflows for uses of the following functions:
+
+	void *memset(void *s, int c, size_t n);
+	void *memcpy(void *dest, const void *src, size_t n);
+	void bcopy(const void *src, void *dest, size_t n);
+	char *fgets(char *s, int size, FILE *stream);
+	int snprintf(char *str, size_t size, const char *format, ...);
+	int vsnprintf(char *str, size_t size, const char *format, va_list ap);
+	int swprintf(wchar_t *wcs, size_t maxlen, const wchar_t *format, ...);
+	int vswprintf(wchar_t *wcs, size_t maxlen, const wchar_t *format, va_list args);
+	char *strncpy(char *dest, const char *src, size_t n);
+	char *strncat(char *dest, const char *src, size_t n);
+	size_t strlcpy(char *dst, const char *src, size_t size);
+	size_t strlcat(char *dst, const char *src, size_t size);
+	int syslog(int type, char *bufp, int len);
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.1
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+The possibility of buffer overflow is a severe security threat.
+If an application has a vulnerability of this kind, it can be exploited to
+execute arbitrary code and gain full control over the application.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation:
+
+Example 1:
+
+#include &lt;string.h&gt;
+
+void example()
+{
+	int src[200];
+	int dest[100];
+	// ...
+	memcpy(dest, src, sizeof(src)); // VIOLATION
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following code will not trigger a violation:
+
+#include &lt;string.h&gt;
+
+void example()
+{
+	int src[200];
+	int dest[100];
+	// ...
+	memcpy(dest, src, sizeof(dest)); // NO VIOLATION
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.owasp.org/index.php/Buffer_Overflow">http://www.owasp.org/index.php/Buffer_Overflow</A> (security relevance)
+
+</PRE>
+</BODY>
+</HTML>

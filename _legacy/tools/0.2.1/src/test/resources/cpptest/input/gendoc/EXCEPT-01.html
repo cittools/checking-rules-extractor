@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never allow an exception to be thrown from a destructor, deallocation, and swap
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never allow an exception to be thrown from a destructor, deallocation, and swap [EXCEPT-01-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Errors from a destructor and resource deallocation function 
+(operator delete) should not be reported.
+For exceptions, simply wrap everything sensitive that your
+destructor, deallocation, or swap function does in
+a try/catch block.
+See also: EXCEPT-03
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents propagation of exceptions out of the destructor 
+and operator delete.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+private:
+    int a;
+public:
+    void foo( ) {
+        throw "Some Exception";
+    }
+    ~A( ) {
+        foo( );                         // Violation
+    }
+    static void boo( ) {
+        throw "Some Exception";
+    }
+    void operator delete( void* ) {
+        boo( );                         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+private:
+    int a;
+public:
+    void foo( ) {
+        throw "Some Exception";
+    }
+    ~A( ) {
+        try {
+            foo( );                     // OK
+        } catch (char* str) {
+        }
+    }
+    static void boo( ) {
+        throw "Some Exception";
+    }
+    void operator delete( void* ) {
+        try {
+            boo( );                     // OK
+        } catch (char* str) {
+        }
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Construction, Destruction, and Copying", Rule 51
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 2, Item 8
+
+</PRE>
+</BODY>
+</HTML>

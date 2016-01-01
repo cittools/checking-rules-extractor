@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The value of a complex expression of integer type shall only be cast to a type  of the same signedness that is no wider than the underlying type of the expression
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The value of a complex expression of integer type shall only be cast to a type  of the same signedness that is no wider than the underlying type of the expression [MISRA2004-10_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports violation if the value of a complex expression of integer type
+is cast to a type that has different signedness or is wider than
+the underlying type of the expression.
+"The term 'complex expression' is defined to mean any expression that is not:
+  - a constant expression
+  - an lvalue (i.e. an object)
+  - the return value of a function
+The term 'underlying type' is defined as describing the type that would
+be obtained from evaluating an expression if it were not for the effects
+of integral promotion."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule prevents behaviours inconsistent with developer expectations.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void myFunction()
+{
+    unsigned int ui1, ui2;
+    signed int si1, si2;
+    unsigned short us1, us2;
+    double d;
+	
+    ui1 = (unsigned int)(si1 + si2); /* Violation - cast from signed to unsigned type */
+    si1 = (signed int)(ui1 / ui2);   /* Violation - cast from unsigned to signed type */
+    ui1 = (unsigned int)(us1 - us2); /* Violation - cast from narrower to wider type */
+    d = (double)(ui1 * ui2);         /* Violation - cast from integer to floating type */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void myFunction()
+{
+    unsigned int ui1, ui2;
+    signed int si1, si2;
+    unsigned short us1, us2;
+    double d;
+	
+    ui1 = (unsigned int)si1 + (unsigned int)si2; /* OK */
+    si1 = (signed int)ui1 / (signed int)ui2;     /* OK */
+    ui1 = (unsigned int)us1 - (unsigned int)us2; /* OK */
+    d = (double)ui1 * (double)ui2;               /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 10
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-7
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-8
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-9
+
+</PRE>
+</BODY>
+</HTML>

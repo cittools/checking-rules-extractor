@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Evaluation order of an expression is implementation dependent
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Evaluation order of an expression is implementation dependent [MISRA-046_c-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The value of an expression shall be the same under
+any order of evaluation that the standard permits.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo46c(){
+    int array[3] = {0};
+    int iVar = 1;
+    array[iVar++] = iVar;	/* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo46c(){
+    int array[3] = {0};
+    int iVar = 1;
+    array[iVar] = iVar + 1;	/* OK */
+    iVar++;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 46
+
+</PRE>
+</BODY>
+</HTML>

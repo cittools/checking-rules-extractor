@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not dereference pointer type expressions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not dereference pointer type expressions [PB-01-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use dereferenced pointer type expressions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves safety and readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* pFun();
+
+void goo()
+{
+    int* ptr;
+    int a, b, c;
+    a = *ptr++;      // Violation
+    b = *pFun();     // Violation
+    c = *(ptr + 5);  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int* pFun();
+
+void goo()
+{
+    int* ptr;
+    int* ptr2;
+    int a, b, c;
+    
+    ptr++;
+    a = *ptr;       // OK
+    
+    ptr2 = pFun();
+    b = *ptr2;      // OK
+    
+    ptr2 = ptr + 5;
+    c = *ptr2;      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Call fclose() on pointer member in destructor if the pointer was used to open a file
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Call fclose() on pointer member in destructor if the pointer was used to open a file [MRM-42-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule reports a violation message when pointer member was used to open
+a file in constructor and the file is not closed in destructor.
+See also: MRM-33
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevention of resource leaks, especially in error cases.
+Releasing resources in a destructor provides a convenient means of resource
+management, especially in regards to exceptional cases. Moreover, if it is
+possible that a resource could be leaked, then that resource should be wrapped
+in a class whose destructor automatically cleans up the resource.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+using namespace std;
+
+class File_ptr
+{ 
+	public:
+		File_ptr (const char *n, const char * a) 
+		{ 
+			p = fopen(n,a); 
+		}
+		
+		
+		~File_ptr ()                  // Violation
+		{
+		}
+
+	private:
+		FILE *p;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+using namespace std;
+
+class File_ptr
+{ 
+	public:
+		File_ptr (const char *n, const char * a) 
+		{ 
+			p = fopen(n,a); 
+		}
+		
+		
+		~File_ptr ()            // OK
+		{
+			if (p)
+			{
+				fclose(p);
+			}
+		}
+
+	private:
+		FILE *p;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.10 Classes, AV Rule 79
+
+</PRE>
+</BODY>
+</HTML>

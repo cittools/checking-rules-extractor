@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+File with extension '.c' may not include other files with extension '.c'
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+File with extension '.c' may not include other files with extension '.c' [PFO-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+.c or .C files (implementation files) are intended to be
+compiled on their own, and not included in other files.
+This is a well accepted physical organization model for 
+C and C++ code. 
+
+Many build environments are set up
+to automatically compile every .c file. If in addition a .c
+file is included in another .c file, this will result in 
+link errors.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves maintainability and readability of code, as 
+well as prevents build errors.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+//file.c
+#include "file2.c"  // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+1. Compile each .c file separately and link them.
+2. Develop a convention for naming implementation files
+to be included that does not use .c or .C extensions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All classes should contain the copy constructor or appropriate comment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All classes should contain the copy constructor or appropriate comment [MRM-05-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Ensure that your class provides sensible copying, or none at all.
+ The choices are:
+ - If copying doesn't make sense for your type, disable copy construction by
+   declaring copy constructor as private unimplemented function
+ - If copy construction is warranted, but correct copying behaviour differs from
+   what the compiler-generated version will do, then write the function yourself
+   and make it non-private
+ - If copying make sense and the default behaviour is correct, use the compiler
+   generated version with an explicit comment, so that readers of your code
+   will know that you didn't miss one of the other two options by accident"
+Comment should contain string "copy constructor" which is checked insensitive.
+See also: CODSTA-CPP-19, MRM-04, MRM-38, MRM-40, MRM-48, OOP-27, OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using compiler-generated copy constructor by accident.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A   // Violation
+{
+};
+
+class B   // Violation
+{
+};
+
+class C : public B   // Violation
+{
+};
+
+class D   // Violation
+{
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A              // OK
+{
+public:
+    A(const A&amp; a){}
+};
+
+class B              // OK
+{
+private:
+	// copying disabled
+	B(const B&amp; b);
+};
+
+class C : public B   // OK
+{
+	// copying disabled
+	// private copy constructor in a base class
+};
+
+class D              // OK
+{
+	// class uses compiler-generated copy constructor
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Construction, Destruction, and Copying", Rule 53
+
+</PRE>
+</BODY>
+</HTML>

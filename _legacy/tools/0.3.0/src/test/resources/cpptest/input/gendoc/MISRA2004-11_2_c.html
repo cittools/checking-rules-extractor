@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Conversions shall not be performed between a pointer to object and any type other than an integral type, another pointer to object type or a pointer to void
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Conversions shall not be performed between a pointer to object and any type other than an integral type, another pointer to object type or a pointer to void [MISRA2004-11_2_c-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A pointer to object can be only converted to or from:
+a) an integral type
+b) another pointer to object type
+c) a pointer to void
+
+This rule is a complementary rule to rule MISRA2004-11_2 and reports
+a violation message if illegal conversions between function return
+type and type of returned expression is found.
+See also: MISRA2004-11_2, MISRA2004-11_2_b
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined conversions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int (*FunctionPointer)(void);
+struct A;
+
+int* someFunction(FunctionPointer funct_ptr, int flag)
+{
+   struct A *incomplete_type_ptr;
+
+   if(flag)
+   {
+      return incomplete_type_ptr;  /* Violation - conversion between
+                                      pointer to object and pointer
+                                      to incomplete type */
+   }else{
+       return funct_ptr;           /* Violation - conversion between
+                                      pointer to object and pointer
+                                      to function type  */
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not perform illegal conversions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 11
+
+</PRE>
+</BODY>
+</HTML>

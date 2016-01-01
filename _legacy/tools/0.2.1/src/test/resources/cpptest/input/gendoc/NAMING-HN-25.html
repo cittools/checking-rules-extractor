@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for long int types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for long int types [NAMING-HN-25-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For long int variables and parameters use "li" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long int g_limyVar;                                 // Violation
+long int g_MyVariable;                              // Violation
+static const long int g_skMyVariable = 0;           // Violation
+class B {
+    long int m_MyVariable;                          // Violation
+    static const long int m_skMyVariable;           // Violation
+    void foo( long int MyParam ) {                  // Violation
+        long int MyVariable;                        // Violation
+        static const long int skMyVariable = 0;     // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+long int g_liMyVar;                                 // OK
+long int g_liMyVariable;                            // OK
+static const long int g_skliMyVariable = 0;         // OK
+class A {
+    long int m_liMyVariable;                        // OK
+    static const long int m_skliMyVariable;         // OK
+    void foo( long int liMyParam ) {                // OK
+        long int liMyVariable;                      // OK
+        static const long int skliMyVariable = 0;   // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

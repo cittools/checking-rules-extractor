@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for long int pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for long int pointer, array, or reference types [NAMING-HN-28-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For long int pointer, array, or reference 
+variables and parameters use "li" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long int* g_plimyVar;                                 // Violation
+long int* g_pMyVariable;                              // Violation
+static const long int* g_spkMyVariable;               // Violation
+class B {
+    long int* m_pMyVariable;                          // Violation
+    static const long int* m_spkMyVariable;           // Violation
+    void foo( long int* pMyParam ) {                  // Violation
+        long int* pMyVariable;                        // Violation
+        static const long int* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+long int* g_pliMyVar;                                 // OK
+long int* g_pliMyVariable;                            // OK
+static const long int* g_spkliMyVariable;             // OK
+class A {
+    long int* m_pliMyVariable;                        // OK
+    static const long int* m_spkliMyVariable;         // OK
+    void foo( long int* pliMyParam ) {                // OK
+        long int* pliMyVariable;                      // OK
+        static const long int* spkliMyVariable;       // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

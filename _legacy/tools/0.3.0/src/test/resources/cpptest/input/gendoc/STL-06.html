@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Instead of anonymous istream_iterator objects use istream_iterator names when used as function parameters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Instead of anonymous istream_iterator objects use istream_iterator names when used as function parameters [STL-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Be alert for C++'s most vexing parse."
+Instead of anonymous istream_iterator objects use istream_iterator names 
+when used as function parameters. A universal rule in C++, says that 
+pretty much anything that can be parsed as a function declaration will be.
+To prevent ambiguous code the best solution is to step back from the
+trendy use of anonymous istream_iterator objects in data's declaration
+and simply give those iterators names.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves maintainability and prevents writing ambiguous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;iterator&gt;
+#include &lt;fstream&gt;
+
+using namespace std;
+
+void foo()
+{
+    ifstream dataFile("ints.dat");
+	
+    list&lt;int&gt; data2(istream_iterator&lt;int&gt;(dataFile),  // Violation
+	                istream_iterator&lt;int&gt;()); 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;iterator&gt;
+#include &lt;fstream&gt;
+
+using namespace std;
+
+void foo()
+{
+    ifstream dataFile(" ints.dat");
+    istream_iterator&lt;int&gt; dataBegin(dataFile);
+    istream_iterator&lt;int&gt; dataEnd;
+				 
+    list&lt;int&gt; data(dataBegin,dataEnd);     // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 1, item 6
+
+</PRE>
+</BODY>
+</HTML>

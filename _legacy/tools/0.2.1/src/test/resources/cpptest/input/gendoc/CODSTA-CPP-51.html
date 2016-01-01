@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not define inline functions in source files
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not define inline functions in source files [CODSTA-CPP-51-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not define inline functions in source files - inline functions 
+must be defined identically in every translation unit they are used. 
+Therefore, inline functions should be defined only in the header
+or .i files.
+
+
+Exceptions:
+
+Static inline functions and inline functions defined in anonymous namespace
+are permitted.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps to prevent unpredictable behaviour of program.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+inline int foo( ) {     // Violation
+    return 10;
+}
+
+class LocalClass {
+public:
+    int bar( ) {        // Violation
+        return 20;
+    }
+};
+
+int test( ) {
+    LocalClass lc;
+    return foo() + lc.bar();
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+static inline int foo( ) {  // OK
+    return 10;
+}
+
+namespace {
+    class LocalClass {
+    public:
+        int bar( ) {        // OK
+            return 20;
+        }
+    };
+}
+
+int test( ) {
+    LocalClass lc;
+    return foo() + lc.bar();
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Stroustroup C++ Programming Language 3rd Edition. 9.2, p199.
+
+</PRE>
+</BODY>
+</HTML>

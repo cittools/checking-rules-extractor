@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The macro offsetof, in library stddef.h, shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The macro offsetof, in library stddef.h, shall not be used [JSF-18-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use of this macro can lead to undefined behaviour 
+when the types of the operands are incompatible or
+when bit fields are used."
+Rule reports a violation message if the offsetof
+macro is used and the file includes any of the 
+following headers: stddef.h, stddef, or cstddef.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// Violation - The macro offsetof shall not be used. Macro is in line: [10]
+#include &lt;stddef.h&gt;
+
+struct S {
+    int x, y, z;
+    char buffer[ 128 ];
+};
+
+int main( ) {
+    int i = offsetof( struct S, buffer );
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use offsetof.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. Origin: Misra Guidelines - Rule 120
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.5 Libraries, AV Rule 18
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 18, Rule 18-2-1
+
+</PRE>
+</BODY>
+</HTML>

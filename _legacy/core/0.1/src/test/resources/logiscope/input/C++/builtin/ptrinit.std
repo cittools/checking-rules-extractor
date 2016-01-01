@@ -1,0 +1,26 @@
+.NAME Pointer initialization
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each auto variable that is explicitly declared as a pointer (using *), 
+must be initialized when declared.
+
+Example:
+--------
+
+// write
+int* y=&x;
+...
+
+// do not write
+int *y ; 
+*y=&x ;
+...
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

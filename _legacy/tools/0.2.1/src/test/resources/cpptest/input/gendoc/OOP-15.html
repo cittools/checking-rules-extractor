@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't change default arguments of virtual functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't change default arguments of virtual functions [OOP-15-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When overriding a virtual function, preserve substitutability;in particular,
+observe the function's pre- and post-conditions in the base class.
+Don't change default arguments of virtual functions. Prefer explicitly
+redeclaring overrides as virtual. Beware of hiding overloads in the base class."
+See also: TEMPL-06, OOP-17
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents misinterpretation which value is passed as default.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A 
+{
+    public: 
+        virtual void foo( float x = 1 );
+};
+
+class B:public A
+{
+    void foo( float x = 2);  // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+    public: 
+        virtual void foo( float x = 1 );
+};
+
+class B:public A
+{
+    void foo( float x = 1);  // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 38
+
+</PRE>
+</BODY>
+</HTML>

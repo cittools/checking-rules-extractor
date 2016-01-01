@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use reserve to avoid unnecessary reallocations
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use reserve to avoid unnecessary reallocations [STL-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use reserve to avoid unnecessary reallocations. The reserve member function
+allows you to minimize the number of reallocations that must be performed,
+thus avoiding the costs of real location and 50 iterator/pointer/reference
+invalidation."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency, correctness and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+void foo()
+{
+    vector&lt;int&gt; v;
+    for (int i = 1; i &lt;= 1000; ++i) v.push_back(i); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+void foo()
+{
+    vector&lt;int&gt; v;
+    v.reserve(1000);
+    for (int i = 1; i &lt;= 1000; ++i) v.push_back(i); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 2, item 14
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for bool pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for bool pointer, array, or reference types [NAMING-HN-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For bool pointer, array, or reference variables and parameters use "b" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+bool* g_pbmyVar;                                  // Violation
+bool* g_pMyVariable;                              // Violation
+static const bool* g_spkMyVariable;               // Violation
+class A {
+    bool* m_pMyVariable;                          // Violation
+    static const bool* m_spkMyVariable;           // Violation
+    void foo( bool* pMyParam ) {                  // Violation
+        bool* pMyVariable;                        // Violation
+        static const bool* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+bool* g_pbMyVar;                                  // OK
+bool* g_pbMyVariable;                             // OK
+static const bool* g_spkbMyVariable;              // OK
+class A {
+    bool* m_pbMyVariable;                         // OK
+    static const bool* m_spkbMyVariable;          // OK
+    void foo( bool* pbMyParam ) {                 // OK
+        bool* pbMyVariable;                       // OK
+        static const bool* spkbMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

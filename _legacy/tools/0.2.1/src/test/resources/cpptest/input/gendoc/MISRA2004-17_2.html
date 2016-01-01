@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Pointer arithmetic shall only be applied to pointers that address an array or array element
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Pointer arithmetic shall only be applied to pointers that address an array or array element [MISRA2004-17_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Subtraction of pointers only gives well-defined results if the two pointers 
+point (or at least behave as if they point) into the same array object."
+Drawbacks: For more complex code rule may not be able to check if there is 
+applied pointer arithmetic to pointers that address an array or array element.
+For such cases the rule may report false positives.
+For example:
+void foo( ) { 
+    int a[10], i;
+    int* p1,* p2,* p3,* p4,* p5; 
+
+    p1 = a; i = p1 - a;    // OK
+    p2 = p1;i = p2 - a;    // OK
+    p3 = p2;i = p3 - a;    // OK
+    p4 = p3;i = p4 - a;    // Violation - false positive
+    p5 = p4;i = p5 - a;    // Violation - false positive
+}
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int a[] ) {
+    int* p1 = 0;
+    int* p2;
+    int* p3 = a;
+    int i;
+
+    i = p1 - p2;   // Violation
+    i = p2 - a;    // Violation
+    i = p3 - a;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not apply pointer subtraction to pointers that address elements 
+of different arrays.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 17
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-17
+
+</PRE>
+</BODY>
+</HTML>

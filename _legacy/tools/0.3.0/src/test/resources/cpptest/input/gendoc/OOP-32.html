@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never redefine an inherited nonvirtual function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never redefine an inherited nonvirtual function [OOP-32-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Nonvirtual functions are statically bound. In essence, a nonvirtual 
+function will hide its corresponding base class version. Hence a single 
+derived class object may behave either as a base class object or as a 
+derived class object depending on the way in which it was accessed - either 
+through a base class pointer/reference or a derived class pointer/reference.
+To avoid this duality in behavior, nonvirtual functions should never be 
+redefined."
+See also: OOP-33
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+This rule reports violations for functions without template parameter.
+Rule OOP-33 reports violations for functions with template parameter.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents misinterpretation which function is called.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base
+{
+    public:
+        void func1(void) {};
+        void func2(int x) {};
+        void func3(int x) {};
+};
+
+class Derived: public Base
+{
+    public:
+        void func1(void) {};    // Violation
+        void func2(int x) {};   // Violation
+        void func3(int x) {};   // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base
+{
+    public:
+        virtual void func1(void) {};
+        virtual void func2(int x) {};
+        void func3(int x) {};
+};
+
+class Derived: public Base
+{
+    public:
+        virtual void func1(void) {};    // OK
+        virtual void func2(int x) {};   // OK
+        void func3_renamed(int x) {};   // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 6, Item 36
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Inheritance and Object-Oriented Design", Item 37
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 94
+
+</PRE>
+</BODY>
+</HTML>

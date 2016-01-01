@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid dynamic_casts
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid dynamic_casts [CODSTA-CPP-35-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"This example also demonstrates that if you find yourself wanting to cast,
+it's a sign that you could be approaching things the wrong way. This is 
+especially the case if your want is for dynamic_cast. Avoid casts whenever
+practical, especially dynamic_casts in performance-sensitive code."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule disallows usage of dynamic_casts.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"(...) Many implementations of dynamic_cast can be quite slow. For example,
+at least one common implementation is based in part on string comparisons
+of class names. If you're performing a dynamic_cast on an object in 
+a single-inheritance hierarchy four levels deep, each dynamic_cast under
+such an implementation could cost you up to four calls to strcmp to compare
+class names."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;boost/tr1/memory.hpp&gt;
+
+using namespace std;
+
+class Window {
+    virtual void onResize( );
+};
+
+class SpecialWindow : public Window {
+public:
+    virtual void onResize( );
+    void blink( );
+};
+
+void foo( )
+{
+    typedef vector&lt;std::tr1::shared_ptr&lt;Window&gt; &gt; VPW;
+    VPW winPtrs;
+
+    for (VPW::iterator iter = winPtrs.begin( ); iter != winPtrs.end( ); ++iter)
+    {
+        if (SpecialWindow *psw = 
+                dynamic_cast&lt;SpecialWindow*&gt;( iter-&gt;get( ) ))      // Violation
+        psw-&gt;blink( );
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;boost/tr1/memory.hpp&gt;
+
+using namespace std;
+
+class Window {
+    virtual void onResize( );
+};
+
+class SpecialWindow : public Window {
+public:
+    virtual void onResize( );
+    void blink( );
+};
+
+void foo( ) {
+    typedef std::vector&lt;std::tr1::shared_ptr&lt;SpecialWindow&gt; &gt; VPSW;
+    VPSW winPtrs;
+    for (VPSW::iterator iter = 
+             winPtrs.begin( ); iter != winPtrs.end( );++iter)
+        (*iter)-&gt;blink( );                                                // OK 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 5, Item 27
+
+</PRE>
+</BODY>
+</HTML>

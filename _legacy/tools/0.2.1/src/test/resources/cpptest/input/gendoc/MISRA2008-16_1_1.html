@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The defined preprocessor operator shall only be used in one of the two standard forms
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The defined preprocessor operator shall only be used in one of the two standard forms [MISRA2008-16_1_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The only two permissible forms for the defined preprocessor operator are:
+  - defined ( identifier )
+  - defined identifier
+Any other form leads to undefined behaviour.
+Generation of the token defined during expansion of a #if or #elif 
+preprocessing directive also leads to undefined behaviour and shall be avoided,"
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#if defined X &gt; Y             // Violation
+#endif
+#define DEFINED defined  
+#if DEFINED(X)              // Violation  
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#if defined X            // OK
+#endif
+#if defined (X)          // OK
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-1-1
+
+</PRE>
+</BODY>
+</HTML>

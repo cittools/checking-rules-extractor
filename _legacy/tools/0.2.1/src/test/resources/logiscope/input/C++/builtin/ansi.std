@@ -1,0 +1,41 @@
+.NAME Function declaration in ANSI syntax
+
+.DESCRIPTION
+
+Definition:
+-----------
+The function declaration and definition shall be written in ANSI syntax.
+
+It is possible to select two options among the following:
+
+- name: the parameters shall be named, and their type indicated, 
+        in function declaration, 
+- void: empty parameter lists are forbidden. 
+
+Parameters: 
+-----------
+A list of character strings composed of the chosen options listed above.
+
+Example:
+--------
+
+// do not write
+f(a, b)
+int a;
+char *b
+{ ...}
+
+f(int, char*);
+f();
+
+// write
+f(int a, char *b)
+{ ...}
+f(int a, char *b);
+f(void); 
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

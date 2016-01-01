@@ -1,0 +1,18 @@
+.NAME References of Classes
+
+.DESCRIPTION
+
+Definition:
+-----------
+Every parameters of class type shall be passed by reference.
+(This rule relates to Item 22 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Improves the efficency of the code.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not allocate resources in function argument list because the order of evaluation of a function's parameters is undefined
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not allocate resources in function argument list because the order of evaluation of a function's parameters is undefined [MRM-01-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Make sure that all resources are owned by objects. Perform every explicit 
+resource allocation (e.g., new) in its own statement that immediately gives 
+the allocated resource to a manager object (e.g., shared_ptr); otherwise, you
+can leak resources because the order of evaluation of a function's parameters
+is undefined."
+Rule disallows resource allocation in argument list of function.
+See also: MRM-02
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Such code is unsafe. The C++ standard gives compilers great leeway to reorder
+the two expressions building the function's two arguments. In particular, the
+compiler can interleave execution of the two expressions: Memory allocation 
+(by calling operator new) could be done first for both object, followed by 
+attempts to call the two constructors. That very nicely sets things up for 
+a leak because if one of the constructor calls throws an exception, then the 
+other object's memory will never be released."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;boost/shared_ptr.hpp&gt;
+using boost::shared_ptr;
+
+void Fun2( shared_ptr&lt;int&gt; p1, shared_ptr&lt;int&gt; p2 );
+
+void goo( ) {
+    Fun2( shared_ptr&lt;int&gt;( new int ), shared_ptr&lt;int&gt;( new int ) ); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;boost/shared_ptr.hpp&gt;
+using boost::shared_ptr;
+
+void Fun2( shared_ptr&lt;int&gt; p1, shared_ptr&lt;int&gt; p2 );
+
+void goo( ) {
+    shared_ptr&lt;int&gt; p1( new int );
+    shared_ptr&lt;int&gt; p2( new int );
+    Fun2( p1, p2 );      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Design Style", Rule 13
+
+</PRE>
+</BODY>
+</HTML>

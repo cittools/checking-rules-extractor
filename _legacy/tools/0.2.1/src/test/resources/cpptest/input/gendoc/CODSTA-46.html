@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use positive logic rather than negative logic whenever practical
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use positive logic rather than negative logic whenever practical [CODSTA-46-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Use positive logic rather than negative logic whenever practical.
+The use of many logical nots "!" within an expression makes
+the expression difficult to understand and maintain.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Makes source code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int *j) 
+{
+    if(j!=0){     // Violation
+        (*j)++;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int *j) 
+{
+    if(j==0){
+    } else {     // OK
+        (*j)++; 
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards G-13
+
+</PRE>
+</BODY>
+</HTML>

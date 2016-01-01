@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Bit fields shall only be defined to be of type unsigned int or signed int
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Bit fields shall only be defined to be of type unsigned int or signed int [MISRA2004-6_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Bit fields shall only be defined to be of type unsigned int or signed int.
+Using int is implementation-defined because bit fields of type int can be 
+either signed or unsigned. The use of enum, short or char types for bit fields 
+is not allowed because the behaviour is undefined."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents implementation-defined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum Enum { E1, E2};
+struct Struct 
+{
+    unsigned char  f1:2;  /* Violation */
+    unsigned short f2:2;  /* Violation */
+    unsigned long  f3:2;  /* Violation */
+    enum Enum      f4:2;  /* Violation */
+    int            f5:2;  /* Violation */
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct Struct
+{
+    unsigned int f1:2;  /* OK */
+    unsigned int f2:2;  /* OK */
+    unsigned int f3:2;  /* OK */
+    signed int   f4:2;  /* OK */
+    signed int   f5:2;  /* OK */
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 6
+
+2. Origin: Misra Guidelines - Rule 111
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.20 Unions and Bit Fields, AV Rule 154
+
+</PRE>
+</BODY>
+</HTML>

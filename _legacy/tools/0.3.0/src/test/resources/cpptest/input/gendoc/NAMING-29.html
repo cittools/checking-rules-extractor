@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Append names of non-scalar typedefs with "_t"
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Append names of non-scalar typedefs with "_t" [NAMING-29-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+All non-scalar typedefs shall be appended with an underscore followed 
+by a lowercase 't'. This convention will make the recognition of user 
+defined data types easier and support future maintenance efforts.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Makes code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class MyClass {
+   int count;
+};
+typedef MyClass My;	// Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class MyClass {
+	int count;
+};
+typedef MyClass My_t;	// OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Motorola Coding Standards R-17
+
+</PRE>
+</BODY>
+</HTML>

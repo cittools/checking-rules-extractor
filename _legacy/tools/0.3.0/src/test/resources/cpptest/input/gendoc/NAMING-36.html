@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Names of parameters in declaration and definition should be identical
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Names of parameters in declaration and definition should be identical [NAMING-36-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If identifiers are given for any of the parameters, then the identifiers used 
+in declaration and definition should be identical."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1( int a, int b );           // Violation
+void foo1( int x, int y ) {}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1( int a, int b );           // OK
+void foo1( int a, int b ) {}
+
+void foo2( int, int );                // OK
+void foo2( int x, int y ) {}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 9 Function - 9.3 Formal Arguments - Rule 32
+
+</PRE>
+</BODY>
+</HTML>

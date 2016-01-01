@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Beware of functions which may return the current directory or the windows directory
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Beware of functions which may return the current directory or the windows directory [SECURITY-23-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+GetTempPath() may return the current directory or the windows directory.
+Be careful what you place in these locations. 
+Important files may be overwritten,
+and trojan DLL's may be dropped in these locations. 
+Rule checks the usage of GetTempPath(),GetTempPathA(), GetTempPathW() functions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents attempts of overwriting important files,
+and DLL's trojan dropping by an attacker.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;afx.h&gt;
+
+const char * virus_temp_sig = "XXX";
+
+char * get_temp_file()
+
+{
+	char wintemp_path[1024];
+	char *temp_path=new char[1024];
+	
+	GetTempPath(1024,wintemp_path); // Violation
+	GetTempFileName(wintemp_path,virus_temp_sig,1234,temp_path);
+	return temp_path;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use the GetTempPath(),GetTempPathA(), GetTempPathW() functions,
+or at least be careful what you place in locations returned by them.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0062.xml">https://buildsecurityin.us-cert.gov/portal/article/knowledge/coding_rules/RULE_0062.xml</A> 
+
+</PRE>
+</BODY>
+</HTML>

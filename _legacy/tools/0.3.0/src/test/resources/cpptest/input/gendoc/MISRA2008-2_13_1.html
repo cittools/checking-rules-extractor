@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Only those escape sequences that are defined in ISO/IEC 14882:2003 shall be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Only those escape sequences that are defined in ISO/IEC 14882:2003 shall be used [MISRA2008-2_13_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Only those escape sequences that are defined in ISO/IEC 14882:2003
+shall be used. The defined escape sequences (ISO/IEC 14882:2003) are:
+\n, \t, \v, \b, \r, \f, \a, \\, \?, \', \", \&lt;Octal Number&gt;,
+\x&lt;Hexadecimal Number&gt;"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The use of an undefined escape sequence leads to undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+void foo( ) {
+    printf("ABCD\u1111");     // Violation
+    printf("abcd\hgf");       // Violation
+    printf("\k");             // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use escape sequences not defined in the ISO/IEC 14882:2003 standard.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 2, Rule 2-13-1
+
+</PRE>
+</BODY>
+</HTML>

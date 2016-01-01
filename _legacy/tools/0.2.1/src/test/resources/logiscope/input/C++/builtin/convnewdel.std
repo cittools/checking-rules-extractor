@@ -1,0 +1,30 @@
+.NAME Adhere to Convention when Writing "new" and "delete" Operators
+
+.DESCRIPTION
+
+Definition:
+-----------
+Convention for writing operator new:
+- the type of the return value shall be void *;
+- the type of the first parameter shall be size_t.
+
+Convention for writing operator delete:
+- the type of the return value shall be void;
+- the type of  the first parameter shall be void *;
+- in case of a second parameter, its type shall be size_t. 
+(This rule relates to Item 8 in "Effective C++", Scott Meyers).
+
+Parameters:
+-----------
+The string "static" which, if used, indicates that operator new and operator
+delete shall be declared static.
+
+Justification:
+--------------
+Keeps the consistency with the default new and delete operators.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

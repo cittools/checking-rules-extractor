@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+When an array is declared with external linkage, its size shall be stated explicitly or defined implicitly by initialisation
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+When an array is declared with external linkage, its size shall be stated explicitly or defined implicitly by initialisation [MISRA2004-8_12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When an array is declared with external linkage, its size shall be stated 
+explicitly or defined implicitly by initialisation.
+Although it is possible to declare an array of incomplete type and access 
+its elements, it is safer to do so when the size of the array may be 
+explicitly determined."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour and improves safety of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+extern int array2[ ]; /* Violation */
+extern int array1[ ]; /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int array2[ ] = { 0, 10, 15 };  /* OK */
+extern int array1[ 10 ];        /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 8
+
+2. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 3, Rule 3-1-3
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Suspicious use of semicolon
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Suspicious use of semicolon [CODSTA-57-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message if the semicolon constituting
+the statement body is placed in the same line as closing ")"
+parentheses (e.g., if(e); or while(e); or for(e;e;e);.
+
+
+Exceptions:
+
+Rule does not report a violation message if the ';' is placed
+in different line than the ')'.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents accidental termination of 'if', 'while', or 'for' constructs.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int param)
+{
+  if (param);   // Violation
+  
+  for(;;)  ;    // Violation  
+
+  while(param); // Violation
+  {
+  
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int param)
+{
+  if (param)     // OK
+  {
+  }
+  
+  for(;;)        // OK
+  ; 
+
+  while(param)   // OK
+  {
+  
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A virtual function shall only be overridden by a pure virtual function if it is itself declared as pure virtual
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A virtual function shall only be overridden by a pure virtual function if it is itself declared as pure virtual [MISRA2008-10_3_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A virtual function shall only be overridden by a pure
+virtual function if it is itself declared as pure virtual."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents writing a code contrary to developer expectations.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+    public:
+    virtual void foo ( );
+};
+class B: public A
+{
+    public:
+    virtual void foo ( ) = 0; // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not override non-pure virtual functions by pure virtual functions 
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 10, Rule 10-3-3
+
+</PRE>
+</BODY>
+</HTML>

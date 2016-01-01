@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The validity of values passed to library functions shall be checked
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The validity of values passed to library functions shall be checked [MISRA2004-20_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Many functions in the standard C libraries are not required by the 
+ISO standard to check the validity of parameters passed to them.
+Even where checking is required by the standard, or where
+compiler writers claim to check parameters, 
+there is no guarantee that adequate checking will take place.
+Therefore the programmer shall provide appropriate checks 
+of input values for all library functions"
+Implementation of this rule will search function body 
+prior to the library function call to see if its arguments 
+are used within conditional statement conditions,
+or passed to any functions.
+Such use will be considered as argument validation 
+necessary to comply with this rule.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents writing error prone code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void* memcpy( void *, void*, int n );
+
+void test( void *v ) {}
+
+int getSomeIntValue( ) {
+    return 0;
+}
+
+void foo( void *p, void *q ) {
+    int n;
+    memcpy( p, q, n );    /* Violation - complain about p, q and n */ 
+    test( q );            /* consider it a validation of q */
+    memcpy( p, q, n );    /* Violation - complain about p, and n */ 
+    switch( n ) {         /* consider it a validation of n */
+    case 0:
+        break;
+    }
+    if (p == 0) {}        /* consider it a validation of p */
+    memcpy( p, q, getSomeIntValue( ) );  /* Violation - complain only about getSomeIntValue call */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void* memcpy( void *, void*, int n );
+
+void test( void *v ) {}
+
+int getSomeIntValue( ) {
+    return 0;
+}
+
+void foo( void *p, void *q ) {
+    int n;
+    test( p );            /* consider it a validation of p */
+    test( q );            /* consider it a validation of q */
+    if (n != 0) {
+        memcpy( p, q, n );    /* OK */ 
+        memcpy( p, q, n );    /* OK */ 
+    }
+    switch( n ) {         /* consider it a validation of n */
+    case 0:
+        break;
+    }
+    if (p == 0) {}        /* consider it a validation of p */
+    n = getSomeIntValue( );
+    if (n != 0) {
+        memcpy( p, q, n );    /* OK */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. Origin: Misra Guidelines - Rule 117
+
+</PRE>
+</BODY>
+</HTML>

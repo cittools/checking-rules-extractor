@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare member variables in the descending size order
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare member variables in the descending size order [OPT-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+There are, of course, issues that may not be readily 
+apparent at the beginning of the project. For instance, 
+in 64-bit applications, longs and pointers are larger, which 
+also increases the size of a structure containing these 
+data types. The layout of your structure elements 
+determines how much space is required by the structure. 
+For example, a structure that contains an integer followed 
+by a long in a 32-bit application is 8 bytes, but a 64-bit 
+application adds 4 bytes of padding to the first element 
+of the structure to align the second element on its natural 
+boundary.
+To minimize this padding, reorder the data structure elements 
+from largest to smallest. However, if data structure elements 
+are accessed as byte streams, you need to change your 
+code logic to adjust for the new order of elements in 
+the data structure.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Following dependencies assumed for this rule:
+bool &lt; long
+float &lt; double &lt; long double
+char &lt; short &lt; int &lt; reference, pointer, long
+arrays and objects should be at the beginning of the list of members
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps to minimize memory consumption
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+    char c;
+    short int si;       // Violation
+    int i;                // Violation
+    void* p;           // Violation
+    long int li;        // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {                        // OK
+    long int li;
+    void* p;
+    int i;
+    short int si;
+    char c;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.ddj.com/184406427">http://www.ddj.com/184406427</A>
+
+</PRE>
+</BODY>
+</HTML>

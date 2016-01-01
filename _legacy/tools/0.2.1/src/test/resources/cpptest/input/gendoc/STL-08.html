@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never create containers of auto_ptrs
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never create containers of auto_ptrs [STL-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Never create containers of auto_ptrs. Alas, many programmers use STL
+platforms that fail to reject COAPs  (container of auto_ptrs). Alas even more,
+many programmers see in COAPs the chimera of a simple, straightforward,
+efficient solution to the resource leaks that often accompany containers of
+pointers. As a result, many programmers are tempted to use COAPs, even though
+it's not supposed to be possible to create them."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency, correctness and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;boost/shared_ptr.hpp&gt;
+
+using namespace std;
+
+void foo( ) {
+    typedef auto_ptr&lt;int&gt; q; 
+    vector&lt;q&gt; v;                // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;boost/shared_ptr.hpp&gt;
+
+using namespace std;
+
+void foo( ) {
+    typedef boost::shared_ptr&lt;int&gt; w; 
+    vector&lt;w&gt; v;               // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 1, item 8
+
+</PRE>
+</BODY>
+</HTML>

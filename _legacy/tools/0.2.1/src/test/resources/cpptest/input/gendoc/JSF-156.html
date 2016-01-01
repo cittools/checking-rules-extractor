@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All the members of a structure (or union) shall be named
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All the members of a structure (or union) shall be named [JSF-156-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+All the members of a structure (or union) shall be named.
+
+The "bit field" facility in C is one of the most poorly defined parts
+of the language. There are two main uses to which bit-fields could be put:
+
+1) To access individual bits, or group of bits, in larger data-types,
+in conjunction with unions (see rule 110).
+2) To allow flags or other short-length data to be packed to save storage space
+
+The packing together of short-length data to economise on storage is the only
+acceptable use of bit fields envisaged in this document.
+
+Provided the elements of the structure are only ever accessed by their name,
+the programmer needs to make no assumptions about the way the bit fields
+are stored within the structure.
+
+This rules checks that all declared bit fields have names.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using unaccessible data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef signed int t;
+typedef int plain;
+struct tag {
+    unsigned t:4;
+    const t:5;   /* Violation */
+    plain r:5;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Name all the members of a structure (or union).
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin:  Misra Guidelines rule 113
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule 156
+
+</PRE>
+</BODY>
+</HTML>

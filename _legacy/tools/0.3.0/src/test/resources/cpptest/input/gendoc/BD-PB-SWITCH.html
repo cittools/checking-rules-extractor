@@ -1,0 +1,174 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid switch with unreachable branches
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid switch with unreachable branches [BD-PB-SWITCH-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule identifies unreachable switch branches-- one kind of dead code.
+Dead code often appears in the course of refactorings and during code evolution--
+especially when code is edited by multiple developers. Often, the existence of unreachable
+switch branches indicates logical errors in the code (as shown below in the example section).
+
+How it works:
+the rule inspects switch statements present in the code and determines whether they 
+have unreachable branches or not. For this, it examines all the code paths that lead 
+to the switch statement. If it finds that on all these paths some of the case branches 
+of the switch statement are unreachable, it reports a violation.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+In order to make good use of this rule, the check box "Do not report violations
+when cause cannot be shown" in BugDetective configuration pane must be unchecked.
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+It is possible to specify whether or not to report a violation for an unreachable 
+default branch which is not declared explicitly. This is controlled by the check box 
+labeled "Report about unreachable default branch even if it's not explicitly defined".
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+Helps you keep code in good shape and weed out logical inconsistencies as soon as they
+appear.
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example which triggers a violation ("Do not report
+violations when cause cannot be shown" check box in BugDetective
+configuration pane must be unchecked):
+
+#include "stdio.h"
+
+enum Figures {
+	SPHERE,
+	CIRCLE,
+	CUBE,
+	SQUARE,
+	HIMESPHERE
+};
+
+static void guessFigure(int round, int volumetric)
+{
+    int figure;
+    if (round &amp;&amp; volumetric) {
+        figure = SPHERE;
+    } else if (round &amp;&amp; !volumetric) {
+        figure = CIRCLE; 
+    } else if (!round &amp;&amp; volumetric) {
+        figure = CUBE;
+    } else {
+    	figure = SQUARE;
+    }
+    
+    switch (figure) {
+		case SQUARE:
+			printf("This is a sphere");
+			break;
+        case HIMESPHERE:
+			printf("This is a hemispere");
+            break;
+        case CIRCLE:
+			printf("This is a circle");
+            break;
+        case CUBE:
+			printf("This is a cube");
+            break;
+		default:
+			printf("This is a square");
+			break;
+	}
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+To repair the code, remove the unreachable branch:
+
+#include "stdio.h"
+
+enum Figures {
+	SPHERE,
+	CIRCLE,
+	CUBE,
+	SQUARE,
+	HIMESPHERE
+};
+
+static void guessFigure(int round, int volumetric)
+{
+    int figure;
+    if (round &amp;&amp; volumetric) {
+        figure = SPHERE;
+    } else if (round &amp;&amp; !volumetric) {
+        figure = CIRCLE; 
+    } else if (!round &amp;&amp; volumetric) {
+        figure = CUBE;
+    } else {
+    	figure = SQUARE;
+    }
+    
+    switch (figure) {
+		case SQUARE:
+			printf("This is a sphere");
+			break;
+        case CIRCLE:
+			printf("This is a circle");
+            break;
+        case CUBE:
+			printf("This is a cube");
+            break;
+		default:
+			printf("This is a square");
+			break;
+	}
+}
+
+</PRE>
+</BODY>
+</HTML>

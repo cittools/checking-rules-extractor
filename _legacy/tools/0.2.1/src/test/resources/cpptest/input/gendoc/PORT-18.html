@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't define i64 or L suffixes directly
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't define i64 or L suffixes directly [PORT-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you use i64 or L suffixes directly. Do not use i64 or
+L suffixes directly because it generally does not work well. Try using Macros
+for compatibility.
+See also: PORT-18
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Using i64 or L suffixes directly generally does not work well.
+Try using Macros for compatibility.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define V1 0x000000000000000cL          // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifdef _WIN64
+   #define CONST3264(a) (a##i64)
+ #else
+   #define CONST3264(a) (a##L)
+#endif
+
+#define V1 CONST3264(0x000000000000000c) // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

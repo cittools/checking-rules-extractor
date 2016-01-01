@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Always provide new[] and delete[] together
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Always provide new[] and delete[] together [MRM-29-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Every class-specific overload void* operator new(params) must be accompanied 
+by a corresponding overload void operator delete(void*, params), where params 
+is a list of extra parameter types (of which first is always std::size_t). 
+The same goes for the array forms new[] and delete[]."
+See also: MRM-28
+
+
+Exceptions:
+
+"The in-place form of operator new
+    void* T:: operator new(size_t,void* p) {return p;}
+does not need the corresponding operator delete because there is no real 
+allocation going on."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents spurious memory leaks in cases when overloaded new operator fails.
+Ensures that corresponding new and delete operators share the same assumptions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+class MemoryPool;
+
+class A {               // Violation
+public:
+    A( ) {}
+    static void* operator new[]( size_t size, MemoryPool&amp; pool );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+class MemoryPool;
+
+class A {               // OK
+public:
+    A( ) {}
+    static void* operator new[]( size_t size, MemoryPool&amp; pool );
+    static void operator delete[]( void*, size_t, MemoryPool&amp; );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 45
+
+</PRE>
+</BODY>
+</HTML>

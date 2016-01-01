@@ -1,0 +1,30 @@
+.NAME Initialize for loop counter in for head
+
+.DESCRIPTION
+
+Definition:
+-----------
+Loop counters (in for loops) are to be initialized in the initialization 
+statement within the loop.
+The loop counter is determined by the third element of the loop head, 
+which is most frequently used to increment the loop counter.
+In all the following examples, i is the loop counter. 
+
+Justification:
+--------------
+This way the loop counter is certain to have been initialized, and with a value 
+that is visible alongside with the loop condition and increment. The loop is 
+easier to understand and to control.
+
+Example:
+--------
+for (int i = 0; i &lt; 10; i++) ... // ok 
+for (int i; i &lt; 10; i++) ...     // violation
+for (int j = 0; j &lt; 10; i++) ... // violation
+for (int j = 10; i &lt; j; i++) ... // violation
+for (int j = 1; i &lt; funct(j); i+=j) ... // violation
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+When calling swap, employ a using declaration for std::swap, then call swap without namespace qualification
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+When calling swap, employ a using declaration for std::swap, then call swap without namespace qualification [STL-40-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When calling swap, employ a using declaration for std::swap,
+then call swap without namespace qualification."
+See also: STL-41, STL-42
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"When compilers see the call to swap, they search for the right swap to
+invoke. C++'s name lookup rules ensure that this will find any T-specific swap
+at global scope or in the same namespace as the type T. If no T-specific swap
+exists,compilers will use swap in std, thanks to the using declaration that
+makes std::swap visible in this function. Even then, however, compilers will
+prefer a T-specific specialization of std::swap over the general template, so
+if std::swap has been specialized for T, the specialized version will be used.
+The one thing you want to be careful of is to not qualify the call, because
+that will affect how C++ determines the function to invoke. For example, if
+you were to write the call to swap this way,
+
+std::swap(obj1, obj2); // the wrong way to call swap
+
+you'd force compilers to consider only the swap in std, thus eliminating 
+the possibility of getting a more appropriate T-specific version defined
+elsewhere."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+template&lt;typename T&gt;
+void doSomething( T&amp; obj1, T&amp; obj2 ) {
+    std::swap( obj1, obj2 );              // Violation
+}
+
+void foo( int a, int b ) {
+    doSomething&lt;int&gt;( a, b );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+template&lt;typename T&gt;
+void doSomething( T&amp; obj1, T&amp; obj2 ) {
+    using std::swap;
+    swap( obj1, obj2 );                   // OK
+}
+
+void foo( int a, int b ) {
+    doSomething&lt;int&gt;( a, b );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 4, Item 25
+
+</PRE>
+</BODY>
+</HTML>

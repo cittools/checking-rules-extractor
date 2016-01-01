@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Usage of functions prone to race is not allowed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Usage of functions prone to race is not allowed [SECURITY-19-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A "race condition" can be defined as "Anomalous behavior due to unexpected 
+critical dependence on the relative timing of events". 
+Race conditions generally involve one or more processes accessing 
+a shared resource (such a file or variable), 
+where this multiple access has not been properly controlled.
+Rule checks if the following functions are used:
+access, creat, pathconf, opendir, dirname, scandir, 
+fopen, lstat, stat, open, rename, remove, lexecve, 
+execl, execlp, execle, execv, execvp, freopen, mktemp, 
+link, unlink
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents anomalous behavior of race conditions functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#ifdef __GNUC__
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#else
+#include &lt;io.h&gt;
+#endif
+
+void foo( ) {
+    access( "path", 0 );    // Violation
+    unlink( "/pathname" );  // Violation
+    mktemp( "template" );   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Remove usage of prone to race functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-race.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-race.html</A>
+
+</PRE>
+</BODY>
+</HTML>

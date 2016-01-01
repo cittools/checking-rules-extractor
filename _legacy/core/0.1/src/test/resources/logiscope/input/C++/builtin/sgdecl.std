@@ -1,0 +1,24 @@
+.NAME A single variable per declaration
+
+.DESCRIPTION
+
+Definition:
+-----------
+Variable declarations have the following formalism: type variable_name. 
+It is forbidden to have more than one variable for the same type declarator.
+
+Example:
+--------
+
+// write
+int width;
+int length;
+
+// do not write
+int width, length; 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Reserved identifiers, macros and functions in the standard library shall not be defined, redefined or undefined
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Reserved identifiers, macros and functions in the standard library shall not be defined, redefined or undefined [MISRA2008-17_0_1_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"It is generally bad practice to #undef a macro which is defined in the 
+standard library. It is also bad practice to #define a macro name which
+is a C reserved identifier or C keyword which is the name of any macro,
+object or function in the standard library.
+For example, there are some specific reserved words and function names 
+which are known to give rise to undefined behaviour if they are redefined or
+undefined, including defined, _ _LINE_ _, _ _FILE_ _, _ _DATE_ _, _ _TIME_ _, 
+_ _STDC_ _, errno and assert. Generally, all identifiers that begin with
+the underscore character are reserved."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define __A 1	    // Violation
+#define assert 1   // Violation
+#undef __AA         // Violation
+#undef assert       // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not #define or #undef reserved identifiers
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 20
+
+2. Origin: Misra Guidelines - Rule 114
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 17, Rule 17-0-1
+
+</PRE>
+</BODY>
+</HTML>

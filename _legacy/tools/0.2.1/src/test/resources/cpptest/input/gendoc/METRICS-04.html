@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Number of function calls within function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Number of function calls within function [METRICS-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule measures the number of calls to methods
+and system functions within function.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule reports a violation if the number of function calls 
+within the function exceeds 10.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo {
+public:
+   void func1() {}	// OK
+   void func2() {	// Violation
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+      func1();
+  }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit the number of function calls within the function to 10.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, Novemeber/December, 1999, pg. 32.
+
+</PRE>
+</BODY>
+</HTML>

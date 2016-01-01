@@ -1,0 +1,18 @@
+.NAME Return "*this" in Assignment Operators
+
+.DESCRIPTION
+
+Definition:
+-----------
+Inside the definition of an assignment operator, the return value shall be "*this".
+(This rule relates to Item 15 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Allows chains of assignments and type conversions.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,79 @@
+.NAME all variables must be initialized before being used.
+
+.DESCRIPTION
+
+Definition:
+-----------
+All variables must be initialized before they are used, without aking into account
+on the default value attributed by the compiler.
+Global variables, parameters of a function in the function body, and data fields 
+of a class in its methods are considered to be initialized.
+
+Justification:
+--------------
+Not all compilers give the same default values. Unexpected behaviour can be 
+avoided with better control over variable values.
+
+Limitations:
+------------
+This rule is not violated in the following cases: 
+If an array, a struct or a class are used, they will be consided initialized as 
+soon as a part of them has been initialized.
+For example: 
+    int a[2];
+    int b[2] = {6, 7};
+    int h;
+    
+    a[0] = b[0]; // ok
+    h = a[1];    // ok
+
+
+    struct 
+    {
+	int i;
+	int j;
+    } e, f;
+
+    e.i = 0;
+    g = e;      // ok
+
+
+This rule is violated in the following cases where initialization is uncertain:
+
+Using a variable in a function call is considered as "being used": if it is not 
+initialized, the rule will be violated. 
+This will occur whatever the use of the function, even initializing the variable.
+
+In cases including a conditional initialization, the rule is violated even though 
+the variable may well be initialized. 
+
+    int i, j, k;
+    j = func();
+    if (j)
+       i = 0;
+    k = i;       // violation 
+
+This applies even when there is an else branch, for example in
+    int i, j, k;
+    j = func();
+    if (j)
+       i = 0;
+    else 
+       i = 5;
+    k = i;      // violation       
+where initialization is certain. 
+
+In the case of a loop, for example
+int j, k;
+for (int i=0; i&lt;glob; i++)
+   {
+   j=func(i);
+   }
+k = j;    // violation 
+where glob is a global variable, depending on the value of glob, j will have been 
+initialized or not: the rule is violated, even if the loop condition occurs or not.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

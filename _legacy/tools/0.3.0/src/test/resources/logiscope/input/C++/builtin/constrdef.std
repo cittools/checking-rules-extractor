@@ -1,0 +1,16 @@
+.NAME Default constructor
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each class must contain its default constructor explicitly.
+Justification:
+--------------
+Makes sure the author has thought about the way to initialize an object of the class.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

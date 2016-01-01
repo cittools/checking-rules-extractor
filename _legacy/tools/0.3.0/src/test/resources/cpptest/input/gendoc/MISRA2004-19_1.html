@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+#include statements in a file should only be preceded by other preprocessor directives or comments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+#include statements in a file should only be preceded by other preprocessor directives or comments [MISRA2004-19_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"All the #include statements in a particular code file should be grouped
+together near the head of the file. The rule states that the only items which
+may precede a #include in a file are other preprocessor directives or comments."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+It is important to prevent the situation of executable code coming before
+a #include directive, otherwise there is danger that the code may try to use 
+items which would be defined in the header.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo();
+int g;
+#include "test.h"  // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include "test.h"  // OK
+void foo();
+int g;
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-0-1
+
+3. Origin: Misra Guidelines - Rule 87
+
+</PRE>
+</BODY>
+</HTML>

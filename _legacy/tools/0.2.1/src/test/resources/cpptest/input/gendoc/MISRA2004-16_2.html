@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Functions shall not call themselves, either directly or indirectly
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Functions shall not call themselves, either directly or indirectly [MISRA2004-16_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Functions shall not call themselves, either directly or indirectly.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule checks for direct recursion and simple indirect 
+recursion (up to three nested function calls).
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using recursive functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int l ) {
+    int x = l;
+
+    if (l &gt; 0) {
+        foo( x - 1 );   /* Violation */
+    }
+}
+
+void foo3( int );
+
+void foo4( int i ) {
+    if (i &gt; 0) {
+        foo3( (int) i / 2 );  /* Violation */
+    }
+}
+
+void foo3( int i ) {
+    int x = i;
+
+    if (i &gt; 0) {
+        foo4( x - i );  /* Violation */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1( ) {          /* OK */
+    /* empty */
+}
+
+void foo2( );           /* OK */
+
+void foo3( ) {
+    foo2( );            /* OK */
+}
+
+void foo7( int );
+
+void foo4( int i ) {
+    foo7( i );    /* OK - cannot check complex indirect recursion */
+}
+
+void foo5( int i ) {
+    foo4( i );    /* OK - cannot check complex indirect recursion */
+}
+
+void foo6( int i ) {
+    foo5( i );    /* OK - cannot check complex indirect recursion */
+}
+
+void foo7( int i ) {
+    if (i &gt; 0) {
+        foo6( i - 5 );  /* OK - cannot check complex indirect recursion */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 16
+
+2. Origin: Misra Guidelines - Rule 70
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 119
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-5-4
+
+5. The Power of Ten - Rules for Developing Safety Critical Code.
+   Rule 1
+
+6. HIS Source Code Metriken, version 1.3.1
+Metrik "ap_cg_cycle"
+
+</PRE>
+</BODY>
+</HTML>

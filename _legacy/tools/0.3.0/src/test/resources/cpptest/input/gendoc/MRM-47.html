@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Classes containing at least one non-static member variable should declare the assignment operator or contain appropriate comment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Classes containing at least one non-static member variable should declare the assignment operator or contain appropriate comment [MRM-47-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Classes which have at least one non-static member variable should contain
+the assignment operator. When behavior of the compiler-generated version
+of operator is correct it should be commented. Comment should contain
+string "assignment operator" which is checked insensitive.
+See also: CODSTA-CPP-02, CODSTA-CPP-21, CODSTA-CPP-24, MRM-04, MRM-37,
+MRM-40, MRM-48, OOP-27, OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using compiler-generated assignment operator by accident.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A   // Violation
+{
+private:
+    int* ptr;
+};
+
+class B   // Violation
+{
+private:
+    int var;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A   // OK
+{
+public:
+	A&amp; operator=(const A&amp;);
+private:
+    int* ptr;
+};
+
+class B   // OK
+{
+	// Assignment operator is compiler generated
+private:
+    int var;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

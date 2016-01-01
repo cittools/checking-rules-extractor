@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid passing address of auto variable into caller space
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid passing address of auto variable into caller space [MRM-44-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation if the address of an auto variable is passed via
+assignment into a location specified by the caller to the function.  
+
+For example:
+    void foo( int *a[] )
+    {
+       int r;
+       a[1] = &amp;r;
+    }
+
+In above example the address of a local variable 'r' is being passed into
+the second element of the array passed to the function 'foo'.
+Such situation may cause that upon return the array will contain a pointer
+to a variable which lifetime is over.
+See also: MISRA2004-17_6, OOP-12, OOP-36, MRM-24
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents possibility of erroneous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int *a[])
+{
+    int n;
+    a[1] = &amp;n;    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not pass address of an auto variable into caller space.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Floating-point expressions shall not be tested for equality or inequality
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Floating-point expressions shall not be tested for equality or inequality [MISRA2004-13_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Floating-point expressions shall not be tested for equality or inequality.
+The recommended method for achieving deterministic floating-point comparisons is
+to write a library that implements the comparison operations. The library should
+take into account the floating-point granularity (FLT_EPSILON) and the magnitude
+of the numbers being compared."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule does not detect indirect tests of equality and inequality which are equally
+problematic and are also forbidden by Misra standard:
+
+if ( ( x &lt;= y ) &amp;&amp; ( x &gt;= y ) )
+{
+  /* ... */ 
+}
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The inherent nature of floating-point types is such that comparisons of 
+equality will often not evaluate to true even when they are expected to. In 
+addition the behaviour of such a comparison cannot be predicted before 
+execution, and may well vary from one implementation to another. "
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() {
+    float x, y;
+
+    if (x == y);      // Violation
+    if (x == 0.0f);   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( float epsilon ) {
+    float x, y;
+
+    if (x - epsilon &lt;= y &amp;&amp; y &lt;= x + epsilon);  // OK
+    if (-epsilon &lt;= x &amp;&amp; x &lt;= epsilon);         // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 13
+
+2. Misra Guidelines - Rule 50
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.25 Expressions, AV Rule 202
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-2-2
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for char types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for char types [NAMING-HN-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For char variables and parameters use "c" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+char g_cmyVar;                                  // Violation
+char g_MyVariable;                              // Violation
+static const char g_skMyVariable = 'a';         // Violation
+class A {
+    char m_MyVariable;                          // Violation
+    static const char m_skMyVariable = 'a';     // Violation
+    void foo( char MyParam ) {                  // Violation
+        char MyVariable;                        // Violation
+        static const char skMyVariable = 'a';   // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+char g_cMyVar;                                  // OK
+char g_cMyVariable;                             // OK
+static const char g_skcMyVariable = 'a';        // OK
+class A {
+    char m_cMyVariable;                         // OK
+    static const char m_skcMyVariable = 'a';    // OK
+    void foo( char cMyParam ) {                 // OK
+        char cMyVariable;                       // OK
+        static const char skcMyVariable = 'a';  // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

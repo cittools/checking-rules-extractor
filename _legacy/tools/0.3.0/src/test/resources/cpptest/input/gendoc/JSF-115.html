@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a function return error information, then that error information should be tested
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a function return error information, then that error information should be tested [JSF-115-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If a function return error information, 
+then that error information should be tested.
+
+This rule assumes that error information is returned as function
+return value, any time return type is integer, 
+and it triggers when this return value is not somehow used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents errornous code and improves quality.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo1();
+void foo2();
+int foo3();
+
+void moo() {
+    int i;
+     
+    foo1();           /* violation */  
+    if (1) {
+	foo1();       /* violation */
+    }
+    
+    if (foo1()) {
+	foo3();       /* violation */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo1();
+void foo2();
+int foo3();
+
+void moo() {
+    int i;
+    i=foo1();         /* OK */
+    
+    (void)foo1();     /* OK */  
+    foo2();           /* OK */
+    if (foo1()!=0) {} /* OK */    
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 86
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 115
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-3-2 
+
+</PRE>
+</BODY>
+</HTML>

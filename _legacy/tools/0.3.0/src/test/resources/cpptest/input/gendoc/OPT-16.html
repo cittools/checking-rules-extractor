@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Global function containing recursion, loops or virtual function call should not be inlined
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Global function containing recursion, loops or virtual function call should not be inlined [OPT-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Limit most inlining to small, frequently called functions."
+Rule disallows inlining for:
+global functions with loops, global recursion functions, 
+global functions with virtual function calls.
+See also: OPT-17, OPT-18
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This facilitates debugging and binary upgradeability,
+minimizes potential code bloat, and maximizes the chances
+of greater program speed."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+inline void sampleFunction( int p ) {  // Violation
+    for (int i = 0; i &lt; 10; i++) {
+        p = p + i;
+    }
+}
+
+inline void otherFunction( ) {       // Violation
+    otherFunction( );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void sampleFunction( int p ) {       // OK 
+    for (int i = 0; i &lt; 10; i++) {
+        p = p + i;
+    }
+}
+
+void otherFunction( ) {              // OK
+    otherFunction( );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 5, Item 30
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Classes and Functions: Implementation", Item 33
+
+</PRE>
+</BODY>
+</HTML>

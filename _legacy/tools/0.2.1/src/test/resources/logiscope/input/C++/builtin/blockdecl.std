@@ -1,0 +1,17 @@
+.NAME Declarations in blocks
+
+.DESCRIPTION
+
+Definition:
+-----------
+Declarations must appear at the beginning of blocks.
+
+Justification:
+--------------
+Makes the code easier to read.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

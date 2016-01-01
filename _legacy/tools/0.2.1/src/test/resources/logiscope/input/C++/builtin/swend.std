@@ -1,0 +1,19 @@
+.NAME End of cases in a switch
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each case in a switch shall end with break , continue , goto , return or exit. 
+Several consecutive case labels are allowed.
+
+Parameters:
+-----------
+The character string "nolast", which, if used, allows not to have one of these 
+instructions in the last case.
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

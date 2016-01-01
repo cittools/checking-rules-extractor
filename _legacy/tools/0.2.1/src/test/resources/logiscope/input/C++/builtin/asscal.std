@@ -1,0 +1,18 @@
+.NAME Assignement in function calls
+
+.DESCRIPTION
+
+Definition:
+-----------
+Assignment operators ( = , += , -=, *=, /= , %= , >>= , <<=, &=, |=, ^= , ++ , - - ) 
+must not be used inside function calls (the evaluation order is not guaranteed).
+
+Justification:
+--------------
+Removes ambiguity about the evaluation order.
+
+
+.SEVERITY Required
+
+.COMMAND builtin
+

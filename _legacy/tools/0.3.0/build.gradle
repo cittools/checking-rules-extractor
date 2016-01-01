@@ -1,0 +1,22 @@
+apply plugin:'java'
+apply plugin:'eclipse'
+
+version = "0.3.0"
+
+archivesBaseName = 'extractor-default-tools'
+
+
+repositories {
+	flatDir dirs: file("../Extractor/build/libs")
+	mavenRepo urls:'http://repo.orchestra/repo'
+}
+
+dependencies {
+	compile "aopalliance:aopalliance:1.0", 
+	        "com.google.code.guice:guice:2.0.1",
+	        "org.jvnet.hudson.dtkit:dtkit-metrics-util:0.9",
+			":extractor:0.1"
+    testCompile "junit:junit:4.8.2"
+}
+
+

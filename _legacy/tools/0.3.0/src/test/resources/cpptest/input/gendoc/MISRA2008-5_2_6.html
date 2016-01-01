@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A cast shall not convert a pointer to a function to any other pointer type, including a pointer to function type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A cast shall not convert a pointer to a function to any other pointer type, including a pointer to function type [MISRA2008-5_2_6-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Conversion of a function pointer to a non-function pointer type causes
+undefined behaviour. Undefined behaviour may arise if a function call is
+made using a pointer that is the result of a function pointer conversion."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void f ( int )
+{
+    reinterpret_cast&lt; void (*)( ) &gt;( &amp;f ); // Violation
+    reinterpret_cast&lt; void * &gt;( &amp;f );      // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast a pointer to a function to any other pointer type.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-2-6
+
+</PRE>
+</BODY>
+</HTML>

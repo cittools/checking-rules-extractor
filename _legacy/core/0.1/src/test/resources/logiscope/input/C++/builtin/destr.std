@@ -1,0 +1,13 @@
+.NAME Destructor
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each class must contain its destructor explicitly.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

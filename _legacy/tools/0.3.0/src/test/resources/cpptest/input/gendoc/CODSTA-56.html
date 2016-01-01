@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All 'case' and 'default' labels of switch statement should have an explicit break or a return statement, or 'fall through' comment
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All 'case' and 'default' labels of switch statement should have an explicit break or a return statement, or 'fall through' comment [CODSTA-56-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+All 'case' and 'default' labels of switch statement should have
+an explicit break or a return statement, or 'fall through' comment
+containing "fall through" phrase (checked case insensitive).
+
+
+Exceptions:
+
+Rule does not report a violation message for empty labels.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unpredictable program behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void MyFunction(int i) 
+{
+    switch(i) 
+    {
+    case 1:           // Violation
+        i++;
+    case 2:
+    case 3:           // Violation
+        i++;
+        /* wrong comment */
+
+    default:          // Violation
+        ;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void MyFunction(int i) 
+{
+    switch(i) 
+    {
+    case 1:            // OK
+        i++;
+        break;             
+    case 2:            // OK - empty label
+    case 3:            // OK
+        i++;
+        /* fall through */
+    default:           // OK
+        break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Every switch statement shall have at least one case-clause
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Every switch statement shall have at least one case-clause [MISRA2008-6_4_8-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Every switch statement shall have at least one case.
+See also: OPT-21, OPT-22, CODSTA-54
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Provides maintainability of 'switch' statement.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int i) 
+{
+    switch(i)      /* Violation */ 
+    {
+        default:
+            ;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int i) 
+{
+    switch(i)      /* OK */ 
+    {
+      case 1:
+      {
+      }
+      default:
+            ;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 15
+
+2. Origin: Misra Guidelines - Rule 64
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-3
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-8
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be no unreachable code after 'return', 'break', 'continue', and 'goto' statements
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be no unreachable code after 'return', 'break', 'continue', and 'goto' statements [MISRA2004-14_1_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"This rule refers to code which cannot under any circumstances be reached, 
+and which can be identified as such at compile-time. Code that can be reached 
+but may never be executed is excluded from the rule (e.g. defensive programming 
+code). A portion of code is unreachable if there is no control flow path from 
+the relevant entry point to that code."
+Rule detects unreachable code after 'return',
+'break', 'continue',and 'goto' statements.
+See also: MISRA2004-14_1_a, MISRA2004-14_1_c, MISRA2004-14_1_d, MISRA2004-14_1_e,
+MISRA2004-14_1_f, MISRA2004-14_1_g
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps avoid useless code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo();
+int myFunction(int i, int j)
+{
+    switch(i)
+    {
+        case 1:
+            j = 5;
+            break;    // Violation
+            foo();
+        case 2:
+            j = 3;
+            return j; // Violation
+            foo();
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo();
+int myFunction(int i, int j)
+{
+    switch(i)
+    {
+        case 1:
+            j = 5;
+            break;    // OK
+        case 2:
+            j = 3;
+            return j; // OK
+    }
+    foo();
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 14
+
+2. Origin: Misra Guidelines - Rule 52
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 186
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-1
+
+</PRE>
+</BODY>
+</HTML>

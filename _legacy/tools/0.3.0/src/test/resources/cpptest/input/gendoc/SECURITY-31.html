@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use 'cuserid' function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use 'cuserid' function [SECURITY-31-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Method 'cuserid' should not be used for logging purposes. 
+This function is poorly defined e.g. 
+different parameters are used under different systems.
+It is not portable.
+'curseid' may cause buffer overflow when the buffer is too small.
+It is recommended to use 'getpwuid(geteuid())' instead.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using insecure 'cuserid' function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+
+void foo( ) {
+    char * w = cuserid( "userName" );    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;sys/types.h&gt;
+#include &lt;pwd.h&gt;
+
+void foo( ) {
+    struct passwd * t =  getpwuid( 12 );  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

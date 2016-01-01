@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid casts down the inheritance hierarchy
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid casts down the inheritance hierarchy [JSF-178-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid casts down the inheritance hierarchy.
+This rule detects casts from a base class pointer to a subclass pointer.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Allowing casts down the inheritance hierarchy leads to maintenance problems, 
+and downcasting from a base class is always illegal.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {};
+class Derived: public Base {};
+class Derived2: public Derived {};
+
+void foo() {
+    Base *pb;
+    Derived *pd = (Derived *) pb;       // Violation
+
+    Base *pb2;
+    Derived *pd2 = (Derived2 *) pb2;    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {};
+void foo() {
+    Base *pb0;
+    Base *pd0 = (Base *) pb0;           // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Inheritance and Object-Oriented Design", Item 39
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 178
+
+</PRE>
+</BODY>
+</HTML>

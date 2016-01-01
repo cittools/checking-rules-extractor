@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for char pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for char pointer, array, or reference types [NAMING-HN-09-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For char pointer, array, or reference variables and parameters use "c" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+char* g_pcmyVar;                                  // Violation
+char* g_pMyVariable;                              // Violation
+static const char* g_spkMyVariable;               // Violation
+class B {
+    char* m_pMyVariable;                          // Violation
+    static const char* m_spkMyVariable;           // Violation
+    void foo( char* pMyParam ) {                  // Violation
+        char* pMyVariable;                        // Violation
+        static const char* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+char* g_pcMyVar;                                  // OK
+char* g_pcMyVariable;                             // OK
+static const char* g_spkcMyVariable;              // OK
+class A {
+    char* m_pcMyVariable;                         // OK
+    static const char* m_spkcMyVariable;          // OK
+    void foo( char* pcMyParam ) {                 // OK
+        char* pcMyVariable;                       // OK
+        static const char* spkcMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

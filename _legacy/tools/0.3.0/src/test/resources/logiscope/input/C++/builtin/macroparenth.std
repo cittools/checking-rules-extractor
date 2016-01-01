@@ -1,0 +1,23 @@
+.NAME Parenthesis macro definitions
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each occurrence of the macro parameters shall be enclosed in parenthesis 
+(or brackets) inside the macro definition.
+
+Example:
+--------
+
+// do not write
+#define GET_NAME(obj,ind) obj->name[ind]
+
+// write
+#define GET_NAME(obj,ind) (obj)->name[ind] 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Implementation files in C++ always have the file name extension ".cc"
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Implementation files in C++ always have the file name extension ".cc" [NAMING-38-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Implementation files in C++ should always have the file name extension ".cc"."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes source code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file.cpp    // Violation
+
+void foo( ) {
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file.cc      // OK
+
+void foo( ) {
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#4.1">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#4.1</A>
+From: 4 Source Code in Files - 4.1 Structure of Code - Rule 2
+
+</PRE>
+</BODY>
+</HTML>

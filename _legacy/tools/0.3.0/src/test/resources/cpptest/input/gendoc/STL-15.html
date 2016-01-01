@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Specify comparison types for associative containers of pointers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Specify comparison types for associative containers of pointers [STL-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Specify comparison types for associative containers of pointers. (...) anytime
+you create a standard associative container of pointers, you must bear in mind
+that the container will be sorted by the values of the pointers. Only rarely
+will this be what you want, so you'll almost always want to create your own
+functor class to serve as a comparison type."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;set&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+void myFunction()
+{
+    set&lt;string*&gt; ssp;                     // Violation
+    ssp.insert(new string("Anteater"));
+    ssp.insert(new string("Wombat"));
+    ssp.insert(new string("Lemur"));
+    ssp.insert(new string("Penguin"));
+ 
+    set&lt;string*&gt;::const_iterator i;
+    
+    for (i = ssp.begin(); i != ssp.end();++i)
+        cout &lt;&lt; *i &lt;&lt; endl;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;set&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+struct StringPtrLess:
+public binary_function&lt;const string*, const string*,bool&gt; 
+{ 
+    bool operator()(const string *ps1, const string *ps2) const
+    {
+        return *ps1 &lt; *ps2;
+    }
+};
+
+void myFunction2()
+{
+    set&lt;string*, StringPtrLess&gt; ssp;       // OK
+    ssp.insert(new string("Anteater"));
+    ssp.insert(new string("Wombat"));
+    ssp.insert(new string("Lemur"));
+    ssp.insert(new string("Penguin"));
+    
+    set&lt;string*, StringPtrLess&gt;::const_iterator i;
+    
+    for (i = ssp.begin(); i != ssp.end();++i)
+        cout &lt;&lt; **i &lt;&lt; endl;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 3, item 20
+
+</PRE>
+</BODY>
+</HTML>

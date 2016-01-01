@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All loops must have a fixed upper or lower bound
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All loops must have a fixed upper or lower bound [CODSTA-83-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The absence of recursion and the presence of loop bounds prevents runaway
+code. This rule does not, of course, apply to iterations that are meant to be
+non-terminating (e.g., in a process scheduler)." 
+"One way to support the rule is to add an explicit upper-bound to all loops that
+have a variable number of iterations (e.g., code that traverses a linked list).
+When the upperbound is exceeded an assertion failure is triggered,
+and the function containing the failing iteration returns an error."
+The rule reports a violation if:
+- a loop is non-infinite and does not contain in condition single relational
+  expression 'variable &lt; FB',  'variable &lt;= FB', 'FB &gt; variable',
+  'FB &gt;= variable' where FB is a constant or a const variable or parameter.
+- a loop contains proper condition with upper bound but does not contain
+  incrementation of checked variable 'variable++', '++variable',
+  'variable += PV', 'variable = variable + PV', 'variable = PV + variable' 
+- a loop contains proper condition with lower bound but does not contain 
+  decrementation of checked variable 'variable--', '--variable',
+  'variable -= PV', 'variable = variable - PV'
+  where PV is:
+  - a constant higher than 0,
+  - a const variable with known initializer higher than 0,
+  - parameter/variable/expression of unsigned type.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents writing endless loops.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int p){
+    int i = 0;
+    while(i == 5){  // Violation - no relational operator in condition
+        i = i + 2;
+    }  
+
+    while(i &lt; p){   // Violation - variable is not compared with constant
+        i++;
+    }      
+    
+    while(i &lt; 7){   // Violation - no incrementation of variable inside loop
+        // ...
+    }
+     
+    for(i = 10; i &lt;= 7; i--){ // Violation - no incrementation in loop
+    }
+
+    while(i &gt; 7){   // Violation - no decrementation of variable inside loop
+        // ...
+    }
+     
+    for(i = 10; i &gt;= 7; i++){ // Violation - no decrementation in loop
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(const int p){
+    int i = 0;
+    while(i &lt; 5){             // OK
+        i = i + 2;
+    }  
+
+    while(i &lt; p){             // OK  
+        i++;
+    }    
+
+    while(i &lt; 7){             // OK
+        i++;
+    }
+     
+    for(i = 10; i &lt;= 7; i++){ // OK
+    }
+
+    while(i &gt; 7){             // OK
+        --i;
+    }
+     
+    for(i = 10; i &gt;= 7; i--){ // OK
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 2
+
+</PRE>
+</BODY>
+</HTML>

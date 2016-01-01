@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Eliminate unused parameters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Eliminate unused parameters [OPT-03-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks for unused parameters.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule does not report unused parameters for virtual 
+functions overriding virtual functions in base class.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Eliminating unused parameters improves legibility and increases efficiency.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int Foo(int i, int k) {      // Violation
+    i = 5;
+    return i;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int Bar(int i, int j) {      // OK
+    i += j;
+    return i;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "More Effective C++: 35 New Ways to Improve
+Your Programs and Designs", Addison Wesley, (31 Mar 1996), Item 6
+
+</PRE>
+</BODY>
+</HTML>

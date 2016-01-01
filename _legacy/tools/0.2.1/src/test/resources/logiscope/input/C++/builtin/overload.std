@@ -1,0 +1,18 @@
+.NAME Never overload "&&", "||" and "," operators
+
+.DESCRIPTION
+
+Definition:
+-----------
+"&&", "||" and "," operators must not be overloaded.
+(This rule relates to Item 7 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Makes the code do what most programmers expect.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

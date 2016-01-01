@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use operator ++ or -- in the conditional expression of if, while, or switch
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use operator ++ or -- in the conditional expression of if, while, or switch [CODSTA-33-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Using the operator ++ or -- in the conditional part of if, while or switch can 
+make code difficult-to-read and error-prone.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Makes code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int Foo (int iVar)
+{	
+    if (iVar-- &amp;&amp; iVar&lt;10)  // Violation 
+    {
+        iVar += 10;
+    } 
+    else 
+    {
+        iVar -= 10;
+    }
+    return iVar;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int Foo (int iVar)
+{	
+    if (iVar&lt;10)  // OK
+    {
+        iVar += 10;
+    } 
+    else 
+    {
+        iVar -= 10;
+    }
+    return iVar;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

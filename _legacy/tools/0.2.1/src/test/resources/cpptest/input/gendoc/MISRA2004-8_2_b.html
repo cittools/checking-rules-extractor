@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Whenever an object is declared or defined, its type shall be explicitly stated
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Whenever an object is declared or defined, its type shall be explicitly stated [MISRA2004-8_2_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Whenever an object is declared or defined, 
+its type shall be explicitly stated.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+extern x;  /* Violation - Non-compliant - implicit int type */
+const y;   /* Violation - Non-compliant - implicit int type */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int int16_t;
+extern int16_t x;       /* OK - explicit type */
+const int16_t y;        /* OK - explicit type */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 8
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+You must employ ptr_fun, mem_fun, or mem_fun_ref whenever you pass a function to an STL component
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+You must employ ptr_fun, mem_fun, or mem_fun_ref whenever you pass a function to an STL component [STL-31-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If you get confused about when to use ptr_fun and when not to, consider using
+it every time you pass a function to an STL component. You must employ them
+(mem_fun and mem_fun_ref) whenever you pass a member function to an STL
+component, because, in addition to adding typedefs (which may or may not be 
+necessary), they adapt the calling syntaxes from the ones normally used with 
+member functions to the one used even-where in the STL. If you don't use them 
+when passing member function pointers, your code will never compile."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The objects produced by mem_fun and mem_fun_ref do more than allow STL 
+components to assume that all functions are called using a single syntax. They 
+also provide important typedefs, just like the objects produced by ptr_fun."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+class Widget {
+};
+
+int test(Widget&amp; x) { return 0; };
+
+void myFunction() 
+{
+    vector&lt;Widget&gt; WidgetVector;
+    for_each(WidgetVector.begin(),WidgetVector.end(), test);    // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+class Widget {
+};
+
+int test(Widget&amp; x) { return 0; };
+
+void myFunction() 
+{
+    vector&lt;Widget&gt; WidgetVector;
+    for_each(WidgetVector.begin(), WidgetVector.end(), ptr_fun(test));  // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 6, item 41
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer non-member operators than member ones to support mixed-mode arithmetic
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer non-member operators than member ones to support mixed-mode arithmetic [CODSTA-CPP-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Declare non-member functions when type conversions should apply to all 
+parameters."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Declaration of non-member functions allows compilers to perform implicit type 
+conversions on all arguments and supports mixed mode arithmetic.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class complex {
+    double re, im;
+public:
+    complex( double r, double i ) : re( r ), im( i ) {}
+    complex operator+ ( complex );                        // Violation
+    complex operator+=( complex );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class complex {
+    double re, im;
+public:
+    complex( double r, double i ) : re( r ), im( i ) {}
+    complex&amp; operator+=( complex a );
+};
+
+complex operator+( complex a, complex b ) {        // OK
+    complex r = a;
+    return r += b;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 4, Item 24
+
+</PRE>
+</BODY>
+</HTML>

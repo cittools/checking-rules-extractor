@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Each operand of the ! operator, the logical &amp;&amp; or the logical || operators shall have type bool
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Each operand of the ! operator, the logical &amp;&amp; or the logical || operators shall have type bool [CODSTA-CPP-67-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The use of operands with types other than bool with these operators is
+unlikely to be meaningful (or intended). This rule allows the detection of
+such uses, which often occur because the logical operators (&amp;&amp;, || and !)
+can be easily confused with the bitwise operators (&amp;, | and ~)."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+Rule prevents confusion between logical and bitwise operators.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* examples of incorrect code */
+void foo(int a, int b, int c, int d, int* ptr)
+{
+    if ( 1 &amp;&amp; ( c &lt; d ) ) {}        // Violation
+    if ( ( a &lt; b ) &amp;&amp; ( c + d ) ){} // Violation
+    if ( a || ( c + d ) ) {}        // Violation
+    if ( !ptr ) {}                  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* examples of correct code */
+void foo(int a, int b, int c, int d)
+{
+    if ( ( a &lt; b ) &amp;&amp; ( c &lt; d ) ){}   // OK
+    if ( ( a == b ) || ( c != d ) ){} // OK
+    if ( !false ) {}                  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-3-1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Closing curly brace '}' shall appear on a line by themselves
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Closing curly brace '}' shall appear on a line by themselves [JSF-61-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that curly braces "}" appear on a line by themselves. 
+See also: FORMAT-02, FORMAT-34
+
+
+Exceptions:
+
+Rule does not adhere to enums, initializations and empty blocks.
+enum E {EN1 = 2, EN2 = 1};  // OK
+int array[] = {1,2,3,4,5};  // OK
+class FooBar{};             // OK
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void goo()
+{
+    int a, c;
+    if (c == 0)
+    {
+        a = 2;}   // Violation
+}      
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void goo()
+{
+    int a, c;
+    if (c == 0)
+    {
+        a = 2;
+    }            // OK
+}      
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+from: 6 Style Classes - 6.3 Compound Statements- Rec. 24
+
+</PRE>
+</BODY>
+</HTML>

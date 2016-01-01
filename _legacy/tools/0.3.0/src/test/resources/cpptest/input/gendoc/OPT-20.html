@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Postpone variable definitions as long as possible
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Postpone variable definitions as long as possible [OPT-20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Whenever you define a variable of a type with a constructor or destructor,
+you incur the cost of construction when control reaches the variable's
+definition, and you incur the cost of destruction when the variable goes out
+of scope. There's a cost associated with unused variables, so you want to
+avoid them whenever you can. You're probably thinking that you never define
+unused variables, but you may need to think again. Consider the following
+function:
+
+std::string encryptPassword(const std::string&amp; password)
+{
+   using namespace std;
+   string encrypted;
+   if (password.length() &lt; MinimumPasswordLength) {
+     throw logic_error("Password is too short");
+   }
+   //...  do whatever is necessary to place an
+   return encrypted;
+}
+
+The object encrypted isn't completely unused in this function, 
+but it's unused if an exception is thrown."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class BaseOne {};
+
+int main( ) {
+    int gc = 0;
+    BaseOne one;      // Violation
+    BaseOne two;      // Violation
+    if (gc == 0) {
+        return 0;
+    }
+    one = two;
+    return gc;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class BaseOne {};
+
+int main( ) {
+    int gc = 0;
+    if (gc == 0) {
+        return 0;
+    }
+    BaseOne one;      // OK
+    BaseOne two;      // OK
+    one = two;
+    return gc;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 5, Item 26
+
+</PRE>
+</BODY>
+</HTML>

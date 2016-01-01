@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never use gets()
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never use gets() [SECURITY-16-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Never use gets(). Because it is impossible to tell without knowing the data
+in advance how many characters gets() will read, and because gets() will
+continue to store characters past the end of the buffer, it is extremely
+dangerous to use. It has been used to break computer security. Use fgets()
+instead."
+See also: SECURITY-07,SECURITY-12,SECURITY-13
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of function which may cause buffer overflows.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void main( ) {
+   char line[100];
+
+   printf( "Input a string: " );
+   gets( line );                                     // Violation 
+   printf( "The line entered was: %s\n", line );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void main( ) {
+   char line[100];
+
+   printf( "Input a string: " );
+   fgets( line, 100, stdin );                        // OK
+   printf( "The line entered was: %s\n", line );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Linux Programmer's Manual (3), 
+<A HREF="http://trajano.us.es/clases/lcd/man/man3/ungetc.3.html">http://trajano.us.es/clases/lcd/man/man3/ungetc.3.html</A>
+
+</PRE>
+</BODY>
+</HTML>

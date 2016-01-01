@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Bit fields of signed types shall be at least 2 bits long
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Bit fields of signed types shall be at least 2 bits long [MISRA2004-6_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid using bit fields of signed types which are less than two bits long.
+This rule enforces that all fields of signed types are at least 2 bits long.
+See also: MISRA2004-6_4
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents the potential pitfalls and erroneous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct MyStruct {
+    signed int si01:1;    /* Violation */
+    signed int si02:1;    /* Violation */
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct MyStruct {
+    signed int si01:2;    /* OK */
+    unsigned int si02:1;  /* OK */
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 6
+
+2. Origin: Misra Guidelines - Rule 112
+
+</PRE>
+</BODY>
+</HTML>

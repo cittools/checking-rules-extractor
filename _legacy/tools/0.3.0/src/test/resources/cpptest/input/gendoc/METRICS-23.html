@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid deep nesting
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid deep nesting [METRICS-23-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Excessively long functions and nested code blocks are often 
+caused by failing to give one function one cohesive responsibility,
+and both are usually solved by better refactoring."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves easier code understanding, and maintain, and often needlessly so.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+    void foo( int x ) {
+        if (x &gt; 0) {                    // OK
+            if (x &gt; 1) {                // OK
+                if (x &gt; 2) {            // OK
+                    if (x &gt; 3) {        // OK
+                        if (x &gt; 4) {    // OK
+                            if (x &gt; 5) { // Violation
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use excessive block nesting depth (5 levels)
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Coding Style", Rule 20
+
+</PRE>
+</BODY>
+</HTML>

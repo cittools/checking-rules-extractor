@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A null statement shall only occur on a line by itself, and shall not  have any other text on the same line
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A null statement shall only occur on a line by itself, and shall not  have any other text on the same line [MISRA-054-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Null statements should not normally be deliberately included, but where they 
+are used they shall appear on a line by themselves and not with any other
+text (including comments). Following this rule enables a static checking tool
+to warn of null statements appearing on a line with other text, which would 
+normally indicate a programming error."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule provides readability and clarity of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1()
+{
+    ;        // Violation
+    int a;; // Violation
+    /* Violation */ ;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1()
+{
+    ;        // OK
+    int c
+    ;        // OK
+    for(;;); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 54
+
+
+See also: MISRA2004-14_3
+
+</PRE>
+</BODY>
+</HTML>

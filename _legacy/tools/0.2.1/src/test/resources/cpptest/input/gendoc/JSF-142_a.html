@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All automatic variables shall have been assigned a value before being used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All automatic variables shall have been assigned a value before being used [JSF-142_a-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The intent of this rule is that all variables shall have been written to before
+they are read. This does not necessarily require initialisation at declaration.
+Ideally a static check should be performed for any automatic variables which 
+might be used without having first been assigned a value"
+See also: INIT-06, INIT-10, INIT-14, BD-PB-NOTINIT
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule assumes that local variable might be initialized 
+by passing its non-const pointer to an external function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents reading from uninitialized variables. 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int b;          // Violation      
+    b++; 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int b = 0;     // OK 
+    b++;        
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 4
+
+2. Misra Guidelines - Rule 30
+
+3. Ellemtel Coding Standards
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#11</A>
+   From: 11 Variables - Rule 40
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.16 Initialization, AV Rule 142
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-5-1
+
+</PRE>
+</BODY>
+</HTML>

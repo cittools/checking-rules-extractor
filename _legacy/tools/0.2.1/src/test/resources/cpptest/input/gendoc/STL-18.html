@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer iterator to const iterator, reverse_iterator, and const_reverse_iterator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer iterator to const iterator, reverse_iterator, and const_reverse_iterator [STL-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Prefer iterator to const iterator, reverse_iterator, and
+const_reverse_iterator. Why it often makes sense to prefer iterators to const
+and reverse iterators:
+- Some versions of insert and erase require iterators. If you want to call
+  those functions, you're going to have to produce iterators, const and reverse
+  iterators won't do.
+- It's not possible to implicitly convert a const iterator to an iterator
+- Conversion from a reverse_iterator to an iterator may require iterator
+  adjustment after the conversion.
+
+All these things conspire to make working with containers easiest, most
+efficient, and least likely to harbor subtle bugs if you prefer iterators to
+their const and reverse colleagues.
+
+From the perspective of const correctness (a worthy perspective, to be sure),
+staying away from const_iterators simply to avoid potential implementation
+shortcomings (all of which have workarounds) seems unjustified, but in
+conjunction with the anointed status of iterators in some container member
+functions, it's hard to avoid the practical conclusion that const_iterators
+arc not only less useful than iterators, sometimes they're just not worth the
+trouble."
+
+
+Exceptions:
+
+Const containers.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and portability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+void sampleFunction(const std::vector&lt;int&gt; &amp;o)
+{
+    vector&lt;int&gt; v;
+    
+    typedef vector&lt;int&gt;::const_iterator ConstIter;
+    typedef vector&lt;int&gt;::iterator Iter;
+    
+    ConstIter c_it;
+    c_it= v.begin();                             // Violation  
+    c_it = o.begin();                            
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+void sampleFunction(const std::vector&lt;int&gt; &amp;o)
+{
+    vector&lt;int&gt; v;
+    
+    typedef vector&lt;int&gt;::const_iterator ConstIter;
+    typedef vector&lt;int&gt;::iterator Iter;
+    
+    ConstIter c_it;
+    Iter it = v.begin();                         // OK
+    c_it = o.begin();                            // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 4, item 26
+
+</PRE>
+</BODY>
+</HTML>

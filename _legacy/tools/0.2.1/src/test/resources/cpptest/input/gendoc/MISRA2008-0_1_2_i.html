@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A project shall not contain infeasible paths
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A project shall not contain infeasible paths [MISRA2008-0_1_2_i-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation on an 'if' statement nested in an 'if' statement
+if the result of expression in nested 'if' condition is always true
+or always false.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule does not report violation if the variable used in both 'if' condition
+is volatile or modified between statements.
+Rule assumes that the variable passed to function could be modified.
+ 
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"If a Boolean operator yields a result that can be proven to be always "true"
+or always "false", it is highly likely that there is a programming error."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int a, int b)
+{
+  if(2 &lt;= b)
+    if(b &gt; 1) /* Violation */
+      a++;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int a, int b)
+{
+  if(2 &lt;= b)
+    if(b &gt; 5) /* OK */
+      a++;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 13
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-2
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The value of an expression shall be the same under any order of evaluation that the standard permits
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The value of an expression shall be the same under any order of evaluation that the standard permits [MISRA2008-5_0_1_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The order of evaluation of function arguments is unspecified. This means that
+if arguments contain side effects then the order in which side effects take 
+place is unspecified. A function call can give different results depending 
+on which of the function's arguments is evaluated first.
+By side effect we understand accessing a volatile object, modifying an object
+or calling a function that does any of those operations.
+
+Rule checks calls of functions that have at least two arguments.
+A violation is reported if
+  * a volatile object is read or modified, or
+  * a non-volatile object is modified
+during evaluation of a function argument and the same object is read or
+modified during evaluation of function's other argument.
+
+
+Exceptions:
+
+Only one level of function calls is checked.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents writing source code which might produce different results
+between compilers.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Transmogrify(int,int);
+int Bump(int&amp; x) {return ++x;}
+void foo()
+{
+    int count = 5;
+    Transmogrify(Bump(count),Bump(count)); // Violation
+    Transmogrify(count++,count);           // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void Transmogrify(int,int);
+int Bump(int&amp; x) {return ++x;}
+void foo()
+{
+    int count = 5;
+    int temp1 = Bump(count);
+    Transmogrify(temp1,Bump(count)); // OK
+    Transmogrify(count,count);       // OK
+    count++;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 46
+
+3. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+    (C) 2005 Pearson Education, Inc.
+   Chapter: "Functions and Operators", Rule 31
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.25 Expressions, AV Rule 204
+
+5. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-1
+
+</PRE>
+</BODY>
+</HTML>

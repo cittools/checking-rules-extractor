@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using static_cast on pointers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using static_cast on pointers [CODSTA-CPP-34-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Pointers to dynamic objects don't static_cast: Safe alternatives range 
+from using dynamic_cast to refactoring to redesigning. Consider replacing 
+uses of static_cast with its more powerful relative dynamic_cast, and then 
+you won't have to remember when static_cast is safe and when it's dangerous."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves safety and reliability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class B {};
+class D : public B {};
+
+void foo( B* pb, D* pd ) {
+    B* pb2 = static_cast&lt;B*&gt;( pd );     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class B {};
+class D : public B {};
+
+void foo( B* pb, D* pd ) {
+    B* pb2 = dynamic_cast&lt;B*&gt;( pd );     // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Type Safety", Rule 93
+
+</PRE>
+</BODY>
+</HTML>

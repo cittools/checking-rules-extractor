@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a class defines any overload of operator new, it should provide overloads of all three of plain, in-place, and non-throwing operator new
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a class defines any overload of operator new, it should provide overloads of all three of plain, in-place, and non-throwing operator new [MRM-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If a class defines any overload of operator new, it should provide 
+overloads of all three of plain, in-place, and non-throwing operator new. 
+If you don't, they'll be hidden and unavailable to users of your class."
+See also: MRM-17, MRM-16, MRM-15, MRM-32
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents hiding other overloaded new operators.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;new&gt;
+class MyClass            // Violation - in-place new only
+{          
+public:
+    static void * operator new( size_t count, void * object );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;new&gt;
+class MyClass         // OK - all three operators overloaded
+{         
+public:
+    static void * operator new( size_t count );                             
+    static void * operator new( size_t count, std::nothrow_t nt ) throw( ); 
+    static void * operator new( size_t count, void * object );              
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 46
+
+</PRE>
+</BODY>
+</HTML>

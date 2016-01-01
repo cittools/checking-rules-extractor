@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Make predicates const pure functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Make predicates const pure functions [STL-29-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A predicate is a function that returns bool (or something that can be
+implicitly converted to bool). A pure function is a function whose return
+value depends only on its parameters. If f is a pure function and x and y are
+objects, the return value of f(x, y) can change only if the value of x or y
+changes. Declaring operator() const in predicate classes is necessary for
+correct behavior, but it's not sufficient. A well-behaved operator() is
+certainly const, but it's more than that. It's also a pure function."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents disabling the compiler from detecting an error if you try to
+change any data members that the predicate type may have.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+#include &lt;algorithm&gt;
+#include &lt;list&gt;
+
+using namespace std;
+
+int global;
+class Widget{};
+
+class MeetsThreshold: public std::unary_function&lt;Widget, bool&gt; {
+public:
+    bool operator( ) ( const Widget&amp; ) {    // Violation
+        return ++global == 0;
+    }
+private:
+    size_t current, n_;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+#include &lt;algorithm&gt;
+#include &lt;list&gt;
+
+using namespace std;
+
+class SampleVol: public std::unary_function&lt;int, bool&gt; {
+    bool operator( ) ( const int&amp; b ) const {   // OK
+        int a = 0;
+        return a == b;
+    }
+public:
+    size_t current, n_;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+   Standard Template Library", Chapter 6, item 39
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "STL: Algorithms", Rule 87
+
+</PRE>
+</BODY>
+</HTML>

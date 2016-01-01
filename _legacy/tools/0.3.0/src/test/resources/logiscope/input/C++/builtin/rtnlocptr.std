@@ -1,0 +1,16 @@
+.NAME Do not return pointer to local variable
+
+.DESCRIPTION
+
+Definition:
+-----------
+Functions must not return a pointer to a non-static local variable.
+
+Justification:
+--------------
+This avoids dangling references of the pointer to the variable after its lifetime.
+
+.SEVERITY Required
+
+.COMMAND builtin
+

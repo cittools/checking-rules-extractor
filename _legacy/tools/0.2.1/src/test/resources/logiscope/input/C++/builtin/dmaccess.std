@@ -1,0 +1,32 @@
+.NAME Access to members data
+
+.DESCRIPTION
+
+Definition:
+-----------
+The class interface must be purely functional: members data definitions can be 
+limited.
+
+Parameters:
+----------
+A list of character strings corresponding to the forbidden access specifiers for 
+the data members.
+
+Justification:
+--------------
+The good way to modify the state of an object is via its methods, not its data 
+members.
+The data members of a class should be private or at least protected.
+
+Example:
+--------
+
+In order to prevent the use of data members in the public and protected 
+access specifiers, the standard may be expressed as below:
+STANDARD dmaccess ON LIST "public" "protected" EN LIST END STANDARD 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

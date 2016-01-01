@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The loop-counter shall not be modified within condition or statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The loop-counter shall not be modified within condition or statement [MISRA2008-6_5_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Loop counters shall not be modified in the body of the loop. 
+However other loop control variables representing logical values 
+may be modified in the loop, for example a flag to indicate that something 
+has been completed, which is then tested in the for statement."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+A loop-counter is a loop-control-variable that is:
+- Initialized in, or prior to, for-init-statement; and
+- an operand to a relational operator in condition; and
+- modified in expression.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Modification 'for' loop counter within a body of the loop can lead to 
+errors and confusion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int i;
+    for ( i = 0; i &lt; 5; i++ ) {
+        i = i + 3;                  /* Violation */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {    
+    int i;
+    for ( i = 0; i &lt; 5; i = i + 3 ) {} /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 13
+
+2. Origin: Misra Guidelines - Rule 67
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 201
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-5-3
+
+</PRE>
+</BODY>
+</HTML>

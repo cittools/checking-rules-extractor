@@ -1,0 +1,126 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be no more than one definition of each virtual function on each path through the inheritance hierarchy
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be no more than one definition of each virtual function on each path through the inheritance hierarchy [OOP-44-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The main aim of this rule is clarity for maintainers and reviewers,
+by ensuring that the version of a function that can be executed from
+any point in a class hierarchy is unambiguous."
+
+
+Exceptions:
+
+"Destructors may be declared virtual in multiple members of a class hierarchy.
+If a function is declared pure and defined in the same class, then that
+definition is ignored for this rule."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Additionally, where classes form a diamond hierarchy, call
+by dominance may occur resulting in a call to a function that
+is inconsistent with developer expectations.
+This rule also prevents call by dominance."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* Examples of incorrect code */
+class A
+{
+    public:
+        virtual void f1 ( );
+        virtual void f2 ( ) { }
+};
+void A::f1 ( )
+{
+}
+
+class B : public A
+{
+    public:
+        virtual void f1 ( ) { }  // Violation
+        virtual void f2 ( );
+};
+void B::f2 ( )                   // Violation
+{
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* Examples of correct code */
+class A
+{
+    public:
+        virtual void f1 ( );
+        virtual void f2 ( ) = 0;
+        virtual ~A(){}
+};
+void A::f2 ( )
+{
+}
+
+class B : public A
+{
+    public:
+        virtual void f1 ( ) { }  // OK
+        virtual void f2 ( );
+        virtual ~B(){}           // OK
+};
+void B::f2 ( )                   // OK
+{
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 10, Rule 10-3-1
+
+</PRE>
+</BODY>
+</HTML>

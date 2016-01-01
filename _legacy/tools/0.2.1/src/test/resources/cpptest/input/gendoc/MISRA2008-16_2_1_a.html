@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Macros shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Macros shall not be used [MISRA2008-16_2_1_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Macros are generally an obsolete construct inherited from C language. 
+The main problems with macros are that they:
+- are not type-safe
+- are expanded by the preprocessor so debugging them is not possible
+- can compile by pure luck creating ugly problems with the program
+
+
+Exceptions:
+
+Macros are almost never necessary in C++. Exceptions to this rule are:
+- #ifdef
+- #ifndef
+- #if
+- #if defined
+when used as include guards and for conditional compilation.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves code reliability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define PI 3.14  // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const double PI = 3.14; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Coding Style", Rule 16
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.6 Pre-Processing Directives, AV Rule 31
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-2-1
+
+</PRE>
+</BODY>
+</HTML>

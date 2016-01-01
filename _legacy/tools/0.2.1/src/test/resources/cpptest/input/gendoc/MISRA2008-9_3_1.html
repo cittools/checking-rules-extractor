@@ -1,0 +1,184 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+const member functions shall not return non-const pointers or references to class-data
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+const member functions shall not return non-const pointers or references to class-data [MISRA2008-9_3_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When an object is declared with const class type, only const member functions
+can be invoked on that object. The common expectation of const member functions
+is that the state of the object may not be modified when invoking the
+functions. However, returning a non-const pointer or reference to class-data
+from a const function allows a modification to the conceptual state of an
+object."
+See also: CODSTA-CPP-06, OOP-12, OOP-36
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Handle to class-data is:
+- reference to member variable/member function
+- pointer to member variable/member function
+- pointer/reference to data allocated in constructor or deallocated in destructor
+Static variables are not considered class-data.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents exposing internal state of the object to clients, so they won't 
+uncontrollably modify the state of the object. Enforces data encapsulation that 
+is a cornerstone of Object Oriented programming. Improves code maintainability.
+Helps const functions act const.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Test
+{
+    public:
+        Test(int &amp; p) : _i(p)
+        {
+            _k = new int; // makes data pointed by _k a "class-data"
+        }
+        int* GetI1() const
+        {
+            return &amp;_i; // Violation
+        }
+    protected:
+        int&amp; GetI2() const
+        {
+            return _i; // Violation
+        }
+        int * GetI3() const
+        {
+            return _k; // Violation
+        }
+    private:
+        int &amp; _i;
+        int * _k;
+};
+class Child: public Test
+{
+    public:
+        Child() : Test(z)
+        {
+        }
+        void foo() const
+        {
+            GetI2() = 0; // Modification of possibly-const object
+            *(GetI3()) = 0; // Modification of possibly-const object
+        }
+    private:
+        int z;
+};
+void bar()
+{
+    const Child c;
+    *(c.GetI1()) = 0; // Modification of possibly-const object
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Test
+{
+    public:
+        Test(int &amp; p) : _i(p)
+        {
+            _k = new int; // makes data pointed by _k a "class-data"
+        }
+        const int* GetI1() const
+        {
+            return &amp;_i; // OK
+        }
+    protected:
+        const int&amp; GetI2() const
+        {
+            return _i; // OK
+        }
+        const int * GetI3() const
+        {
+            return _k; // OK
+        }
+    private:
+        int &amp; _i;
+        int * _k;
+};
+class Child: public Test
+{
+    public:
+        Child() : Test(z)
+        {
+        }
+        void foo() const
+        {
+            // GetI2() = 0; // Not compilable - can't modify const object
+            // *(GetI3()) = 0; // Not compilable - can't modify const object
+        }
+    private:
+        int z;
+};
+void bar()
+{
+    const Child c;
+    // *(c.GetI1()) = 0; // Not compilable - can't modify const object
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Class Design and Inheritance", Rule 42
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 5, Item 28
+
+3. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Implementation", Item 29
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+   Chapter 6, Section 7, Rule 9-3-1
+
+</PRE>
+</BODY>
+</HTML>

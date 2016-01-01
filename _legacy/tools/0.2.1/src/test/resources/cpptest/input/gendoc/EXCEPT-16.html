@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Handlers of a function-try-block implementation of a class constructor or destructor shall not reference nonstatic members from this class or its bases
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Handlers of a function-try-block implementation of a class constructor or destructor shall not reference nonstatic members from this class or its bases [EXCEPT-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Accessing a non-static member of a class or a base class in the
+handler (i.e. the catch part) of a function-try-block of a class
+constructor/destructor is not allowed.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The effect of accessing a non-static member of a class or a base class in the
+handler (i.e. the catch part) of a function-try-block of a class
+constructor/destructor is undefined. For example, if a memory allocation
+exception is thrown during creation of the object, the object will not exist
+when the handler attempts to access its members. Conversely, in the destructor,
+the object may have been successfully destroyed before the exception is
+handled, so again will not be available to the handler. By contrast, the
+lifetime of a static member is greater than that of the object itself, so the
+static member is guaranteed to exist when the handler accesses it."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int int32_t;
+class C
+{
+    public:
+        int32_t x;
+        C( )
+    try
+    {
+        // Action that may raise an exception
+    }
+    catch ( ... )  // Violation
+    {
+        if ( 0 == x ) // Non-compliant – x may not exist at this point
+        {
+            // Action dependent on value of x
+        }
+    }
+    ~C ( )
+    try
+    {
+        // Action that may raise an exception
+    }
+    catch ( ... )  // Violation
+    {
+	    if ( 0 == x ) // Non-compliant – x may not exist at this point
+        {
+            // Action dependent on value of x
+        }
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use non-static member of a class or a base class in the handler
+of a function-try-block of a class constructor/destructor
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-3-3
+
+</PRE>
+</BODY>
+</HTML>

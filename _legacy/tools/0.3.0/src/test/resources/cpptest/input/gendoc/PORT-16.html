@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid conversions from a "shorter" type to a "longer" type in function calls
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid conversions from a "shorter" type to a "longer" type in function calls [PORT-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Under 32 bit platform double can hold all significant bits.
+Under 64 bit platform double has 52 significant bits, and bits can be lost.
+See also: PORT-14, PORT-15
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void moo (double d) {}
+void foo () {
+    long longValue = 1L;
+    moo(longValue);	// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void moo (double d) {}
+void foo () {
+    double longValue = 1;
+    moo(longValue);	// OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3</A>
+From: 18 Portable Code - 18.3 Type Conversions - Port. Rec. 6
+
+</PRE>
+</BODY>
+</HTML>

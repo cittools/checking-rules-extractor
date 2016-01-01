@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Each overriding virtual function shall be declared with the virtual keyword
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Each overriding virtual function shall be declared with the virtual keyword [MISRA2008-10_3_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Using the virtual keyword whenever a subclass implements a virtual function
+makes the code more readable, because the reader does not have to refer back
+to the base class to see that the function is virtual. This rule detects 
+if a subclass implements a virtual function without using a virtual keyword.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability, as well as more intuitive behavior for deep inheritance
+hierarchies, in that functions that are virtual in a base class will
+remain virtual in all inherited classes.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    virtual int foo( );
+};
+
+class B : public A {
+public:
+    int foo( );         // Violation
+};
+
+int B::foo() {
+    return 5;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    virtual int foo( );
+};
+
+class B : public A {
+public:
+    virtual int foo( );         // OK
+};
+
+int B::foo() {
+  return 5;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Class Design and Inheritance", Rule 38
+
+2. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 10, Rule 10-3-2
+
+</PRE>
+</BODY>
+</HTML>

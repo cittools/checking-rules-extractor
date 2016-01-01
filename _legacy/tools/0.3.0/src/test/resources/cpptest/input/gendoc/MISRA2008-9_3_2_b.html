@@ -1,0 +1,166 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Public member functions shall not return non-const handles to class-data
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Public member functions shall not return non-const handles to class-data [MISRA2008-9_3_2_b-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"By implementing class interfaces with member functions the implementation
+retains more control over how the object state can be modified and helps
+to allow a class to be maintained without affecting clients.
+Returning a handle to class-data allows for clients to modify the state
+of the object without using any interfaces."
+The rule reports a violation if a public member function returns non-const 
+reference or pointer to private/protected class-data.
+See also: CODSTA-CPP-06, CODSTA-CPP-77, OOP-12
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Handle to class-data is:
+- reference to member variable/member function
+- pointer to member variable/member function
+- pointer/reference to data allocated in constructor or deallocated in destructor
+Static variables are not considered class-data.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves encapsulation and prevents from data changing in ways not 
+intended by the class designer.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Test
+{
+    public:
+        Test()
+        {
+            _k = new int; // makes data pointed by _k a "class-data"
+        }
+        int* GetI1()
+        {
+            return &amp;_i; // Violation
+        }
+        int&amp; GetI2()
+        {
+            return _i; // Violation
+        }
+        int * GetI3()
+        {
+            return _k; // Violation
+        }
+    private:
+        int _i;
+        int * _k;
+};
+void foo()
+{
+    Test t;
+    *(t.GetI1()) = 0; // Encapsulation broken - possible to change private class data
+    t.GetI2() = 0; // Encapsulation broken - possible to change private class data
+    *(t.GetI3()) = 0; // Encapsulation broken - possible to change private class data
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Test
+{
+    public:
+        Test()
+        {
+            _k = new int; // makes data pointed by _k a "class-data"
+        }
+        const int* GetI1()
+        {
+            return &amp;_i; // OK
+        }
+        const int&amp; GetI2()
+        {
+            return _i; // OK
+        }
+        const int * GetI3()
+        {
+            return _k; // OK
+        }
+    private:
+        int _i;
+        int * _k;
+};
+void foo()
+{
+    Test t;
+    // *(t.GetI1()) = 0; // Not compilable - not possible to change private class data
+    // t.GetI2() = 0; // Not compilable - not possible to change private class data
+    // *(t.GetI3()) = 0; // Not compilable - not possible to change private class data
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Implementation", Item 30
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Implementation", Item 29
+
+3. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 5, Item 28
+
+4. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Class Design and Inheritance", Rule 42
+
+5. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 7 Classes - 7.8 Member Function Return Types - Rule 29
+
+6. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 9, Rule 9-3-2
+
+</PRE>
+</BODY>
+</HTML>

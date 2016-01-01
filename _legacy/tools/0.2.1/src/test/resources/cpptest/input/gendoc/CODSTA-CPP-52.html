@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider using the natural relationship between the assignment version of an operator and the stand-alone version
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider using the natural relationship between the assignment version of an operator and the stand-alone version [CODSTA-CPP-52-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A good way to ensure that the natural relationship between the assignment 
+version of an operator (e.g., operator+=) and the stand-alone version 
+(e.g., operator+) exists is to implement the latter in terms of the former. 
+For example:"
+
+class Rational {
+public:
+  Rational&amp; operator+=(const Rational&amp; rhs);
+};
+
+const Rational operator+(const Rational&amp; lhs,
+                         const Rational&amp; rhs)
+{
+  return Rational(lhs) += rhs;
+}
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"In this example, operators += is implemented (elsewhere) from scratch, and 
+operator+ calls them to provide their own functionality. With this design, only 
+the assignment version of these operator need to be maintained. Furthermore, 
+assuming the assignment versions of the operators are in the class's public 
+interface, there is never a need for the stand-alone operators to be friends 
+of the class."
+See also: OOP-11, CODSTA-CPP-29
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A operator+=( A&amp; b );
+    A operator-=( A&amp; b );
+    A operator*=( A&amp; b );
+    friend A operator*( A&amp; a, A&amp; b );   // Violation
+};
+
+A operator+( A&amp; a, A&amp; b ){    // Violation
+    return A( a );
+}
+
+A operator-( A&amp; a, A&amp; b ){    // Violation
+    return A( a );
+}
+
+A operator*( A&amp; a, A&amp; b ){    // OK
+    return A( a ) *= b;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A operator+=( A&amp; b );
+    A operator-=( A&amp; b );
+    A operator*=( A&amp; b );
+    // OK - removed friend declaration
+};
+
+A operator+( A&amp; a, A&amp; b ){    // OK
+    return A( a ) += b;
+}
+
+A operator-( A&amp; a, A&amp; b ){    // OK
+    A result( a );
+    return result -= b;
+}
+
+A operator*( A&amp; a, A&amp; b ){    // OK
+    return A( a ) *= b;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+Chapter: "Efficiency", Item 22
+
+</PRE>
+</BODY>
+</HTML>

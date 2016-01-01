@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Only use characters defined in ISO C standard
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Only use characters defined in ISO C standard [JSF-9-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Only those characters and escape sequences which are 
+defined in the ISO C standard shall be used.
+
+Section 5.2.1 of the ISO C standards defines 91 characters 
+which are the minimum source character set for all 
+compilers. These are the only characters that should be 
+used, even if the compiler supports a larger character set,
+or supports alternative character sets.
+
+Those characters are:
+- the 26 uppercase letters of the Latin alphabet
+A B C D E F G H I J K L M
+N O P Q R S T U V W X Y Z
+
+- the 26 lowercase letters of the Latin alphabet
+a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+
+- the 10 decimal digits
+0 1 2 3 4 5 6 7 8 9
+
+- the following 29 graphic characters
+!"#%&amp;' ()*+,-./:
+;&lt;=&gt;?[\]^_{|}~
+the space character, and control characters representing 
+horizontal tab, vertical tab, and form feed.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Minimal required character set.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() {
+    char c1 = '$';  /* Violation */
+    char c2 = '`';  /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use characters no defined in the ISO C standard.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 5
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.4 Environment, AV Rule 9
+
+</PRE>
+</BODY>
+</HTML>

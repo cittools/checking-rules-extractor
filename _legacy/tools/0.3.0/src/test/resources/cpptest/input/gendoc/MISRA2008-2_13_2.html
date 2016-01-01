@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Octal constants (other than zero) and octal escape sequences (other than "\0") shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Octal constants (other than zero) and octal escape sequences (other than "\0") shall not be used [MISRA2008-2_13_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Any integer constant beginning with a '0' (zero) is treated as octal. 
+So there is a danger, for example, with writing fixed length constants.
+Octal escape sequences can be problematic because the inadvertent
+introduction of a decimal digit ends the octal escape and introduces
+another character. It is better not to use octal constants or escape
+sequences at all and to statically check for any occurrences.
+The integer constant zero (written as a single numeric digit) is, strictly
+speaking, an octal constant, but is a permitted exception to this rule.
+Additionally \0 is the only permitted octal escape sequence."
+
+
+Exceptions:
+
+Rule ignores any #pragma parasoft / codewizard directives.
+Rule ignores any values inside asm blocks.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule increases readability and maintainability. 
+Rule prevents using implementation-defined values.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() 
+{
+    int code1;
+    int code2;
+    int code3;
+
+    code1 = 052;    /* Violation */
+    code2 = 071;    /* Violation */
+    code3 = '\100'; /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1() 
+{
+    int code1;
+    int code2;
+    int code3;
+
+    code1 = 42;  /* OK */
+    code2 = 57;  /* OK */
+    code3 = 64;  /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 7
+
+2. Origin: Misra Guidelines - Rule 19
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.18 Constants, AV Rule 149
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 2, Rule 2-13-2
+
+</PRE>
+</BODY>
+</HTML>

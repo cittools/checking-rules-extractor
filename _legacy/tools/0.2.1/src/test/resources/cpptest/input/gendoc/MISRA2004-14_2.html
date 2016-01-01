@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All non-null statements shall either have at least one side-effect however executed or cause control flow to change
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All non-null statements shall either have at least one side-effect however executed or cause control flow to change [MISRA2004-14_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+As defined by ISO/IEC 9899:1999 standard,a side effect is defined as: 
+"Accessing a volatile object, modifying an object, modifying a file, 
+or calling a function that does any of those operations are all side effects, 
+which are changes in the state of the execution environment." 
+
+A null statement is, according to the standard, a statement 
+"consisting of just a semicolon." 
+This rule will report a violation message each time a non-null statement 
+(i.e. statement consisting of just a semicolon) is detected with no 
+side-effects. 
+For example, if an expression evaluation result is not used, 
+because a programmer forgot 
+to use assignment operator to store the value, 
+or because he accidentally wrote "==" instead of "=", 
+the statement is considered not to have a side effect. 
+Such programming errors are potentially disastrous. 
+
+This rule will also report violation if an empty block statement is detected, 
+since such a statement has no effect. 
+Empty function body is not considered as violating this rule. 
+For purposes of this rule any function call is considered as 
+having side effects, even if no variable is modified as a result 
+of the function call.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct tagStruct {
+    int _iField;
+    char * _p;
+};
+
+volatile struct tagStruct _SSS;
+
+int bar( );
+
+void foo( ) {
+    int i = 0;
+    volatile int j = 0;
+    struct tagStruct s, *ps;
+    /* no side effects: */
+    i + 3;                    /* Violation - result not used */
+    3;                        /* Violation - result not used */
+    i;                        /* Violation - result not used */
+    i + bar();                /* Violation - result not used */
+    switch (i) { }            /* Violation - empty block - no side-effect */
+    ps-&gt;_p + s._iField;       /* Violation - result not used */
+    ps-&gt;_iField &lt;&lt; s._iField; /* Violation - result not used */
+    *(ps-&gt;_p);                /* Violation - result not used */
+	
+    {                         /* Violation - empty block - no side-effect */
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct tagStructOK {
+    int _iField;
+    char * _p;
+};
+
+volatile struct tagStructOK _SSSOK;
+
+int bar( );
+
+void foo( ) {
+    int i = 0;
+    volatile int j = 0;
+    struct tagStructOK s, *ps;
+	
+    /* with side effects: */
+    i = i + 3;               /* OK - assignment */
+    i &lt;&lt;= 3;                 /* OK - assignment */
+    bar();                   /* OK - function call */
+    j;                       /* OK - volatile variable */
+    _SSSOK._p;               /* OK - volatile variable */
+	
+    /* OK - null statement */
+    ;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical system
+   Chapter 6, Section 14
+
+2. Origin: Misra Guidelines - Rule 53
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 187
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not declare the non-member to be an overloading of std::swap
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not declare the non-member to be an overloading of std::swap [STL-41-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In general, overloading function templates is fine, but std is a special
+namespace, and the rules governing it are special, too. It's okay to totally
+specialize templates in std, but it's not okay to add new templates to std.
+So what to do? We still need a way to let other people call swap and get our
+more efficient template-specific version. The answer is simple. We still
+declare a non-member swap that calls the member swap, we just don't declare
+the non-member to be a specialization or overloading of std::swap."
+See also: STL-40, STL-42
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule detects attempt of std::swap overloading.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Programs that cross this line will almost certainly compile and run, but
+their behavior is undefined. If you want your software to have predictable
+behavior, you'll not add new things to std."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+template&lt;typename T&gt;
+class WidgetImpl {};
+
+template&lt;typename T&gt;
+class Widget {
+public:
+    void swap( Widget&lt;T&gt;&amp; other ) {
+        using std::swap;
+        swap(pImpl, other.pImpl );
+    }
+private:
+    WidgetImpl&lt;T&gt; *pImpl;
+};
+
+namespace std {
+    template&lt;typename T&gt;
+    void swap( Widget&lt;T&gt;&amp; a, Widget&lt;T&gt;&amp; b ) {  // Violation
+        a.swap( b );
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+namespace WidgetStuff {
+    template&lt;typename T&gt;
+    class WidgetImpl {};
+
+    template&lt;typename T&gt; 
+    class Widget { 
+    public:
+        void swap( Widget&lt;T&gt;&amp; other ) {
+            using std::swap;
+            swap( pImpl, other.pImpl );
+        }
+    private:
+        WidgetImpl&lt;T&gt; *pImpl;
+    };
+
+    template&lt;typename T&gt;
+    void swap( Widget&lt;T&gt;&amp; a, Widget&lt;T&gt;&amp; b ) {  // OK
+        a.swap( b );
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 4, Item 25
+
+</PRE>
+</BODY>
+</HTML>

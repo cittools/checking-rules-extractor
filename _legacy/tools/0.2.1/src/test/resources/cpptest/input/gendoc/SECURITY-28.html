@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Standard random number generators should not be used to generate randomness for security reasons
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Standard random number generators should not be used to generate randomness for security reasons [SECURITY-28-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Standard random number generators should not be used to 
+generate randomness for security reasons.
+For security sensitive randomness a cryptographic randomness generator 
+that provides sufficient entropy should be used.
+Rule detects usage of the following functions:
+drand48, erand48, initstate, jrand48, cong48, lrand48, mrand48, 
+nrand48, seed48, setstate, srand48, strfry, memfrob, crypt, srandom
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using unsecured random number generators.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+void goo()
+{
+    double rnumber = drand48(); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use standard random number generators.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+David A. Wheeler, Programming Secure Applications for Unix-like Systems (pdf), 
+<A HREF="http://www.dwheeler.com/secure-programs">http://www.dwheeler.com/secure-programs</A>
+
+</PRE>
+</BODY>
+</HTML>

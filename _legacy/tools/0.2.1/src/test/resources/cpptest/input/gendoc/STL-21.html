@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider istreambuf_iterators for character-by-character input
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider istreambuf_iterators for character-by-character input [STL-21-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If you need to read the characters in a stream one by one, you don't need the
+power of formatted input, and you care about how long it takes to read the
+stream, typing three extra characters per iterator is a small price to pay for
+what is often a significant increase in performance. For unformatted character
+by - character input, you should always consider istreambuf_iterators."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves performance and efficiency of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;fstream&gt;
+#include &lt;iterator&gt;
+
+using namespace std;
+
+void myFunction()
+{
+    ifstream dataFile("some_file.dat");
+    istream_iterator&lt;char&gt; dataBegin(dataFile); // Violation
+    istream_iterator&lt;char&gt; dataEnd;             // Violation
+    
+    list&lt;char&gt; data(dataBegin, dataEnd);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;fstream&gt;
+#include &lt;iterator&gt;
+
+using namespace std;
+
+void myFunction()
+{
+    ifstream dataFile("some_file.dat");
+    istreambuf_iterator&lt;char&gt; dataBegin(dataFile); // OK
+    istreambuf_iterator&lt;char&gt; dataEnd;             // OK
+    
+    list&lt;char&gt; data(dataBegin, dataEnd);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 4, item 29
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid initialization order problems across translation units
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid initialization order problems across translation units [INIT-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If initialization of a non-local static object in one translation 
+unit uses a non-local static object in a different translation
+unit, the object it uses could be uninitialized, because the
+relative order of initialization of non-local static objects 
+defined in different translation units is undefined.
+Fortunately, a small design change eliminates the problem
+entirely. All that has to be done is to move each non-local
+static object into its own function, where it's declared 
+static. These functions return references to the objects
+they contain. Clients then call the functions instead 
+of referring to the objects. In other words, non-local 
+static objects are replaced with local static objects."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This approach is founded on C++'s guarantee that local 
+static objects are initialized when the object's definition
+is first encountered during a call to that function. So if
+you replace direct accesses to non-local static objects 
+with calls to functions that return references to local 
+static objects, you're guaranteed that the references you
+get back will refer to initialized objects. As a bonus, if you
+never call a function emulating a non-local static object, 
+you never incur the cost of constructing and destructing 
+the object, something that can't be said for true non-local
+static objects."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+using namespace std;
+
+class FileSystem { 
+public:
+    size_t numDisks( ) const; 
+};
+extern FileSystem tfs;                              // Violation 
+class Directory { 
+public:
+    Directory( );
+};
+Directory::Directory( ) {
+    size_t disks_tfs = tfs.numDisks( ); 
+}
+Directory tempDir( );
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+using namespace std;
+
+class FileSystem { 
+public:
+    size_t numDisks( ) const; 
+};
+FileSystem&amp; tfs_one( ) { 
+    static FileSystem fs;                            // OK
+    return fs; 
+}
+class Directory { 
+public:
+    Directory( );
+};
+Directory::Directory( ) {
+   size_t disks_one = tfs_one().numDisks( );
+}
+Directory tempDir( ); 
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 4
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.28 Portable Code, AV Rule 214
+
+</PRE>
+</BODY>
+</HTML>

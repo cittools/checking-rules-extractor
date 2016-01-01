@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+No function should be longer than 60 lines of code
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+No function should be longer than 60 lines of code [METRICS-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"No function should be longer than what can be printed on a single sheet
+of paper in a standard reference format with one line per statement
+and one line per declaration. Typically, this means no more than about
+60 lines of code per function."
+See also: METRICS-01, METRICS-20, METRICS-21, METRICS-22
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule counts non-empty lines inside body of function.
+Lines containing only comment are not counted.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Each function should be a logical unit in the code that is understandable
+and verifiable as a unit. It is much harder to understand a logical unit that
+spans multiple screens on a computer display or multiple pages when printed.
+Excessively long functions are often a sign of poorly structured code."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x )     // Violation
+{
+    // ...
+    // more than 60 lines of constants, declarations, expressions, 
+    // statements, types
+    // ...
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Refactor long functions into several smaller functions.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 4
+
+</PRE>
+</BODY>
+</HTML>

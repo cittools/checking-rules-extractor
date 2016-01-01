@@ -1,0 +1,14 @@
+.NAME The key-word union is not allowed.
+
+.DESCRIPTION
+
+Definition:
+-----------
+The key-word union is not allowed.
+
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

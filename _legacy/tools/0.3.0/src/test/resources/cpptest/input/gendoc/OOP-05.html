@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use multiple inheritance
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use multiple inheritance [OOP-05-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Using multiple inheritances can result in strange class hierarchies and less 
+flexible code. Because in C++ there may be an arbitrary number of instances
+of a given type, it could be that direct inheritance from a class may only
+be used once (see the example below). This rule detects if you use multiple
+inheritances.
+See also: OOP-07, OOP-06, OOP-04, OOP-03
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Clarity, maintainability. Following this rule prevents ambiguity when classes 
+derive from one object through multiple objects as in the "diamond of death".
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {};
+class B {};
+class C : public A, public B {}; // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class B {};
+class A : public B {}; // OK
+class C : public B {}; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers,
+"More Effective C++: 35 New Ways to Improve Your Programs and Designs"
+Chapter: Efficiency, Item 24
+
+</PRE>
+</BODY>
+</HTML>

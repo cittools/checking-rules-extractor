@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The getters and setters of a Q_PROPERTY must exist and the types must match
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The getters and setters of a Q_PROPERTY must exist and the types must match [QT-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The getters and setters of a Q_PROPERTY must exist and the types must match.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The Q_PROPERTY macro tells the Qt meta type system how to get and set 
+a property. The property has a type, a name and getter and setter
+methods. The getter should return the type of the property and have no 
+arguments, the setter should have exactly one argument that is either the
+property's type or a const reference to the type.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+
+enum MyEnum { FirstVal, SecondVal, ThirdVal };
+
+class MyQObject: public QObject  // Violation (wrong return type
+                                 // and only one argument allowed)
+{
+    Q_OBJECT
+    Q_ENUMS(MyEnum)
+    Q_PROPERTY(MyEnum id READ id WRITE setId)
+
+public:
+    void id();                        // wrong return type
+    void setId(MyEnum, int);          // only one argument allowed
+
+private:
+    Q_DISABLE_COPY(MyQObject)
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+
+enum MyEnum { FirstVal, SecondVal, ThirdVal };
+
+class MyQObject: public QObject       // OK
+{
+    Q_OBJECT
+    Q_ENUMS(MyEnum)
+    Q_PROPERTY(MyEnum id READ id WRITE setId)
+
+public:
+    MyEnum id();
+    void setId(MyEnum);
+
+private:
+    Q_DISABLE_COPY(MyQObject)
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

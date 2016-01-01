@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Check the return value of new
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Check the return value of new [MRM-34-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule warns you if you do not check the return value of new. 
+"Until 1993, C++ required that operator new return null when it was unable to 
+allocate the requested memory. Operator new is now specified to throw
+a bad_alloc exception, but a lot of C++ was written before compilers began 
+supporting the revised specification. The C++ standardization committee didn't 
+want to abandon the test-for-null code base, so they provided alternative forms
+of operator new that offer the traditional failure-yields-null behavior. These
+forms are called "nothrow" forms, in part because they employ nothrow objects 
+(defined in the header &lt;new&gt;) at the point where new is used."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents access to null pointer when memory is not allocated.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;new&gt;
+void foo()
+{
+    char *pc;
+    pc = new char[10*10*10];      // Violation
+    pc[0] = 'x';
+    delete[] pc;
+    int *p;
+    if(p){
+        /*code here*/ 
+    }
+    p = new int;                  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;new&gt;
+void foo()
+{
+    char *pc;
+    try{
+        pc = new char[10*10*10];   // OK
+    }catch(std::bad_alloc&amp;){}
+    pc[0] = 'x';
+    delete[] pc;
+    int *p = new int;              // OK
+    if(p){
+        /*code here*/
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 8, Item 49
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Memory Management", Item 7
+
+</PRE>
+</BODY>
+</HTML>

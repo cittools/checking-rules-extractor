@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The percentage of comment lines versus the total number of module lines should be between 20 and 60
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The percentage of comment lines versus the total number of module lines should be between 20 and 60 [METRICS-19-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule checks if percentage of comment lines versus the total number of method
+lines is between 20 and 60.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1(int y) {	// Violation
+	//
+	//
+	//
+	//
+}
+
+void foo12() {		// Violation
+	/*
+
+
+  */
+}
+
+void foo3() {		// Violation
+	/**//**//**//**/
+}
+
+void foo4() {		// Violation
+
+
+
+
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1() {		// OK
+	//
+	//
+	//
+	//
+
+
+
+
+
+}
+
+void foo2() {		// OK
+	/*
+
+  */
+
+
+
+
+}
+
+void foo3() {		// OK
+	/**//**//**//**/
+
+
+
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

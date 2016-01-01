@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use static keyword except inside functions and classes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use static keyword except inside functions and classes [CODSTA-CPP-50-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use static keyword except inside functions and classes (C++ only).
+Note that static keyword is perfectly legal in C files at the file scope.
+"By deprecating a feature, the standards committee expresses the wish that
+the feature would go away. However, the committee does not have a mandate to
+remove a heavily used feature – however redundant or dangerous it may be.
+Thus, a deprecation is a strong hint to the users to avoid the feature.
+The keyword s t a t i c , which usually means ‘‘statically allocated,’’ can be
+used to indicate that a function or an object is local to a translation unit.
+For example:
+
+// file1:
+static int glob ;
+
+// file2:
+static int glob ;
+
+This program genuinely has two integers called g l o b . Each g l o b is used
+exclusively by functions defined in its translation unit. The use of static to
+indicate "local to translation unit" is deprecated in C++. Use unnamed
+namespaces instead."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using deprecated language structures.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static int glob;    // Violation
+static int goo( );  // Violation
+
+namespace N {
+    static int c;   // Violation
+}
+
+static struct S {
+    int a;
+    static int b;   // Violation
+} S_var;            // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+namespace{
+   static int glob;    // OK
+}
+
+class A {
+    static void foo( ); // OK
+};
+
+void zoo( ) {
+    static int c;       // OK
+}
+
+class B {
+public:
+    static struct S {
+        int a;
+        static int b;   // OK
+    } S_var;            // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Stroustroup C++ Programming Language 3rd Edition. 9.2, p200.
+
+</PRE>
+</BODY>
+</HTML>

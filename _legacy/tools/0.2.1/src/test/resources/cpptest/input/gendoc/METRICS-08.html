@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Number of parameter(s) per method should not exceed 10
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Number of parameter(s) per method should not exceed 10 [METRICS-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A high number of parameters indicates a complex interface to calling objects,
+and should be avoided." 
+This metric measures the number of parameters in each method. 
+Rule triggers if the number of parameters exceeds 10 per method.
+See also: METRICS-15
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule applies only to the C++ programming language.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo
+{
+public:
+void func2(int ,int ,int ,int ,int ,int ,int ,int ,int ,int ,int ); // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// Limit the number of parameters to 10 per method.
+class Foo
+{
+public:
+   void func(int i, double d, float f, char c, Foo &amp;); // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, Novemeber/December, 1999, pg. 34.
+
+</PRE>
+</BODY>
+</HTML>

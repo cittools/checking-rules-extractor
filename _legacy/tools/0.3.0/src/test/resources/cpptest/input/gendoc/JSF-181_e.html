@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not cast from "shorter" type to "longer" type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not cast from "shorter" type to "longer" type [JSF-181_e-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Be careful not to make conversion from a shorter type to a longer one."
+See also: PORT-14, PORT-16,  MISRA2004-10_1, MISRA2004-10_2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo3() {
+    int longValue = 1L;
+    (double)longValue;	// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not make conversion from a shorter type to a longer one.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3</A>
+   From: 18 Portable Code - 18.3 Type Conversions - Port. Rec. 6
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 181
+
+</PRE>
+</BODY>
+</HTML>

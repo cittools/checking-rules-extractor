@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer canonical form of ++ and --. Prefer calling the prefix forms
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer canonical form of ++ and --. Prefer calling the prefix forms [OPT-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In calling code, prefer using the prefix form unless you actually need the
+original value returned by the postfix version. The prefix form is semantically
+equivalent, just as much typing, and often slightly more efficient by creating
+one less object. It is not premature optimization; it is avoiding premature
+pessimization"
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Using rule helps to avoid potential inefficiencies resulting from a need to 
+make a temporary copy of a variable or object when postfix form is used.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class SampleMemberO {
+public:
+    SampleMemberO&amp; operator++();               
+    SampleMemberO&amp; operator++(int x);          
+};
+
+class SampleGlobalO {};
+SampleGlobalO&amp; operator++( SampleGlobalO&amp; t );        
+SampleGlobalO&amp; operator++( SampleGlobalO&amp; t, int x ); 
+
+void myFunction()
+{
+    SampleMemberO obj_MemberO;                          
+    SampleGlobalO obj_GlobalO;
+    
+    obj_MemberO++;                             // Violation
+    obj_GlobalO++;                             // Violation
+
+    int i=0;
+    i++;                                       // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class SampleMemberO {
+public:
+    int m;
+    SampleMemberO&amp; operator++();               
+    SampleMemberO&amp; operator++(int x);          
+};
+
+class SampleGlobalO {};
+SampleGlobalO&amp; operator++( SampleGlobalO&amp; t );        
+SampleGlobalO&amp; operator++( SampleGlobalO&amp; t, int x ); 
+
+void myFunction()
+{
+    SampleMemberO obj_MemberO;                          
+    SampleGlobalO obj_GlobalO;
+    
+    ++obj_MemberO;                             // OK
+    ++obj_GlobalO;                             // OK
+    
+    int i=0;
+    ++i;                                       // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Functions and Operators", Rule 28
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Design Style", Rule 09
+
+3. Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+   Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+   Chapter: "Operators", Item 6
+
+</PRE>
+</BODY>
+</HTML>

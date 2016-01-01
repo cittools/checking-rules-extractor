@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Dynamic heap memory allocation shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Dynamic heap memory allocation shall not be used [MISRA2004-20_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The use of dynamic memory can lead to out-of-storage run-time failures,
+which are undesirable. The built-in new and delete operators, other than
+the placement versions, use dynamic heap memory. The functions calloc,
+malloc, realloc and free also use dynamic heap memory."
+
+
+Exceptions:
+
+The rule allows to use a placement new.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"There is a range of unspecified, undefined and implementation-defined
+behaviour associated with dynamic memory allocation, as well as a number of
+other potential pitfalls. Dynamic heap memory allocation may lead to memory
+leaks, data inconsistency, memory exhaustion, non-deterministic behaviour."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+  int * p = new int[10]; // Violation
+  /* ... */
+  
+  delete[] p;            // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use neither 'new' and 'delete' operators nor 'calloc', 'malloc',
+'realloc' and 'free' functions.
+ 
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 20
+
+2. Misra Guidelines - Rule 118
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical systems
+   Chapter 6, Section 18, Rule 18-4-1
+
+4. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.26 Memory Allocation, AV Rule 206
+
+5. The Power of Ten - Rules for Developing Safety Critical Code.
+   Rule 3
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The comma operator shall not be used, except in the control expression of a for loop
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The comma operator shall not be used, except in the control expression of a for loop [MISRA-042-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Use of the  comma operator in situations other than the control expression
+of a loop is generally detrimental to the readability of code, and the same
+effect can be achieved by other means"
+See also: misra2004-12_10
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Extensive use of comma operator reduces readability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1( int x, int y )
+{
+    int i;
+    i = (x = 1, y = 0);            // Violation
+    x++, y++;                      // Violation
+    for (i = 0; i &lt; 10; i++){
+        foo1( (x--, y + 2), y );   // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo2( int x, int y ) {
+    int i;
+    x++;
+    y++;                                       // OK
+    for (i = 0; i &gt;=0, i &lt; 10; i++)	{     // OK 
+    }
+    x--;
+    foo2( y + 2, y );                      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines - Rule 42
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule 168
+
+</PRE>
+</BODY>
+</HTML>

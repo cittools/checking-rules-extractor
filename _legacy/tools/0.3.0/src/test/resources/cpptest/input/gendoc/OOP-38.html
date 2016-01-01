@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a class destructor is called and the class has virtual functions it shall have a virtual destructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a class destructor is called and the class has virtual functions it shall have a virtual destructor [OOP-38-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Declaring virtual destructors in classes that have virtual functions causes
+the compiler to call destructors for each class from which the object inherits.
+If a class has virtual functions, has no virtual destructor, and class
+destructor is called then the rule reports a violation message.
+See also: OOP-23
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents memory leaks in derived classes. A class that has virtual functions
+is intended to be used as a base class, so it should have a virtual destructor
+to guarantee that the destructor will be called when the derived object
+is referenced through a pointer to the base class.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A        
+{	
+    public:
+        ~A( );              // Violation
+        virtual int foo( );
+};
+
+void foo1(A* a)
+{
+    delete a;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A         
+{	
+    public:
+        virtual ~A( );      // OK
+        virtual int foo( );
+};
+
+void foo1(A* a)
+{
+    delete a;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft.
+
+</PRE>
+</BODY>
+</HTML>

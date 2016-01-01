@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not cast an int pointer to a long pointer
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not cast an int pointer to a long pointer [PORT-11-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Do not assume that int and long have the same size."
+Do not cast an int pointer to a long pointer. 
+These are not compatible in 64 bit, even though in 32 bit
+they would have been interchangeable.
+See also: PORT-05, PORT-06, PORT-07, PORT-08, PORT-10, PORT-12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void f2005() {
+    int *intPointer;
+    long *longPointer;
+    longPointer = (long *)intPointer;	// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast an int pointer to a long pointer.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.2">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.2</A>
+   From: 18 Portable Code - 18.2 Sizes of Types - Port. Rec. 2
+
+2. <A HREF="http://developers.sun.com/solaris/articles/64_bit_driver.html">http://developers.sun.com/solaris/articles/64_bit_driver.html</A>
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 181
+
+</PRE>
+</BODY>
+</HTML>

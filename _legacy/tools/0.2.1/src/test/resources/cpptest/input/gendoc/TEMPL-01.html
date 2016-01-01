@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Factor parameter-independent code out of templates
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Factor parameter-independent code out of templates [TEMPL-01-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When you're writing a function and you realize that some part of the
+function's implementation is essentially the same as another function's
+implementation, do you just replicate the code? Of course not. You factor the
+common code out of the two functions, put it into a third function, and have
+both of the other functions call the new one. When writing templates, you do
+the same analysis, and you avoid replication in the same ways, but there's
+a twist. In non-template code, replication is explicit: you can see that
+there's duplication between two functions or two classes. In template code,
+replication is implicit: there's only one copy of the template source code, so
+you have to train yourself to sense the replication that may take place when
+a template is instantiated multiple times. If you have class with non-type
+template parameter, consider creating base class with the same functions, but 
+taking as a additional parameter non-type template parameter from inherited
+class."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents possible implicit replication of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+template&lt;typename T&gt; 
+class SquareMatrixBase { 
+protected:
+    void invert( std::size_t matrixSize );
+};
+
+template&lt; typename T, std::size_t n&gt;
+class SquareMatrix: private SquareMatrixBase&lt;T&gt; { // Violation (no foo()
+                                                  // in SquareMatrixBase)
+public:
+    void foo( );
+};
+
+template&lt; typename T, std::size_t n&gt;
+class SquareMatrix2 {                             // Violation (no base class)
+public:
+    void foo( );
+    void invert( );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+template&lt;typename T&gt;
+class SquareMatrixBase {
+protected:
+    void invert( std::size_t matrixSize );
+};
+
+template&lt; typename T, std::size_t n&gt;
+class SquareMatrix: private SquareMatrixBase&lt;T&gt; {
+private:
+    using SquareMatrixBase&lt;T&gt;::invert;
+public:
+    void invert( ) { this-&gt;invert(n); }        // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 7, Item 44
+
+</PRE>
+</BODY>
+</HTML>

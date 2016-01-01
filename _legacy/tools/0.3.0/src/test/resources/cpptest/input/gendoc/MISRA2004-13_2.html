@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Tests of a value against zero should be made explicit, unless the operand is effectively Boolean
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Tests of a value against zero should be made explicit, unless the operand is effectively Boolean [MISRA2004-13_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Where a data value is to be tested against zero then the test should be made 
+explicit. The exception to this rule is when data represents a Boolean value, 
+even though in C this will in practice be an integer." 
+An 'effectively Boolean' expression which is either 'Boolean-by-construct'
+or 'Boolean-by-enforcement' as defined below.
+Boolean-by-construct values are produced by the following operators:
+- equality operators (== and !=)
+- logical operators (!, &amp;&amp; and ||)
+- relational operators (&lt;, &gt;, &lt;= and &gt;=)
+Boolean-by-enforcement values can be introduced by implementing a specific type
+enforcement mechanism using a tool. A Boolean type could be associated with
+a specific typedef, and would then be used for any objects that are Boolean."
+
+Rule does not report violation if as an operand of logical operator is used:
+- Boolean-by-construct values
+- boolean constant
+- integer or enum constant defined as '0' or '1' 
+- variable, parameter or expression of type:
+  - bool,
+  - typedef to bool,
+  - enum that name begins with 'bool' (ignoring case)
+    and that contains exactly 2 enum constant in body
+  - typedef to char/short/int/enum which name begins with 'bool' (ignoring case) 
+  - reference to above types
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule does not report violations on constant expressions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This rule is in the interests of clarity, and makes clear the distinction
+between integers and logical values."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int goo()
+{
+    return 1;
+}
+
+void foo( int x, int y )
+{
+  if (goo()) {}	// Violation
+  if (y) {}     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int goo()
+{
+    return 1;
+}
+
+void foo( int x, int y )
+{
+  if (goo() != 0) {}	// Violation
+  if (y != 0) {}        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 13
+
+2. Misra Guidelines - Rule 49
+
+</PRE>
+</BODY>
+</HTML>

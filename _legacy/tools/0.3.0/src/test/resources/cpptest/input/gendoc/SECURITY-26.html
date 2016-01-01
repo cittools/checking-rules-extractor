@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use 'setuid' in source code
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use 'setuid' in source code [SECURITY-26-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+'setuid' method should not be used in source code.
+If uid is to be changed, 'seteuid' should be rather used than 'setuid'. 
+As a backup 'setreuid' function should be used.
+Thanks to it we may revert back to either the real uid 
+or previous saved one.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using insecure 'setuid' function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+int main()
+{
+  setuid(34);            // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+int main()
+{
+  seteuid(34);           // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+David A. Wheeler, Programming Secure Applications for Unix-like Systems (pdf), 
+<A HREF="http://www.dwheeler.com/secure-programs">http://www.dwheeler.com/secure-programs</A>
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-setuid.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-setuid.html</A>
+
+</PRE>
+</BODY>
+</HTML>

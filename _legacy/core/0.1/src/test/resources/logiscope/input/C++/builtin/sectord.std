@@ -1,0 +1,57 @@
+.NAME public, private and protected sections order
+
+.DESCRIPTION
+
+Definition:
+-----------
+In a class declaration, sections defined by the access specifiers must follow 
+a particular order, given in the parameters of the rule.
+Empty string can be used (in the first position), representing 
+the first section without any specifier.
+Note: Class definitions have not to contain all the access specifiers 
+defined in the standard.
+
+Parameters:
+----------
+A list of character strings representing the access specifiers in the wanted order.
+
+Example:
+--------
+
+if the standard has the following strings in this order: "", "private", 
+"protected" and "public", then the following declarations are allowed:
+
+class aClass {
+int i ;
+protected:
+void p();
+}
+
+class aClass {
+protected:
+int i ;
+public:
+void p();
+}
+
+and not the following ones:
+
+class aClass {
+protected:
+...;
+private:
+... ;
+} 
+
+class aClass {
+protected:
+...;
+protected:
+... ;
+} 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

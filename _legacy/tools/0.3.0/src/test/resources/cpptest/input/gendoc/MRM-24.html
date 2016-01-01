@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never return a reference to a local object
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never return a reference to a local object [MRM-24-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A function must never return a pointer or reference to a local variable.
+If a function returns a reference or a pointer to a local variable, the memory
+to which it refers will already have been deallocated, when this reference or 
+pointer is used. The compiler may or may not give a warning for this."
+See also: MRM-23
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Returning a reference to a local object or a dereferenced pointer initialized
+by new within the function may cause a memory leak.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* foo( ) {
+    int i;
+    return &amp;i; // Violation
+}
+int&amp; bar( ) {
+    int i;
+    return i;  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo( ) {
+    int i = 0;
+    return i;  // OK
+}
+int bar( ) {
+    int i = 0;
+    return i;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#9.4">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#9.4</A>
+   From: 9 Functions - 9.4 Return Types and Values - Rule 34
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Classes and Functions: Implementation", Item 31
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 111
+
+</PRE>
+</BODY>
+</HTML>

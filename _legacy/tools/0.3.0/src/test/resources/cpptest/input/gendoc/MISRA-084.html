@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid expressions in return statements of void functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid expressions in return statements of void functions [MISRA-084-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For functions with void return type, 
+return statements shall not have an expression.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents from undefined behaviour (the compiler may not give an error).
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* compilable by 'c' compiler */
+void foo2() {
+  return 1;  /* Violation */
+}
+
+void foo3() {
+  int a=0;
+  return a;  /* Violation */
+}
+
+void foo4(int a) {
+  return a;  /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* compilable by 'c' compiler */
+
+void foo1() {
+  return;    /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 84
+
+</PRE>
+</BODY>
+</HTML>

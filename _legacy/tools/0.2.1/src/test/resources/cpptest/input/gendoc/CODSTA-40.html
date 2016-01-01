@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+'void' should be used when a function is passed or returns no values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+'void' should be used when a function is passed or returns no values [CODSTA-40-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+In many compiler implementations, functions which do not declare return
+type are automatically assigned int return type. This will conflict with
+semantics of function implementation.
+
+Explicitly specifying parameter and return types as void clearly conveys
+the function intent.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+func1 () { 	// Violation, no return type, no void in parameter list
+    printf("%s\n", "Hello World");
+};
+
+void func2() {  	// Violation, no void parameter list
+    int a = 2000;
+    /* do something */
+};
+
+func3 (void) {  	// Violation, no void as explicit return type
+   return ;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+
+void func1 (void) {        // OK
+    printf("%s\n", "Hello World");
+}
+
+void func2 (void) {       // OK
+    int a = 2000;
+    /* do something */
+}
+
+void func3 (void) {      // OK
+   return ;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Customer guidelines
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use distance and advance to convert a container's const_iterators to iterators
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use distance and advance to convert a container's const_iterators to iterators [STL-19-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Casting const iterators to iterators is ill-advised even for vector
+and string, because its portability is doubtful. Use distance() and
+advance() to convert a container's const_iterators to iterators."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves portability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// Compiles with vc++ 6.0
+
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void foo( ) {
+    typedef vector&lt;int&gt; IntVector;
+    typedef vector&lt;int&gt;::iterator Iter;
+    typedef vector&lt;int&gt;::const_iterator ConstIter;
+
+    ConstIter citer;
+
+    Iter iter = const_cast&lt;Iter&gt;( citer );   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void goo( ) {
+    typedef vector&lt;int&gt; IntVector;
+    typedef vector&lt;int&gt;::iterator Iter;
+    typedef vector&lt;int&gt;::const_iterator ConstIter;
+
+    IntVector v;
+    ConstIter citer;
+
+    Iter iter( v.begin( ) );
+    advance( iter, distance&lt;ConstIter&gt;( iter, citer ) ); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 4, item 27
+
+</PRE>
+</BODY>
+</HTML>

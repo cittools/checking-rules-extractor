@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A cast should not convert a pointer type to an integral type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A cast should not convert a pointer type to an integral type [MISRA2004-11_3_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The size of integer that is required when a pointer is converted to an integer 
+is implementation-defined. Casting between a pointer and an integer type should 
+be avoided where possible, but may be unavoidable when addressing memory mapped 
+registers or other hardware specific features."
+
+
+Exceptions:
+
+The rule allows to cast to UINT_PTR or INT_PTR type. These types are integral
+types that scale to the size of a pointer for both 32-bit and 64-bit Windows.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents undefined or implementation-defined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int* pi;
+    int i;
+    i = (int) pi;    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast pointers to non-pointers.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 11
+
+2. Misra Guidelines rule 45
+
+3. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.3</A>
+   From: 18 Portable Code - 18.3 Type Conversions - Port. Rec. 7
+
+4. <A HREF="http://msdn2.microsoft.com/en-gb/library/aa489560.aspx">http://msdn2.microsoft.com/en-gb/library/aa489560.aspx</A>
+
+5. <A HREF="http://www.codeproject.com/system/64BitOSAndPortingIssues.asp">http://www.codeproject.com/system/64BitOSAndPortingIssues.asp</A>
+
+6. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 182
+
+7. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-2-9
+
+</PRE>
+</BODY>
+</HTML>

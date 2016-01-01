@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The #include directive shall use the &lt;filename.h&gt; notation to include header files
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The #include directive shall use the &lt;filename.h&gt; notation to include header files [PREPROC-09-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The #include directive shall use the &lt;filename.h&gt; notation to include
+header files.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The include form "filename.h" is typically used to include local header files.
+However, due to the unfortunate divergence in vendor implementations, only
+the &lt;filename.h&gt; form will be used.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include "foo.h" // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;foo.h&gt;           // OK
+#include &lt;dir1/dir2/foo.h&gt; // OK: relative path used
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.7 Header Filess, AV Rule 33
+
+</PRE>
+</BODY>
+</HTML>

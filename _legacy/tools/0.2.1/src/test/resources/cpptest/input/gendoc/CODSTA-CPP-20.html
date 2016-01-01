@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If you'd like to support mixed-mode operations make operators a non-member functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If you'd like to support mixed-mode operations make operators a non-member functions [CODSTA-CPP-20-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks declared two-argument operators to make sure they are proper
+for the class type used. You know you'd like to support arithmetic operations
+like addition, subtraction, multiplication, etc., but you're unsure whether
+you should implement them via a member function, a non-member function. 
+If class contains a conversion operators or constructors allowing implicit
+conversion you should define operators global because it makes operations
+commutative. operator&gt;&gt; and operator&lt;&lt; are never members. If f is operator&gt;&gt; 
+or operator&lt;&lt;, make f a non-member function. Here the goal is a natural calling
+syntax; earlier we were concerned about implicit type conversions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Differentiating among functions leads to more object-oriented code
+with behavior that is more intuitive to use and maintain.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+using namespace std;
+
+class A{
+public:
+    A(int x=0);
+    A&amp; operator+(A&amp; a); // Violation (could be global)
+};
+
+class B{
+public:
+    istream&amp; operator&gt;&gt;(istream&amp; input);                   // Violation
+                                                           // should be global
+    ostream&amp; operator&lt;&lt;(ostream&amp; output) { as = "aaaa"; }; // Violation
+                                                           // should be friend
+private: 
+    char* as;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A{
+public:
+    A(int x=0);
+};
+
+A&amp; operator+(A&amp; a, A&amp; b); // OK
+
+class B{
+public:
+    friend ostream&amp; operator&lt;&lt;(ostream&amp; output, B&amp; out);
+private:
+    char* as;
+};
+
+istream&amp; operator&gt;&gt;(istream&amp; input,const B&amp; in);   // OK
+ostream&amp; operator&lt;&lt;(ostream&amp; output, B&amp; out) {     // OK
+    out.as = "aaaa";
+    return output; 
+}; 
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+Your Programs and Design", Second Edition, Addison-Wesley,
+(C) 2005 Pearson Education, Inc., Chapter: "Classes and Functions:
+Design and Declaration", Item 19
+
+</PRE>
+</BODY>
+</HTML>

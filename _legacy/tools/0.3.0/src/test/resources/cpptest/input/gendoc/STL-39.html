@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use traits classes in conjunction with overloading
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use traits classes in conjunction with overloading [STL-39-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"What we really want is a conditional construct (i.e., an if...else statement)
+for types that is evaluated during compilation. As it happens, C++ already has
+a way to get that behavior. It's called overloading."
+Note: Source example is for "VC++.NET2003" compiler only.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Traits classes make information about types available during compilation. 
+They're implemented using templates and template specialization.
+In conjunction with overloading, traits classes make it possible to perform
+compile-time if...else on types."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#if _MSC_VER == 1310
+#include &lt;typeinfo&gt;
+template &lt;typename IterT, typename DistT&gt; 
+void advancedd( IterT&amp; iter, DistT d ) {
+    //**** construction if-else  
+    if (typeid( typename std::iterator_traits&lt;IterT&gt;              // Violation
+                            ::iterator_category ) ==   
+        typeid( std::random_access_iterator_tag )) {
+            iter += d;
+    } else {
+        if (d &gt;= 0) { while (d--) ++iter; }
+        else { while (d++) --iter; }
+    }
+}
+
+#include &lt;vector&gt;
+void example( std::vector&lt;int&gt;::iterator iterator, int distant ){
+    advancedd&lt;std::vector&lt;int&gt;::iterator, int&gt;( iterator, distant );
+}
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#if _MSC_VER == 1310
+
+//**** overloading
+template&lt;typename IterT, typename DistT&gt;          // use this impl for
+void doAdvance( IterT&amp; iter, DistT d,              // random access
+               std::random_access_iterator_tag ) { // iterators
+    iter += d;
+}
+
+template&lt;typename IterT, typename DistT&gt;          // use this impl for
+void doAdvance( IterT&amp; iter, DistT d,              // bidirectional
+               std::bidirectional_iterator_tag ) { // iterators
+    if (d &gt;= 0) { while (d--) ++iter; }
+    else { while (d++) --iter; }
+}
+
+template&lt;typename IterT, typename DistT&gt;          // use this impl for
+void doAdvance( IterT&amp; iter, DistT d,              // input iterators
+               std::input_iterator_tag ) {
+    if (d &lt; 0 ) {
+        throw std::out_of_range("Negative distance"); 
+    }
+    while (d--) ++iter;
+}
+
+template&lt;typename IterT, typename DistT&gt;
+void advancett( IterT&amp; iter, DistT d ) {
+    doAdvance(                            // call the version of doAdvance that
+              iter, d,                    // is appropriate for iter's iterator
+              typename                                         
+              std::iterator_traits&lt;IterT&gt;::iterator_category( ) // OK
+             );                                                 
+}
+
+#include &lt;vector&gt;
+void repair( std::vector&lt;int&gt;::iterator iterator, int distant ) {
+    advancett&lt;std::vector&lt;int&gt;::iterator, int&gt;( iterator, distant );
+}
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 7, Item 47-48
+
+</PRE>
+</BODY>
+</HTML>

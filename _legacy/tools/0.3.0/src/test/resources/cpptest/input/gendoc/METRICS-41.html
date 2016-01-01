@@ -1,0 +1,162 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The number of blocks of comments before and inside function to the number of statements in function should be &gt; 0.2
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The number of blocks of comments before and inside function to the number of statements in function should be &gt; 0.2 [METRICS-41-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The rule reports a violation if the number of blocks of comments in function
+body (BCOM) and before function (BCOB) to number of statements in function
+(STMT) is not higher than 0.2
+    (BCOM + BCOB)/STMT &lt;= 0.2 /* Violation */
+Counted statements are: asm, break, continue, do...while, empty, for, goto,
+if, return, switch, while and the top level expressions.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* 1 block */
+/* 1 block */
+
+int comm /* Violation - function 'comm' contains 20 statements
+            and 4 blocks of comments - COMF = 0.2
+            2 block */
+(
+    unsigned short s
+)
+{
+    int i;
+
+    if (s &gt; 0)
+       i = 3;
+    else
+       i = 4;
+    if (s &gt; 0)
+       i = 3;
+    else
+       i = 4;
+    if (s &gt; 0)
+       i = 3;
+    else        /* 3 block */
+       i = 4;
+    if (s &gt; 0)
+       i = 3;
+    else
+       i = 4;
+    if (s &gt; 0)
+       i = 3;
+    else
+       i = 4;   /* 4 block */
+    if (s &gt; 0){
+       i = 3;
+       i = 5;
+    }
+    else
+       i = 4;
+    return i;
+} 
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* 1 block */
+/* 1 block */
+
+int comm1 /* OK - function 'comm' contains 20 statements
+            and 10 blocks of comments - COMF = 0.5
+            2 block */
+(
+   unsigned short s /* 3 block */
+                    /* 4 block */
+)
+{
+    int i;
+
+    if (s &gt; 0)
+       i = 3;
+    else
+       i = 4;
+    if (s &gt; 0)
+       i = 3;
+    else
+       i = 4;
+    if (s &gt; 0)
+       i = 3;   /* 5 block */
+    /* 6 block */
+    else        /* 7 block */
+       i = 4;
+    if (s &gt; 0)
+    	/* 8 block */
+    	/* 8 block */
+    	/* 8 block */ i = 3;
+    else
+       i = 4;
+    if (s &gt; 0)
+       i = 3;
+    /* 9 block */
+    else
+       i = 4;
+    if (s &gt; 0){
+       i = 3;
+       i = 5;
+    }
+    else
+       i = 4;
+    return i;
+}/* 10 block */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+HIS Source Code Metriken, version 1.3.1
+Metrik "COMF"
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use setWindowFlags function on a Widget
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use setWindowFlags function on a Widget [QT-11-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use setWindowFlags function on a Widget.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Using setWindowFlags in your code can result in widgets which disappear and
+reappear, and change their looks. The widget is destroyed and recreated for
+each call. The setWindowFlags function should only be used on a widget is not
+yet shown.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QWidget&gt;
+
+class PreviewWindow : public QWidget
+{
+    Q_OBJECT
+public:
+    PreviewWindow( QWidget *parent = 0, Qt::WindowFlags flags = 0 );
+    void setWindowFlags( Qt::WindowFlags flags );
+    void setProperty( Qt::WindowFlags flags )
+    {
+        setWindowFlags( flags );                                    // Violation
+    }
+
+private:
+    Q_DISABLE_COPY(PreviewWindow)
+};
+
+void updatePreview( )
+{
+    Qt::WindowFlags flags = 0;
+
+    PreviewWindow *previewWindow = new PreviewWindow( 0, flags );
+    PreviewWindow previewWindowObj( 0, flags );
+
+    previewWindow-&gt;setWindowFlags( flags );                         // Violation
+    previewWindowObj.setWindowFlags( flags );                       // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QWidget&gt;
+
+class PreviewWindow : public QWidget
+{
+    Q_OBJECT
+public:
+    PreviewWindow( QWidget *parent = 0, Qt::WindowFlags flags = 0 );
+    void setWindowFlags( Qt::WindowFlags flags );
+    void setProperty( Qt::WindowFlags flags )
+    {
+        // OK
+    }
+
+private:
+    Q_DISABLE_COPY(PreviewWindow)
+};
+
+void updatePreview( )
+{
+    Qt::WindowFlags flags = 0;
+
+    PreviewWindow *previewWindow = new PreviewWindow( 0, flags );  // OK
+    PreviewWindow previewWindowObj( 0, flags );                    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

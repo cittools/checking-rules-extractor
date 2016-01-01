@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A class destructor shall not exit with an exception
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A class destructor shall not exit with an exception [MISRA2008-15_5_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if you throw from within a destructor. 
+This rule is for C++ programming language only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents throwing from within a destructor. It may lead to memory leaks
+and improper object destruction. 
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo {
+public:
+    Foo( ) { }
+    ~Foo( ) {
+        throw;  // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Exception {};
+
+class Foo {
+public:
+    Foo( ) { }
+    ~Foo( ) {
+        try {       // OK 
+        } catch (Exception&amp; e) {
+            // caught all exceptions
+        }
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 2, Item 8
+
+2. <A HREF="http://www.cs.helsinki.fi/u/vihavain/s03/cpp/items/CppStyleRules2.html">http://www.cs.helsinki.fi/u/vihavain/s03/cpp/items/CppStyleRules2.html</A>
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 15, Rule 15-5-1
+
+</PRE>
+</BODY>
+</HTML>

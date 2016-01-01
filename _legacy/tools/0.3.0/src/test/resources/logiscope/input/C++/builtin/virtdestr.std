@@ -1,0 +1,18 @@
+.NAME Virtual destructors
+
+.DESCRIPTION
+
+Definition:
+-----------
+Destructors of base classes must be declared virtual.
+(This rule relates to Item 14 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Ensures that base and derived destructors are called before memory deallocation.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

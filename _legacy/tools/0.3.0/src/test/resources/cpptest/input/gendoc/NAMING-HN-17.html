@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for floating point types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for floating point types [NAMING-HN-17-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For floating point variables and parameters use "f" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+float g_fmyVar;                                  // Violation
+float g_MyVariable;                              // Violation
+static const float g_skMyVariable = 0.0;         // Violation
+class B {
+    float m_MyVariable;                          // Violation
+    static const float m_skMyVariable;           // Violation
+    void foo( float MyParam ) {                  // Violation
+        float MyVariable;                        // Violation
+        static const float skMyVariable = 0.0;   // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+float g_fMyVar;                                  // OK
+float g_fMyVariable;                             // OK
+static const float g_skfMyVariable = 0.0;        // OK
+class A {
+    float m_fMyVariable;                         // OK
+    static const float m_skfMyVariable;          // OK
+    void foo( float fMyParam ) {                 // OK
+        float fMyVariable;                       // OK
+        static const float skfMyVariable = 0.0;  // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

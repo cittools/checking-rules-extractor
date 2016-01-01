@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All #else, #elif and #endif preprocessor directives shall reside in the same file as the #if or #ifdef directive to which they are related
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All #else, #elif and #endif preprocessor directives shall reside in the same file as the #if or #ifdef directive to which they are related [MISRA2008-16_1_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When the inclusion and exclusion of blocks of statements is controlled 
+by a series of preprocessor directives, confusion can arise 
+if all of the relevant directives do not occur within one file." 
+This rule requires that the number of preprocessor directives #if/ifdef/ifndef 
+matches the number of #endif directives in the file.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves good code structure and 
+prevents maintenance problems.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* Violation */
+#define A
+#ifdef A
+#include "file1.h"
+#endif
+#if 1
+#include "file2.h"
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* OK */
+#define A
+#ifdef A
+#include "file1.h"
+#endif
+#if 1
+#include "file2.h"
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-1-2
+
+</PRE>
+</BODY>
+</HTML>

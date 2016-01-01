@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Bitwise operators shall only be applied to operands of unsigned underlying type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Bitwise operators shall only be applied to operands of unsigned underlying type [CODSTA-63-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Bitwise operations (~, &lt;&lt;, &lt;&lt;=, &gt;&gt;, &gt;&gt;=, &amp;, &amp;=, ^, ^=, | and |=) are not
+normally meaningful on signed integers or enumeration constants.
+Additionally, an implementation-defined result is obtained if a right shift
+is applied to a negative value."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo1( )
+{
+    signed short   s1;
+    unsigned short us1, us2;
+
+    us1 = us2 &amp; s1;        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo1( )
+{
+    signed short   s1;
+    unsigned short us1, us2;
+
+    us1 = us2 &amp; (unsigned short)s1;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-0-21
+
+</PRE>
+</BODY>
+</HTML>

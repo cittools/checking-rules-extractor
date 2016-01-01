@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Assigning result of ints operation to long without casting at least one of the ints is not allowed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Assigning result of ints operation to long without casting at least one of the ints is not allowed [PORT-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+When assigning result of ints operation to long, you should cast at least one
+of the ints to a long before the operation.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+When operating on ints, you should at least cast one of the ints to along
+before the operation. Otherwise, you may have a loss of information.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() {
+   int a = 72;
+   int b = 55;
+   long result = 0;
+   result = (long)(a*b);        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo() {
+   int a = 72;
+   int b = 55;
+   long result = 0;
+   result = (long)((long)a*b);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

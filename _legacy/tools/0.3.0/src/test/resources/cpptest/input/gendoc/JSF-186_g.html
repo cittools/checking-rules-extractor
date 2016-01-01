@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be no unreachable code after "if" or "switch" statement inside while/for/do...while loop
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be no unreachable code after "if" or "switch" statement inside while/for/do...while loop [JSF-186_g-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"This rule refers to code which cannot under any circumstances be reached, 
+and which can be identified as such at compile-time. Code that can be reached 
+but may never be executed is excluded from the rule (e.g. defensive programming
+code). A portion of code is unreachable if there is no control flow path from 
+the relevant entry point to that code."
+The rule reports a violation on the code inside loop if:
+- the code is after 'if/else' construction, where each branch has unconditional
+  'break', 'continue' or 'return'
+- the code is after switch which has unconditional 'return' inside each 'case'
+  and 'default'
+See also: MISRA2004-14_1_a, MISRA2004-14_1_b, MISRA2004-14_1_c,
+          MISRA2004-14_1_d, MISRA2004-14_1_e, MISRA2004-14_1_f
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps avoid useless code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo( int c ) {
+    while ( c &gt; 1 ) {
+        if ( c &gt; 2 ) {    // Violation
+            continue;
+        } else {
+            break;
+        }
+        c++;              // unreachable code
+    }
+
+    for (int i = 0; i &gt; 1; i++ ) {
+        switch(i){        // Violation
+        case 1:
+            i++;
+            return i;
+        case 2:
+            i = i + 2;
+            return i;
+        default:
+            return i;
+        }
+        c++;              // unreachable code
+    }
+    return c;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo( int c ) {
+    while ( c &gt; 1 ) {
+        c++;
+        if ( c &gt; 2 ) {    // OK
+            continue;
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i &gt; 1; i++ ) {
+        c++;
+        switch(i){        // OK
+        case 1:
+            i++;
+            return i;
+        case 2:
+            i = i + 2;
+            return i;
+        default:
+            return i;
+        }
+    }
+    return c;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 14
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 186
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 0, Rule 0-1-1
+
+</PRE>
+</BODY>
+</HTML>

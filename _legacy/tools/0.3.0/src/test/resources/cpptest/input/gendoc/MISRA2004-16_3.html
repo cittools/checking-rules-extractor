@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Identifiers shall be given for all of the parameters in a function prototype declaration
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Identifiers shall be given for all of the parameters in a function prototype declaration [MISRA2004-16_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Names shall be given for all the parameters in the function declaration 
+for reasons of compatibility, clarity and maintainability.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and clarity of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo1( void );          /* OK */
+void foo2( int a, int );    /* Violation */
+void foo3( int a, int ){}   /* OK */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1( void );          /* OK */
+void foo2( int a, int b );  /* OK */
+void foo3( int a, int ){}   /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 16
+
+</PRE>
+</BODY>
+</HTML>

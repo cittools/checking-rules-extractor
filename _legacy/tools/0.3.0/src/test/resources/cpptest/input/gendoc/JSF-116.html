@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Pass built-in-types by value unless you are modifying them
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Pass built-in-types by value unless you are modifying them [JSF-116-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if your code passes arguments of built-in types by value,
+unless they should be modified by functions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Passing arguments of built-in types by value improves the efficiency
+ of your code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int Foo(int i, int &amp;j)  // Violation
+{    
+    return i + j;
+}
+int Bar(int &amp;i, int j)  // Violation
+{    
+    j += i;
+    return j;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int Foo(int i, int j)  // OK
+{      
+    return i + j;
+}
+int Bar(int i, int j)  // OK
+{    
+    j += i;
+    return j;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc. Chapter: "Take Parameters Appropriately
+   by Value, (Smart) Pointer, or Reference", Rule 25
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Functions (Value, Pointer or Reference), AV Rule 116
+
+</PRE>
+</BODY>
+</HTML>

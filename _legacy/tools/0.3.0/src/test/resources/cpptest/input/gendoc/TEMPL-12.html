@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In a class template with a dependent base, any name that may be found in that dependent base shall be referred to using a qualified-id or this-&gt;
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In a class template with a dependent base, any name that may be found in that dependent base shall be referred to using a qualified-id or this-&gt; [TEMPL-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"In a class template with a dependent base, any name that may be found in that
+dependent base shall be referred to using a qualified-id or this-&gt;"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Using a qualified-id or prefixing the identifier with this-&gt; ensures that
+the entity chosen is consistent with developer expectations."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int TYPE;
+void g ( );
+int i;
+template &lt;typename T&gt;
+class B;
+template &lt;typename T&gt;
+class A : public B&lt;T&gt;
+{
+    void f1 ( )
+    {
+        TYPE t = 0; // Violation
+        g ( );      // Violation
+        i++;        // Violation
+    }
+};
+template &lt;typename T&gt;
+class B
+{
+public:
+    typedef T TYPE;
+    void g ( );
+    int i;
+};
+template class A&lt;int&gt;;
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int TYPE;
+void g ( );
+int i;
+template &lt;typename T&gt;
+class B;
+template &lt;typename T&gt;
+class A : public B&lt;T&gt;
+{
+    void f1 ( )
+    {
+        ::TYPE t1 = 0; // OK - explicit use global TYPE
+        ::g ( );       // OK - explicit use global func
+        ::i++;         // OK - explicit use global var
+        typename B&lt;T&gt;::TYPE t2 = 0; // OK - explicit use base TYPE
+        this-&gt;g ( );                // OK - explicit use base "g"
+        this-&gt;i;                    // OK - explicit use base "i"
+    }
+};
+template &lt;typename T&gt;
+class B
+{
+public:
+    typedef T TYPE;
+    void g ( );
+    int i;
+};
+template class A&lt;int&gt;;
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 14, Rule 14-6-1
+
+</PRE>
+</BODY>
+</HTML>

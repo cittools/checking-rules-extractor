@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An include file for a class should have a file name of the form &lt;class name&gt; + extension
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An include file for a class should have a file name of the form &lt;class name&gt; + extension [NAMING-32-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"An include file for a class should have a file name of the form
+&lt;class name&gt; + extension.
+Use uppercase and lowercase letters in the same way as in the source code.
+Since class names must generally be unique within a large context,
+it is appropriate to utilize this characteristic when naming its include file."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Makes easy to locate a class definition using a file-based tool.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+Header (with tested class definition) should be included 
+in the project or "File Scope" should include path to the header files.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// MyClass.hh
+// Violation
+class MyClass2 {    
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// MyClass2.hh
+// OK
+class MyClass2 {    
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 4 Source Code in Files - 4.2 Naming Files - Rec. 7
+
+</PRE>
+</BODY>
+</HTML>

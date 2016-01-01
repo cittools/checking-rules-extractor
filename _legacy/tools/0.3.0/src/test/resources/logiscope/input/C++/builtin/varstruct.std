@@ -1,0 +1,53 @@
+.NAME struct and union variables
+
+.DESCRIPTION
+
+Definition:
+-----------
+Variables must not be directly declared using a struct or an union structure.
+An intermediate type must be automatically used.
+
+Parameters:
+----------
+The string "nostruct" which, if used, prevents from declaring a struct or 
+union variable except in a typedef structure.
+
+WARNING! This option has no meaning in C++ programs, where class declarations 
+are always allowed outside a typedef structure.
+
+Example:
+--------
+
+// write
+
+typedef struct {
+...
+} typeName;
+
+typeName varName;
+struct structName;
+
+typedef struct structName {
+...
+struct structName *ptr;
+} typeName;
+typeName varName;
+
+// do not write
+
+struct {
+...
+} varName;
+
+// do not write, if the "nostruct" option is used
+
+struct structName {
+...
+};
+struct structName varName; 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

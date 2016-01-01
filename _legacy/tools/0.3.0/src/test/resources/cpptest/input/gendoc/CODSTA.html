@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Coding Conventions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+CODSTA
+</STRONG>
+<PRE>
+Coding Conventions
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="CODSTA-01.html">Array elements shall be accessed by the array operator [ ] [CODSTA-01-3]</a></code><br>
+<code><a href="CODSTA-02.html">Do not declare member variables as bit-fields [CODSTA-02-5]</a></code><br>
+<code><a href="CODSTA-03.html">Do not define constants via #define [CODSTA-03-3]</a></code><br>
+<code><a href="CODSTA-04.html">Do not declare local variables with the 'static' keyword [CODSTA-04-5]</a></code><br>
+<code><a href="CODSTA-05.html">Pointers to pointers should be avoided whenever possible [CODSTA-05-3]</a></code><br>
+<code><a href="CODSTA-06.html">Avoid using the '?:' operator [CODSTA-06-3]</a></code><br>
+<code><a href="CODSTA-07.html">If a function has no parameters, use ( ) instead of ( void ) [CODSTA-07-3]</a></code><br>
+<code><a href="CODSTA-08.html">Do not use break in for loops [CODSTA-08-2]</a></code><br>
+<code><a href="CODSTA-09.html">Do not cast pointers to functions to pointers to primitive types [CODSTA-09-3]</a></code><br>
+<code><a href="CODSTA-10.html">Storage type modifiers shall be associated with the type, not the variable or the function [CODSTA-10-3]</a></code><br>
+<code><a href="CODSTA-11.html">Assert liberally to document internal assumptions and invariants [CODSTA-11-5]</a></code><br>
+<code><a href="CODSTA-12.html">Avoid using shift operations instead of arithmetic operations [CODSTA-12-3]</a></code><br>
+<code><a href="CODSTA-13.html">Avoid pointer arithmetic [CODSTA-13-3]</a></code><br>
+<code><a href="CODSTA-14.html">Never convert consts to non-consts [CODSTA-14-3]</a></code><br>
+<code><a href="CODSTA-15.html">Do not declare the size of an array when the array is passed into a function as a parameter [CODSTA-15-2]</a></code><br>
+<code><a href="CODSTA-16.html">Do not declare the size of an array when the array is initialized [CODSTA-16-2]</a></code><br>
+<code><a href="CODSTA-17.html">Do not compare a pointer to NULL or assign NULL to a pointer; use 0 instead [CODSTA-17-3]</a></code><br>
+<code><a href="CODSTA-18.html">Prefer while statements over do statements [CODSTA-18-5]</a></code><br>
+<code><a href="CODSTA-19.html">Use the ctype.h facilities for character test [CODSTA-19-3]</a></code><br>
+<code><a href="CODSTA-20.html">EOS should be used to terminate a string rather than NULL [CODSTA-20-2]</a></code><br>
+<code><a href="CODSTA-21.html">When using enum, the values of each member should be explicitly declared [CODSTA-21-5]</a></code><br>
+<code><a href="CODSTA-22.html">Local variable or parameter names and class member variable or parent class/struct member variable names shall differ by more than a single character [CODSTA-22-1]</a></code><br>
+<code><a href="CODSTA-23.html">All 'if' statements should have an 'else' clause [CODSTA-23-3]</a></code><br>
+<code><a href="CODSTA-24.html">If FALSE is to be defined, and is not already defined, #define FALSE should be 0 [CODSTA-24-5]</a></code><br>
+<code><a href="CODSTA-25.html">If FALSE is to be defined, and is not already defined, enum value FALSE should be 0 [CODSTA-25-5]</a></code><br>
+<code><a href="CODSTA-26.html">Avoid magic numbers [CODSTA-26-3]</a></code><br>
+<code><a href="CODSTA-27.html">Avoid functions that modify global variables [CODSTA-27-3]</a></code><br>
+<code><a href="CODSTA-28.html">Define fields for union declarations [CODSTA-28-5]</a></code><br>
+<code><a href="CODSTA-29.html">"#define" or enum constants should be used instead of hard coded values whenever possible [CODSTA-29-3]</a></code><br>
+<code><a href="CODSTA-30.html">Avoid returning handles to function parameters [CODSTA-30-3]</a></code><br>
+<code><a href="CODSTA-31.html">Never use explicit type conversions (casts) [CODSTA-31-3]</a></code><br>
+<code><a href="CODSTA-32.html">Do not write logical expressions of the type if(test) or if(!test)  when test is a pointer [CODSTA-32-3]</a></code><br>
+<code><a href="CODSTA-33.html">Do not use operator ++ or -- in the conditional expression of if, while, or switch [CODSTA-33-3]</a></code><br>
+<code><a href="CODSTA-34.html">Use a typedef to simplify program syntax when declaring function pointers [CODSTA-34-3]</a></code><br>
+<code><a href="CODSTA-35.html">Always provide a default branch for switch statements [CODSTA-35-3]</a></code><br>
+<code><a href="CODSTA-36.html">Pass built-in-types by value unless you are modifying them [CODSTA-36-3]</a></code><br>
+<code><a href="CODSTA-37.html">Do not use a #define that prevents the compiler from checking types except ones used only in #ifs and #elifs conditions [CODSTA-37-3]</a></code><br>
+<code><a href="CODSTA-38.html">Do not use a #define that prevents the compiler from checking types [CODSTA-38-3]</a></code><br>
+<code><a href="CODSTA-39.html">Avoid internal or external name conflict with a C++ reserved word [CODSTA-39-1]</a></code><br>
+<code><a href="CODSTA-40.html">'void' should be used when a function is passed or returns no values [CODSTA-40-3]</a></code><br>
+<code><a href="CODSTA-41.html">Avoid switch statements with only one case [CODSTA-41-4]</a></code><br>
+<code><a href="CODSTA-42.html">If TRUE is to be defined, and is not already defined, #define TRUE should be 1 [CODSTA-42-5]</a></code><br>
+<code><a href="CODSTA-43.html">If TRUE is to be defined, and is not already defined, enum value TRUE should be 1 [CODSTA-43-5]</a></code><br>
+<code><a href="CODSTA-44.html">Local variables and variables of class/parent classes/parent structs should have different name [CODSTA-44-1]</a></code><br>
+<code><a href="CODSTA-45.html">Parameters and variables of class/parent classes/parent structs should have different name [CODSTA-45-1]</a></code><br>
+<code><a href="CODSTA-46.html">Use positive logic rather than negative logic whenever practical [CODSTA-46-5]</a></code><br>
+<code><a href="CODSTA-47.html">All structures should have typedefs [CODSTA-47-3]</a></code><br>
+<code><a href="CODSTA-48.html">The following digraphs will not be used &lt;%, %&gt;, &lt;:, :&gt;, %:, %:%: [CODSTA-48-3]</a></code><br>
+<code><a href="CODSTA-49.html">Null initialize or increment expressions in for loops will not be used; a while loop will be used instead [CODSTA-49-3]</a></code><br>
+<code><a href="CODSTA-50.html">Hexadecimal constants will be represented using all uppercase letters [CODSTA-50-3]</a></code><br>
+<code><a href="CODSTA-51.html">Literal suffixes shall use uppercase rather than lowercase letters [CODSTA-51-2]</a></code><br>
+<code><a href="CODSTA-52.html">The initialization expression in a for loop will perform no actions other than to initialize the value of a single for loop parameter [CODSTA-52-3]</a></code><br>
+<code><a href="CODSTA-53.html">The increment expression in a for loop will perform no action other than to change a single loop parameter to the next value for the loop [CODSTA-53-3]</a></code><br>
+<code><a href="CODSTA-54.html">Every switch statement will have at least two cases and a potential default [CODSTA-54-3]</a></code><br>
+<code><a href="CODSTA-55.html">Enumeration types shall be used instead of integer types (and constants) as case labels [CODSTA-55-2]</a></code><br>
+<code><a href="CODSTA-56.html">All 'case' and 'default' labels of switch statement should have an explicit break or a return statement, or 'fall through' comment [CODSTA-56-3]</a></code><br>
+<code><a href="CODSTA-57.html">Suspicious use of semicolon [CODSTA-57-4]</a></code><br>
+<code><a href="CODSTA-58.html">Cast to void is not allowed [CODSTA-58-4]</a></code><br>
+<code><a href="CODSTA-59.html">Hardcoded array declarations and 'malloc' calls should not be used [CODSTA-59-4]</a></code><br>
+<code><a href="CODSTA-60.html">Avoid comparing values with TRUE macro/enum constant using equality operators ("==", "!=") [CODSTA-60-3]</a></code><br>
+<code><a href="CODSTA-61.html">The final clause of a switch statement shall be the default-clause [CODSTA-61-3]</a></code><br>
+<code><a href="CODSTA-62.html">A cast shall not convert a pointer to a function to any other pointer type, including a pointer to function type [CODSTA-62-3]</a></code><br>
+<code><a href="CODSTA-63.html">Bitwise operators shall only be applied to operands of unsigned underlying type [CODSTA-63-3]</a></code><br>
+<code><a href="CODSTA-64.html">An unconditional throw or break statement shall terminate every non-empty switch-clause [CODSTA-64-3]</a></code><br>
+<code><a href="CODSTA-65.html">An object with integer type or pointer to void type shall not be converted to an object with pointer type [CODSTA-65-3]</a></code><br>
+<code><a href="CODSTA-66.html">Non-constant operands to a binary bitwise operator shall have the same underlying type [CODSTA-66-3]</a></code><br>
+<code><a href="CODSTA-67.html">The types used for an object, a function return type, or a function parameter shall be token-for-token identical in all declarations and re-declarations [CODSTA-67-3]</a></code><br>
+<code><a href="CODSTA-68.html">A "U" suffix shall be applied to all octal or hexadecimal integer literals of unsigned type [CODSTA-68-3]</a></code><br>
+<code><a href="CODSTA-69.html">Expressions with type (plain) char and wchar_t shall not be used as operands to built-in operators other than  =,  ==, != and the unary &amp; operator [CODSTA-69-3]</a></code><br>
+<code><a href="CODSTA-70.html">Expressions with type enum shall not be used as operands to built-in operators other than  [ ],  =, ==, !=, &lt;, &lt;=, &gt;, &gt;=, and the unary &amp; operator [CODSTA-70-3]</a></code><br>
+<code><a href="CODSTA-71.html">Named bit-fields with signed integer type shall have a length of more than one bit [CODSTA-71-3]</a></code><br>
+<code><a href="CODSTA-73.html">Assembler instructions shall only be introduced using the asm declaration [CODSTA-73-3]</a></code><br>
+<code><a href="CODSTA-74.html">Bit-fields shall not have enum type [CODSTA-74-3]</a></code><br>
+<code><a href="CODSTA-75.html">Bit-fields shall be either bool type or an explicitly unsigned or signed integral type [CODSTA-75-3]</a></code><br>
+<code><a href="CODSTA-76.html">The identifier main shall not be used for a function other than the global function main [CODSTA-76-3]</a></code><br>
+<code><a href="CODSTA-77.html">The goto statement shall jump to a label declared later in the same function body [CODSTA-77-3]</a></code><br>
+<code><a href="CODSTA-78.html">Any label referenced by a goto statement shall be declared in the same block, or in a block enclosing the goto statement [CODSTA-78-3]</a></code><br>
+<code><a href="CODSTA-79.html">For any iteration statement there shall be no more than one break or goto statement used for loop termination [CODSTA-79-3]</a></code><br>
+<code><a href="CODSTA-80.html">The continue statement shall only be used within a well formed for loop [CODSTA-80-3]</a></code><br>
+<code><a href="CODSTA-81.html">If a function has internal linkage then all redeclarations shall include the static storage class specifier [CODSTA-81-3]</a></code><br>
+<code><a href="CODSTA-82.html">Avoid infinite loops [CODSTA-82-3]</a></code><br>
+<code><a href="CODSTA-83.html">All loops must have a fixed upper or lower bound [CODSTA-83-3]</a></code><br>
+<code><a href="CODSTA-85.html">Avoid exit points within infinite loops [CODSTA-85-3]</a></code><br>
+<code><a href="CODSTA-86.html">The validity of parameters must be checked inside each function [CODSTA-86-3]</a></code><br>
+<code><a href="CODSTA-87.html">Use no more than one level of dereferencing [CODSTA-87-3]</a></code><br>
+<code><a href="CODSTA-88.html">Function pointers are not permitted [CODSTA-88-3]</a></code><br>
+<code><a href="CODSTA-89.html">The declaration should not contain more than one level of pointer indirection [CODSTA-89-3]</a></code><br>
+<code><a href="CODSTA-90.html">Each operand of a logical '&amp;&amp;' or '||' shall be a postfix-expression [CODSTA-90-3]</a></code><br>
+<code><a href="CODSTA-91.html">A function shall have at most one exit point [CODSTA-91-3]</a></code><br>
+</BODY>
+</HTML>

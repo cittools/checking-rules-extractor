@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Base class copy constructor should be protected or public with smart pointer as parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Base class copy constructor should be protected or public with smart pointer as parameter [OOP-01-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Sliced objects aren't good. (...) 
+There is a better way that portably achieves the goal of preventing slicing
+and delivers more value to boot. The more general idiomatic solution is to
+make the copy constructor for base classes protected"
+See also: OOP-02
+
+
+Exceptions:
+
+"Some designs might require that the copy constructor of base classes
+are left public. In that case, prefer passing by (smart) pointer to passing
+by reference. Passing by pointer is much less vulnerable to slicing and
+unwanted temporary construction."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using of sliced objects.
+"Object slicing is automatic, invisible, and likely to bring wonderful
+polymorphic designs to a screeching halt"
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+    A(A&amp;);  // Violation - copy constructor in public section 
+            //             without smart pointer as parameter 
+};
+
+class B
+{
+private:
+   B(B &amp;); // Violation  - copy constructor in private section  
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;memory&gt;
+using namespace std;
+
+class C
+{
+public:
+    C(auto_ptr&lt;C&gt;); // OK
+};
+
+class D
+{
+protected:
+    D(D&amp;);         // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Construction, Destruction, and Copying", Rule 54
+
+</PRE>
+</BODY>
+</HTML>

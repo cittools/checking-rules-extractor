@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The validity of parameters must be checked inside each function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The validity of parameters must be checked inside each function [CODSTA-86-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The validity of parameters must be checked inside each function."
+The rule reports a violation if a parameter is not checked before the first 
+use inside function.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule assumes that the parameter is validated if it is used inside 
+condition of statements: if, switch or ternary operator.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule prevents use incorrect value of parameter.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo3(int p, int q){   // Violation
+    p++;
+    q++;
+    return p + q;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo4(int p, int q){   // OK
+    if(p == 0 || q == 0){
+        return 0;
+    }
+    p++;
+    q++;
+    return p + q;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 7
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Always assign a new value to a pointer that points to deallocated memory
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Always assign a new value to a pointer that points to deallocated memory [MRM-11-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Always assign a new value to a pointer that points to deallocated memory."
+All pointers should be set to either 0 or to a valid address immediately
+after delete statement.
+See also: MRM-06, MRM-08, MRM-09, MRM-10, MRM-30
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents accessing a pointer or a reference to a deleted object.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int* p;
+    int* q;
+    delete p;	// Violation - set deleted pointer to 0 in next expression
+    delete q;	// Violation - set deleted pointer to 0 in next expression
+    p = 0;
+    q = new int;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int* p;
+    int* q;
+    delete p;	// OK
+    p = 0;
+    delete q;	// OK
+    q = new int;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 16 Memory Allocation - Rec. 59
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+For any iteration statement there shall be no more than one break or goto statement used for loop termination
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+For any iteration statement there shall be no more than one break or goto statement used for loop termination [CODSTA-79-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"For any iteration statement there shall be no more than one break or goto
+statement used for loop termination."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Restricting the number of exits from a loop is done in the interests of good
+structured programming. One break or goto statement is acceptable in a loop
+since this allows, for example, for dual outcome loops or optimal coding."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int a;
+
+    for (a = 0; a &lt; 10; a++) { // Violation
+        if (a == 5) {
+            break;
+        }
+        if (a == 7) {
+            break;
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int a;
+
+    for (a = 0; a &lt; 10; a++) { // OK
+        if (a == 5 || a == 7) {
+            break;
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 6, Rule 6-6-4
+
+</PRE>
+</BODY>
+</HTML>

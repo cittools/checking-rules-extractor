@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid declaring virtual functions inline
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid declaring virtual functions inline [OOP-25-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Most compiler implementations use virtual tables (vtbl) to implement virtual
+functions. There have to be one vtbl for a class. It have to be placed
+somewhere. It's compiler dependent, but some implementations put vtbl in object
+file that contains definition of first non-inline non-pure virtual function.
+If all virtual functions are inline compiler does not have one place to put
+vtbl - it puts it in all objects that use virtualness of the class.
+This increases size of object files.
+The simplest solutions is not to make virtual functions inline.
+
+
+Exceptions:
+
+The rule does not report violations on template functions.
+Compiler must know the body of a template function. It instantiates and puts
+implementation in each object that uses it. Thus, removing inline does not help
+because virtual table is still put in each object that uses it.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The size of a class's vtbl is proportional to the number of virtual functions
+declared for that class (including those it inherits from its base classes).
+There should be only one virtual table per class, so the total amount of space
+required for virtual tables is not usually significant, but if you have a large
+number of classes or a large number of virtual functions in each class, you may
+find that the vtbls take a significant bite out of your address space.
+If all virtual functions in a class are declared inline, the most implementations
+then generate a copy of the class's in every object file that uses it. 
+In large systems, this can lead to programs containing hundreds or thousands
+of copies of a class's!"
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+   A(int i) : _i( i ) {}
+   virtual ~A( ) {}         // Violation
+
+private:
+   int _i;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+public:
+    A( int i ) : _i( i ) {}
+    virtual ~A( );          // OK
+
+private:
+    int _i;
+};
+
+A::~A() { }
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+Chapter: "Efficiency", Item 24
+
+</PRE>
+</BODY>
+</HTML>

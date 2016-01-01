@@ -1,0 +1,18 @@
+.NAME Global variable initialization
+
+.DESCRIPTION
+
+Definition:
+-----------
+Global variables must be initialized when they are defined.
+
+Justification:
+--------------
+Not all compilers give the same default values. Unexpected behaviour can be 
+avoided with better control over variable values. Initializing global variables 
+when they are declared ensures that they are initialized before being used.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

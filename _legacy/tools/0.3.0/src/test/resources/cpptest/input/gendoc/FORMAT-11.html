@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be a single ASCII space character preceding and following bitwise operator '&amp;'
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be a single ASCII space character preceding and following bitwise operator '&amp;' [FORMAT-11-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether there is a single ASCII space character 
+preceding and following bitwise operator &amp;.
+See also: FORMAT-09, FORMAT-10
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This convention promotes readability by clearly 
+separating the operands from the operator.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Space( ) {
+   int z = 73;
+   int y = 0;
+
+   y = z &amp;  y;   // Violation
+   y = z  &amp; y;   // Violation
+   y = z&amp; y;     // Violation
+   y = z &amp;y;     // Violation
+   y = z&amp;y;      // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void Space( ) {
+   int z = 73;
+   int y = 0;
+
+   y = z &amp; y;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

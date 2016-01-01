@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An object shall not be assigned to an overlapping object
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An object shall not be assigned to an overlapping object [PB-42-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"An object shall not be assigned to an overlapping object."
+Rule detects if two different members of the same union are assigned
+to each other using the same object
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Assigning between objects that have an overlap in their physical storage
+leads to undefined behaviour."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+union U {
+    int         iValue; 
+    long        lValue;
+    double      dValue;
+};
+
+void main( ) {
+    union U a, b;
+    union U *p;
+
+    a.dValue  = a.lValue;    // Violation
+    p-&gt;dValue = p-&gt;iValue;   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+union U {
+    int         iValue; 
+    long        lValue;
+    double      dValue;
+};
+
+void main( ) {
+    union U a, b;
+    union U *p, *q;
+    a.dValue  = b.lValue;     // OK
+    p-&gt;dValue = q-&gt;iValue;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 0, Rule 0-2-1 
+
+</PRE>
+</BODY>
+</HTML>

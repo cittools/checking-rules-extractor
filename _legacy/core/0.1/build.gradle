@@ -1,0 +1,49 @@
+apply plugin:'java'
+apply plugin:'maven'
+apply plugin:'eclipse'
+
+version = "0.1" 
+
+
+installer = install.repositories.mavenInstaller
+
+installer.pom*.whenConfigured {pom ->
+  pom.project {
+    developers {
+      developer {
+        id('gboissinot')
+        name('Gregory Boissinot')
+        email('gregory.boissinot@zenika.com')
+        roles {
+          role('Project Architecture')
+        }
+      }
+      developer {
+        id('jforner')
+        name('Joel Forner')
+        roles {
+          role('Project Owner')
+          role('Project Developer')
+        }
+      }
+    }
+  }
+}
+
+
+archivesBaseName = 'extractor'
+
+manifest.mainAttributes("Main-Class": "com.thalesgroup.extractor.client.CmdLineClient")
+
+repositories {
+	mavenRepo urls:'http://repo.orchestra/repo'
+}
+
+dependencies {
+	compile "aopalliance:aopalliance:1.0", 
+	        "com.google.code.guice:guice:2.0.1"
+}
+
+jar {
+    from configurations.compile.collect {  zipTree(it).matching { exclude('META-INF/*') } }
+}

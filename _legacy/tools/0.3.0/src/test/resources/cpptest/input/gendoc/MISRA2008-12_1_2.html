@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All constructors of a class should explicitly call a constructor for all of its immediate base classes and all virtual base classes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All constructors of a class should explicitly call a constructor for all of its immediate base classes and all virtual base classes [MISRA2008-12_1_2-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"All constructors of a class should explicitly call a constructor for all of
+its immediate base classes and all virtual base classes."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule will also report a violation if class does not define any constructors
+and has a base class with a constructor.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule reduces confusion over which constructor will be used,
+and with what parameters.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+    public:
+        A ( )
+        {
+        }
+};
+
+
+class B : public A
+{
+    public:
+        B ( ) // Violation
+        {
+        }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+    public:
+        A ( )
+        {
+        }
+};
+
+
+class B : public A
+{
+    public:
+        B ( ): A() // OK
+        {
+        }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 - Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 12, Rule 12-1-2
+
+</PRE>
+</BODY>
+</HTML>

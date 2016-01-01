@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Portability
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+PORT
+</STRONG>
+<PRE>
+Portability
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="PORT-01.html">Use capital 'L' instead of lowercase 'l' to indicate long [PORT-01-5]</a></code><br>
+<code><a href="PORT-02.html">Assigning result of ints operation to long without casting at least one of the ints is not allowed [PORT-02-3]</a></code><br>
+<code><a href="PORT-03.html">Don't use hard coded value of offset in structures [PORT-03-2]</a></code><br>
+<code><a href="PORT-04.html">Don't use hex constants [PORT-04-3]</a></code><br>
+<code><a href="PORT-05.html">A pointer to a long should not be casted to an int pointer [PORT-05-2]</a></code><br>
+<code><a href="PORT-06.html">Do not assign a long int to an int [PORT-06-3]</a></code><br>
+<code><a href="PORT-07.html">Do not pass long casted to an int in function call [PORT-07-3]</a></code><br>
+<code><a href="PORT-08.html">Constant assignment to long should not involve int literals [PORT-08-3]</a></code><br>
+<code><a href="PORT-09.html">The type char shall always be declared as unsigned char or signed char [PORT-09-3]</a></code><br>
+<code><a href="PORT-10.html">Do not initialize a long int with int literals [PORT-10-3]</a></code><br>
+<code><a href="PORT-11.html">Do not cast an int pointer to a long pointer [PORT-11-2]</a></code><br>
+<code><a href="PORT-12.html">Do not assign the value from 32 bit multiplication to long type [PORT-12-3]</a></code><br>
+<code><a href="PORT-13.html">The type int shall always be declared as unsigned int or signed int [PORT-13-3]</a></code><br>
+<code><a href="PORT-14.html">Avoid conversions from "shorter" type to "longer" type in assignment [PORT-14-3]</a></code><br>
+<code><a href="PORT-15.html">Do not cast from "shorter" type to "longer" type [PORT-15-3]</a></code><br>
+<code><a href="PORT-16.html">Avoid conversions from a "shorter" type to a "longer" type in function calls [PORT-16-3]</a></code><br>
+<code><a href="PORT-17.html">Don't use i64 or L suffixes directly [PORT-17-3]</a></code><br>
+<code><a href="PORT-18.html">Don't define i64 or L suffixes directly [PORT-18-3]</a></code><br>
+<code><a href="PORT-19.html">Instead of casting a long type operand of an expression to int cast the result of the expression [PORT-19-3]</a></code><br>
+<code><a href="PORT-20.html">Do not declare variables of long type directly [PORT-20-3]</a></code><br>
+<code><a href="PORT-21.html">Do not assign a long value to a double [PORT-21-3]</a></code><br>
+<code><a href="PORT-22.html">Use arrays of int types instead of large arrays of longs [PORT-22-5]</a></code><br>
+<code><a href="PORT-23.html">Use arrays of int types instead of dynamic allocated large arrays of longs [PORT-23-5]</a></code><br>
+<code><a href="PORT-24.html">Don't use large arrays of pointers to bool, char, short, int and float types [PORT-24-5]</a></code><br>
+<code><a href="PORT-25.html">User-specified identifiers (internal and external) will not rely on significance of more than 64 characters [PORT-25-2]</a></code><br>
+<code><a href="PORT-26.html">Algorithms shall not make assumptions concerning the order of allocation of nonstatic data members separated by an access specifier [PORT-26-2]</a></code><br>
+</BODY>
+</HTML>

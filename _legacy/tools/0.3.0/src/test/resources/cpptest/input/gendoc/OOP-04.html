@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not derive functions with the same name from more than one base class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not derive functions with the same name from more than one base class [OOP-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"One of the first things to recognize is that when MI enters the designscape,
+it becomes possible  to inherit the same name (e.g., function, typedef, etc.)
+from more than one base class."
+Rule checks if in parent classes exist fields or methods with the same names
+that are not redefined in child class.
+See also: OOP-07, OOP-06, OOP-05, OOP-03
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule checks possibility of ambiguity in code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class BaseOne {
+public:
+    int field;
+};
+
+class BaseTwo {
+public:
+    int field;
+    void foo( );
+};
+
+class BaseThree {
+public:
+    void foo( );
+};
+
+class MyClassOne: public BaseOne, public BaseTwo {};    // Violation
+
+class MyClassTwo: public BaseTwo, public BaseThree {};  // Violation
+
+class MyClassThree: public virtual BaseOne, public virtual BaseThree {};// OK
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class BaseOne {
+public:
+    int field;
+};
+
+class BaseTwo {
+public:
+    int field;
+    void foo();
+};
+
+class BaseThree {
+public:
+    void foo();
+};
+
+class MyClassOne: public virtual BaseOne, public virtual BaseTwo {};    // OK
+
+class MyClassTwo: public virtual BaseTwo, public virtual BaseThree {};  // OK
+
+class MyClassThree: public virtual BaseOne, public virtual BaseThree {};// OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 6, Item 40
+
+</PRE>
+</BODY>
+</HTML>

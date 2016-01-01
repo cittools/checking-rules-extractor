@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't use i64 or L suffixes directly
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't use i64 or L suffixes directly [PORT-17-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you use i64 or L suffixes directly.
+Do not use i64 or L suffixes directly because it generally
+does not work well. Try using Macros for compatibility.
+See also: PORT-18
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Using i64 or L suffixes directly generally does not work well.
+Try using Macros for compatibility.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void goo( double a );
+double foo( ) {
+    double d = 5l;             // Violation
+    goo( 4567L );              // Violation
+    return 567l;               // Violation
+}
+
+double d1 = 456l;              // Violation
+#ifndef __GNUC__
+double d2 = 45i64;             // Violation
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#ifdef _WIN64
+   #define CONST3264(a) (a##i64)
+#else
+   #define CONST3264(a) (a##L)
+#endif
+
+void goo( double a );
+double foo( ) {
+    double d = CONST3264( 5 );       // OK
+    goo( CONST3264( 4567 ) );        // OK
+    return CONST3264( 567 );         // OK
+}
+
+double d1 = CONST3264( 456 );        // OK
+double d2 = CONST3264( 45 );         // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

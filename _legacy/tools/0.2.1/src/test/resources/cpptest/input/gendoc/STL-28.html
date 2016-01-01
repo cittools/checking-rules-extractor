@@ -1,0 +1,144 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Design functor classes for pass-by-value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Design functor classes for pass-by-value [STL-28-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Because function objects are passed and returned by value, the onus is on you
+to make sure that your function objects behave well when passed that way
+(i.e., copied). This implies two things. First, your function objects need to
+be small. Otherwise they will be too expensive to copy. Second, your function
+objects must be monomorphic (i.e., not polymorphic) — they must not use
+virtual functions. That's because derived class objects passed by value into
+parameters of base class type suffer from the slicing problem: during the copy,
+their derived parts are removed. The prohibition on polymorphic functors is
+equally unrealistic. Surely there's a way to let function objects be big
+and/or polymorphic, yet still allow them to mesh with the pass-functors-by-
+value convention that pervades the STL. There is. Take the data and/or the
+polymorphism you'd like to put in your functor class, and move it into a
+different class. Then give your functor class a pointer to this new class."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+By small class functor rule means the one with the number of non-static
+members not exceeding 5.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents the slicing problem and expensive copying.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// compiles with msvc 6.0, 7.1
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget;
+
+template&lt;typename T&gt;                       
+class BPFC: public unary_function&lt;T, void&gt;       // Violation
+{
+private:
+    Widget w;
+    int x;
+    int y;
+    void someFunction();
+    bool checkWidget(Widget &amp;);
+    
+public:
+    virtual void operator()(const T&amp; val) const; // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;functional&gt;
+using namespace std;
+
+class Widget;
+
+template &lt;typename T&gt; class BPFC{};
+
+template&lt;typename T&gt; 
+class BPFCImpl
+{
+private:
+    Widget w;
+    int x;
+    
+    virtual ~BPFCImpl();
+    virtual void operator()(const T&amp; val) const;
+    friend class BPFC&lt;T&gt;; 
+};
+
+template&lt;typename T&gt;                              // OK
+class BPFC2: public unary_function&lt;T, void&gt; 
+{ 
+private:
+    BPFCImpl&lt;T&gt; *pImpl;
+public:
+    void operator()(const T&amp; val) const
+    {
+        pImpl-&gt;operator() (val );
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 6, item 38
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+When using containers of newed pointers, remember to delete the pointers before the container is destroyed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+When using containers of newed pointers, remember to delete the pointers before the container is destroyed [STL-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"All you really need to remember is that STL containers are smart, but they're
+not smart enough to know whether to delete the pointers they contain. To avoid
+resource leaks when you have containers of pointers that should be deleted,
+you must either replace the pointers with smart reference-counting pointer
+objects (such as Boost's shared_ptr) or you must manually delete each pointer
+in the container before the container is destroyed."
+Rule enforces replacing the pointers with smart reference-counting pointer
+objects (such as Boost's shared_ptr) as it is exception-safe solution.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps writing exception-safe code and prevents resource leaks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;boost/shared_ptr.hpp&gt;
+
+#define NUMBER 10
+
+using namespace std;
+
+class Widget
+{
+public:
+	Widget(){}
+	~Widget(){}
+	
+};
+
+void foo()
+{
+	vector&lt;Widget*&gt; vwp;
+	for (int i = 0; i &lt; NUMBER; ++i)
+		vwp.push_back(new Widget);               // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;boost/shared_ptr.hpp&gt;
+
+#define NUMBER 10
+
+using namespace std;
+
+class Widget
+{
+public:
+	Widget(){}
+	~Widget(){}
+	
+};
+
+void foo()
+{
+	typedef boost::shared_ptr&lt;Widget&gt; WidgetPtr;
+	vector&lt;WidgetPtr&gt; vwp;
+	
+	for (int i = 0; i &lt; NUMBER; ++i)
+		vwp.push_back(WidgetPtr(new Widget));        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 1, item 7
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid functions which use time from standard C library
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid functions which use time from standard C library [SECURITY-01-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects usage of time-related functions from the standard C library
+See also: MISRA2004-20_12
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of functions from standard C library, 
+which may open security holes. 
+Getting the current system time might be suspicious 
+and could lead to security problems 
+if used as a key for accessing sensitive information 
+or allow access to specific functions. 
+Do not use the following functions: 
+time, clock, ctime, gmtime, localtime, mktime, strftime.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;time.h&gt;
+void dangerFunction(time_t time);
+int main ()
+{
+  time_t rawtime;
+  tm * ptm;
+  time ( &amp;rawtime );          // Violation
+  ptm = gmtime ( &amp;rawtime );  // Violation
+  dangerFunction(rawtime);
+
+  return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Remove usage of time-related functions from the standard C library
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+David A. Wheeler, Programming Secure Applications for Unix-like Systems (pdf),
+<A HREF="http://www.dwheeler.com/secure-programs">http://www.dwheeler.com/secure-programs</A> 
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not declare variables in "if", "for", "while", and "do while" statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not declare variables in "if", "for", "while", and "do while" statement [OPT-10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not declare variables in "if", "for", "while", and "do while" statement.
+Because such declaration can lead to confusion caused by hiding variable with 
+the same name in more global context.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents writing ambiguous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int bar( int&amp; x );
+int lookup( int&amp; x );
+
+void foo( int x ){
+    if (x == 0) {
+        int y;         // Violation
+        y = bar(x);
+    }
+    for (x = 0; x &lt; 2;x++) {
+        int y;         // Violation
+        y = lookup(x);
+        bar(y);
+    }
+    while (x &lt; 0) {
+        int y;         // Violation
+        y = bar(x);
+    }
+    do {
+        int y;         // Violation
+        y = bar(x);
+    } while (x &lt; 0);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int bar( int&amp; x );
+int lookup( int&amp; x );
+
+void foo( int x ){
+    int y;            // OK
+    if (x == 0) {
+        y = bar(x);
+    }
+    for (x = 0; x &lt; 2;x++) {
+        y = lookup(x);
+        bar(y);
+    }
+    while (x &lt; 0) {
+        y = bar(x);
+    }
+    do {
+        y = bar(x);
+    } while (x &lt; 0);
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

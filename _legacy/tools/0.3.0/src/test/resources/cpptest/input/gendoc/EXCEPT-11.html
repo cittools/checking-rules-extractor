@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The assignment-expression of a throw statement shall not itself cause an exception to be thrown
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The assignment-expression of a throw statement shall not itself cause an exception to be thrown [EXCEPT-11-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If an exception is thrown when constructing the exception object, or when
+evaluating the assignment expression that initializes the exception object,
+it is that exception that propagates in preference to the one that was about
+to be thrown."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class E
+{
+public:
+    E ( )
+    {
+        throw 10;
+    }
+};
+int foo1()
+{
+    try
+    {
+        if ( 0 )
+        {
+            throw E ( ); // Violation
+        }
+    }
+    catch(...)
+    {
+    	
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class E
+{
+public:
+    E ( ){ }
+};
+
+int foo()
+{
+    try
+    {
+        if ( 0 )
+        {
+            throw E ( ); // OK
+        }
+    }
+    catch(...)
+    {
+    	
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-1-1
+
+</PRE>
+</BODY>
+</HTML>

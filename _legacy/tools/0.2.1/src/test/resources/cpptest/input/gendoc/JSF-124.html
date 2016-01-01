@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Trivial forwarding functions should be inlined
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Trivial forwarding functions should be inlined [JSF-124-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Trivial forwarding functions should be inlined.
+Rule reports a violation message if a function performing
+only one action i.e. calling another function is not inlined.
+
+
+Exceptions:
+
+Constructors, destructors, template methods, virtual methods.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Inlining short, simple functions can save both time and space.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int goo(int a, int b)
+{
+ /* code */
+ return 1;
+}
+
+int foo(int a, int b)        // Violation
+{
+  return(goo(a,b));
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int goo(int a, int b)
+{
+ /* code */
+ return 1;
+}
+
+inline int foo(int a, int b) // OK
+{
+  return(goo(a,b));
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.13 Functions, AV Rule 124
+
+</PRE>
+</BODY>
+</HTML>

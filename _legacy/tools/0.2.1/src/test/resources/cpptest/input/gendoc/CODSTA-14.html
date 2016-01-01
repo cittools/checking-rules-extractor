@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never convert consts to non-consts
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never convert consts to non-consts [CODSTA-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Cast away const on an object whose original definition was const may prove to
+undefined behaviour. Compilers can put constant data into ROM or write-protected
+RAM pages and casting away const from such a const object often causes
+a memory fault.
+The rule detects casts that remove a const qualification from the type adressed
+by a pointer or reference. 
+Besides it detects an implicit cast from a string literal to char*.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule prevents undefined behaviours.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( const int a, const int* b ) {
+    int x;
+    int* y;
+    (int&amp;) a = x;         // Violation
+    y = (int*) b;         // Violation
+    *y = 10;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Avoid casting away const.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 13 Type Conversions - Rule 46
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Type Safety", Rule 94
+
+</PRE>
+</BODY>
+</HTML>

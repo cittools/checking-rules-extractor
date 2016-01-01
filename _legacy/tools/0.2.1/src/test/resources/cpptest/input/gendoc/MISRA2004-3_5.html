@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not mix bit-fields and other data within the same structure
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not mix bit-fields and other data within the same structure [MISRA2004-3_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+It is recommended that structures should be declared specifically 
+to hold the sets of bit fields, and do not include any other data
+within the same structure.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents from the potential pitfalls and areas of implementation-defined 
+(i.e.non-portable) behaviour such as:
+- the alignment of the bit fields in the storage unit is implementation-defined,
+  that is whether they are allocated from the high end or low end of the storage
+  unit (usually a byte).
+- whether or not a bit field can overlap a storage unit boundary is also implementation-defined
+  (e.g. if a 6-bit field and a 4-bit field are declared in that order, whether the 4-bit field
+  will start a new byte or whether it will be 2 bits in one byte and 2 bits in the next).
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct message {  /* Violation */
+    signed int little: 4;
+    unsigned int x_set: 1;
+    int size;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+struct message {  /* OK */
+    signed int little: 4;
+    unsigned int x_set: 1;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 3
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+.NAME Try Blocks
+
+.DESCRIPTION
+
+Definition:
+-----------
+Do not use "try" blocks.
+(This rule relates to Item 15 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Improves code efficiency.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

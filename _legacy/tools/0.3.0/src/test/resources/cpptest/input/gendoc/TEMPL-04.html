@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In template global functions use 'typename' to identify nested dependent type names
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In template global functions use 'typename' to identify nested dependent type names [TEMPL-04-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+In template global functions use typename to identify
+nested dependent type names.
+See also: TEMPL-05
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Nested dependent names can lead to parsing difficulties. (...) if the parser
+encounters a nested dependent name in a template, it assumes that the name is
+not a type unless you tell it otherwise. By default, nested dependent names are
+not types. The general rule is simple: anytime you refer to a nested dependent
+type name in a template, you must immediately precede it by the word typename."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+template&lt;typename T&gt;
+void print2nd( const T&amp; container ) {
+    if (container.size( ) &gt;= 2) {
+        T::const_iterator iter( container.begin( ) );    // Violation
+        ++iter;
+        int value = *iter;
+        cout &lt;&lt; value;
+    }
+}
+
+void test( ) {
+    typedef vector&lt;int&gt; int_v;
+    int_v container( 10 );
+
+    print2nd&lt;int_v&gt;( container );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+template&lt;typename T&gt;
+void print2nd( const T&amp; container ) {
+    if (container.size( ) &gt;= 2) {
+        typename T::const_iterator iter( container.begin( ) );    // OK
+        ++iter;
+        int value = *iter;
+        cout &lt;&lt; value;
+    }
+}
+
+void test( ) {
+    typedef vector&lt;int&gt; int_v;
+    int_v container( 10 );
+
+    print2nd&lt;int_v&gt;( container );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 7, Item 42
+
+</PRE>
+</BODY>
+</HTML>

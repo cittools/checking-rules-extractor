@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid structs, unions, or classes with more than 20 fields
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid structs, unions, or classes with more than 20 fields [METRICS-17-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule is purely informational and will report a message when a struct,
+union or class declaration is found with more than 20 fields.
+See also: METRICS-06
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct _tA	// Violation
+{
+    int i0;
+    int i1;
+    int i2;
+    int i3;
+    int i4;
+    int i5;
+    int i6;
+    int i7;
+    int i8;
+    int i9;
+    int i10;
+    int i11;
+    int i12;
+    int i13;
+    int i14;
+    int i15;
+    int i16;
+    int i17;
+    int i18;
+    int i19; 
+    int i20;
+    int i21;
+    int i22;
+    int i23;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit the number of fields to 20.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

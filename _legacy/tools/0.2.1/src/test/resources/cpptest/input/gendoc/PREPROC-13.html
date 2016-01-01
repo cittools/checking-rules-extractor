@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Macro should not contain token pasting, variable argument list nor recursive macro calls
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Macro should not contain token pasting, variable argument list nor recursive macro calls [PREPROC-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The use of the preprocessor must be limited to the inclusion of header files
+and simple macro definitions. Token pasting, variable argument lists (ellipses),
+and recursive macro calls are not allowed."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule detects only direct recursion and indirect recursion if it is limited
+to two level and macros are defined in the same file.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The C preprocessor is a powerful obfuscation tool that can destroy code
+clarity and befuddle many text based checkers. The effect of constructs 
+in unrestricted preprocessor code can be extremely hard to decipher,
+even with a formal language definition in hand."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define PASTING(a, b) a ## b       // Violation - Token pasting
+
+#define ELLIP(a, b, ...) a + b     // Violation - ellipsis
+
+#define RECUR(a, b) RECUR(a, a)    // Violation - recursion
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use token pasting, variable argument lists (ellipses),
+nor recursive macro calls
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 8
+
+</PRE>
+</BODY>
+</HTML>

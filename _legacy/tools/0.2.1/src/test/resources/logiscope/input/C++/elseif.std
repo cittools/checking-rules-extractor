@@ -1,0 +1,70 @@
+.DESCRIPTION
+Work on else if structure
+
+.COMMAND tcl
+
+.CODE
+
+proc compute {standardName tree} {
+	
+	set formalism [::logiscope::treeFormalism $tree]
+
+	set opList {}
+	::logiscope::forobj op $formalism formalismOperator {
+		lappend opList [::logiscope::opName $op]
+	}
+	# start the search
+	filterTree $tree
+}
+
+# filterTree applies callback to tree, and recurs on tree's sons
+proc filterTree {tree} {
+	if {[string equal [getOpName $tree] if]} {
+		# an if - check for elsif
+
+		# if this if is in an if, its parent will be then or else
+		set parent [::logiscope::treeParent $tree]
+
+		# and its grand parent will be the if
+		set gparent [::logiscope::treeParent $parent]
+
+		if {[string equal [getOpName $gparent] if]} {
+			# the grand parent of the "if" is an "if", then if the "if" is
+			# in the "else" it is mandatory to have an else
+			if { [::logiscope::treeEqual [getElseTree $gparent] $parent]} {
+				if { ! [haveElse $tree] } {
+					# no else, this is a violation
+					::logiscope::addViolation $tree
+				}
+			}
+		}
+	}
+	::logiscope::forobj son $tree treeChild {
+		filterTree $son
+	}
+}
+
+# Utilities
+
+# Get the "else" tree of an "if"
+proc getElseTree {if} {
+	::logiscope::forobj son $if treeChild {
+		set else $son
+    }
+	return $else
+}
+
+# does the tree (which is supposed to be an "if") has an "else" part
+proc haveElse {if} {
+	::logiscope::forobj son $if treeChild {
+		lappend lst $son
+    }
+	set else [lindex $lst 2]
+	return [string compare [getOpName $else] none]
+}
+
+# Get the readable name of an operator
+proc getOpName {tree} {
+	set op [::logiscope::treeOperator $tree]
+	return [::logiscope::opName $op]
+}

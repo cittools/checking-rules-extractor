@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Objects or functions with external linkage shall be declared in a header file
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Objects or functions with external linkage shall be declared in a header file [MISRA2008-3_3_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Placing the declarations of objects and functions with external linkage
+in a header file documents that they are intended to be accessible from other
+translation units. If external linkage is not required, then the object or
+function shall either be declared in an unnamed namespace or declared static."
+
+
+Exceptions:
+
+This rule does not apply to main, or to members of unnamed namespaces.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule reduce the visibility of objects and functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file.cpp
+int a1 = 0;   // Violation
+void fun(){}  // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file.h
+extern int a1;      // OK
+extern void fun();  // OK
+
+// file.cpp
+#include "file.h"
+int a1 = 0;   // OK
+void fun(){}  // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 3, Rule 3-3-1
+
+</PRE>
+</BODY>
+</HTML>

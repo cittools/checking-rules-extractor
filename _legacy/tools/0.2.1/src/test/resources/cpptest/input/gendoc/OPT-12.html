@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If a file-level static variable is used/referenced in one class only then include that variable in the class itself
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If a file-level static variable is used/referenced in one class only then include that variable in the class itself [OPT-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If a file-level static variable is used/referenced in one class only,
+it is better to include that variable in the class itself.
+See also: OPT-11
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Memory optimization and clarity of intent expression/maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+static int s;               // Violation
+const static int cs = 0;    // Violation
+
+class A
+{
+    void foo1(int i) {
+        s = i + cs;
+    }
+    void foo2(int j ) {
+        s = j + cs;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+    static int s;               // OK
+    const static int cs = 0;    // OK
+    void foo1(int i) {
+        s = i + cs;
+    }
+    void foo2(int j ) {
+        s = j + cs;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

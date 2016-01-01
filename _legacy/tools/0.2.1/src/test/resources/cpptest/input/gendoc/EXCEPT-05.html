@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+C++ exceptions shall not be used (i.e. throw, catch and try shall not be used.)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+C++ exceptions shall not be used (i.e. throw, catch and try shall not be used.) [EXCEPT-05-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use C++ exceptions.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves portability of the code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+
+using namespace std;
+int main()
+{
+    char *buf;
+    try                                          // Violation
+    {
+        buf = new char[512];
+        if( buf == 0 )
+            throw "Memory allocation failure!";  // Violation
+    }
+    catch( char * str )                          // Violation
+    {
+        cout &lt;&lt; "Exception raised: " &lt;&lt; str &lt;&lt; '\n';
+    }
+    // ...
+    return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;iostream&gt;
+
+using namespace std;
+int main()                                   // OK
+{
+	char *buf;
+	buf = new char[512];
+	if( buf == 0 )
+		cout&lt;&lt; "Memory allocation failure!";
+
+	return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.27 Fault Handling, AV Rule 208
+
+</PRE>
+</BODY>
+</HTML>

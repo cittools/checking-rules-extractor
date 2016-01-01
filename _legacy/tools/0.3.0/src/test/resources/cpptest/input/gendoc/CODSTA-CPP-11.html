@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer C++-style casts
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer C++-style casts [CODSTA-CPP-11-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects C-style casts in your code.
+"C-style casts have different semantics depending on context, 
+all disguised behind a single syntax." 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+C++ casts are more specific than C casts 
+and are much easier to locate and read.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    Base( );
+    virtual ~Base( );
+};
+
+class Derived : public Base {
+public:
+    Derived( );
+    ~Derived( );
+};
+
+void foo( ) {
+    Base *pB;
+    Derived *pD2 = (Derived *) pB;     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    Base( );
+    virtual ~Base( );
+};
+
+class Derived : public Base {
+public:
+    Derived( );
+    ~Derived( );
+};
+
+void foo( ) {
+    Base *pB;
+    Derived *pD1 = dynamic_cast&lt;Derived*&gt;( pB );   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+   Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+   Chapter: "Basics", Item 2
+
+2. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Type Safety", Rule 95
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 185
+
+</PRE>
+</BODY>
+</HTML>

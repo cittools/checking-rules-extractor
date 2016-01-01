@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare a copy constructor and operator= for any Qt - inherited objects that have pointers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare a copy constructor and operator= for any Qt - inherited objects that have pointers [QT-10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The assignment operator and copy constructor should be private without 
+an implementation for all QObject subclasses.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Classes which have pointers as members cannot be copied around with the
+compiler implemented copy constructors or assignment operator, as that will
+break implicit sharing and may lead to unexpected crashes.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+class MyQObject : public QObject       // Violation
+{
+    Q_OBJECT
+};
+
+class MyQWidget : public QWidget       // Violation
+{
+    Q_OBJECT
+
+public:
+    MyQWidget( MyQWidget&amp; );
+    MyQWidget&amp; operator=( MyQWidget&amp; );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+class MyQObject : public QObject       // OK
+{
+    Q_OBJECT
+
+private:
+    MyQObject( MyQObject&amp; );
+    MyQObject&amp; operator=( MyQObject&amp; );
+};
+
+class MyQWidget : public QWidget       // OK
+{
+    Q_OBJECT
+
+private:
+    Q_DISABLE_COPY(MyQWidget)
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

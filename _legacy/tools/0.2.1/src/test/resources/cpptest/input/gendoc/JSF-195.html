@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A switch expression shall not represent a value that is effectively Boolean
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A switch expression shall not represent a value that is effectively Boolean [JSF-195-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Values which are effectively Boolean should not be represented in 
+'switch' condition.
+The rule forbids following  operators:
+a) equality operators (== and !=)
+b) logical operators (!, &amp;&amp; and ||)
+c) relational operators (&lt;, &gt;, &lt;= and &gt;=)
+which produce boolean-by-construct values.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using values that are effectively Boolean in switch.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int i)
+{
+    switch(i == 0)           // Violation
+    {
+        case 0 : break;
+        default:;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo1(int i) 
+{
+    switch(i)                   // OK
+    {
+        case 0 : break;
+        default:;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 15
+
+2. Origin: Misra Guidelines - Rule 63
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 195
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-3
+
+5. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-7
+
+</PRE>
+</BODY>
+</HTML>

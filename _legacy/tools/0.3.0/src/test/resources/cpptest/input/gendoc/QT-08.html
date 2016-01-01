@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If using lock on a mutex in a function, release the lock in the same function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If using lock on a mutex in a function, release the lock in the same function [QT-08-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If using lock on a mutex in a function, release the lock in the same function.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Not unlocking a locked mutex in the same function may lead to inconsistent
+locks and unlocks, which will in turn lead to potential deadlocks in your code.
+To ensure that a locked mutex is always unlocked when the function ends, both
+by normal and exception code paths, consider using the QMutexLocker convenience
+class.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include&lt;QtGui/QtGui&gt;
+
+void myExample(bool isBlue, bool isFigure)
+{
+    QMutex m;
+    QMutex n;
+    m.lock();
+
+    if (isBlue &amp;&amp; isFigure)
+        return;                  // Violation
+
+    m.unlock();
+
+    /* code */
+
+    m.lock();                    // Violation
+    n.lock();                    // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include&lt;QtGui/QtGui&gt;
+
+void myExample(bool isBlue, bool isFigure)
+{
+    QMutex m;
+    QMutex n;
+
+    m.lock();               // OK
+
+    if (isBlue &amp;&amp; isFigure){
+        m.unlock();
+        return;             // OK
+    }else{
+        m.unlock();
+    }
+
+    m.lock();               // OK
+    n.lock();               // OK
+
+    /* code */
+
+    m.unlock();             // OK
+    n.unlock();             // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/4.2/qmutex.html#details">http://doc.trolltech.com/4.2/qmutex.html#details</A>
+
+</PRE>
+</BODY>
+</HTML>

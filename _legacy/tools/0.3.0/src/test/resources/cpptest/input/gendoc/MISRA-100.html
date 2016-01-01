@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use only non-ambiguous forms of defined pre-processor operator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use only non-ambiguous forms of defined pre-processor operator [MISRA-100-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The defined pre-processor operator shall only be used in one of the two standards forms.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents from undefined bahaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* EXAMPLE.H - Example header file */
+#if defined TEST+1     /* Violation */
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* EXAMPLE.H - Example header file */
+#if defined TEST       /* OK */ 
+#endif 
+
+#if defined EXAMPLE_H
+#endif
+
+#if defined ( TEST )    /* OK */ 
+#endif
+
+#if !defined ( EXAMPLE_H )
+#define EXAMPLE_H        /* OK */ 
+
+struct Example
+{
+    int _i;
+};
+
+#endif /* !defined( EXAMPLE_H ) */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 100
+
+</PRE>
+</BODY>
+</HTML>

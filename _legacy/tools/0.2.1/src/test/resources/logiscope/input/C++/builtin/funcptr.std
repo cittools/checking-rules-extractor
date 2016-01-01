@@ -1,0 +1,12 @@
+.NAME No function pointers
+
+.DESCRIPTION
+
+Definition:
+-----------
+Do not use function pointers.
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid slicing. Consider Clone instead of copying in base classes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid slicing. Consider Clone instead of copying in base classes [OOP-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Sliced objects are not a good practice. 
+"Object slicing is automatic and invisible. In base classes, disabling
+the copy constructor and copy assignment operator should be considered. 
+Instead should be supplied a virtual Clone member function if clients
+need to make polymorphic (complete, deep) copies."
+ 
+Base class with copy constructor should look like below:
+
+class A    
+{
+public:
+    A* Clone() const
+    {
+      A* p = DoClone();
+      assert(typeid(p) == typeid(this));
+      return p;
+    }
+protected:
+    A(A&amp;);
+    virtual A* DoClone() const = 0;
+};
+
+This rule checks:
+I) if there is protected copy constructor
+II) if 'DoClone' function:
+- is protected
+- is const
+- is pure virtual
+- returns pointer to the base class
+III) if 'Clone' function:
+- is public
+- is const
+- returns pointer to the base class
+- has local variable initialized by 'DoClone' method
+- contains assert as above
+See also: OOP-01
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents using of sliced objects.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;assert.h&gt;
+#include &lt;typeinfo&gt;
+#include &lt;memory&gt;
+using namespace std;
+
+class A      // Violation - function Clone defined incorrectly
+{
+
+public:
+    A* Clone() const
+    {
+      A* p = 0;
+      return p;
+    }
+protected:
+    A(A&amp;);
+    virtual A* DoClone() const = 0;
+};
+
+class B      // Violation - no DoClone function
+{
+
+protected:
+    B(B&amp;);
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;assert.h&gt;
+#include &lt;typeinfo&gt;
+#include &lt;memory&gt;
+using namespace std;
+
+class C      // OK
+{
+
+public:
+    C* Clone() const
+    {
+      C* p = DoClone();
+      assert(typeid(p) == typeid(this));
+      return p;
+    }
+protected:
+    C(C&amp;);
+    virtual C* DoClone() const = 0;
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Construction, Destruction, and Copying", Rule 54
+
+</PRE>
+</BODY>
+</HTML>

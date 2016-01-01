@@ -1,0 +1,141 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Undefined macro identifiers shall not be used in #if or #elif preprocessor directives, except as operands to the defined operator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Undefined macro identifiers shall not be used in #if or #elif preprocessor directives, except as operands to the defined operator [MISRA2008-16_0_7-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If an attempt is made to use an identifier in a preprocessor directive,
+and that identifier has not been defined, 
+the preprocessor will sometimes not give any warning but will assume 
+the value zero.
+#ifdef, #ifndef and defined() are provided to test the existence of a macro,
+and are therefore excluded.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer code 
+and prevents hard-to-detect errors.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+1) Currently the implementation of the rule assumes that the compliance with 
+   the rule is provided by following MISRA 2004 19-11 advice (p. 78):
+   "Consideration should be given to the use of a /#ifdef/" test before 
+   an identifier is used."
+
+2) If #1 is not followed, due to technical limitations we are not able 
+   to recognize cases where preprocessor identifier is defined in different 
+   file from that where the identifier is used. Also, we are unable to detect 
+   that given identifier was defined as compiler command line option.
+
+3) If tested macro identifier was earlier defined by #define preprocessor 
+   directive, it can not be defined in more nested #if / #elif / #else / #endif
+   directives. In such cases rule can report false positives.
+
+3) If tested macro identifier is defined within complex conditional statement (containing
+   few branches #elif/#else) we cannot be sure if branch containing definition of macro
+   being tested is executed. In such case rule may report false positives.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#if X 
+/* Violation - X undefined at this point */
+#endif
+
+#if Y
+/* Violation - Y undefined at this point */
+#endif
+
+#if X + Y
+/* Violation - X and Y undefined at this point */
+#endif
+
+#ifdef X
+#define Y 1
+#else
+#define Y 3
+#endif
+
+#if Y &gt; 2  // Violation - because of point 3
+#endif
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define X 1
+
+#if X
+/* OK */
+#endif
+
+#ifdef Y
+#if Y
+/* OK - check is done in the #ifdef above */
+#endif
+#endif
+
+#ifdef X
+#define Y 1
+#else
+#define Y 3
+#endif
+
+#ifdef Y
+#if Y &gt; 2  // OK - possible workaround because of point 3
+#endif
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. Origin: Misra Guidelines - Rule 97
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-0-7
+
+</PRE>
+</BODY>
+</HTML>

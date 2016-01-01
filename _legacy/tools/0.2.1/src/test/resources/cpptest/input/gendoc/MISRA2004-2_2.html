@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Source code shall only use /* ... */ style comments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Source code shall only use /* ... */ style comments [MISRA2004-2_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This excludes the use of // C99 style comments and C++ style comments,
+since these are not permitted in C90.
+Many compilers support the // style of comments as an extension to C90.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The use of // in preprocessor directives (e.g. #define) can vary.
+Also the mixing of /* ... */ and // is not consistent. 
+This is more than a style issue, 
+since different (pre C99) compilers may behave differently.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MAX 100 // Violation: bad comment
+// Violation: bad comment
+void foo()
+{
+   int x;   // Violation: bad comment
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define MAX 100 /* OK */
+
+/* OK */
+void foo()
+{
+   int x;   /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 2
+
+</PRE>
+</BODY>
+</HTML>

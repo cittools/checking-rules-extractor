@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid returning handles to function parameters
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid returning handles to function parameters [CODSTA-30-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+A function must never return a pointer or reference to a parameter,
+it could make your code non-deterministic. If a function returns 
+a reference or a pointer to a parameter, the memory to which it refers 
+will already have been deallocated, when this reference or pointer 
+is used. The compiler may or may not give a warning for this.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents non-deterministic behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* foo1( int x ){
+    return &amp;x;       // Violation
+}
+
+int&amp; foo2( int x ){
+    return x;        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo1( int x ){
+    return x;        // OK
+}
+
+int foo2( int x ){
+    return x;        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

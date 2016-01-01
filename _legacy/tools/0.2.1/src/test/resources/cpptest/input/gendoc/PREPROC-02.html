@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't use macros in include statement
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't use macros in include statement [PREPROC-02-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that macros are not used in the include statement. 
+Including header files with "#define" predefined makes code hard
+to read and understand.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability and clarity.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* Notice:
+ * You must be sure that your compiler can do that
+ * and that given header file is available
+ * Works with gcc
+ */
+#define A(string) #string
+#define HEADER_FILE(nr) A(MacroWithinInclude ## nr)
+
+#include HEADER_FILE(12)                // Violation
+
+#include "MacroWithinInclude12"         // OK
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Don't use macros in include statement
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

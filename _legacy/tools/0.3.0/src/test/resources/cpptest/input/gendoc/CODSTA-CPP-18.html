@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Encapsulate global variables and constants, enumerated types, and typedefs in a class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Encapsulate global variables and constants, enumerated types, and typedefs in a class [CODSTA-CPP-18-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Encapsulate global variables and constants, enumerated types, and typedefs
+in a class. Static variables in a class should be used instead of global
+variables and constants, enumerated data types, and typedefs."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+enum Days {yesterday};  // Violation
+typedef int myint;      // Violation
+myint glob;             // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    enum Days {yesterday};  // OK
+    typedef int MyInt;      // OK
+    static MyInt glob;      // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+   from: 5 Assigning Names - Rec. 19
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.26 Memory Allocation, AV Rule 207
+
+</PRE>
+</BODY>
+</HTML>

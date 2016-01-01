@@ -1,0 +1,28 @@
+.DESCRIPTION
+This metric computes the number of files in the application.
+
+.COMMAND tcl
+
+.CODE
+
+# The real work is done by the context bearing the same name.
+
+# The compute proc is mandatory, so we have to define it.
+# But it does nothing, here.
+proc compute {metricName vtpTree} {
+}
+
+proc measureValue {metricName vtpTree} {
+	# Returns the value computed by the context bearing the same name.
+	::logiscope::get countFiles fileCount
+}
+
+proc metricType {metricName} {
+	# This is the default value, anyway.
+	return integer
+}
+
+proc metricLevel {metricName} {
+	# Return the level of this metric.
+	return application
+}

@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Never return a dereferenced local pointer initialized by new in this function scope
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Never return a dereferenced local pointer initialized by new in this function scope [JSF-112-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Never return a reference to a local object or a dereferenced pointer
+initialized by new within the function. This rule detects when you
+return a reference to a local object or dereferenced pointer.
+See also: MRM-24
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Returning a reference to a local object or a dereferenced pointer initialized
+by new within the function may cause a memory leak.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A(int xval, int yval) : _x(xval), _y(yval) {}
+    friend A&amp; operator+(const A&amp; p1, const A&amp; p2);
+private:
+    int _x, _y;
+};
+
+A&amp; operator+(const A&amp; p1, const A&amp; p2) {
+    A *result = new A(p1._x + p2._x, p1._y + p2._y);
+    return *result;             // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A(int xval, int yval) : _x(xval), _y(yval) {}
+    friend A operator+(const A&amp; p1, const A&amp; p2);
+private:
+    int _x, _y;
+};
+
+A operator+(const A&amp; p1, const A&amp; p2) {
+    A result = A(p1._x + p2._x, p1._y + p2._y);
+    	
+    return result;              // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Implementation", Item 31
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule 112
+
+</PRE>
+</BODY>
+</HTML>

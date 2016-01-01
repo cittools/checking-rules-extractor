@@ -1,0 +1,19 @@
+.NAME A single class per code file
+
+.DESCRIPTION
+
+Definition:
+-----------
+In a code file, every function must belong to the same class. 
+A C function is considered to belong to the main class.
+
+Parameters:
+-----------
+A string representing the types of modules (metric type) that should be considered 
+as code files.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

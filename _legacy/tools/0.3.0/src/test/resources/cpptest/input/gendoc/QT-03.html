@@ -1,0 +1,126 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+It's only possible to connect a signal to a slot or a signal to another signal
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+It's only possible to connect a signal to a slot or a signal to another signal [QT-03-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Connecting a signal and a slot can be done by calling QObject::connect.
+It's only possible to connect a signal to a slot or a signal to another signal.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Slots are to be considered observers, and are not possible to connect together
+as there would be no source of signal to trigger the slots. However, you may
+connect several slots to one signal. A slot cannot have a signal connected to
+it, but a signal can have a slot connected to it; the direction of the
+connection is important. You can connect as many signals as you want to a single
+slot, and a signal can be connected to as many slots as you need. It is even 
+possible to connect a signal directly to another signal. 
+(This will emit the second signal immediately whenever the first is emitted.)
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+
+class MyQObject: public QObject
+{
+    Q_OBJECT
+
+public:
+    MyQObject();
+
+public slots:
+    int sampleSlot(QString qStr, const MyQObject&amp; myQObjRef, int* i);
+
+signals:
+    void someSignal(QString qStr);
+
+private:
+    Q_DISABLE_COPY(MyQObject)
+};
+
+void myFunction(QString qStr)
+{
+    MyQObject obj1, obj2;
+    QObject::connect(&amp;obj1,                                        // Violation
+                     SLOT(sampleSlot(QString, const MyQObject&amp;, int*)),
+                     &amp;obj2, SIGNAL(someSignal(QString)));
+    QObject::connect(&amp;obj1,                                        // Violation
+                     SLOT(sampleSlot(QString, const MyQObject&amp;, int*)),
+                     &amp;obj2, SLOT(sampleSlot(QString, const MyQObject&amp;, int*)));
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtCore/QObject&gt;
+
+class MyQObject: public QObject
+{
+    Q_OBJECT
+
+public:
+    MyQObject();
+
+public slots:
+    int sampleSlot(QString qStr, const MyQObject&amp; myQObjRef, int* i);
+
+signals:
+    void someSignal(QString qStr);
+
+private:
+    Q_DISABLE_COPY(MyQObject)
+};
+
+void myFunction(QString qStr)
+{
+    MyQObject obj1, obj2;
+    QObject::connect(&amp;obj1, SIGNAL(someSignal(QString)),    // OK
+                     &amp;obj2, SIGNAL(someSignal(QString)));
+    QObject::connect(&amp;obj1, SIGNAL(someSignal(QString)),    // OK
+                     &amp;obj2, SLOT(sampleSlot(QString, const MyQObject&amp;, int*)));
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/4.2/signalsandslots.html">http://doc.trolltech.com/4.2/signalsandslots.html</A>
+
+</PRE>
+</BODY>
+</HTML>

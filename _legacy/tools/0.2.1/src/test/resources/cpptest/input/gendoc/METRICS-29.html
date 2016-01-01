@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Report Cyclomatic Complexity
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Report Cyclomatic Complexity [METRICS-29-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule reports the Cyclomatic Complexity value for each function.
+
+Cyclomatic Complexity is calculated according to the formula:
+CC = Number of decisions + 1
+By decision we mean every occurrence of:
+-'if'
+-'for'
+-'while'
+-'do-while'
+-'case'
+-'catch'
+-conditional expression 'a?b:c'
+-logical operator '&amp;&amp;' and '||'
+
+See also: METRICS-18, METRICS-28, METRICS-33, METRICS-34, METRICS-35
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+To change the default limit of the Cyclomatic Complexity modify the main
+"Count" expression of the rule (Collector A) from "$$ &gt; 0" to "$$ &gt; N"
+using desired threshold value for N. Rule's header should be also changed
+accordingly.
+
+To ignore switch statements in the computation of the Cyclomatic Complexity,
+modify the "Count" expression for the cases (Collector C) from "$$ &gt; 0"
+to "$$ == 0".
+
+To ignore switch statements having more than N cases in the computation
+of the Cyclomatic Complexity, modify the "Count" expression for the cases
+(Collector C) from "$$ &gt; 0" to "$$ &lt;= N" using desired threshold value for N.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Studies have found that methods with high Cyclomatic Complexity are error-prone.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int a, int b) // Violation - CC value: 8
+{
+    if(a||b)           // 1, 2
+    {
+    }
+    if((a||b)&amp;&amp;(a&amp;&amp;b)) // 3, 4, 5, 6
+    {
+    }
+    do                 // 7
+    {
+    }while(0);
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+This rule is an informational rule and reports message
+on each function implementation.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

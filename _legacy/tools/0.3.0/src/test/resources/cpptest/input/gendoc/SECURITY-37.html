@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use weak encryption functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use weak encryption functions [SECURITY-37-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message when crypt() function is used or an encrypt()
+function is called with second parameter (edflag) equal '0'. If edflag is 0,
+block passed as first parameter is encoded. In this encryption the password
+is cryptographically weak and can be deciphered. Also crypt() is
+cryptographically weak and stronger alternatives should be preferred for the
+hashing of passwords.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule detects weak encryption functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+
+void myCrypt(const char* key, const char *salt)
+{
+    char *hash = crypt(key, salt);    // Violation
+
+    /* ... */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Calls to crypt() and encrypt() should be replaced with a more secure version.
+The following libraries provide good choices:
+
+* OpenSSL (e.g. SHA1 function)
+* Crypto++
+* BSAFE - RSA Security's widely deployed commercial library
+* Cryptlib (Peter Gutmann)
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="https://buildsecurityin.us-cert.gov/daisy/bsi-rules/home/g1/728.html">https://buildsecurityin.us-cert.gov/daisy/bsi-rules/home/g1/728.html</A>
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Include guards shall be provided
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Include guards shall be provided [MISRA2008-16_2_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Every include file must contain a mechanism that prevents multiple inclusion 
+of the file."
+The multiple inclusion mechanism should be defined as follows:
+
+#ifndef FILENAME_H
+#define FILENAME_H
+// code
+#endif
+
+or
+
+#if !defined(FILENAME_H)
+#define FILENAME_H
+// code
+#endif
+
+See also: PFO-07, PFO-08, MISRA2004-19_15
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves maintainability and optimization of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file foo.hh
+// Violation - no multiple inclusion mechanism present
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file foo.hh
+// OK
+#ifndef FOO_HH
+#define FOO_HH
+int i;
+#endif
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 4 Source Code in Files - 4.4 Include Files - Rule 7
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.6 Pre-Processing Directives, AV Rule 27
+
+3. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 16, Rule 16-2-3
+
+</PRE>
+</BODY>
+</HTML>

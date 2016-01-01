@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be a single ASCII space character preceding and following relational and equality operators
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be a single ASCII space character preceding and following relational and equality operators [FORMAT-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether there is a single ASCII space character
+preceding and following relational and equality operators.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This convention promotes readability by clearly separating
+the operands from the operator.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int x)
+{
+   if(x==1)     // Violation
+   {
+   }
+
+   if(x  &gt;  1)  // Violation
+   {
+   }
+
+   if(x &lt;=1)    // Violation
+   {
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int x)
+{
+   if(x == 1)   // OK
+   {
+   }
+
+   if(x &gt; 1)    // OK
+   {
+   }
+
+   if(x &lt;= 1)   // OK
+   {
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

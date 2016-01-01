@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid passing dynamically created strings into exec
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid passing dynamically created strings into exec [SECURITY-18-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid passing dynamically created strings into exec.
+Rule checks if string variables, parameters, or values
+are not passed to exec() method.
+See also: SECURITY-17
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents running native applications. Having string variables passed into 
+an exec() method could provide system access to an outside program. 
+Server applications should never access native applications.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#ifdef __GNUC__
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#define _execl execl
+#else
+#include &lt;process.h&gt;
+#endif
+
+class MyClass {
+public:
+    char* text( );
+};
+
+void foo( char* prog ) {
+    MyClass  *v1 = 0;
+    char * v4=v1-&gt;text();
+    prog = strcat( "c:\\", "command.com" );
+    _execl( prog, "", "_execl", "", NULL );      // Violation
+    _execl( v1-&gt;text(), "", "_execl", "", NULL );// Violation
+    _execl( v4, "", "_execl", "", NULL );        // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#ifdef __GNUC__
+#include &lt;unistd.h&gt;
+#define _execl execl
+#else
+#include &lt;process.h&gt;
+#endif
+
+void foo( char* prog ) {
+    _execl( "C:\\command.com", "", "_execl", "", NULL );  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

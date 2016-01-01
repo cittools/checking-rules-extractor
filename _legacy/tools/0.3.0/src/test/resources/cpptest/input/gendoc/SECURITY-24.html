@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using InitializeCriticalSection
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using InitializeCriticalSection [SECURITY-24-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+InitializeCriticalSection method should not be used in the code - exceptions 
+can be thrown in low-memory situations. 
+InitializeCriticalSectionAndSpinCount should be used instead.
+When 'InitializeCriticalSectionAndSpinCount' method is used the calling thread 
+avoids the wait operation when the critical section becomes free during the 
+spin operation.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improve the performance by choosing a small spin count for a critical 
+section of short duration.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define _WIN32_WINNT  0x0501
+#include &lt;afx.h&gt;
+class Queue {
+public:
+    Queue(int limit)
+    {   
+        InitializeCriticalSection(&amp;lock);    // Violation
+    } 
+    
+    ~Queue()
+    {
+        ::DeleteCriticalSection(&amp;lock);
+    } 
+    
+    void AddTail()
+    { 
+        ::EnterCriticalSection(&amp;lock);
+        ::LeaveCriticalSection(&amp;lock);        
+    } 
+protected:
+    CRITICAL_SECTION lock; 
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define _WIN32_WINNT  0x0501
+#include &lt;afx.h&gt;
+class Queue1 {
+public:
+    Queue1(int limit)
+    {
+        if (!InitializeCriticalSectionAndSpinCount(&amp;lock, 0x80000400) )  // OK
+        {
+            exit(0);
+        }
+    } 
+    
+    ~Queue1()
+    {
+        ::DeleteCriticalSection(&amp;lock);
+    } 
+    
+    void AddTail()
+    { 
+        ::EnterCriticalSection(&amp;lock);
+        ::LeaveCriticalSection(&amp;lock);
+    } 
+protected:
+    CRITICAL_SECTION lock; 
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/</A>
+
+</PRE>
+</BODY>
+</HTML>

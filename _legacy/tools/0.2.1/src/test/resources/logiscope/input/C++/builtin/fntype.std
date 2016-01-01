@@ -1,0 +1,14 @@
+.NAME Function types
+
+.DESCRIPTION
+
+Definition:
+-----------
+Each function has to declare its type. If nothing is returned, 
+it must be declared of void type.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

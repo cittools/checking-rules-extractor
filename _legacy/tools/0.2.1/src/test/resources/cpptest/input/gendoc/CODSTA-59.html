@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hardcoded array declarations and 'malloc' calls should not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hardcoded array declarations and 'malloc' calls should not be used [CODSTA-59-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Hardcoded calls to malloc and hardcoded array declarations decrease readability
+and maintainability of code. Macros should be used instead of these calls,
+so that all instances of hardcoded size could be changed by a single code
+update.
+
+
+Exceptions:
+
+Expressions such as [ARRAY_SIZE + 1] are allowed
+in array declarations for type char.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+void myFunction()
+{
+    int array[10];      // Violation
+    malloc(20);         // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+#define ARRAY_SIZE 10
+#define MALLOC_SIZE 20
+
+void myFunction()
+{
+    int array[ARRAY_SIZE];      // OK
+    malloc(MALLOC_SIZE);        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

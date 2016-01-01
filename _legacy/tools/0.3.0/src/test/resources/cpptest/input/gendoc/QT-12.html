@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not directly set specific Widget attributes that are set by Qt kernel
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not directly set specific Widget attributes that are set by Qt kernel [QT-12-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not directly set specific Widget attributes that are set by Qt kernel.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Qt uses the widget attributes to signal states to the rest of the framework.
+Altering the attributes which are set by the Qt kernel may have adverse effects,
+and in worst case make your application crash.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QWidget&gt;
+
+class PreviewWindow : public QWidget
+{
+    Q_OBJECT
+
+public:
+    PreviewWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+
+private:
+    Q_DISABLE_COPY(PreviewWindow) 
+};
+
+void updatePreview( Qt::WindowFlags flags )
+{
+    PreviewWindow *previewWindow = new PreviewWindow( 0, flags );
+
+    previewWindow-&gt;setAttribute(Qt::WA_UnderMouse, true);    // Violation
+    previewWindow-&gt;setAttribute(Qt::WA_Disabled, true);      // Violation
+    previewWindow-&gt;setAttribute(Qt::WA_SetPalette, true);    // Violation
+    previewWindow-&gt;setAttribute(Qt::WA_SetCursor, true);     // Violation
+    previewWindow-&gt;setAttribute(Qt::WA_SetFont, true);       // Violation
+    previewWindow-&gt;setAttribute(Qt::WA_Disabled, true);      // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not directly set specific Widget attributes that are set by Qt kernel.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+<A HREF="http://doc.trolltech.com/4.2/qt.html#WidgetAttribute-enum">http://doc.trolltech.com/4.2/qt.html#WidgetAttribute-enum</A>
+
+</PRE>
+</BODY>
+</HTML>

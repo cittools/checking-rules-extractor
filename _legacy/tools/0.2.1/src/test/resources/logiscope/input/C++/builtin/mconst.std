@@ -1,0 +1,60 @@
+.NAME Macro constant usage
+
+.DESCRIPTION
+
+Definition:
+-----------
+The usage of macro constants shall be limited.
+It is possible to choose between three options:
+
+ - var: global or static variables are used for string constants, 
+	 other constants could be defined by macros, 
+
+Example:
+--------
+
+// write
+const char *string = "Hello world!";
+#define value 3
+
+// do not write
+#define string "Hello world!"
+
+
+  - const: const data are always used instead of macros, 
+
+Example:
+--------
+
+// write
+const char *string = "Hello world!";
+const int value = 3;
+
+// do not write
+#define string "Hello world!"
+#define value 3
+ 
+
+  - nodefine: only compilation flags and macro functions are allowed. 
+
+Example:
+--------
+
+// write
+#define VERBOSE
+#define min(x,y) ((x)<(y)?(x):(y))
+
+// do not write
+#define value 3
+#define current_value f(tab[0])
+ 
+
+Parameters:
+----------
+One of the three character strings explained above.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Number of methods per class
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Number of methods per class [METRICS-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The number of methods per class indicates the total level of functionality
+implemented by a class." 
+This metric measures the number of methods per class. 
+Rule triggers if the number of methods per class exceeds 20.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule applies only to the C++ programming language.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Foo {	// Violation
+public:
+  void method1();
+  void method2();
+  void method3();
+  void method4();
+  void method5();
+  void method6();
+
+protected:
+  void method7();
+  void method8();
+  void method9();
+  void method10();
+  void method11();
+  void method12();
+
+private:
+  void method13();
+  void method14();
+  void method15();
+  void method16();
+  void method17();
+  void method18();
+  void method19();
+  void method20();
+  void method21();
+
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Limit the number of methods to 20 per class.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+By Mark Schroeder "A Practical Guide to Object-Oriented Metrics"
+IT Professional, Novemeber/December, 1999, pg. 33.
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid implicit conversions of float type resulting in a loss of information
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid implicit conversions of float type resulting in a loss of information [JSF-184_b-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The value of an expression of float type shall not be implicitly converted 
+to a different type."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"By observing the principle whereby all operations are performed in 
+a consistent (underlying) type, it is possible to avoid programmer confusion 
+and some of the dangers associated with integral promotion."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+unsigned short goo_float( ) {
+    double f64a, f64b;
+    float f32a, f32b;
+    unsigned int u32a, u32b;
+    signed int s32a,s32b;
+
+    u32b = f32a;                // Violation
+    s32b = f32a;                // Violation
+    f32a = f64a;                // Violation
+    f64a = f32b + f32a + f64b;  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+unsigned short goo_float( ) {
+    double f64a, f64b;
+    float f32a, f32b;
+    unsigned int u32a, u32b;
+    signed int s32a,s32b;
+
+    u32b = (unsigned int)f32a;  // OK
+    s32b = (signed int)f32a;    // OK
+    f32a = (float)f64b;         // OK
+    f64a = f64b + f32b + f32a;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 184
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-5
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-6
+
+</PRE>
+</BODY>
+</HTML>

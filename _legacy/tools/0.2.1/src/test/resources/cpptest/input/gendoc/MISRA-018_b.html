@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use type suffix for numeric constants
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use type suffix for numeric constants [MISRA-018_b-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Numeric constants should be suffixed to indicate type, 
+where an appropriate suffix is available.
+Rule checks only value between 65536 and 2147483647.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+unsigned long arrL[] = {
+	0, 
+	1, 
+	32767, 
+	32768, 
+	65535, 
+	65536, 			/* Violation */
+	2147483547,		/* Violation */
+	2147483648,
+	4294967295
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+unsigned long arrL[] = {
+	0,			/* OK */
+	1, 			/* OK */
+	32767, 			/* OK */
+	32768, 			/* OK */
+	65535,			/* OK */
+	65536L, 		/* OK */
+	2147483547L,		/* OK */
+	2147483648,		/* OK */
+	4294967295		/* OK */
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 18
+
+</PRE>
+</BODY>
+</HTML>

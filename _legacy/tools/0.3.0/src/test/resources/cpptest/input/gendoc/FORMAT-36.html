@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Sibling statement lines should be indented to the same level
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Sibling statement lines should be indented to the same level [FORMAT-36-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Two statements in the same block coming one after another should be indented 
+to the same level.
+See also: FORMAT-27, FORMAT-37
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+- Rule treats tab characters as an alignment to correct column indentation.
+- Rule does not check indentation for lines which are in context 
+  of "()" or "[]" or lines which start with preprocessor directives.
+- Rule can be parameterized by changing value of the "TabSize" variable 
+  in Python scripts (by default it is set to 4 spaces).
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int x ) {
+    if (x == 0) {
+    }
+     x = 2;
+    x = 2;          // Violation
+   x = 2;           // Violation
+    x = 2;          // Violation
+   x = 2;           // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( int x ) {
+    if (x == 0) {
+    }
+    x = 2;          // OK
+    x = 2;          // OK
+    x = 2;          // OK
+    x = 2;          // OK
+    x = 2;          // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

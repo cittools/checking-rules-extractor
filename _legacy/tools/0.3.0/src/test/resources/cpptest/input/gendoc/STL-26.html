@@ -1,0 +1,162 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Proper implementation of copy_if should not be based on returning the remove_copy_if with a not1 in front of the predicate
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Proper implementation of copy_if should not be based on returning the remove_copy_if with a not1 in front of the predicate [STL-26-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"One of the more interesting aspects of the STL is that although there are 11 
+algorithms with "copy" in their names, none of them is copy_if. To implement
+copy_if, then, it seems that all we need to do is throw a not1 in front of the
+predicate we'd like to pass to copy_if, then pass the resulting predicate to
+remove_copy_if. The result is the code below.
+
+// a not-quite-right implementation of copy_if
+template&lt; typename Inputlterator, typename Outputlterator, typename Predicate&gt; 
+Outputlterator copy_if( InputIterator begin, Inputlterator end, 
+                        Outputlterator destBegin, Predicate p)
+{
+    return remove_copy_if(begin, end, destBegin, not1(p));
+}
+
+If the above reasoning were valid, we could write out our defective Widgets
+this way:
+
+// well-intentioned code that will not compile
+copy_if( widgets.begin(), widgets.end(), ostream_iterator&lt;Widget&gt;(cerr, "\n"),
+         isDefective);
+
+Your STL platforms will take a jaundiced view of this code, because it tries to
+apply not1 to isDefective. not1 can't be applied directly to a function 
+pointer: the function pointer must first be passed through ptr_fun. To call this
+implementation of copy_if, you must pass not just a function object, but an
+adaptable function object. That's easy enough to do, but clients of a would-be
+STL algorithm shouldn't have to. Standard STL algorithms never require that
+their functors be adaptable, and neither should copy_if."
+Rule reports a violation if implementation of copy_if is based on returning the
+remove_copy_if with a not1 in front of the predicate.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Given how useful copy_if is, plus the fact that new STL programmers tend to 
+expect it to exist anyway, there's a good case to be made for putting copy_if 
+— the correct one!"
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+#include &lt;functional&gt;
+
+using namespace std;
+
+template &lt;typename Inputlterator,typename Outputlterator, typename Predicate&gt;
+    Outputlterator copy_if( Inputlterator begin, Inputlterator end,
+        Outputlterator destBegin, Predicate p ) {
+    return remove_copy_if( begin, end, destBegin,             // Violation
+                           not1( ptr_fun( p ) ) ); 
+}
+
+template &lt;class T&gt; bool is_not_3( T val ) {
+    return val != 3;
+}
+
+void foo( ) {
+    vector&lt;int&gt; v;
+    v.push_back( 1 );
+    v.push_back( 2 );
+    v.push_back( 3 );
+
+    copy_if( v.begin( ), v.end( ), ostream_iterator&lt;int&gt;( cout, " " ),
+             is_not_3&lt;int&gt; );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+
+using namespace std;
+
+template &lt;typename Inputlterator, typename Outputlterator, typename Predicate&gt;
+    Outputlterator copy_if( Inputlterator begin, Inputlterator end,
+        Outputlterator destBegin, Predicate p ) {
+    while (begin != end) {        // OK
+        if (p(*begin))
+            *destBegin++ = *begin;
+        ++begin;
+    }
+    return destBegin;
+}
+
+template &lt;class T&gt; bool is_not_3( T val ) {
+    return val != 3;
+}
+
+void foo( ) {
+    vector&lt;int&gt; v;
+    v.push_back( 1 );
+    v.push_back( 2 );
+    v.push_back( 3 );
+
+    copy_if( v.begin( ), v.end( ), ostream_iterator&lt;int&gt;( cout, " " ),
+             is_not_3&lt;int&gt; );
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 5, Item 36
+
+</PRE>
+</BODY>
+</HTML>

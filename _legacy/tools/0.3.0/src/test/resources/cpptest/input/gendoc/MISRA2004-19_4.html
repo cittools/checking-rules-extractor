@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid keywords and basic types in macros
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid keywords and basic types in macros [MISRA2004-19_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"C macros shall only expand to a braced initialiser, a constant, 
+a string literal, a parenthesised expression, a type qualifier, 
+a storage class specifier, or a do-while-zero construct.
+These are the only permitted uses of macros.
+In particular macros shall not be used to define statements or parts
+of statements except the use of the do-while construct. Nor shall
+macros redefine the syntax of the language. All brackets of whatever
+type ( ) { } [ ] in the macro replacement list shall be balanced."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Storage class specifiers and type qualifiers include keywords such as:
+typedef, extern, static, auto, register, const, volatile, restrict.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents from redefining the syntax of the language.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define PI 3.14159F      /* OK */
+#define DOUBLE_PI  2*PI  /* Violation */
+#define int64_t    long  /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define PI 3.14159F       /* OK */
+#define DOUBLE_PI (2*PI)  /* OK */
+typedef long int64_t;     /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. Origin: Misra Guidelines - Rule 90
+
+</PRE>
+</BODY>
+</HTML>

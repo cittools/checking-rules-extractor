@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Pointer arithmetic shall only be applied to pointers that address an array or array element
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Pointer arithmetic shall only be applied to pointers that address an array or array element [MISRA2004-17_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Pointer arithmetic shall only be applied to pointers that address an array or 
+array element.
+Addition and subtraction of integers (including increment and decrement) from 
+pointers that do not point to an array or array element results in undefined 
+behaviour."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int a[] ) {
+    int* p1 = 0;
+    int* p2;
+    int* p3 = a;
+
+    a++;     // OK
+    p1++;    // Violation
+    p2 = a;
+    p2++;    // OK
+    p3++;    // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not apply pointer arithmetic to pointers.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 17
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Member data in non-POD class types shall be private
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Member data in non-POD class types shall be private [OOP-48-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Member data in non-POD class types shall be private."
+non-POD class types are such for which at least one
+of following conditions is met:
+- is a class (classes are not PODs)
+- is a struct/union that:
+  + has user declared constructor
+  + has private or protected non-static data member
+  + has base class
+  + has virtual function
+  + has non-static member with type non-POD (or array of non-POD)
+  + has non-static member with type reference
+  + has user declared copy assignment operator
+  + has user declared destructor
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"By implementing class interfaces with member functions,
+the implementation retains more control over how the object
+state can be modified, and helps to allow a class to be 
+maintained without affecting clients.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef signed int int32_t;
+class C
+{
+    public:
+        int32_t b; // Violation
+    protected:
+        int32_t c; // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef signed int int32_t;
+class C
+{
+    private:
+        int32_t b; // OK
+        int32_t c; // OK
+    protected:
+        const int32_t access_b();
+        const int32_t access_c();
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 11, Rule 11-0-1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,38 @@
+.DESCRIPTION
+It is not recommended to use path into an include directive
+
+#include "foo.h" // good
+
+#include "../foo.h" // bad ==> violation
+
+.COMMAND tcl
+
+.CODE
+
+proc compute {standardName tree} {
+	filterTree $tree [list opNameIs {pp_local_file pp_external_file}]
+}
+
+# opNameIs adds a rule violation if the operator of the tree is one of opNameLst
+proc opNameIs {opNameLst tree} {
+	set op [::logiscope::treeOperator $tree]
+	if { [lsearch $opNameLst [::logiscope::opName $op]] != -1} {
+		set fn [::logiscope::atomToString [::logiscope::treeAtomValue $tree] [::logiscope::atomTypeByName string]]
+	    # test for / and \ chars into the name of the file
+		if { [string match "*\[\\/\]*" $fn] } {
+			# add a violation on the parent (pp_include) instead of the pp_locale_file itself.
+			::logiscope::addViolation [::logiscope::treeParent $tree]
+			return 0
+		}
+	}
+	return 1
+}
+
+# filterTree applies callback to tree, and recurses on tree's sons
+proc filterTree {tree callback} {
+	if {[eval $callback [list $tree]]} {
+		::logiscope::forobj son $tree treeChild {
+			filterTree $son $callback
+    	}
+	}
+}

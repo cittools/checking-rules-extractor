@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The second or third operand of a ternary operator '?:' shall not contain side effects
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The second or third operand of a ternary operator '?:' shall not contain side effects [JSF-204_d-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"There are some situations in C or C++ code where certain parts of expressions
+may not be evaluated. If these sub-expressions contain side effects then those
+side effects may or may not occur, depending on the values of other 
+sub-expressions.
+The operators which can lead to this problem are &amp;&amp;, || and ?:. In the case of
+the ?: operator, either the second or third operands are evaluated but not both.
+The ?: operator is specifically provided to choose between two sub-expressions, 
+and is therefore less likely to lead to mistakes."
+See also: MISRA2004-12_2_a, MISRA2004-12_4_a
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only two nested level of fuction call.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents conditional evaluation of the second or third operand of ternary
+operator that can easily cause problems if the developer relies on a side effect
+occurring.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int i;
+int j;
+int foo( ) {
+    return (i &gt; j) ? j++ : i++; // Violation - developer expects 2nd and 3rd
+                                // operand to be evaluated
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int i;
+int j;
+int foo( ) {
+    if (i &gt; j) {      // OK
+        ++i;
+        return j++;
+    } else {
+        ++j;
+        return i++;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.25 Expressions, AV Rule 204
+
+</PRE>
+</BODY>
+</HTML>

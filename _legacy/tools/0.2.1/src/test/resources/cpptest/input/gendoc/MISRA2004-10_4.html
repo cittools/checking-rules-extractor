@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The value of a complex expression of floating type may only be cast to a narrower floating type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The value of a complex expression of floating type may only be cast to a narrower floating type [MISRA2004-10_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If a cast is to be used on any complex expression, 
+the type of cast that may be applied is severely restricted. 
+Conversions on complex expressions are often a source of
+confusion and it is therefore wise to be cautious."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents loss of data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef float           float32_t;
+typedef double          float64_t;
+typedef long double     float128_t;
+
+void goo( ) {
+    float128_t f128a, f128b;
+    float64_t f64a, f64b;
+    float32_t f32a, f32b;
+
+    (float64_t)(f32a + f32b);   /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef float           float32_t;
+typedef double          float64_t;
+typedef long double     float128_t;
+
+void goo( ) {
+    float128_t f128a, f128b;
+    float64_t f64a, f64b;
+    float32_t f32a, f32b;
+
+    (float32_t)(f64a + f64b);  /* OK - cast to narrow float type */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 10
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-7
+
+</PRE>
+</BODY>
+</HTML>

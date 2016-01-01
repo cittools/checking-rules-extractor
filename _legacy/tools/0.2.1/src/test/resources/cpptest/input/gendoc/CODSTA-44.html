@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Local variables and variables of class/parent classes/parent structs should have different name
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Local variables and variables of class/parent classes/parent structs should have different name [CODSTA-44-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule checks if local variables and variables of class/parent classes/
+/parent structs have the same name (case sensitive). 
+If so, then it reports violation message.
+See also: CODSTA-45
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and prevents writing ambiguous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    int member;
+    float var1;
+    float var2;
+    short var3;
+
+    void foo( ) {
+        float member;                                   // Violation
+    }
+
+    short foo2( ) {
+        for( int var2 = 0; var2 &lt; 10; var2++ ) {  // Violation
+        }
+        return var3;
+    }
+};
+
+
+class A : public Base {
+    void foo( ) {
+        float member;                                   // Violation
+    }
+    int foo1( );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    int member;
+    float var1;
+    float var2;
+    short var3;
+
+    void foo( ) {
+        float member2;                                     // OK
+    }
+
+    short foo2( ) {
+        for( int var4 = 0; var4 &lt; 10; var4++ ) {     // OK
+        }
+        return var3;
+    }
+};
+
+class A : public Base {
+    void foo( ) {
+        float member2;                                     // OK
+    }
+    int foo1( );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

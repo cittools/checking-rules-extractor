@@ -1,0 +1,203 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Protect against command injection
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Protect against command injection [BD-SECURITY-TDCMD-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases when data coming directly from the end-user can influence
+the code which is executed (for example, to form the name of the file to
+be executed).
+
+The rule supports functions for process execution from the standard C library as well
+as from POSIX. For example, it considers widely used system() function and the exec family
+of functions dangerous.
+
+Data from the following data sources are considered tainted:
+
+   * Parameters of the main() function
+   * Network
+
+Additional sources of tainted data can be defined by parameterizing the rule.
+For details, see the PARAMETERS section.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+Enforces 'A2 - Injection Flaws', #2 from the OWASP Top 10 2007 list.
+
+If some tainted data will appear in an executed file name without verification,
+it may allow the execution of custom malicious code which could damage the system.
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+
+This rule can be parameterized so that data from the following data sources are considered tainted
+(in addition to those previously listed in the DESCRIPTION section):
+
+   * Files
+   * Pipes
+   * Stream-oriented APIs (std::istream, CArchive and CFile from MFC)
+   * Low-level input (Windows API, POSIX)
+   * Console
+   * Environment variables
+
+The rule can be parameterized with a list of validating functions.
+Any validating function can be defined as:
+   * returning benign data, and/or;
+   * making its parameter(s) benign, and/or;
+   * making this-object benign.
+
+Validation functions allow this data to be safely passed
+to dangerous functions.
+
+Below is the description of columns which allow to define different aspects of
+functions in validating function table: 
+
+* The 'Enabled' column can be used to temporarily disable some of the defined functions
+  for BugDetective analysis.
+
+* The 'Fully qualified type name' column must be filled with the fully qualified name of the type
+  that declares the function. Use '*' if you want to describe function declared in any type
+  or namespace, or a global function declared outside of any type or namespace.
+
+* The 'Function name' column should contain name of the described function.
+
+* The '+ definitions in subclasses' column is used to indicate whether the current row will
+  apply to functions with the given in name defined in subclasses of the given class. Note that this
+  applies to both instance and non-instance functions.
+  
+Other columns allow to describe which of the data are affected by a given function:
+
+* The '"this" object is validated' column is used to specify that the function cleans object on which
+  it is called.
+
+* The 'returns validated data' column is used to specify that the function cleans its return value.
+
+* The 'Numbers of the parameters that are validated (1-based)' column is used to specify that
+  the function cleans some of its parameters. List parameters' indexes separated by comma
+  or use '*' to specify that all parameters are affected.
+
+Also, there is an option that determines whether numerical data should be considered tainted.
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+Consider a network application that receives some user-defined parameters from a socket and
+starts some processing using these parameters. In such situations, placing unverified user data into
+an execution request can have some dangerous consequences. For example, users might be able to
+run custom code on the server with application privileges.
+
+For instance, providing " &amp; shutdown -s -f -d p" as a command_parameter value in the request
+will cause a server to shutdown if the command is executed in the following way:
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+
+void commandInjection(int socket)
+{
+	char params[200], command[250];
+	recv(socket, params, 200, 0); /* Receiving command parameters from a socket */
+	strcpy(command, "process_data -params ");
+	strcat(command, params);
+	system(command); // Command injection
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+Validating tainted data prior to its usage in the dangerous function removes
+the risk of command injection:
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+
+char* validate(char*); /* properly implement validation function */
+
+void commandInjection(int socket)
+{
+	char params[200], command[250];
+	recv(socket, params, 200, 0); /* Receiving command parameters from a socket */
+	strcpy(command, "process_data -params ");
+	strcat(command, validate(params));
+	system(command); /* OK, protected from command injection provided that validate() is implemented properly */
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+OWASP Top 10 2007 (A2 - Injection Flaws):
+<A HREF="http://www.owasp.org/index.php/Top_10_2007">http://www.owasp.org/index.php/Top_10_2007</A>
+
+Web Application Security Consortium:
+<A HREF="http://www.webappsec.org/projects/threat/classes/os_commanding.shtml">http://www.webappsec.org/projects/threat/classes/os_commanding.shtml</A>
+
+</PRE>
+</BODY>
+</HTML>

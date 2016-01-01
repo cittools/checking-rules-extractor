@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All the functions pointed to by a single pointer to function shall be identical in the number and type of parameters and the return type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All the functions pointed to by a single pointer to function shall be identical in the number and type of parameters and the return type [MISRA-105-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Pointers to functions can easily violate type integrity, 
+so all pointed-to functions should be of identical type.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+This rule is active for C code only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents type integrity violation.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int(*PTF)(int, char*);
+     typedef void(*PTF2)(void);
+     int foo(int i, char* c){ return 0;}
+     void bar(){}
+     void test(void)
+     {
+         PTF p;
+         void *purePtr = 0;
+         char *charPtr = 0;
+         PTF2 q; 
+         PTF arrV[] = { foo, (PTF)&amp;bar };  /* Violation */ 
+         p = (PTF) bar;                    /* Violation */ 
+         p = (PTF) q;                      /* Violation */
+         p = purePtr;                      /* Violation */
+         p = (PTF)charPtr;                 /* Violation */
+     }
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef int(*PTF)(int, char*);
+     typedef void(*PTF2)(void);
+     int foo(int i, char* c){ return 0;}
+     void bar(){}
+     void test(void)
+     {
+         PTF p;
+         void *purePtr = 0;
+         char *charPtr = 0;
+         PTF2 q = bar;                /* OK */ 
+         PTF arrOK[] = { foo, &amp;foo }; /* OK */ 
+	 p = &amp;foo;                    /* OK */
+         p = (PTF) purePtr;           /* OK */
+     }
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 105
+
+</PRE>
+</BODY>
+</HTML>

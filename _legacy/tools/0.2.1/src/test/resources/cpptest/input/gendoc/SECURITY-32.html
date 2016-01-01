@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using obsolete C routine 'usleep'
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using obsolete C routine 'usleep' [SECURITY-32-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The C routine 'usleep()' is considered to be obsolete. 
+The interaction of this function with SIGALARM 
+and other timer functions such as sleep(), alarm(), setitimer(),
+and nanosleep() is unspecified. 
+Use 'nanosleep()' or 'setitimer()' instead.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents unspecified behaviour of obsolete 'usleep()' C routine.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+int main()
+{
+  usleep(7);                  // Violation
+  return 0;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;time.h&gt;
+void foo(timespec *req, timespec *rem)
+{
+  nanosleep(req, rem);   // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

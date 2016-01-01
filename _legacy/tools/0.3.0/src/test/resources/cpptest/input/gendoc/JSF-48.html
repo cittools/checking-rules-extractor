@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Identifiers will not differ by mixture of case, the underscore character, interchange of the similarly looking letters and numbers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Identifiers will not differ by mixture of case, the underscore character, interchange of the similarly looking letters and numbers [JSF-48-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Identifiers will not differ by:
+- Only a mixture of case
+- The presence/absence of the underscore character
+- The interchange of the letter 'O', with the number '0' or the letter 'D'
+- The interchange of the letter 'I', with the number '1' or the letter 'l'
+- The interchange of the letter 'S' with the number '5'
+- The interchange of the letter 'Z' with the number '2'
+- The interchange of the letter 'n' with the letter 'h'.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int paramS, int param5);   // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int param1, int param2);   // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.9 Style, AV Rule 48
+
+</PRE>
+</BODY>
+</HTML>

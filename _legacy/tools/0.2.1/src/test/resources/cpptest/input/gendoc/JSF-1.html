@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Any one function (or method) will contain no more than 200 logical source lines of code (L-SLOCs)
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Any one function (or method) will contain no more than 200 logical source lines of code (L-SLOCs) [JSF-1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Any one function (or method) will contain no more than 200
+logical source lines of code (L-SLOCs).
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Logical lines of code represent a metrics for those line of
+code which form code statements.  These statements are terminated
+with a semi-colon.  The control line for the "for" loop contain
+two semi-colons but accounts for only one semi colon.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using long functions which tend to be complex and
+therefore difficult to comprehend and test.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void sample_function() // Violation
+{
+    int x, y;
+    
+    // ...
+
+    if (x&lt;10)
+    {
+        y = x + 1;   // L-SLOCs number = 201
+    } 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void sample_function() // OK
+{
+    int x, y;
+    
+    // ...
+
+    if (x&lt;10)
+    {
+        y = x + 1;   // L-SLOCs number = 150
+    } 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 3.2 Code Size and Complexity, AV Rule 1
+
+</PRE>
+</BODY>
+</HTML>

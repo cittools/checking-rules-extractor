@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Enclose in parentheses whole definition of a function-like macro
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Enclose in parentheses whole definition of a function-like macro [MISRA-096-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+In the definition of a function-like macro whole definition
+shall be enclosed in parentheses.
+See also: MISRA2004-19_10
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves the readability of code and ensures operations order.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define abs( x ) (x)&gt;=0 ? c: -(x)           /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define abs2( x ) ((x)&gt;=0 ? c: -(x))        /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 96
+
+</PRE>
+</BODY>
+</HTML>

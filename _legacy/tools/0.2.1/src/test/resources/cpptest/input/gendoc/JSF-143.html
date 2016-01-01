@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Variables will not be introduced until they can be initialized with meaningful values
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Variables will not be introduced until they can be initialized with meaningful values [JSF-143-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Variables will not be introduced until they can be initialized with meaningful values.
+Rule reports a violation message if:
+- value assigned to local variable during initialization is not used (i.e. there is
+  no variable usage after initialization statement and before new value assignment)
+- local variable is prematurely declared and is only used in for loop
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule is enabled for C++ only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevent clients from accessing variables without meaningful values.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int f(int);
+
+void fun_1(int x)
+{
+   int i;             // Violation: i is prematurely declared 
+                      // (the intent is to use i in the for loop only)
+
+   int max=0;         // Violation: max initialized with a dummy value
+
+   max = f(x);
+   for (i=0 ; i&lt;max ; ++i)
+   {
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int f(int);
+
+void fun_2(int x)
+{
+
+   int max = f(x);   // OK: max not introduced until meaningful
+                     // value is available
+
+   for(int i = 0; i &lt; max; i++) // OK
+   {
+   }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.16 Initialization, AV Rule 143
+
+</PRE>
+</BODY>
+</HTML>

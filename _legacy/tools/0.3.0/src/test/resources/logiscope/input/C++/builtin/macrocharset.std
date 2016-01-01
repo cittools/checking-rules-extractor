@@ -1,0 +1,29 @@
+.NAME Characters used in macros
+
+.DESCRIPTION
+
+Definition:
+-----------
+Some characters may be forbidden in the writing of the definitions of 
+macro-functions and macro-constants (not in their name).
+The two cases are treated separately.
+
+Parameters:
+----------
+A list of two couples of character strings; the first string of the couple 
+is "constant" or "function", and the second one a string composed by the 
+associated forbidden characters.
+
+Example:
+--------
+The standard can be expressed as following, to forbid, for macro-constants, 
+characters taken in the string @#!&/[]{}~`' and, for macro-functions, 
+characters taken in the string #@%.\. 
+STANDARD macrocharset ON LIST "constant" "@#!&/[]{}~`'" "function" "#@%.\" END LIST 
+END STANDARD 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not print potentially sensitive information, resulting from an application error into exception messages
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not print potentially sensitive information, resulting from an application error into exception messages [SECURITY-15-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not print potentially sensitive information,
+resulting from an application error into exception messages.
+Rule disallows printing messages in catch block.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the application from leaking potentially sensitive information, 
+resulting from an application error.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+class LoginException{ 
+public:
+	int tmp;
+	char* getMessage();
+};
+
+class CLogin {
+public:
+	void login(){};
+};
+
+void log( char *text){};
+
+void foo( int i ) {
+	CLogin lc;
+	try {
+		lc.login();		
+	} catch (LoginException le1) {
+		// login failed
+		::printf( le1.getMessage() );  // Violation
+		exit( 1 );
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+class LoginException{ 
+public:
+	int tmp;
+	char* getMessage();
+};
+
+class CLogin {
+public:
+	void login(){};
+};
+
+void log( char *text){};
+
+void foo( int i ) {
+	CLogin lc;
+	try {
+		lc.login();		
+	} catch (LoginException le2) {  // OK
+		exit( 1 );
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.atsec.com/downloads/pdf/secure-coding-guidelines.pdf">http://www.atsec.com/downloads/pdf/secure-coding-guidelines.pdf</A>
+
+</PRE>
+</BODY>
+</HTML>

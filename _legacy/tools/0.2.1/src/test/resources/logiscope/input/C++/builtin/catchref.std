@@ -1,0 +1,18 @@
+.NAME Catch Exceptions by Reference
+
+.DESCRIPTION
+
+Definition:
+-----------
+In catch clauses references to exceptions must be indicated.
+(This rule relates to Item 13 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Improves code efficiency.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

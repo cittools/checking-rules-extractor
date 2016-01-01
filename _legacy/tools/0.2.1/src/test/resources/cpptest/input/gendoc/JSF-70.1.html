@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Freed memory shouldn't be accessed under any circumstances. Destructor should not be called manually
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Freed memory shouldn't be accessed under any circumstances. Destructor should not be called manually [JSF-70.1-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"(..) invalid objects (...) wreak havoc on your program's health.
+Don't make assumptions about what delete does and doesn't do; 
+freed memory is freed, and shouldn't be subsequently 
+accessed under any circumstances. Don't try to play with object lifetime 
+by calling the destructor manually (e.g. obj.~T())."
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only simple cases (usage of variable, parameter, 
+a[b], a.b, a-&gt;b, or *a expression after they were deleted).
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents writing unsafe and error prone code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    ~A();
+};
+
+void zoo( ) {
+    A obj;
+    obj.~A( );    // Violation
+}
+
+void foo( ) {	
+    char * a = new char;
+    char * b = new char;
+
+    delete a;
+    a++;          // Violation
+    delete b;
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Don't use invalid objects.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Type Safety", Rule 99
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 70
+
+</PRE>
+</BODY>
+</HTML>

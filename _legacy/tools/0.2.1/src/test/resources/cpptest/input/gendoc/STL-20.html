@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+It is necessary to be careful when using reverse_iterator's base iterator for erasure purposes
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+It is necessary to be careful when using reverse_iterator's base iterator for erasure purposes [STL-20-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Understand how to use a reverse_iterator's base iterator.
+(...) it's not accurate to say that a reverse_iterator's base member
+function returns the "corresponding" iterator. For insertion purposes, it
+does, but for erasure purposes, it does not. When converting reverse_iterators
+to iterators, it's important that you know what you plan to do with the
+resulting iterator, because only then can you determine whether the iterator
+you have is the one you need.
+To emulate erasure at a position specified by a reverse_iterator ri, erase at
+the position preceding ri.base() instead. For purposes of erasure, ri 
+and ri.base() are nor equivalent, and ri.base() is nor the iterator
+corresponding to ri." 
+Rule reports warning message when the usage of base iterator within
+erase call is found and no icrement/decrement operators are performed for base
+iterator.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined results.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;list&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+void foo()
+{
+	vector&lt;int&gt; v;
+	list&lt;int&gt; li;
+	vector&lt;int&gt;::reverse_iterator ri = find(v.rbegin(), v.rend(), 3);
+	list&lt;int&gt;::reverse_iterator ri2 = find(li.rbegin(), li.rend(), 3);
+	
+        v.reserve(5);
+	for(int i = 1;i &lt;= 5;++i){
+		v.push_back(i);
+		li.push_back(i);
+	}
+	
+	v.erase(ri.base());     // Violation	
+	li.erase(ri2.base());   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+#include &lt;list&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+void foo()
+{
+	vector&lt;int&gt; v;
+	list&lt;int&gt; li;
+	vector&lt;int&gt;::reverse_iterator ri = find(v.rbegin(), v.rend(), 3);
+	list&lt;int&gt;::reverse_iterator ri2 = find(li.rbegin(), li.rend(), 3);
+	
+        v.reserve(5);
+	for(int i = 1;i &lt;= 5;++i){
+		v.push_back(i);
+		li.push_back(i);
+	}
+	
+	v.erase((--ri).base()); // OK
+	li.erase(--ri2.base()); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the 
+Standard Template Library", Chapter 4, item 28
+
+</PRE>
+</BODY>
+</HTML>

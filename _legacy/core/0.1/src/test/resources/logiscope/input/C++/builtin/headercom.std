@@ -1,0 +1,27 @@
+.NAME Function and class header comments
+
+.DESCRIPTION
+Definition:
+-----------
+Functions and classes must be preceded by a comment.
+
+It is possible to define a format for this comment depending on the type 
+of the function definition or declaration, or class definition: func_glob_def,
+func_glob_decl, func_stat_def, func_stat_decl, class.
+
+The format of the comment is defined as a list of regular expressions that 
+shall be found in the header comment in the order of declaration.
+
+Parameters:
+----------
+Five or six lists of character strings concerning the five cases listed above. 
+Each list begins with one of the five strings (func_glob_def for instance), 
+followed by a string representing the regular expression.
+
+.SEVERITY Advisory
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+
+

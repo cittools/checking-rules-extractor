@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Statements within function should not be nested deeper than 4 levels
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Statements within function should not be nested deeper than 4 levels [METRICS-40-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Statements should not be nested deeper than 4 levels.
+The rule as a level detects a block of code enclosed with curly braces '{}'
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves easier code understanding, and maintain, and often needlessly so.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo2( int x ) {
+/* level-0 */    if (x &gt; 0) {                    /* OK */
+/* level-1 */        if (x &gt; 1) {                /* OK */
+/* level-2 */            if (x &gt; 2) {            /* OK */
+/* level-3 */                if (x &gt; 3) {        /* OK */
+/* level-4 */                    if (x &gt; 4) {    /* Violation - level 5 starts */
+/* level-5 */                       if (x &gt; 5) { /* OK - Violation on higher level */
+/* level-6 */	                        return x;
+	                            }
+                                 }
+                             }
+                         }
+                     }
+                 }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use excessive block nesting depth (more than 4 levels)
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+HIS Source Code Metriken, version 1.3.1
+Metrik "LEVEL"
+
+</PRE>
+</BODY>
+</HTML>

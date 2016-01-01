@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The final clause of a switch statement shall be the default clause
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The final clause of a switch statement shall be the default clause [MISRA2004-15_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+All switch statements should contain a final default clause.
+"The requirement for a final default clause is defensive programming. 
+This clause should either take appropriate action or contain a suitable 
+comment as to why no action is taken."
+See also: CODSTA-35
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of 'switch' statement.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int i) {
+    switch(i) /* Violation */
+    {
+        case 0 : break;
+        case 1 : break;
+    }
+    switch(i) /* Violation */
+    {
+        case 0 : break;
+        default: break;
+        case 1 : break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int i) {
+    switch(i) /* OK */
+     {
+        case 0 : break;
+        case 1 : break;
+        default: break;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 15
+
+2. Origin: Misra Guidelines - Rule 62
+
+</PRE>
+</BODY>
+</HTML>

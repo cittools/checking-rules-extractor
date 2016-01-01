@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use increment and decrement expressions inside a(b), a[b], and cast
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use increment and decrement expressions inside a(b), a[b], and cast [PB-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not use increment and decrement expressions inside a(b), a[b], and cast.
+See also: MISRA2004-12_3 (operator sizeof), PB-02 (assign expression)
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule increases legibility, efficiency and prevents possible bugs 
+related to aftereffects of unnecessary shortcuts in the code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( int i ) 
+{
+    int* x;
+    x[ i++ ];          // Violation
+    foo( i++ );        // Violation
+    i = (int) (x++);   // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use increment and decrement expressions inside a(b), a[b] and cast.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

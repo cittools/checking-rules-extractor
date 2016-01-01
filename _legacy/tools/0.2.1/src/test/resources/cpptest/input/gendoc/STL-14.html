@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using vector&lt;bool&gt;
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using vector&lt;bool&gt; [STL-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Avoid using vector&lt;bool&gt;. As an STL container, there are really only 
+two things wrong with vector&lt;bool&gt;. First, it's not an STL container.
+Second, it doesn't hold bools."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps writing safer and more scalable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+void foo(vector&lt;bool&gt; bParam)      // Violation
+{
+	vector&lt;bool&gt; sName;        // Violation
+	vector&lt;bool&gt; *psName;      // Violation
+}
+
+vector&lt;bool&gt; vec_fun();            // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;vector&gt;
+using namespace std;
+
+void foo(vector&lt;int&gt; bParam)      // OK
+{
+	vector&lt;int&gt; sName;        // OK
+	vector&lt;int&gt; *psName;      // OK
+}
+
+vector&lt;int&gt; vec_fun();            // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 2, item 18
+
+</PRE>
+</BODY>
+</HTML>

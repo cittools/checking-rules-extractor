@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Standard library function names shall not be reused
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Standard library function names shall not be reused [MISRA-115-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Standard library function names shall not be reused.
+This rule requires that any new versions of standard functions are given names different than 
+the original functions.
+This is to avoid confusion as to whether a standard library function is being used or 
+whether a modified version of that function is being used.
+This rule will report violation for the redefinition of functions listed in Annex B of the ISO/IEC 9899:1999 
+standard.  It will also report any function definitions whose names conflict with any of function macros 
+defined in the standard (see the example below).
+This rule is active for C code only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents writing error prone code and provides maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+double sqrt(double arg)             /* Violation - redefined */ 
+{
+	return (arg);
+}
+
+void strpbrk(double arg) { }        /* Violation - redefined */ 
+
+/* macro redefined as function */ 
+void offsetof(double arg) { }       /* Violation - std. macro name */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+double sqrt(double);                /* OK - just declared */ 
+void foo()                          /* OK - user function */
+{
+	sqrt(123.0);                /* OK - std. C function call */ 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Origin: Misra Guidelines - Rule 115
+
+</PRE>
+</BODY>
+</HTML>

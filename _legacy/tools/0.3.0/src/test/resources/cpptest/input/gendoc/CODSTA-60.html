@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid comparing values with TRUE macro/enum constant using equality operators ("==", "!=")
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid comparing values with TRUE macro/enum constant using equality operators ("==", "!=") [CODSTA-60-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid checking "== TRUE" and "!= TRUE". 
+Such checks should be avoided because true can have many possible values 
+(any non-zero value can be true), but the TRUE macro or enum constant is
+defined, for example, as 1.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Checking "== TRUE" or "!= TRUE", can be dangerous if
+e.g., variable is true but not 1.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define TRUE 1
+
+void foo()
+{
+  int a = 10;
+  
+  if(a==TRUE)      // Violation
+  {
+    /* ... */
+  
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define TRUE 1
+
+void foo()
+{
+  int a = 10;
+  
+  if(a)               // OK
+  {
+    /* ... */
+  
+  }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

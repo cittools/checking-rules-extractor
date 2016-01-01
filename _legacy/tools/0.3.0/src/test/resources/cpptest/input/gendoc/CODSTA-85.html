@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid exit points within infinite loops
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid exit points within infinite loops [CODSTA-85-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"This rule applies to iterations that are meant to be non-terminating
+(e.g., in a process scheduler). It should be statically provable that
+the iteration cannot terminate."
+The rule reports a violations if an iteration statement (while, do while, for)
+has a termination point. Only loops with empty or simple constant conditions
+are checked.
+The rule assumes that a loop can be terminated if it contains:
+- break
+- return
+- goto to a label outside of the loop
+- throw that is not caught by try/catch inside of the loop
+- calls to standard functions: exit, abort or _Exit
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule does not check called functions - if there's a termination point 
+in a function called from within the loop, which is used to stop the loop,
+the rule won't report a violation.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule prevents unexpected termination of loop that can not terminate.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(){
+    for(;;){
+        // code
+        break;     // Violation
+    }
+
+    while(1){
+        // code
+        return;    // Violation
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(){
+    for(;;){      // OK
+        // code
+    }
+
+    while(1){     // OK
+        // code
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 2
+
+</PRE>
+</BODY>
+</HTML>

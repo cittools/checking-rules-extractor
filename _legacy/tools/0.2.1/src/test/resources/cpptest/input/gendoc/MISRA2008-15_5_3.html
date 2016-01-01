@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The terminate() function shall not be called implicitly
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The terminate() function shall not be called implicitly [MISRA2008-15_5_3-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"It is implementation-defined whether the call stack is unwound before
+terminate() is called, so the destructors of any automatic objects may
+or may not be executed."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents implementation-defined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class C 
+{
+ public:
+    C() { throw 1; }
+};
+
+void fnExit1 (void)
+{
+  C c;
+  /* ... */
+}
+
+void foo()
+{
+  atexit (fnExit1);  // Violation
+  /* ... */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class C 
+{
+ public:
+    C() 
+    {
+    	try
+    	{ 
+    		/* ... */
+    		throw 1;
+    	}
+    	catch(...)
+    	{
+    		/* ... */
+    	} 
+    }
+};
+
+void fnExit1 (void)
+{
+  C c;
+  /* ... */
+}
+
+void foo()
+{
+  atexit (fnExit1);  // OK
+  /* ... */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-5-3
+
+</PRE>
+</BODY>
+</HTML>

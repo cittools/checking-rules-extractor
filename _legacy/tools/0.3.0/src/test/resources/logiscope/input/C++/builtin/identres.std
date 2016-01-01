@@ -1,0 +1,18 @@
+.NAME Reserved identifiers
+
+.DESCRIPTION
+
+Definition:
+-----------
+Some identifiers may be forbidden in declarations. 
+For instance, names used in compilation directives or in libraries.
+
+Parameters:
+----------
+A list of character strings representing reserved identifiers.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

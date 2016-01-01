@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Only the first word of the name of a class, structure, namespace, enumeration, or typedef will begin with an uppercase letter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Only the first word of the name of a class, structure, namespace, enumeration, or typedef will begin with an uppercase letter [NAMING-40-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The first word of the name of a class, structure, namespace, enumeration,
+or type created with typedef will begin with an uppercase letter.
+All others letters will be lowercase.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+If one wants to eliminate some abbreviations from checking it can be done by
+adding abbreviation string to array abb_table in rule's python method
+checkNamingConvention() e.g. abb_table = ["RGB", "IBM"]
+
+
+Exceptions:
+
+The first letter of a typedef name may be in lowercase if the typedef is a class member or
+when it is used as a replacement for primitive types.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class sample_Class   // Violation
+{
+   // ...
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Sample_class   // OK
+{
+   // ...
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.9 Style, AV Rule 50
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Array indexing shall be the only form of pointer arithmetic
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Array indexing shall be the only form of pointer arithmetic [MISRA2008-5_0_15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Array indexing is the only acceptable form of pointer arithmetic, because it is
+clearer and hence less error prone than pointer manipulation. This rule bans the
+explicit calculation of pointer values. Array indexing shall only be applied to 
+objects defined as an array type. Any explicitly calculated pointer value has 
+the potential to access unintended or invalid memory addresses. Pointers may go 
+out of bounds of arrays or structures, or may even point to effectively 
+arbitrary locations."
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves safety of the code.
+
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+
+For more complex code rule may not be able to check if there is indexed pointer
+which points to array. For such cases the rule may report false positives.
+For example:
+void foo( ) {
+    int a[10];
+    int* p1,* p2,* p3,* p4,* p5;
+
+    p1 = a;  p1[0] = 0;  // OK
+    p2 = p1; p2[0] = 0;  // OK
+    p3 = p2; p3[0] = 0;  // OK
+    p4 = p3; p4[0] = 0;  // Violation - false positive
+    p5 = p4; p5[0] = 0;  // Violation - false positive
+}
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void my_fn(int * p1, int p2[]) {
+    int index = 0;
+    int * p3;
+    int * p4;
+    *p1 = 0;
+
+    p1 ++;        /* Violation - pointer increment */
+    p1 = p1 + 5;  /* Violation - pointer increment */
+    p1[5] = 0;    /* Violation - p1 was not declared as an array */
+    p3 = &amp;p1[5];  /* Violation - p1 was not declared as an array */
+    p2[0] = 0;
+    index ++;
+    index = index + 5;
+    p2[index] = 0; /* OK */
+    p4 = &amp;p2[5];   /* OK */
+}
+
+void foo() {
+    int a1[16];
+    int a2[16];
+    int a[10];
+    int * p;
+
+    my_fn(a1, a2);
+    my_fn(&amp;a1[4], &amp;a2[4]);
+    p = a;
+    *(p+5) = 0; /* Violation */
+    p[5] = 0;   /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not increment/decrement pointers that does not point to an array
+Do not apply array indexing to pointers that does not point to array elements.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 17
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-0-15
+
+</PRE>
+</BODY>
+</HTML>

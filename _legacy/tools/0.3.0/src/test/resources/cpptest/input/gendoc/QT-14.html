@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+If you use Q_DECLARE_FLAGS, you must also use Q_DECLARE_OPERATORS_FOR_FLAGS
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+If you use Q_DECLARE_FLAGS, you must also use Q_DECLARE_OPERATORS_FOR_FLAGS [QT-14-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If you use Q_DECLARE_FLAGS, you must also use 
+Q_DECLARE_OPERATORS_FOR_FLAGS.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Q_DECLARE_FLAGS creates a type-safe way of storing OR-combinations of enum
+values. Q_DECLARE_OPERATORS_FOR_FLAGS declares a global operator|() for these
+type-safe flags, so they may be used outside the scope of where the flags
+are declared.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+enum Value { FirstVal, SecondVal, ThirdVal };
+
+Q_DECLARE_FLAGS(Values,Value)                    // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+enum Value { FirstVal, SecondVal, ThirdVal };
+
+Q_DECLARE_FLAGS(Values,Value)                    // OK
+Q_DECLARE_OPERATORS_FOR_FLAGS(Values)
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

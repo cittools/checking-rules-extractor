@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The unary minus operator shall not be applied to an expression whose underlying type is unsigned
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The unary minus operator shall not be applied to an expression whose underlying type is unsigned [MISRA2008-5_3_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Applying the unary minus operator to an expression of type unsigned int or 
+unsigned long generates a result of type unsigned int or unsigned long 
+respectively and is not a meaningful operation. Applying unary minus to an 
+operand of smaller unsigned integer type may generate a meaningful signed result
+due to integral promotion, but this is not good practice."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents unexpected result due to integral promotion.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() {
+    unsigned char  ui1;
+    signed short si2;
+    si2 = -ui1;                 // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo() {
+    unsigned char  ui1;
+    signed short si2;
+    si2 = -(signed short) ui1;  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 39
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.21 Operators, AV Rule  165
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-3-2
+
+</PRE>
+</BODY>
+</HTML>

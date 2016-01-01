@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use obsolete C routine ulimit()
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use obsolete C routine ulimit() [SECURITY-29-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+C routine ulimit() is considered obsolete.
+Use getrlimit(), setrlimit(), or sysconf() instead.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents using unsafe, obsolete C routine.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;ulimit.h&gt;
+
+void foo(int cmd, long newlimit)
+{
+    ulimit(cmd, newlimit);  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;sys/types.h&gt;
+#include &lt;sys/resource.h&gt;
+#include &lt;unistd.h&gt;
+
+void foo(int who, struct rlimit *rlim)
+{
+    getrlimit(who, rlim);  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

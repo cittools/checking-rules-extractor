@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Declare at least one constructor to prevent the compiler from doing so
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Declare at least one constructor to prevent the compiler from doing so [CODSTA-CPP-19-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+If you do not write at least one constructor in a class, the compiler will
+write a public constructor for you by default. This rule detects if you
+do not declare at least one constructor.
+See also: MRM-05, MRM-38, MRM-40, MRM-48, OOP-27, OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability. If you follow this rule, you will make class initialization
+explicit and prevent the compiler from initializing members improperly,
+especially pointer members.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {    // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {    // OK
+    A(){}
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 1, Item 5
+
+</PRE>
+</BODY>
+</HTML>

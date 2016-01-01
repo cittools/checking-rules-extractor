@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A class type exception shall always be caught by reference
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A class type exception shall always be caught by reference [EXCEPT-15-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If a class type exception object is caught by value, slicing occurs. That is,
+if the exception object is of a derived class and is caught as the base,
+only the base class’s functions (including virtual functions) can be called. 
+Also, any additional member data in the derived class cannot be accessed."
+Rule detects class or struct type exception object that is caught by value.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"If the exception is caught by reference, slicing does not occur."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class ExpBase
+{
+};
+class ExpD1: public ExpBase
+{
+};
+void foo()
+{
+    try
+    {
+        throw ExpD1 ( );
+        throw ExpBase ( );
+    }
+    catch ( ExpBase b ) // Violation - derived type objects will be
+    // caught as the base type
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class ExpBase
+{
+};
+class ExpD1: public ExpBase
+{
+};
+void foo()
+{
+    try
+    {
+        throw ExpD1 ( );
+        throw ExpBase ( );
+    }
+    catch ( ExpBase &amp;b ) // OK - exceptions caught by reference
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-3-5
+
+</PRE>
+</BODY>
+</HTML>

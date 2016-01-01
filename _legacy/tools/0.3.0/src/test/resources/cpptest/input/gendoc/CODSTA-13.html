@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid pointer arithmetic
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid pointer arithmetic [CODSTA-13-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that uses pointer arithmetic.
+"Avoid pointer arithmetic. Pointer arithmetic can be portable. 
+The operators == and != are defined for all pointers of the same type, 
+while the use of the operators &lt;, &gt;, &lt;=, &gt;= are portable 
+only if they are used between pointers which point into the same array."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents confusion of types (e.g., in comparison).
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int* returnptr();
+void foo() {
+  int* a;
+  char* b;
+
+  if (a == b) {}		// Violation
+  if (returnptr( ) &gt;= b) {}	// Violation
+  if (b &lt; returnptr( )) {}	// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use pointer arithmetic.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.8">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#18.8</A>
+From: 18 Portable Code - 18.8 Pointer Arithmetic - Port. Rec. 18
+
+</PRE>
+</BODY>
+</HTML>

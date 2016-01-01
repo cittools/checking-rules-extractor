@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use objects to manage resources
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use objects to manage resources [MRM-22-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"To make sure that the resource returned by function is always released, we
+need to put that resource inside an object whose destructor will automatically
+release the resource when control leaves scope. In fact, that's half the idea
+behind this Item: by putting resources inside objects, we can rely on C++'s
+automatic destructor invocation to make sure that the resources are released.
+In fact, the idea of using objects to manage resources is often called 
+Resource Acquisition Is Initialization (RAII), because it's so common to 
+acquire a resource and initialize a resource-managing object in the same
+statement. Sometimes acquired resources are assigned to resource-managing
+objects instead of initializing them, but either way, every resource is
+immediately turned over to a resource-managing object at the time the resource
+is acquired. i.e: auto_ptr, shared_ptr."
+See also: MRM-21
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents resources leaks.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;boost/tr1/memory.hpp&gt;
+using namespace std;
+using namespace tr1;
+
+class Investment {};
+
+Investment* createInvestment()
+{
+    Investment * ptr = new Investment();
+    return ptr;
+};
+
+void myFunction()
+{
+   Investment *pInv = createInvestment();                // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;boost/tr1/memory.hpp&gt;
+using namespace std;
+using namespace tr1;
+
+class Investment {};
+
+Investment* createInvestment()
+{
+    Investment * ptr = new Investment();
+    return ptr;
+};
+
+void myFunction()
+{
+   std::auto_ptr&lt;Investment&gt; pInv(createInvestment());  // OK
+   shared_ptr&lt;Investment&gt; pInv2(createInvestment());   // OK
+} 
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 3, Item 13
+
+</PRE>
+</BODY>
+</HTML>

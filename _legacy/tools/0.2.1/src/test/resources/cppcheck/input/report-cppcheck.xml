@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<results>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\Documentation\accounting\getdelays.c" line="506" id="memleak" severity="error" msg="Memory leak: logfile"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\Documentation\connector\ucon.c" line="250" id="resourceLeak" severity="error" msg="Resource leak: out"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\Documentation\ia64\aliasing-test.c" line="136" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\Documentation\lguest\lguest.c" line="1048" id="memleak" severity="possible error" msg="Memory leak: stack"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\Documentation\video4linux\v4lgrab.c" line="163" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\alpha\boot\tools\objstrip.c" line="279" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\alpha\boot\tools\objstrip.c" line="279" id="resourceLeak" severity="error" msg="Resource leak: ofd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\arm/lib/decompress_inflate.c" line="95" id="memleak" severity="possible error" msg="Memory leak: zbuf"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\avr32\boards\atngw100\mrmt.c" line="154" id="syntaxError" severity="error" msg="Invalid number of character ({). Can't process file."/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\m32r/lib/decompress_inflate.c" line="95" id="memleak" severity="possible error" msg="Memory leak: zbuf"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\mips/lib/decompress_inflate.c" line="95" id="memleak" severity="possible error" msg="Memory leak: zbuf"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\powerpc\boot\addnote.c" line="205" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\powerpc\boot\hack-coff.c" line="84" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\s390/lib/decompress_inflate.c" line="95" id="memleak" severity="possible error" msg="Memory leak: zbuf"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\s390\kernel\early.c" line="142" id="sprintfOverlappingData" severity="error" msg="Overlapping data buffer defsys_cmd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\s390\kernel\early.c" line="136" id="sprintfOverlappingData" severity="error" msg="Overlapping data buffer defsys_cmd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sh/lib/decompress_inflate.c" line="95" id="memleak" severity="possible error" msg="Memory leak: zbuf"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sh\drivers\heartbeat.c" line="109" id="memleak" severity="possible error" msg="Memory leak: hd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sparc\kernel\central.c" line="240" id="memleak" severity="possible error" msg="Memory leak: p"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sparc\kernel\pcic.c" line="356" id="arrayIndexOutOfBounds" severity="possible error" msg="Array index out of bounds"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sparc\kernel\pcic.c" line="357" id="arrayIndexOutOfBounds" severity="possible error" msg="Array index out of bounds"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sparc\kernel\pcic.c" line="358" id="arrayIndexOutOfBounds" severity="possible error" msg="Array index out of bounds"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sparc\kernel\prom_common.c" line="103" id="memleak" severity="possible error" msg="Memory leak: new_val"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\sparc\kernel\sbus.c" line="559" id="memleak" severity="error" msg="Memory leak: iommu"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\um\drivers\xterm.c" line="126" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\um\os-Linux\mem.c" line="179" id="memleak" severity="error" msg="Memory leak: tempname"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\um\os-Linux\mem.c" line="193" id="resourceLeak" severity="error" msg="Resource leak: fd"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\x86/lib/decompress_inflate.c" line="95" id="memleak" severity="possible error" msg="Memory leak: zbuf"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\x86\boot\compressed\relocs.c" line="681" id="resourceLeak" severity="possible error" msg="Resource leak: fp"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\x86\kernel\pci-calgary_64.c" line="334" id="nullPointer" severity="error" msg="Possible null pointer dereference: pbus"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\arch\x86\mm\pat.c" line="332" id="memleak" severity="error" msg="Memory leak: new"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\block\genhd.c" line="330" id="memleak" severity="possible error" msg="Memory leak: p"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\acpi\scan.c" line="1035" id="memleak" severity="error" msg="Memory leak: id.id"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\char\ipmi\ipmi_msghandler.c" line="1253" id="memleak" severity="possible error" msg="Memory leak: rcvr"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\dma\ioat\dma_v2.c" line="733" id="nullPointer" severity="error" msg="Possible null pointer dereference: desc - otherwise it is redundant to check if desc is null at line 743"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\dma\ioat\dma_v3.c" line="440" id="nullPointer" severity="error" msg="Possible null pointer dereference: desc - otherwise it is redundant to check if desc is null at line 450"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\dma\ioat\dma_v3.c" line="509" id="nullPointer" severity="error" msg="Possible null pointer dereference: desc - otherwise it is redundant to check if desc is null at line 530"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\dma\ioat\dma_v3.c" line="543" id="nullPointer" severity="error" msg="Possible null pointer dereference: compl_desc - otherwise it is redundant to check if compl_desc is null at line 549"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\dma\ioat\dma_v3.c" line="701" id="nullPointer" severity="error" msg="Possible null pointer dereference: compl_desc - otherwise it is redundant to check if compl_desc is null at line 707"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\dma\ioat\dma_v3.c" line="814" id="nullPointer" severity="error" msg="Possible null pointer dereference: desc - otherwise it is redundant to check if desc is null at line 827"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\firmware\dell_rbu.c" line="158" id="memleak" severity="possible error" msg="Memory leak: newpacket"/>
+<error file="D:\workspace\linux-2.6.35.1\linux-2.6.35.1\drivers\hid\hid-roccat.c" line="189" id="memleak" severity="error" msg="Memory leak: reader"/>
+</results>

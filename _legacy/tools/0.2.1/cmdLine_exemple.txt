@@ -1,0 +1,20 @@
+java -jar D:\workspacej2ee\Extractor-default-tools\build\libs\extractor-default-tools-0.1.jar -DtoolName=cpptest -DpropertiesPath=D:\workspacej2ee\Extractor-default-tools\src\test\resources\logiscope\logiscope.ini
+
+
+java -jar D:\workspacej2ee\Extractor\build\libs\extractor-0.1.jar -DtoolName=cpptest -DpropertiesPath=D:\workspacej2ee\Extractor-default-tools\src\test\resources\logiscope\logiscope.ini
+
+
+java -DtoolName=logiscope -DpropertiesPath="D:\workspacej2ee\Extractor-default-tools\src\test\resources\logiscope\logiscope.ini" -DpluginPath="D:\workspacej2ee\Extractor-default-tools\build\libs\extractor-default-tools-0.1.jar" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -jar build\libs\extractor-0.1.jar 
+
+java -DtoolName=logiscope -DpropertiesPath="D:\workspacej2ee\Extractor-default-tools\src\test\resources\logiscope\logiscope.ini" -DpluginPath="D:\workspacej2ee\Extractor-default-tools\build\libs\extractor-default-tools-0.1.jar" -jar build\libs\extractor-0.1.jar 
+
+------
+java -DtoolName=cpptest -DpropertiesPath="D:\Aravindan\extractor\Extractor-default-tools\src\test\resources\cpptest\cpptest.ini" -DpluginPath="D:\Aravindan\extractor\Extractor-default-tools\build\libs\extractor-default-tools-0.1.jar" -jar D:\Aravindan\extractor\Extractor\build\libs\extractor-0.1.jar
+
+java -DtoolName=klocwork -DpropertiesPath="D:\Aravindan\klocwork-extraction\klocwork.ini" -DpluginPath="D:\Aravindan\extractor\Extractor-default-tools\build\libs\extractor-default-tools-0.1.jar" -jar D:\Aravindan\extractor\Extractor\build\libs\extractor-0.1.jar
+
+java -DtoolName=klocwork -DpropertiesPath="D:\Aravindan\klocwork-extraction\klocwork.ini" -DpluginPath="D:\Aravindan\test_extractor\extractor-default-tools-0.1.jar" -jar D:\Aravindan\test_extractor\extractor-0.1.jar
+
+java -DtoolName=cppcheck -DpropertiesPath="D:\Aravindan\extractor\cppcheck.ini" -DpluginPath="D:\Aravindan\test_extractor\extractor-default-tools-0.1.jar" -jar D:\Aravindan\test_extractor\extractor-0.1.jar
+
+java -DtoolName=logiscope -DpropertiesPath="D:\Aravindan\test_extractor\logiscope.ini" -DpluginPath="D:\Aravindan\test_extractor\extractor-default-tools-0.1.jar" -jar D:\Aravindan\test_extractor\extractor-0.1.jar

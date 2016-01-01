@@ -1,0 +1,14 @@
+.NAME Variable number of parameters
+
+.DESCRIPTION
+
+Definition:
+-----------
+Functions with a variable number of arguments are not allowed.
+Parameters of va_list type and ... are forbidden in function declarations.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

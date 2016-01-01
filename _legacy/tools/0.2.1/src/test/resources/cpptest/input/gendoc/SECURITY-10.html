@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using vfork() function
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using vfork() function [SECURITY-10-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects code that uses vfork() functions.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents the use of the vfork() function, 
+which can easily fail when the code changes
+or even when the compiler version changes. 
+There are a number of problems with vfork(). 
+From a portability point-of-view, 
+the problem with vfork() is that it's actually fairly tricky 
+for a process to not interfere with its parent, 
+especially in high-level languages. 
+The "not interfering" requirement applies to the actual machine code generated, 
+and many compilers generate hidden temporaries 
+and other code structures that cause unintended interference. 
+Use the fork() function instead of the vfork() function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+
+void main( void )
+{
+	vfork( );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+
+void main( void )
+{
+	fork( );  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-vfork.html">http://www.dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-vfork.html</A>
+
+</PRE>
+</BODY>
+</HTML>

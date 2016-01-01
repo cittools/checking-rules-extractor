@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The initialization expression in a for loop will perform no actions other than to initialize the value of a single for loop parameter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The initialization expression in a for loop will perform no actions other than to initialize the value of a single for loop parameter [JSF-198-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The initialization expression in a for loop will perform no actions other than
+to initialize the value of a single for loop parameter.
+Note that the initialization expression may invoke an accessor that returns
+an initial element in a sequence:
+for (Iter_type p = c.begin() ; p != c.end() ; ++p) // Good
+{
+ // ...
+}
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+ 	int k = 0;
+	
+        /* ... */
+ 	 	
+	for(; k&gt;0; k--){}                // Violation
+	for(int i=0, k=2; k&gt;0; k--){}    // Violation
+	for(int i = k+2-10; k&gt;0; k--){}  // Violation
+	for(k--; k&gt;0; k--){}             // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+ public:
+  int i;
+  int moo();
+};
+
+void foo()
+{
+ 	int k = 0;
+ 	A obj;
+	
+        /* ... */
+ 	 	
+	for(k=2; k&gt;0; k--){}           // OK
+	for(int i =0; i&gt;0; i--){}      // OK
+	for(k = obj.i; k&gt;0; k--){}     // OK
+	for(k = obj.moo(); k&gt;0; k--){} // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.24 Flow Control Structures, AV Rule 198
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Class cannot inherit other class more than once unless it is virtual inheritance
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Class cannot inherit other class more than once unless it is virtual inheritance [OOP-03-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Multiple inheritance is more complex than single inheritance. It can lead to
+new ambiguity issues and to the need for virtual inheritance. Any time you
+have an inheritance hierarchy with more than one path between a base class 
+and a derived class , you must confront the question of whether you want the
+data members in the base class to be replicated for each of the paths."
+See also: OOP-07, OOP-06, OOP-05, OOP-04
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Multiple inheritance just means inheriting from more than one base class, but
+it is not uncommon for MI to be found in hierarchies that have higher-level
+base classes, too. That can lead to what is sometimes known as the "deadly MI
+diamond". (..) "
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class PreBase {};
+class Base: public PreBase {};
+class Empty {};
+class Intermediate: public Base, public Empty  {};
+class NonEmpty: public PreBase {};
+
+class MyClass:public Intermediate, public NonEmpty, public Empty{}; // Violation
+class MyClass2:public Intermediate, protected Empty {};             // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class PreBase {};
+class Base: public virtual PreBase {};
+class Empty {};
+class Intermediate: public virtual Base, public virtual Empty  {};
+class NonEmpty: public virtual PreBase {};
+
+class MyClass: public Intermediate, public NonEmpty, public Empty {};  // OK
+class MyClass2: public Intermediate, protected Empty {};               // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+Your Programs and Design", Third Edition, Addison-Wesley, 
+(C) 2005 Pearson Education, Inc., Chapter 6, Item 40
+
+</PRE>
+</BODY>
+</HTML>

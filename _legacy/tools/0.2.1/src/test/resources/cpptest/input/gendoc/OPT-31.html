@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+There shall be no unused parameters (named or unnamed) in non-virtual functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+There shall be no unused parameters (named or unnamed) in non-virtual functions [OPT-31-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"There shall be no unused parameters (named or unnamed) in non-virtual
+functions."
+
+
+Exceptions:
+
+"An unnamed parameter in the definition of a function that is used as
+a callback does not violate this rule."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Unused function parameters are often due to design changes and can
+lead to mismatched parameter lists."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int Foo(int i, int k)   // Violation
+{
+    i = 5;
+    return i;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int Foo(int i)          // OK
+{
+    i = 5;
+    return i;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 0, Rule 0-1-11
+
+</PRE>
+</BODY>
+</HTML>

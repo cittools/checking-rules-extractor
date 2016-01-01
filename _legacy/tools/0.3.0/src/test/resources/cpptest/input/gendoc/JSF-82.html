@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Have assignment operator returns a reference to *this; make assignment operator's return type a non-const reference to it's class' type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Have assignment operator returns a reference to *this; make assignment operator's return type a non-const reference to it's class' type [JSF-82-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule makes sure your assignment operator's return type is non-const
+reference to it's class' type and that it returns a reference to its left-hand
+argument, *this. Having operator= return a reference to *this protects you
+from not knowing where the temporary gets destroyed and allows you to declare
+the operator='s parameter as a reference to const, which is safer than just
+declaring it to be a reference.
+See also: CODSTA-CPP-21, CODSTA-CPP-24, MRM-04, MRM-37, MRM-40, MRM-47, OOP-27,
+          OOP-30, OOP-34
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Returning reference to *this in operator= functions protects you from not 
+knowing where the temporary gets destroyed and allows you to declare 
+the operator='s parameter as a reference to const, which is safer than just 
+declaring it to be a reference.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( ) { }
+    void operator=( A&amp; a ) {         // Violation
+        return;
+    }
+};
+class C {
+public:
+    C( ) { }
+    C operator=( C&amp; c ) {            // Violation
+        C *cp;
+        return *cp;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( ) { }
+    A&amp; operator=( A&amp; a ) {           // OK
+        return *this;
+    }
+};
+class C {
+public:
+    C( ) { }
+    C&amp; operator=( C&amp; c ) {           // OK
+        return *this;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 3, Item 15
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc.,
+   Chapter: "Constructors, Destructors, and Assignment Operators", Item 15
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 82
+
+</PRE>
+</BODY>
+</HTML>

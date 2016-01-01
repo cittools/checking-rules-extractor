@@ -1,0 +1,147 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All functions with more than 20 lines should contain at least 2 assertions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All functions with more than 20 lines should contain at least 2 assertions [METRICS-32-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The rule checks if a function that has more than M lines has at least
+N assertions. M and N are parameters that could be set inside rule in 
+python method 'setValue'.
+They are default set to:
+  MinimalNumberOfAssertions = 2
+  MinimalNumberOfFunctionLines = 20
+In this case the rule reports a violation if a function that has more than 20
+lines does not contain at least 2 assertions.
+See also: METRICS-31
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+As assertion the rule sees any use of macro with name that 
+ends with 'assert', e.g. 'assert', 'c_assert', 'checkAssert' etc.
+The first line of function is a line containing opening brace '{'
+and the last is line containing closing brace '}'. All lines are
+counted, including empty and commented out.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Statistics for industrial coding efforts indicate that unit tests often
+find at least one defect per 10 to 100 lines of code written. The odds
+of intercepting defects increase with assertion density. Use of assertions
+is often also recommended as part of a strong defensive coding strategy.
+Assertions can be used to verify pre- and post-conditions of functions,
+parameter values, return values of functions, and loop-invariants. 
+Because assertions are side-effect free, they can be selectively disabled
+after testing in performance-critical code."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define c_assert(x) ((x) ? 1 : 0);
+
+void foo(int x, int y) {  // Violation - 21 lines, 1 assertion used
+    /* Some code */
+    c_assert(x);  /* Use of assertion */
+    /*
+     * code
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * code
+     *
+     *
+     *
+     *
+     */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define c_assert(x) ((x) ? 1 : 0);
+
+void foo(int x, int y) {  // OK - 21 lines, 2 assertion used
+    /* Some code */
+    c_assert(x); /* Use of assertion */
+    c_assert(x); /* Use of assertion */
+    /*
+     * code
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * code
+     *
+     *
+     *
+     *
+     */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 5
+
+</PRE>
+</BODY>
+</HTML>

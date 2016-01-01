@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The declaration should not contain more than one level of pointer indirection
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The declaration should not contain more than one level of pointer indirection [CODSTA-89-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Use of more than one level of pointer indirection can seriously impair
+the ability to understand the behaviour of the code, and should therefore
+be avoided.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves safety of the code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+typedef int** INTPTR;  /* Violation */
+int** ptr;             /* Violation */
+int* a[];              /* Violation */
+struct S{
+    int** s;           /* Violation */
+};
+
+struct S** ps;         /* Violation */
+
+int** foo();           /* Violation */
+int(**pfunc1)();       /* Violation */
+int**(*pfunc2)();      /* Violation */
+void fun( int** par,   /* Violation */
+          INTPTR par_t /* Violation */
+        )
+{
+	int* a[10];        /* Violation */
+    int ** ptr;        /* Violation */
+    INTPTR ptr_t = 0;  /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not declare more than one level of pointer indirection.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+The Power of Ten - Rules for Developing Safety Critical Code.
+Rule 9
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The first operand of a conditional-operator shall have type bool
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The first operand of a conditional-operator shall have type bool [CODSTA-CPP-65-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The first operand of a conditional-operator shall have type bool.
+If an expression with type other than bool is used as the first operand
+of a conditional-operator, then its result will be implicitly converted
+to bool."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The first operand shall contain an explicit test (yielding a result of type
+ bool) in order to clarify the intentions of the developer."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int i, int j, int k, int l)
+{
+    i = j ? k : l;               // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int i, int j, int k, int l)
+{
+    i = (j != 0) ? k : l;        // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-0-14
+
+</PRE>
+</BODY>
+</HTML>

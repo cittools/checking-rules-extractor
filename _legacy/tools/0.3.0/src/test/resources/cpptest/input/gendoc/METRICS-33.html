@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Report Essential Complexity
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Report Essential Complexity [METRICS-33-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule reports the Essential Complexity value for each function.
+
+The Essential Complexity metric quantifies the extent to which software is unstructured.
+
+The metric is calculated according to the formula:
+  EC = Number of unstructured decisions + 1
+By decision we mean every occurrence of:
+  - 'if', 'for', 'while', 'do-while', 'case'
+  - conditional expression 'a?b:c' inside 'if', 'for', 'while', 'do-while' condition
+  - logical operator '&amp;&amp;' and '||' inside 'if', 'for', 'while', 'do-while' condition
+By unstructured decisions we mean conditional jumps into or out of other decesions, e.g. 
+'goto' inside 'if' which is in turn inside 'switch', or
+'return' inside 'while' which is in turn inside 'for'.
+If a decision contains unstructured decision then it's a unstructured decision itself.
+
+See also: METRICS-18, METRICS-28, METRICS-29, METRICS-34, METRICS-35
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.3
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule does not consider exception handling ('catch') as a decision.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Structured programming avoids unmaintainable "spaghetti code" by restricting the usage 
+of control structures to those that are easily analyzed and decomposed."
+
+By comparing Essential Complexity with Cyclomatic Complexity it's possible to find
+functions that are complicated but well structured, which means they can be refactored.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void Example(int x, int y) /* Violation: Essential Complexity = 8  */
+{
+    for(;x || y;) {                     // +2
+        switch (x*y) {
+            case 1:                     // +1
+                while (--x &gt; 0) {  // +1
+                    if (x % y) {        // +1
+                        return;
+                    }
+                }
+                if (x &gt; y) {            // +1
+                    goto OUT;
+                }
+                break;
+            case 2:                     // +1
+                do {
+                    x++;
+                } while (x &amp;&amp; y &amp;&amp; (x * y &lt; 100));
+                break;
+        }
+        OUT:
+        if (y) {
+            ++y;
+        }
+    }
+    if (y) {
+        goto END;
+    }
+    END:
+    return;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+This rule is an informational rule and reports Essential Complexity
+on each function implementation.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. A Complexity Measure
+   Thomas J. McCabe
+   308 IEEE TRANSACTIONS ON SOFTWARE ENGINEERING, VOL. SE-2, NO.4, DECEMBER 1976
+
+2. Structured Testing: A Testing Methodology Using the Cyclomatic Complexity Metric
+   NIST Special Publication 500-235   
+   Chapter 10 Essential Complexity
+   <A HREF="http://hissa.nist.gov/HHRFdata/Artifacts/ITLdoc/235/chaptera.htm#446037">http://hissa.nist.gov/HHRFdata/Artifacts/ITLdoc/235/chaptera.htm#446037</A>
+
+</PRE>
+</BODY>
+</HTML>

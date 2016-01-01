@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for long double-precision floating point types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for long double-precision floating point types [NAMING-HN-26-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For long double-precision floating point 
+variables and parameters use "ld" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+long double g_ldmyVar;                                 // Violation
+long double g_MyVariable;                              // Violation
+static const long double g_skMyVariable = 0.0;         // Violation
+class B {
+    long double m_MyVariable;                          // Violation
+    static const long double m_skMyVariable;           // Violation
+    void foo( long double MyParam ) {                  // Violation
+        long double MyVariable;                        // Violation
+        static const long double skMyVariable = 0.0;   // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+long double g_ldMyVar;                                  // OK
+long double g_ldMyVariable;                             // OK
+static const long double g_skldMyVariable = 0.0;        // OK
+class A {
+    long double m_ldMyVariable;                         // OK
+    static const long double m_skldMyVariable;          // OK
+    void foo( long double ldMyParam ) {                 // OK
+        long double ldMyVariable;                       // OK
+        static const long double skldMyVariable = 0.0;  // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

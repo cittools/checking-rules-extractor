@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The dereference operator `*' and the address-of operator `&amp;' should be directly connected with the type names
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The dereference operator `*' and the address-of operator `&amp;' should be directly connected with the type names [JSF-62-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The dereference operator * and the "address-of" operator &amp; should be
+directly connected to the type names in declaration and definition."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes source code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo() {
+    int k=42;
+    int *p1;	// Violation
+    int &amp;r1 = k;// Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo() {
+    int k=42;
+    int* p2;	// OK
+    int&amp; r2 = k;// OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1.Ellemtel Coding Standards 
+  <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#6.5">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#6.5</A>
+  from: 6 Style - 6.4 Pointers and References - Rec. 26
+
+2.JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+  Chapter 4.9 Style, AV Rule 62
+
+</PRE>
+</BODY>
+</HTML>

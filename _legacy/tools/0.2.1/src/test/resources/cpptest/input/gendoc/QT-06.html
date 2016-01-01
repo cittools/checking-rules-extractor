@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not set Idle or Critical priority to QThreads. Use High/Low/Med only
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not set Idle or Critical priority to QThreads. Use High/Low/Med only [QT-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Do not set Idle or Critical priority to QThreads. Use High/Low/Med only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Idle and Critical settings can cause live-lock or starvation.
+Some Operating Systems will not allow escalating the priorities of threads,
+so the results are platform specific.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+void myFunction( QThread* qt1, QThread* qt2 ) {
+    qt1-&gt;start( QThread::IdlePriority );           // Violation
+    qt2-&gt;setPriority( QThread::IdlePriority );     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;QtGui/QtGui&gt;
+
+void myFunction( QThread* qt1, QThread* qt2 ) {
+    qt1-&gt;start( QThread::NormalPriority );         // OK
+    qt2-&gt;setPriority( QThread::InheritPriority );  // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by Parasoft and Trolltech
+
+</PRE>
+</BODY>
+</HTML>

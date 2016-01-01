@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for string pointer, array, or reference types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for string pointer, array, or reference types [NAMING-HN-40-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For string pointer, array, or reference
+variables and parameters use "str" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using namespace std;
+
+string* g_pstrmyVar;                                // Violation
+string* g_pMyVariable;                              // Violation
+static const string* g_spkMyVariable;               // Violation
+class A {
+    string* m_pMyVariable;                          // Violation
+    static const string* m_spkMyVariable;           // Violation
+    void foo( string* pMyParam ) {                  // Violation
+        string* pMyVariable;                        // Violation
+        static const string* spkMyVariable;         // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string&gt;
+using namespace std;
+
+string* g_pstrMyVar;                                  // OK
+string* g_pstrMyVariable;                             // OK
+static const string* g_spkstrMyVariable;              // OK
+class A {
+    string* m_pstrMyVariable;                         // OK
+    static const string* m_spkstrMyVariable;          // OK
+    void foo( string* pstrMyParam ) {                 // OK
+        string* pstrMyVariable;                       // OK
+        static const string* spkstrMyVariable;        // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

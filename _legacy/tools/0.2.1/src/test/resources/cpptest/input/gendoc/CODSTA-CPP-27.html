@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Keep a type and its nonmember function interface in the same namespace
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Keep a type and its nonmember function interface in the same namespace [CODSTA-CPP-27-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Nonmember functions that are designed to be a part of the interface of 
+a class X (operators and helper functions) must be defined in the same 
+namespace as the X in order to be called correctly."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves efficiency and readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+namespace N{
+	class X{
+	     public:
+		void foo();
+	};
+}
+
+N::X operator+(const N::X&amp;, const N::X&amp;); // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+namespace N{
+	class X{
+	     public:
+		void foo();
+		X operator+(const X&amp;);    // OK
+	};
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Namespaces and Modules", Rule 57
+
+</PRE>
+</BODY>
+</HTML>

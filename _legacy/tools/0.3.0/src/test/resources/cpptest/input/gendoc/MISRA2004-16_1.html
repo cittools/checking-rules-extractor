@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Functions shall not be defined with a variable number of arguments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Functions shall not be defined with a variable number of arguments [MISRA2004-16_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Functions shall not be defined with a variable number of arguments.
+There are a lot of potential problems with this feature. Users shall not 
+write additional functions that use a variable number of arguments. 
+This precludes the use of use of stdarg.h, va_arg, va_start and va_end."
+Rule reports a violation message on:
+- inclusion of &lt;stdarg.h&gt; or &lt;cstdarg&gt; headers
+- use of va_arg/va_start/va_end functions
+- definitions (but not declarations) of functions with variable number
+  of arguments
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdarg.h&gt;                     /* Violation */
+int average( int first, ... );
+
+int average( int first, ... ) {         /* Violation */
+    int count = 0, sum = 0, i = first;
+    va_list marker;
+
+    va_start( marker, first );          /* Violation */
+    while( i != -1 ) {
+        sum += i;
+        count++;
+        i = va_arg( marker, int );      /* Violation */
+    }
+    va_end( marker );                   /* Violation */
+    return( sum ? (sum / count) : 0 );
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use functions with variable numbers of arguments.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA-C:2004 Guidelines for the use of the C language in critical systems
+Chapter 6, Section 16
+
+</PRE>
+</BODY>
+</HTML>

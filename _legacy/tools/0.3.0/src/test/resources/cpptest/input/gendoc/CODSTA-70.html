@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Expressions with type enum shall not be used as operands to built-in operators other than  [ ],  =, ==, !=, &lt;, &lt;=, &gt;, &gt;=, and the unary &amp; operator
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Expressions with type enum shall not be used as operands to built-in operators other than  [ ],  =, ==, !=, &lt;, &lt;=, &gt;, &gt;=, and the unary &amp; operator [CODSTA-70-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Expressions with type enum shall not be used as operands to built-in
+operators other than the subscript operator [ ], the assignment operator =,
+the equality operators == and !=, the unary &amp; operator, and the relational
+operators &lt;, &lt;=, &gt;, &gt;=."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Enumerations have implementation-defined representation
+ and so should not be used in arithmetic contexts."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+/* Examples of incorrect code */
+enum { COLOUR_0, COLOUR_1, COLOUR_2, COLOUR_3, COLOUR_COUNT } colour;
+void foo()
+{
+    if ( ( COLOUR_0 + COLOUR_1 ) == colour ){} // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+/* Examples of correct code */
+enum { COLOUR_0, COLOUR_1, COLOUR_2, COLOUR_3, COLOUR_COUNT } colour;
+void foo()
+{
+    if ( ( COLOUR_0 &lt; colour) &amp;&amp; (COLOUR_3  &gt; colour ) ){} // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 4, Rule 4-5-2
+
+</PRE>
+</BODY>
+</HTML>

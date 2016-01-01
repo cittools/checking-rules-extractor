@@ -1,0 +1,11 @@
+.DESCRIPTION
+Number of statements computed by the preprocessor in a module
+(#include, #if, #define, ...).
+
+.COMMAND tcl
+
+.CODE
+
+::logiscope::include -once common loc.tcl
+
+loc::declare module

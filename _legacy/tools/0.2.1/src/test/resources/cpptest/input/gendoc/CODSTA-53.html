@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The increment expression in a for loop will perform no action other than to change a single loop parameter to the next value for the loop
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The increment expression in a for loop will perform no action other than to change a single loop parameter to the next value for the loop [CODSTA-53-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The increment expression in a for loop will perform no action other
+than to change a single loop parameter to the next value for the loop
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo()
+{
+    int k = 0;
+
+    for(;k&gt;0; ){}                 // Violation
+    for(int i=0; k&gt;0; k--, i++){} // Violation
+    for(k--; k&gt;0; k+1){}          // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void zoo(){}
+
+class A
+{
+public:
+    int i;
+};
+
+void foo()
+{
+    int k = 0;
+    A obj;
+    
+    for(int i = k+2-10; k&gt;0; zoo()){} // OK
+    for(k=2; k&gt;0; k--){}              // OK
+    for(int i =0; i&gt;0; i=i-1){}       // OK
+    for(k = obj.i; k&gt;0; k-=1){}       // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.24 Flow Control Structures, AV Rule 199
+
+</PRE>
+</BODY>
+</HTML>

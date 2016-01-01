@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Don't write namespace usings in a header file or before an #include
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Don't write namespace usings in a header file or before an #include [CODSTA-CPP-39-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Namespace usings are for your convenience, not for you to inflict on others:
+Never write a using declaration or a using directive before #include 
+directive. In header files, don't write namespace-level using directives 
+or using declarations; instead, explicitly namespace-qualify all names. 
+The second rule follows from the first, because headers can never know 
+what other header #includes might appear after them."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents writing usings directives in header files which are meant 
+to be included in an unbounded number of implementation files.
+Rule also prevents messing with the meaning of code in someone else's header.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+using namespace std;    // Violation
+#include &lt;stddef.h&gt;
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdio.h&gt;
+#include &lt;stddef.h&gt;
+using namespace std;    // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Namespaces and Modules", Rule 59
+
+</PRE>
+</BODY>
+</HTML>

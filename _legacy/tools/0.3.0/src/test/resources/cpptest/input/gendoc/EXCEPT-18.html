@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Each exception explicitly thrown in the code shall have a handler of a compatible type in all call paths that could lead to that point
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Each exception explicitly thrown in the code shall have a handler of a compatible type in all call paths that could lead to that point [EXCEPT-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If a program throws an unhandled exception, it terminates in an
+implementation-defined manner. In particular, it is implementation-defined
+whether the call stack is unwound before termination, so the destructors of
+any automatic objects may or may not be invoked. If an exception is thrown
+as an object of a derived class, a "compatible type" may be either the
+derived class or any of its bases."
+Rule reports a violation if an unhandled exception is thrown while 
+a non-local object is declared or initialized.
+see also: EXCEPT-13
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule checks only one level of nested function calls.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"The objective of this rule is that a program should catch
+all exceptions that it is expected to throw."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class B{};
+class A {
+    int i;
+    A ( ) : i(1)
+    {
+        try
+        {
+            if ( i &gt; 10 )
+            {
+                throw A ( );
+            }
+            else
+            {
+                throw B ( ); 
+            }
+        }
+        catch ( A const &amp; )
+        {
+        }
+    }
+};
+A a; // Violation - unhandled exception of class B
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class B{};
+class A {
+    int i;
+    A ( ) : i(1)
+    {
+        try
+        {
+            if ( i &gt; 10 )
+            {
+                throw A ( );
+            }
+            else
+            {
+                throw B ( ); 
+            }
+        }
+        catch ( A const &amp; )
+        {
+        }
+        catch ( B const &amp; )
+        {
+        }
+    }
+};
+A a; // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 15, Rule 15-3-4
+
+</PRE>
+</BODY>
+</HTML>

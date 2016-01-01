@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+In a macro function, use parentheses before and after multiplication or division
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+In a macro function, use parentheses before and after multiplication or division [PREPROC-05-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether parentheses are used before and after division
+or multiplication in macros.
+
+
+Exceptions:
+
+The rule does not report violation if as an operand of division
+or multiplication is used a number constant or other division
+or multiplication.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves the readability of code and ensures operations order.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define DIVISION_1(x)  ( x / (x))    // Violation
+#define DIVISION_2(x)  ((x) / 2 + 5) // Violation
+#define DIVISION_3(x)  (256 / x)     // Violation
+#define MULTI_1(x)  (x * (x))        // Violation
+#define MULTI_2(x)  ((x) * 2 + 5)    // Violation
+#define MULTI_3(x)  (256 * x)        // Violation
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define DIVISION_1(x)  ( (x) / (x))     // OK
+#define DIVISION_2a(x)  ((x) / (2 + 5)) // OK
+#define DIVISION_2b(x)  (((x) / 2) + 5) // OK
+#define DIVISION_3(x)  (256 / (x))      // OK
+#define MULTI_1(x)  ( (x) * (x))        // OK
+#define MULTI_2a(x)  ((x) * (2 + 5))    // OK
+#define MULTI_2b(x)  (((x) * 2) + 5)    // OK
+#define MULTI_3(x)  (256 * (x))         // OK
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

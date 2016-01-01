@@ -1,0 +1,20 @@
+.NAME Check for Assignment to "self" in Operator "="
+
+.DESCRIPTION
+
+Definition:
+-----------
+Inside the definition of an assignment operator:
+- the equality between the parameter and this or *this shall be checked;
+- in case of equality, *this must be returned.
+(This rule relates to Item 17 in "Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Ensures that self-assignment will work.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

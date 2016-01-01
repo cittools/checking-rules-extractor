@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid returning handles to class data from member functions
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid returning handles to class data from member functions [CODSTA-CPP-06-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A function that returns a handle to an internal part of the object
+is dangerous. It doesn't matter whether the handle is a pointer, a reference,
+or an iterator. It doesn't matter whether it's qualified with const.
+It doesn't matter whether the member function returning the handle
+is itself const. All that matters is that a handle is being returned,
+because once that's being done, you run the risk that the handle will 
+outlive the object it refers to."
+The rule reports a violation if a member function returns reference or pointer
+to class-data.
+See also: CODSTA-CPP-77, OOP-12, OOP-36
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Handle to class-data is:
+- reference to member variable
+- pointer to member variable
+- pointer/reference to data allocated in constructor or deallocated in destructor
+Static variables are not considered class-data.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+The rule increases encapsulation, helps const member functions act const,
+and minimizes the creation of dangling handles.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Test
+{
+    public:
+        Test(int &amp; p) : _i(p)
+        {
+            _k = new int; // makes data pointed by _k a "class-data"
+        }
+        ~Test()
+        {
+            if (_k) {
+                delete _k;
+            }
+        }
+        int* GetI1()
+        {
+            return &amp;_i; // Violation
+        }
+        int&amp; GetI2() const
+        {
+            return _i; // Violation
+        }
+    protected:
+        const int * GetI3() const
+        {
+            return _k; // Violation
+        }
+    private:
+        int &amp; _i;
+        int * _k;
+};
+const int * ptr = 0;
+class Child: public Test
+{
+    public:
+        Child() : Test(z)
+        {
+        }
+        void foo() const
+        {
+            ptr = GetI3(); // Pointer to internal object saved
+        }
+    private:
+        int z;
+};
+void bar()
+{
+    int * i1 = 0;
+    {
+        Child c;
+        i1 = c.GetI1(); // Pointer to internal object saved
+    }
+    int &amp; i2 = Child().GetI2(); // Reference to internal object saved
+    // Now "ptr", "i2" and "i3" are dangling pointers/references
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Avoid returning handles to class-data.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Class Design and Inheritance", Rule 42
+
+2. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 5, Item 28
+
+3. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Implementation", Item 29
+
+</PRE>
+</BODY>
+</HTML>

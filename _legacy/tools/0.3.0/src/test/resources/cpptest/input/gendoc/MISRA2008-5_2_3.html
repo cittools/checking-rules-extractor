@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Casts from a base class to a derived class should not be performed on polymorphic types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Casts from a base class to a derived class should not be performed on polymorphic types [MISRA2008-5_2_3-4]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A downcast occurs when a class type is converted to another class type
+that is derived from that first class.
+Polymorphism enables strong abstraction between the interface and implementation
+of a hierarchy. Explicit casts bypass this layer of abstraction resulting
+in higher levels of coupling and dependency."
+"Casting from a base class to a derived class is unsafe unless some mechanism
+is provided to ensure that the cast is legitimate."
+See also: OOP-29, OOP-50
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents illegal casts and ensures that abstraction layer is not bypassed.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class B
+{
+    public:
+    virtual int foo( );
+};
+
+class D : public B
+{
+    public:
+    int foo( );
+};
+ 
+void main( )
+{
+    B *b;
+    D *d;
+    d = (D*) b; // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast a pointer to a base class to a pointer to a class
+that inherits from it.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-2-3
+
+</PRE>
+</BODY>
+</HTML>

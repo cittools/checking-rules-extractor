@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The definition of a constructor shall not contain default arguments that produce a signature identical to that of the implicitly-declared copy constructor
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The definition of a constructor shall not contain default arguments that produce a signature identical to that of the implicitly-declared copy constructor [PB-24-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+The definition of a member function shall not contain default arguments that
+produce a signature identical to that of the implicitly-declared copy
+constructor for the corresponding class/structure.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.1
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+If the class definition does not explicitly declare a copy constructor,
+one is declared implicitly. Thus, for the class definition
+class X 
+{
+   X(const X&amp;, int);
+};
+
+a copy constructor is implicitly-declared. If the user-declared constructor
+is later defined as
+
+X::X(const X&amp; x, int i =0) 
+{ 
+   /* ... */ 
+}
+
+then any use of X's copy constructor is ill-formed because of the ambiguity.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A
+{
+	A(const A&amp;, int);
+	A(const A&amp;);
+};
+
+A::A(const A&amp; x, int i =0) // Violation
+{
+	 /* ... */ 
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A
+{
+	A(const A&amp;, int i=0);
+	A(const A&amp;);
+};
+
+A::A(const A&amp; x, int i) // OK
+{
+	 /* ... */ 
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+Chapter 4.10 Classes, AV Rule 77.1
+
+</PRE>
+</BODY>
+</HTML>

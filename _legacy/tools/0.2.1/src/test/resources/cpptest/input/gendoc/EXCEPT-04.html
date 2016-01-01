@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All exceptions should be rethrown or logged with standard logger
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All exceptions should be rethrown or logged with standard logger [EXCEPT-04-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule detects exceptions that are not either 
+1) logged using a logger or 2) rethrown and logged somewhere else.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+An exception is an indication of an abnormal condition during the application 
+runtime. When debugging abnormal conditions from the security standpoint, 
+it is critical to have a proper log of suspicious events. 
+This rule enforces that proper logging is performed for such exceptions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+class LoginException{ 
+public:
+	int tmp;
+};
+
+class CLogin {
+public:
+	void login(){};
+};
+
+void log( char *text){};
+
+void foo( int i ) {
+	CLogin lc;
+	try {
+		lc.login();		
+	} catch (LoginException le1) {  // Violation
+		// login failed
+		le1.tmp = 0;
+		exit( 1 );
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;stdlib.h&gt;
+
+class LoginException{ 
+public:
+	int tmp;
+};
+
+class CLogin {
+public:
+	void login(){};
+};
+
+void log( char *text){};
+
+void foo( int i ) {
+	CLogin lc;
+	try {
+		lc.login();		
+	} catch (LoginException le1) {  // OK
+		// login failed
+		log( "login failed" );
+		// or throw new LoginException();
+		le1.tmp = 0;
+		exit( 1 );
+	}
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://www.freshsources.com/Except2/ALLISON.HTM">http://www.freshsources.com/Except2/ALLISON.HTM</A>
+
+</PRE>
+</BODY>
+</HTML>

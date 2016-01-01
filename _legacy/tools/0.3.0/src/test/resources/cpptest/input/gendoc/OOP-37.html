@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Prefer composition when don't need inheritance
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Prefer composition when don't need inheritance [OOP-37-5]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Inheritance is nearly the strongest relationship we can express in C++,
+it's only really appropriate when there is no equivalent weaker alternative.
+"If you can express a class relationship using composition alone,
+you should prefer that."
+You should avoid inheritance unless you need to:
+- override a virtual function
+- access a protected member
+See also: OOP-14
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves greater flexibility, compile-time insulation, 
+shorter compile times and less weirdness.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    virtual int virtualFoo( );
+    int publicData;
+protected:
+    int protectedData;
+};
+
+class DerivedA : public Base {  // Violation
+public:
+    virtual int moo();
+};
+
+class DerivedB : public Base {  // Violation
+public:
+    virtual int virtualMoo( ) {
+        publicData = 0;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+public:
+    virtual int virtualFoo( );
+    int publicData;
+protected:
+    int protectedData;
+};
+
+class DerivedA : public Base {  // OK
+public:
+    virtual int virtualFoo( );
+};
+
+class DerivedB : public Base {  // OK
+public:
+    int virtualMoo( ) {
+        return protectedData;
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 34
+
+</PRE>
+</BODY>
+</HTML>

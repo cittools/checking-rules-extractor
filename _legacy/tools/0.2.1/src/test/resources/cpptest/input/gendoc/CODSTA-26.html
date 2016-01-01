@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid magic numbers
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid magic numbers [CODSTA-26-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Avoid spelling literal constants in code. They are not self-explanatory.
+Use symbolic values instead.
+See also: CODSTA-29
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+We excluded using literal constants in initialization.
+We also skip usage of 0 or 1 because they are equivalent of true or false.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void boo(int);
+
+int foo( int a[], int b ) {
+    int e;
+    int f = 0;  
+    a[5] = 56; // Violation
+    e= 8;      // Violation
+    boo(56);   // Violation
+    return 8;  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+const int MAX = 8;       // OK
+
+void boo(int);
+
+int foo( float a[], float b ) {
+    int e;
+    int f = 0;        // OK  
+    int i = 5;        // OK
+    a[i] = MAX;       // OK
+    e = MAX;          // OK
+    boo(a[5]);        // OK
+    return  MAX;      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Coding Style", Rule 17
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.18 Constants, AV Rule 151
+
+</PRE>
+</BODY>
+</HTML>

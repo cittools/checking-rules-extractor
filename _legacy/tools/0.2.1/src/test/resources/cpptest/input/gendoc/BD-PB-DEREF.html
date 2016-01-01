@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid dereferencing before checking for null
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid dereferencing before checking for null [BD-PB-DEREF-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects cases where a reference checked for being null gets dereferenced
+on any path leading to this check.
+
+In some cases, the checks for null might have become redundant in the course of
+refactoring. In other cases, it is possible that the dereference was introduced
+into code that already had the null check, but the developer mistakenly added
+the dereference before the null check. This usually results in a null reference
+exception. In any case, such a condition usually points to an inconsistency in
+the code, which should be reviewed for correctness.
+
+How it works:
+The rule inspects null checks present in the code and determines whether they
+are redundant. To do this, it examines all the code paths that lead to
+the null check (for example, of variable "foo"). If it finds a dereferencing
+of the variable "foo" along all these paths, then it reports a violation.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+When both the dereference and the null check are within the same function,
+this almost always indicates a problem with the logic. When one of these
+is in a different function, a more careful review is needed before
+proceeding to fix the reported violation. Even though
+an obvious solution may be to remove the null check, it is possible that
+the null check is a protection against future changes.
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+Helps you detect code that is fraught with the danger of null dereferencing and find
+fragments of dead code.
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example which triggers a violation due to a problem with logic:
+
+#include "stdio.h"
+
+static void checkSequence(char cur[])
+{
+	if (cur[0] == '-') {
+		printf("Error: only positive values are permitted");
+		return;
+	}
+	// misplaced null check
+	if (cur == 0) {
+		printf("Error: null argument provided");
+		return;
+	}
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The misplaced null check should precede the array processing code:
+
+#include "stdio.h"
+
+static void checkSequence(char cur[])
+{
+	if (cur == 0) {
+		printf("Error: null argument provided");
+		return;
+	}
+	if (cur[0] == '-') {
+		printf("Error: only positive values are permitted");
+		return;
+	}
+}
+
+</PRE>
+</BODY>
+</HTML>

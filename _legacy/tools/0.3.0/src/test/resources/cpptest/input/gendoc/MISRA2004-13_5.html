@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The three expressions of a for statement shall be concerned only with loop control
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The three expressions of a for statement shall be concerned only with loop control [MISRA2004-13_5-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When present, the three expressions of a for statement shall be used only
+ for these purposes:
+ - First expression Initialising the loop counter (i in the following example)
+ - Second expression Shall include testing the loop counter (i), and optionally 
+   other loop control variables (flag)
+ - Third expression Increment or decrement of the loop counter (i)"
+This rule analyzes for statements to find any variables that are used within 
+initialization or update sections of the statements, but do not seem to be 
+concerned with loop control. Often, variables are initialized within the for 
+statement even though they have nothing to do with stop condition of the loop.
+In extreme cases entire for statement blocks can be moved into the for 
+statement, which makes the code both error-prone and hard to read.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Complying with this rule leads to safer and more readable code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( )
+{
+    int x, j;
+    for ( x = 5; j &lt; 2 ; x++ );       // Violation
+    for ( x = 5; x &lt; 2 ; j++ );       // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo( )
+{
+    int x, j;
+    for ( x = 5; x &lt; 2; x++);         // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 13
+
+2. Origin: Misra Guidelines - Rule 66
+
+</PRE>
+</BODY>
+</HTML>

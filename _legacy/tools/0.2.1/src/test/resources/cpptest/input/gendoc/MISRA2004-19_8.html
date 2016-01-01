@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A function-like macro shall not be invoked without all of its arguments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A function-like macro shall not be invoked without all of its arguments [MISRA2004-19_8-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"This is a constraint error, but preprocessors have been known to ignore this
+problem. Each argument in a function-like macro must consist of at least one
+preprocessing token otherwise the behaviour is undefined."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#define MAX(a, b, c)    ((a &lt; b) ? b : a)
+
+void foo(int a, int b)
+{
+    int c;
+    c = MAX(a, b);   /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define MAX(a, b, c)    ((a &lt; b) ? b : a)
+
+void foo(int a, int b)
+{
+    int c;
+    c = MAX(a, b, 0); /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. Origin: Misra Guidelines - Rule 94
+
+</PRE>
+</BODY>
+</HTML>

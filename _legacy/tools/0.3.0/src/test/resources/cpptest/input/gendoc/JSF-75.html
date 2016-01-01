@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+List members in an initialization list in the order in which they are declared
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+List members in an initialization list in the order in which they are declared [JSF-75-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Recall that the destructors for the members of an object are always called 
+in the inverse order of their constructors. Thus, if members were initialized 
+in the order of their appearance in an initialization list, compilers would 
+have to keep track of the order in which the members were initialized for each 
+object, just to ensure that the destructors would be called in the right order. 
+That would be an expensive proposition. To avoid that overhead, the order 
+of construction and destruction is the same for all objects of a given type, 
+and the order of members in an initialization list is ignored."
+In example section variable b from class A will not be initialized as we 
+assumed (initialized by the same value).
+See also: INIT-06, INIT-14, MISRA-030
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents access to null pointer when memory is not allocated.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( int x ) : a( x ), b( a ) {}    // Violation - b is declared before a
+private:
+    int b;
+    int a;
+};
+
+class B : public A {
+public:
+    B( int );
+private:
+    int a;
+    float b;
+};
+
+B::B( int y ) : b( 5 ), A( 1 ), a( y ) {}   // Violation - a is declared before b
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A {
+public:
+    A( int x ) : a( x ), b( a ) {}   // OK - a is declared before b
+private:
+    int a;
+    int b;
+};
+
+class B : public A {
+public:
+    B( int );
+private:
+    float b;
+    int a;
+};
+
+B::B( int y ) : b( 5 ), A( 1 ), a( y ) {}   // OK - b is declared before a
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 1, Item 4
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Constructors, Destructors, and Assignment Operators", Item 13
+
+3, JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 75
+
+</PRE>
+</BODY>
+</HTML>

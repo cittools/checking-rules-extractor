@@ -1,0 +1,37 @@
+.NAME Reserved functions
+
+.DESCRIPTION
+
+Definition:
+-----------
+This standard prevents from the use of system functions that are non portable 
+or dangerous.
+You can not use the name of these functions for the declaration or definition 
+of functions and for function calls.
+
+Parameters:
+-----------
+A list of character strings representing the function names considered as reserved.
+
+Justification:
+--------------
+Prevents from the use of system functions that are non portable or dangerous.
+
+Example:
+--------
+
+// if the system function is forbidden, do not write
+int system(char *command);
+
+int system(char *command)
+{
+...
+}
+
+system("cp file /tmp"); 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

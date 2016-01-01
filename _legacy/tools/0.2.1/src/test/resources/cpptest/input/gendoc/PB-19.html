@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not create inline non-member functions that contain local static data
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not create inline non-member functions that contain local static data [PB-19-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If you create an inline non-member function containing a local static object, 
+you may end up with more than one copy of the static object in your program!"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents from declaring inline local variable inside inline function.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+inline int increase( ) {   // Violation
+    static int count = 0;
+    count++;
+    return count;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int increase( ) {          // OK
+    static int count = 0;
+    count++;
+    return count;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "More Effective C++: 35 New Ways to Improve 
+Your Programs and Designs", Addison-Wesley, Copyright 1996, 
+Chapter: "Techniques", Item 26
+
+</PRE>
+</BODY>
+</HTML>

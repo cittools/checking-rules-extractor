@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Inline definition files always have the file name extension ".icc"
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Inline definition files always have the file name extension ".icc" [NAMING-39-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Inline definition files - files which contain definitions of inline functions -
+should always have the file extension ".icc"."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes source code more readable.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file.cpp                            // Violation
+inline int sum( int a, int b ) {
+    return a + b;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file.icc                             // OK
+inline int sum( int a, int b ) {
+    return a + b;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#4.1">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html#4.1</A>
+From: 4 Source Code in Files - 4.1 Structure of Code - Rule 3
+
+</PRE>
+</BODY>
+</HTML>

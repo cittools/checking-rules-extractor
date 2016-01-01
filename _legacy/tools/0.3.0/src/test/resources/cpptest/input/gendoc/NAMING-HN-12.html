@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for double-precision floating point types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for double-precision floating point types [NAMING-HN-12-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For double-precision floating point variables and parameters use "d" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+double g_dmyVar;                                  // Violation
+double g_MyVariable;                              // Violation
+static const double g_skMyVariable = 0.0;         // Violation
+class B {
+    double m_MyVariable;                          // Violation
+    static const double m_skMyVariable;           // Violation
+    void foo( double MyParam ) {                  // Violation
+        double MyVariable;                        // Violation
+        static const double skMyVariable = 0.0;   // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+double g_dMyVar;                                  // OK
+double g_dMyVariable;                             // OK
+static const double g_skdMyVariable = 0.0;        // OK
+class A {
+    double m_dMyVariable;                         // OK
+    static const double m_skdMyVariable;          // OK
+    void foo( double dMyParam ) {                 // OK
+        double dMyVariable;                       // OK
+        static const double skdMyVariable = 0.0;  // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

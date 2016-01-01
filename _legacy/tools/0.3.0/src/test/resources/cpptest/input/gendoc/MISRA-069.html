@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use functions with variable numbers of arguments
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use functions with variable numbers of arguments [MISRA-069-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Functions with variable numbers of arguments shall not be used.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents from a lot of potential problems with this feature.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int x, ...)   // Violation
+{  
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not use functions with variable numbers of arguments.
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Misra Guidelines - Rule 69
+
+2. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 9 Functions - 9.1 Function Arguments - Rule 31 
+
+3. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc.
+   Chapter: "Type Safety", Rule 98
+
+4. Scott Meyers and Martin Klaus, "Examining C++ Program Analyzers", 
+   Dr. Dobbs' Journal, the February 1997, 
+   Chapter: "Implementation", Item 23
+   <A HREF="http://www.aristeia.com/ddjpaper1_frames.html">http://www.aristeia.com/ddjpaper1_frames.html</A>
+
+5. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.13 Function, AV Rule  108
+
+6. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-4-1 
+
+</PRE>
+</BODY>
+</HTML>

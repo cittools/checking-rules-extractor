@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for array of char types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for array of char types [NAMING-HN-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For old-style null terminated string variables and parameters use "sz" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+char g_szmyVar[1];                                 // Violation
+char g_MyVariable[1];                              // Violation
+static const char g_skMyVariable[1] = {0};         // Violation
+class B {
+    char m_MyVariable[1];                          // Violation
+    static const char m_skMyVariable[1];           // Violation
+    void foo( char MyParam[1] ) {                  // Violation
+        char MyVariable[1];                        // Violation
+        static const char skMyVariable[1] = {0};   // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+char g_szMyVar[1];                                  // OK
+char g_szMyVariable[1];                             // OK
+static const char g_skszMyVariable[1] = {0};        // OK
+class A {
+    char m_szMyVariable[1];                         // OK
+    static const char m_skszMyVariable[1];          // OK
+    void foo( char szMyParam[1] ) {                 // OK
+        char szMyVariable[1];                       // OK
+        static const char skszMyVariable[1] = {0};  // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>

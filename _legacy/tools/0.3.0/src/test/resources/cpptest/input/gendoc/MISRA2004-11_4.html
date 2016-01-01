@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A cast should not be performed between a pointer to object type and a different pointer to object type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A cast should not be performed between a pointer to object type and a different pointer to object type [MISRA2004-11_4-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"A cast should not be performed between a pointer to object type and a different
+pointer to object type. Conversions of this type may be invalid if the new 
+pointer type requires a stricter alignment.
+Pointer types can be classified as follows:
+- Pointer to object
+- Pointer to function
+- Pointer to void
+- The null pointer constant (the value 0 cast to type void *)"
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Pointers which are different only const or volatile qualifier are not checked
+by this rule.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents incorrect pointer alignment.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( )
+{
+    unsigned int* ui;
+    signed char*  sc;
+
+    /* Examples of incorrect code */
+    ui = (unsigned int*) sc;          /* Violation */
+    ui = (unsigned int*) &amp;sc;         /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+typedef unsigned int uint32_t;
+void foo( )
+{
+    unsigned int* ui;
+    uint32_t*  ui_t;
+
+    /* Examples of correct code */ 
+    ui = (unsigned int*) ui_t;         /* OK */
+    ui = (unsigned int* const) ui_t;   /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 11
+
+2. Origin: Misra Guidelines rule 45
+
+3. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 5, Rule 5-2-7
+
+</PRE>
+</BODY>
+</HTML>

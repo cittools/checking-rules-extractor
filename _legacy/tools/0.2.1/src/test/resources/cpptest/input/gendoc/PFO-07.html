@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Use multiple include guards with pattern based on the header file name
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Use multiple include guards with pattern based on the header file name [PFO-07-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Every include file must contain a mechanism that prevents multiple inclusion 
+of the file."
+The multiple inclusion mechanism should be defined as follows:
+
+#ifndef FILENAME_H
+#define FILENAME_H
+// code
+#endif
+
+or
+
+#if !defined(FILENAME_H)
+#define FILENAME_H
+// code
+#endif
+
+See also: PFO-02, PFO-08, and MISRA2004-19_15
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+If the name of file is filename.h the name in multiple inclusion 
+mechanism should be converted to the following format FILENAME_H (capitalized
+and with extension preceded by underscoring)
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves maintainability and optimization of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+// file goo.hh
+#ifndef GUARD_GOO // Violation - naming convention not followed (GUARD_GOO)
+#define GUARD_GOO
+int i;
+#endif /*GUARD_GOO*/
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// file goo.hh
+#ifndef GOO_HH // OK
+#define GOO_HH
+int i;
+#endif /*GUARD_HH*/
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+From: 4 Source Code in Files - 4.4 Include Files - Rule 7
+
+</PRE>
+</BODY>
+</HTML>

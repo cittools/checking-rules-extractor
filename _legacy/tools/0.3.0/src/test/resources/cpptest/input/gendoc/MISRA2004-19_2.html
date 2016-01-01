@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Non-standard characters should not occur in header file names in #include directives
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Non-standard characters should not occur in header file names in #include directives [MISRA2004-19_2-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"If the ', \, ", or /* characters are used between &lt; and &gt; 
+delimiters or the ', \, or /* characters are used
+between the " delimiters in a header name preprocessing token,
+then the behaviour is undefined."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Ensures only standard characters in header file names.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;sys\types.h&gt;     /* Violation */
+#include "incl\header.h"   /* Violation */
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;sys/types.h&gt;     /* OK */
+#include "incl/header.h"   /* OK */
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 19
+
+2. Origin: Misra Guidelines - Rule 88
+
+</PRE>
+</BODY>
+</HTML>

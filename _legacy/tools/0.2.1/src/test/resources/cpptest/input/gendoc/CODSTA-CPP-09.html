@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Avoid using reinterpret_cast
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Avoid using reinterpret_cast [CODSTA-CPP-09-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Don't try to use reinterpret_cast to force the compiler to reinterpret the 
+bits of an object of one type as being the bits of an object of a different 
+type. That's the opposite of maintaining type safety, and reinterpret_cast 
+isn't even guaranteed to do that or anything else in particular."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Prevents assumptions how data is represented, which may dramatically affect 
+the safety and reliability of code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A{};
+class B{};
+
+void foo( ) {
+    A *a;
+    B *b = reinterpret_cast&lt;B*&gt;( a );  // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class A{};
+class B{};
+
+void foo( ) {
+    A *a;
+    void *pv = a;
+    B *b = static_cast&lt;B*&gt;( pv );      // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Type Safety", Rule 92
+
+</PRE>
+</BODY>
+</HTML>

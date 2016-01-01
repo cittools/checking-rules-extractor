@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+To make copying efficient, correct, and immune to the slicing problem create containers of pointers instead of containers of objects
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+To make copying efficient, correct, and immune to the slicing problem create containers of pointers instead of containers of objects [STL-02-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Containers hold objects, but not the ones you give them. Furthermore, when you
+get an object from a container, the object you get is not the one that was in
+the container. Instead, when you add an object to a container (via. e.g..
+insert or push_back. etc.), what goes into the container is a copy of the
+object you specify. When you get an object from a container (via. e.g.. front
+or back), what you set is a copy of what was contained. Copy in, copy out.
+That's the STL way.
+
+An easy way to make copying efficient, correct, and immune to the slicing
+problem is to create containers of pointers or smart pointers instead of
+containers of objects."
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Copying pointers is fast, it always does exactly what you expect (it copies
+the bits making up the pointer), and nothing gets sliced when a pointer is
+copied."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;map&gt;
+using namespace std;
+
+class example {
+};
+
+void foo() 
+{
+  list&lt;example&gt; cont1;            // Violation
+  map&lt;int,example&gt; cont2;      // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;list&gt;
+#include &lt;map&gt;
+using namespace std;
+
+class example {
+};
+
+void foo() {
+  list&lt;example*&gt; cont1;            // OK
+  map&lt;int,example*&gt; cont2;      // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Scott Meyers, "Effective STL: 50 Specific Ways to Improve Your Use of the
+Standard Template Library", Chapter 1, item 3
+
+</PRE>
+</BODY>
+</HTML>

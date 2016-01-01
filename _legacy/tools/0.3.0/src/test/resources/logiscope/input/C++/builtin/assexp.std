@@ -1,0 +1,30 @@
+.NAME Assignement in expressions
+
+.DESCRIPTION
+
+Definition:
+-----------
+Inside an expression:
+
+An lvalue has to be assigned only once, 
+With multiple assignments, an assigned lvalue can appear only where it has been 
+assigned. 
+
+Justification:
+--------------
+Removes ambiguity about the evaluation order.
+
+Example:
+--------
+
+// do not write
+
+i = t[i++];
+a=b=c+a;
+i=t[i]=15; 
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

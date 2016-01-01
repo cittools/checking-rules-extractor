@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+An object with integer type or pointer to void type shall not be converted to an object with pointer type
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+An object with integer type or pointer to void type shall not be converted to an object with pointer type [CODSTA-65-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"An object with integer type or pointer to void type shall
+not be converted to an object with pointer type"
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+In general, converting from an integral type or a pointer to void type
+to a pointer to an object leads to unspecified behaviour.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+struct S
+{
+    int i;
+    int j;
+};
+
+void f ( void * v, int i )
+{
+    S * s1 = reinterpret_cast&lt; S * &gt;( v ); // Violation
+    S * s2 = reinterpret_cast&lt; S * &gt;( i ); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Do not cast an object with integer type or pointer to void type
+to an object with pointer type
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+MISRA C++:2008 Guidelines for the use of the C++ language in critical systems
+Chapter 6, Section 5, Rule 5-2-8
+
+</PRE>
+</BODY>
+</HTML>

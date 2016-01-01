@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Ensure deallocation functions guarantee resource freeing
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Ensure deallocation functions guarantee resource freeing [BD-RES-BADFREEF-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+This rule detects functions that were meant to free resources, but do not guarantee that the resource
+is freed under any circumstances. The rule checks functions whose name matches the pattern
+you designate (it is set to "*free*" by default). A violation is reported when a function deallocates
+resources passed as parameters on some paths, but on some paths they are not deallocated. This
+can imply that calling the closing function under certain conditions may result in a resource leak.
+
+The set of resources and related deallocation functions are defined at
+"Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab.
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+v7.2
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+SECURITY RELEVANCE
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+PARAMETERS
+</STRONG>
+<PRE>
+The parameterization dialog allows to define the name pattern for functions that are to be checked.
+The default value is "*free*".
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+DRAWBACKS
+</STRONG>
+<PRE>
+N/A
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+Here is an example that will trigger a violation. (Please note that in order for BugDetective
+to find violations in the example, "Memory (standard C)" must be turned on in the resource
+table on "Test Configurations -&gt; Static -&gt; Options -&gt; BugDetective -&gt; Resources" tab):
+
+#include &lt;stdlib.h&gt;
+
+void bad_free(void *p, int condition)
+{
+    if (condition) {
+        free(p);
+    }
+}
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+The following code will not trigger a violation:
+
+#include &lt;stdlib.h&gt;
+
+void good_free(void *p)
+{
+    if (p != 0) {
+        free(p);
+    }
+}
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+N/A
+
+</PRE>
+</BODY>
+</HTML>

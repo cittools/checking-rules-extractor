@@ -1,0 +1,240 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Joint Strike Fighter
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+JSF
+</STRONG>
+<PRE>
+Joint Strike Fighter
+</PRE>
+<STRONG>
+RULES
+</STRONG>
+<p>
+<code><a href="JSF-1.html">Any one function (or method) will contain no more than 200 logical source lines of code (L-SLOCs) [JSF-1-3]</a></code><br>
+<code><a href="JSF-10.html">Values of character types shall be restricted to a defined and documented subset of ISO 10646-1 [JSF-10-3]</a></code><br>
+<code><a href="JSF-107.html">Always declare functions at file scope [JSF-107-2]</a></code><br>
+<code><a href="JSF-108.html">Do not use functions with variable numbers of arguments [JSF-108-2]</a></code><br>
+<code><a href="JSF-109.html">Member functions shall not be defined within the no-template class definition [JSF-109-4]</a></code><br>
+<code><a href="JSF-11.html">Trigraphs shall not be used [JSF-11-3]</a></code><br>
+<code><a href="JSF-110.html">Functions with more than 7 parameters will not be used [JSF-110-3]</a></code><br>
+<code><a href="JSF-111.html">Never return a reference to a local object [JSF-111-2]</a></code><br>
+<code><a href="JSF-112.html">Never return a dereferenced local pointer initialized by new in this function scope [JSF-112-4]</a></code><br>
+<code><a href="JSF-113.html">A function shall have a single point of exit at the end of the function [JSF-113-3]</a></code><br>
+<code><a href="JSF-114.html">All exit paths from a function with non-void return type shall have an explicit return statement with an expression [JSF-114-2]</a></code><br>
+<code><a href="JSF-115.html">If a function return error information, then that error information should be tested [JSF-115-3]</a></code><br>
+<code><a href="JSF-116.html">Pass built-in-types by value unless you are modifying them [JSF-116-4]</a></code><br>
+<code><a href="JSF-117.1.html">Declare reference parameters as const references whenever possible [JSF-117.1-4]</a></code><br>
+<code><a href="JSF-117_a.html">Avoid slicing function arguments / return value [JSF-117_a-4]</a></code><br>
+<code><a href="JSF-117_b.html">The class object should be passed by reference if the class has non-static pointers and has no declared copy constructor [JSF-117_b-4]</a></code><br>
+<code><a href="JSF-118.html">A pointer parameter in a function prototype should be declared as pointer to const if the pointer is not used to modify the addressed object [JSF-118-4]</a></code><br>
+<code><a href="JSF-119.html">Functions shall not call themselves, either directly or indirectly [JSF-119-2]</a></code><br>
+<code><a href="JSF-12.html">The following digraphs will not be used &lt;%, %&gt;, &lt;:, :&gt;, %:, %:%: [JSF-12-3]</a></code><br>
+<code><a href="JSF-121.html">Only functions with 1 or 2 statements should be considered candidates for inline functions [JSF-121-4]</a></code><br>
+<code><a href="JSF-122.html">Trivial accessor and mutator functions should be inlined [JSF-122-4]</a></code><br>
+<code><a href="JSF-123.html">The number of accessor and mutator functions should be minimized [JSF-123-4]</a></code><br>
+<code><a href="JSF-124.html">Trivial forwarding functions should be inlined [JSF-124-4]</a></code><br>
+<code><a href="JSF-125_a.html">Pass objects by reference instead of by value [JSF-125_a-2]</a></code><br>
+<code><a href="JSF-125_b.html">Consider using op= instead of stand-alone op [JSF-125_b-2]</a></code><br>
+<code><a href="JSF-126.html">Prefer C++ style comment [JSF-126-2]</a></code><br>
+<code><a href="JSF-127.html">Sections of code should not be "commented out" [JSF-127-2]</a></code><br>
+<code><a href="JSF-13.html">Do not use wide string literals [JSF-13-3]</a></code><br>
+<code><a href="JSF-132_a.html">Each variable declaration should be commented [JSF-132_a-3]</a></code><br>
+<code><a href="JSF-132_b.html">Each typedef should be commented [JSF-132_b-3]</a></code><br>
+<code><a href="JSF-132_c.html">Each enumeration value should be commented [JSF-132_c-3]</a></code><br>
+<code><a href="JSF-132_d.html">Each structure member variable should be commented [JSF-132_d-3]</a></code><br>
+<code><a href="JSF-133_a.html">Comment every file [JSF-133_a-3]</a></code><br>
+<code><a href="JSF-133_b.html">Provide copyright information [JSF-133_b-3]</a></code><br>
+<code><a href="JSF-134.html">Comment every function [JSF-134-4]</a></code><br>
+<code><a href="JSF-135_a.html">Identifiers in an inner scope shall not use the same name as an identifier in an outer scope, and therefore hide that identifier [JSF-135_a-2]</a></code><br>
+<code><a href="JSF-135_b.html">Identifiers in an inner scope shall not use the same name as an identifier in an outer scope, and therefore hide that identifier [JSF-135_b-2]</a></code><br>
+<code><a href="JSF-136.html">Declare objects at function scope [JSF-136-4]</a></code><br>
+<code><a href="JSF-137.html">Make declarations at file scope static where possible [JSF-137-4]</a></code><br>
+<code><a href="JSF-138_a.html">Use consistent linkage for identifiers [JSF-138_a-2]</a></code><br>
+<code><a href="JSF-138_b.html">The static storage class specifier shall be used in definitions and declarations of objects and functions that have internal linkage [JSF-138_b-2]</a></code><br>
+<code><a href="JSF-139.html">External object should not be declared in more than one file [JSF-139-3]</a></code><br>
+<code><a href="JSF-14.html">Literal suffixes shall use uppercase rather than lowercase letters [JSF-14-2]</a></code><br>
+<code><a href="JSF-140.html">Do not use register storage class [JSF-140-2]</a></code><br>
+<code><a href="JSF-141.html">A class, structure, or enumeration will not be declared in the definition of its type [JSF-141-3]</a></code><br>
+<code><a href="JSF-142_a.html">All automatic variables shall have been assigned a value before being used [JSF-142_a-2]</a></code><br>
+<code><a href="JSF-142_b.html">Initialize all variables [JSF-142_b-2]</a></code><br>
+<code><a href="JSF-143.html">Variables will not be introduced until they can be initialized with meaningful values [JSF-143-2]</a></code><br>
+<code><a href="JSF-144.html">Braces shall be used to indicate and match the structure in the non-zero initialization of arrays and structures [JSF-144-2]</a></code><br>
+<code><a href="JSF-145.html">In an enumerator list, the "=" construct shall not be used to explicitly initialise members other than the first, unless all items are explicitly initialised [JSF-145-2]</a></code><br>
+<code><a href="JSF-147.html">The underlying bit representations of floating point numbers shall not be used [JSF-147-2]</a></code><br>
+<code><a href="JSF-148.html">Enumeration types shall be used instead of integer types (and constants) as case labels [JSF-148-2]</a></code><br>
+<code><a href="JSF-149.html">Octal constants (other than zero) and octal escape sequences shall not be used [JSF-149-2]</a></code><br>
+<code><a href="JSF-150.html">Hexadecimal constants will be represented using all uppercase letters [JSF-150-3]</a></code><br>
+<code><a href="JSF-151.html">Avoid magic numbers [JSF-151-3]</a></code><br>
+<code><a href="JSF-151.1.html">A string literal shall not be modified [JSF-151.1-2]</a></code><br>
+<code><a href="JSF-152.html">Multiple variable declarations shall not be allowed on the same line [JSF-152-2]</a></code><br>
+<code><a href="JSF-153.html">Unions shall not be used [JSF-153-2]</a></code><br>
+<code><a href="JSF-154.html">Bit fields shall only be defined to be of type unsigned int or signed int [JSF-154-2]</a></code><br>
+<code><a href="JSF-156.html">All the members of a structure (or union) shall be named [JSF-156-2]</a></code><br>
+<code><a href="JSF-157.html">The right-hand operand of a logical &amp;&amp; or || operator shall not contain side effects [JSF-157-2]</a></code><br>
+<code><a href="JSF-158.html">Each operand of a logical '&amp;&amp;' or '||' shall be a postfix-expression [JSF-158-2]</a></code><br>
+<code><a href="JSF-159.html">Avoid overloading &amp;&amp;, || or , (comma) [JSF-159-2]</a></code><br>
+<code><a href="JSF-160.html">Assignment operators shall not be used in expressions that yield a Boolean value [JSF-160-2]</a></code><br>
+<code><a href="JSF-162_a.html">Avoid implicit conversions between signed and unsigned integer types [JSF-162_a-2]</a></code><br>
+<code><a href="JSF-162_b.html">Avoid implicit conversions between signed and unsigned integer types [JSF-162_b-2]</a></code><br>
+<code><a href="JSF-162_c.html">Use explicit type conversions for arithmetic using signed and unsigned values [JSF-162_c-2]</a></code><br>
+<code><a href="JSF-163.html">Unsigned arithmetic shall not be used [JSF-163-2]</a></code><br>
+<code><a href="JSF-164.html">The right-hand operand of a shift operator shall lie between zero and one less than the width in bits of the underlying type of the left-hand operand [JSF-164-2]</a></code><br>
+<code><a href="JSF-164.1.html">The left-hand operand of a right-shift operator shall not have a negative value [JSF-164.1-2]</a></code><br>
+<code><a href="JSF-165.html">The unary minus operator shall not be applied to an expression whose underlying type is unsigned [JSF-165-2]</a></code><br>
+<code><a href="JSF-166.html">The sizeof operator shall not be used on expressions that contain side effects [JSF-166-3]</a></code><br>
+<code><a href="JSF-167.html">Document integer division [JSF-167-2]</a></code><br>
+<code><a href="JSF-168_a.html">The comma operator shall not be used, except in the control expression of a for loop [JSF-168_a-2]</a></code><br>
+<code><a href="JSF-168_b.html">The comma operator shall not be used [JSF-168_b-2]</a></code><br>
+<code><a href="JSF-169.html">Pointers to pointers should be avoided whenever possible [JSF-169-4]</a></code><br>
+<code><a href="JSF-17.html">The error indicator errno shall not be used [JSF-17-2]</a></code><br>
+<code><a href="JSF-170_a.html">The declaration of objects should contain no more than 2 levels of pointer indirection [JSF-170_a-2]</a></code><br>
+<code><a href="JSF-170_b.html">The declaration of objects should contain no more than 2 levels of pointer indirection [JSF-170_b-2]</a></code><br>
+<code><a href="JSF-171.html">&gt;, &gt;=, &lt;, &lt;= shall not be applied to pointer types except where they point to the same array [JSF-171-2]</a></code><br>
+<code><a href="JSF-173.html">The address of an object with automatic storage shall not be assigned to another object that may persist after the first object has ceased to exist [JSF-173-2]</a></code><br>
+<code><a href="JSF-174_a.html">The NULL pointer shall not be dereferenced [JSF-174_a-2]</a></code><br>
+<code><a href="JSF-174_b.html">The NULL pointer shall not be dereferenced [JSF-174_b-2]</a></code><br>
+<code><a href="JSF-175.html">Do not compare a pointer to NULL or assign NULL to a pointer; use 0 instead [JSF-175-2]</a></code><br>
+<code><a href="JSF-176.html">Use a typedef to simplify program syntax when declaring function pointers [JSF-176-3]</a></code><br>
+<code><a href="JSF-177.html">Do not use user-defined conversion functions [JSF-177-4]</a></code><br>
+<code><a href="JSF-178.html">Avoid casts down the inheritance hierarchy [JSF-178-2]</a></code><br>
+<code><a href="JSF-179.html">A pointer to a virtual base class shall only be cast to a pointer to a derived class by means of dynamic_cast [JSF-179-2]</a></code><br>
+<code><a href="JSF-18.html">The macro offsetof, in library stddef.h, shall not be used [JSF-18-2]</a></code><br>
+<code><a href="JSF-180_a.html">Implicit conversions which may result in a loss of information shall not be used [JSF-180_a-2]</a></code><br>
+<code><a href="JSF-180_c.html">Avoid implicit conversions between integer and floating types [JSF-180_c-2]</a></code><br>
+<code><a href="JSF-180_d.html">Avoid implicit conversions of complex expressions [JSF-180_d-2]</a></code><br>
+<code><a href="JSF-180_e.html">Avoid implicit conversions from wider to narrower types [JSF-180_e-2]</a></code><br>
+<code><a href="JSF-180_f.html">Avoid implicit conversions of function return expressions [JSF-180_f-2]</a></code><br>
+<code><a href="JSF-180_h.html">Avoid implicit conversions of function arguments [JSF-180_h-2]</a></code><br>
+<code><a href="JSF-181_a.html">Avoid unnecessary explicit cast from derived to a base class [JSF-181_a-3]</a></code><br>
+<code><a href="JSF-181_b.html">Instead of casting a long type operand of an expression to int cast the result of the expression [JSF-181_b-3]</a></code><br>
+<code><a href="JSF-181_c.html">Do not cast an int pointer to a long pointer [JSF-181_c-3]</a></code><br>
+<code><a href="JSF-181_d.html">A pointer to a long should not be casted to an int pointer [JSF-181_d-3]</a></code><br>
+<code><a href="JSF-181_e.html">Do not cast from "shorter" type to "longer" type [JSF-181_e-3]</a></code><br>
+<code><a href="JSF-182_a.html">A cast should not convert a pointer type to an integral type [JSF-182_a-2]</a></code><br>
+<code><a href="JSF-182_b.html">A cast should not convert an integral type to a pointer type [JSF-182_b-2]</a></code><br>
+<code><a href="JSF-183.html">Never use explicit type conversions (casts) [JSF-183-4]</a></code><br>
+<code><a href="JSF-184_a.html">Avoid implicit conversions of float type resulting in a loss of information [JSF-184_a-2]</a></code><br>
+<code><a href="JSF-184_b.html">Avoid implicit conversions of float type resulting in a loss of information [JSF-184_b-2]</a></code><br>
+<code><a href="JSF-185.html">Prefer C++-style casts [JSF-185-2]</a></code><br>
+<code><a href="JSF-186_a.html">There shall be no unreachable code in "else" block [JSF-186_a-2]</a></code><br>
+<code><a href="JSF-186_b.html">There shall be no unreachable code after 'return', 'break', 'continue', and 'goto' statements [JSF-186_b-2]</a></code><br>
+<code><a href="JSF-186_c.html">There shall be no unreachable code in "if/else/while/for" block [JSF-186_c-2]</a></code><br>
+<code><a href="JSF-186_d.html">There shall be no unreachable code in switch statement [JSF-186_d-2]</a></code><br>
+<code><a href="JSF-186_e.html">There shall be no unreachable code in 'for' loop [JSF-186_e-2]</a></code><br>
+<code><a href="JSF-186_f.html">There shall be no unreachable code after 'if' or 'switch' statement [JSF-186_f-2]</a></code><br>
+<code><a href="JSF-186_g.html">There shall be no unreachable code after "if" or "switch" statement inside while/for/do...while loop [JSF-186_g-2]</a></code><br>
+<code><a href="JSF-187.html">All non-null statements shall either have at least one side-effect however executed or cause control flow to change [JSF-187-2]</a></code><br>
+<code><a href="JSF-188.html">Do not use labels [JSF-188-3]</a></code><br>
+<code><a href="JSF-189.html">The goto statement shall not be used [JSF-189-3]</a></code><br>
+<code><a href="JSF-19.html">Do not use locale.h header and setlocale function [JSF-19-2]</a></code><br>
+<code><a href="JSF-190.html">The continue statement shall not be used [JSF-190-2]</a></code><br>
+<code><a href="JSF-191.html">Do not use the break statement [JSF-191-2]</a></code><br>
+<code><a href="JSF-192.html">All if ... else if constructs shall be terminated with an else clause [JSF-192-3]</a></code><br>
+<code><a href="JSF-193.html">An unconditional break statement shall terminate every non-empty switch clause [JSF-193-2]</a></code><br>
+<code><a href="JSF-194.html">Always provide a default branch for switch statements [JSF-194-2]</a></code><br>
+<code><a href="JSF-195.html">A switch expression shall not represent a value that is effectively Boolean [JSF-195-3]</a></code><br>
+<code><a href="JSF-196.html">Every switch statement will have at least two cases and a potential default [JSF-196-3]</a></code><br>
+<code><a href="JSF-197.html">Do not use floating point variables as loop counters [JSF-197-2]</a></code><br>
+<code><a href="JSF-198.html">The initialization expression in a for loop will perform no actions other than to initialize the value of a single for loop parameter [JSF-198-3]</a></code><br>
+<code><a href="JSF-199.html">The increment expression in a for loop will perform no action other than to change a single loop parameter to the next value for the loop [JSF-199-3]</a></code><br>
+<code><a href="JSF-20.html">The setjmp macro and the longjmp function shall not be used [JSF-20-2]</a></code><br>
+<code><a href="JSF-200.html">Null initialize or increment expressions in for loops will not be used; a while loop will be used instead [JSF-200-3]</a></code><br>
+<code><a href="JSF-201.html">Do not modify for loop counter within a body of the loop [JSF-201-2]</a></code><br>
+<code><a href="JSF-202.html">Floating-point expressions shall not be tested for equality or inequality [JSF-202-2]</a></code><br>
+<code><a href="JSF-203.html">Evaluation of constant unsigned expression should not lead to wrap-around [JSF-203-2]</a></code><br>
+<code><a href="JSF-204_a.html">Assert liberally to document internal assumptions and invariants [JSF-204_a-2]</a></code><br>
+<code><a href="JSF-204_b.html">The increment (++) and decrement (--) operators should not be mixed with other operators in an expression [JSF-204_b-2]</a></code><br>
+<code><a href="JSF-204_c.html">The value of an expression shall be the same under any order of evaluation that the standard permits [JSF-204_c-2]</a></code><br>
+<code><a href="JSF-204_d.html">The second or third operand of a ternary operator '?:' shall not contain side effects [JSF-204_d-2]</a></code><br>
+<code><a href="JSF-204_e.html">Don't write code that depends on the order of evaluation of function arguments [JSF-204_e-2]</a></code><br>
+<code><a href="JSF-205.html">Do not use the volatile keyword [JSF-205-2]</a></code><br>
+<code><a href="JSF-206.html">Dynamic heap memory allocation shall not be used [JSF-206-2]</a></code><br>
+<code><a href="JSF-207.html">Encapsulate global variables and constants, enumerated types, and typedefs in a class [JSF-207-3]</a></code><br>
+<code><a href="JSF-208.html">C++ exceptions shall not be used (i.e. throw, catch and try shall not be used.) [JSF-208-2]</a></code><br>
+<code><a href="JSF-209.html">typedefs that indicate size and signedness should be used in place of the basic types [JSF-209-2]</a></code><br>
+<code><a href="JSF-21.html">The signal handling facilities of signal.h shall not be used [JSF-21-2]</a></code><br>
+<code><a href="JSF-210.1.html">Algorithms shall not make assumptions concerning the order of allocation of nonstatic data members separated by an access specifier [JSF-210.1-2]</a></code><br>
+<code><a href="JSF-213_a.html">Limited dependence should be placed on C's operator precedence rules in expressions [JSF-213_a-2]</a></code><br>
+<code><a href="JSF-213_b.html">Limited dependence should be placed on C's operator precedence rules in expressions [JSF-213_b-2]</a></code><br>
+<code><a href="JSF-213_c.html">No parentheses are required for the operand of a unary operator [JSF-213_c-2]</a></code><br>
+<code><a href="JSF-213_d.html">Limited dependence should be placed on C's operator precedence rules in expressions [JSF-213_d-2]</a></code><br>
+<code><a href="JSF-213_e.html">Use parentheses unless all operators in the expression are the same [JSF-213_e-2]</a></code><br>
+<code><a href="JSF-214.html">Avoid initialization order problems across translation units [JSF-214-2]</a></code><br>
+<code><a href="JSF-215.html">Avoid pointer arithmetic [JSF-215-3]</a></code><br>
+<code><a href="JSF-22.html">The input/output library stdio.h shall not be used [JSF-22-2]</a></code><br>
+<code><a href="JSF-23.html">The library functions atof, atoi and atol from library stdlib.h shall not be used [JSF-23-2]</a></code><br>
+<code><a href="JSF-24.html">The library functions abort, exit, getenv and system from library stdlib.h shall not be used [JSF-24-2]</a></code><br>
+<code><a href="JSF-25.html">The time handling functions of library time.h shall not be used [JSF-25-2]</a></code><br>
+<code><a href="JSF-26.html">Only the following pre-processor directives shall be used: #ifndef, #define, #endif, #include [JSF-26-2]</a></code><br>
+<code><a href="JSF-27.html">Use multiple include guards [JSF-27-3]</a></code><br>
+<code><a href="JSF-28.html">The #ifndef and #endif pre-processor directives will only be used to prevent multiple inclusions of the same header file [JSF-28-3]</a></code><br>
+<code><a href="JSF-29.html">A function should be used in preference to a function-like macro [JSF-29-2]</a></code><br>
+<code><a href="JSF-3.html">Follow the Cyclomatic Complexity limit of 20 [JSF-3-2]</a></code><br>
+<code><a href="JSF-30.html">Do not define constants via #define [JSF-30-2]</a></code><br>
+<code><a href="JSF-31.html">Avoid macros [JSF-31-3]</a></code><br>
+<code><a href="JSF-32.html">The #include pre-processor directive will only be used to include header (*.h) files [JSF-32-3]</a></code><br>
+<code><a href="JSF-33.html">The #include directive shall use the &lt;filename.h&gt; notation to include header files [JSF-33-2]</a></code><br>
+<code><a href="JSF-35.html">Use mechanism that prevents multiple inclusion of the file i.e. include guards or "#pragma once" preprocessor directive [JSF-35-3]</a></code><br>
+<code><a href="JSF-39_a.html">Don't define entities with linkage in a header file [JSF-39_a-3]</a></code><br>
+<code><a href="JSF-41.html">Source lines will be kept to a length of 120 characters or less [JSF-41-3]</a></code><br>
+<code><a href="JSF-42.html">Only one statement shall be allowed per line [JSF-42-3]</a></code><br>
+<code><a href="JSF-43.html">Tabs that do not use ASCII spaces shall not be used [JSF-43-4]</a></code><br>
+<code><a href="JSF-46.html">User-specified identifiers (internal and external) will not rely on significance of more than 64 characters [JSF-46-2]</a></code><br>
+<code><a href="JSF-47.html">Do not use identifiers which begin with one or two underscores (`_' or `__') [JSF-47-3]</a></code><br>
+<code><a href="JSF-48.html">Identifiers will not differ by mixture of case, the underscore character, interchange of the similarly looking letters and numbers [JSF-48-3]</a></code><br>
+<code><a href="JSF-50.html">Only the first word of the name of a class, structure, namespace, enumeration, or typedef will begin with an uppercase letter [JSF-50-3]</a></code><br>
+<code><a href="JSF-51.html">All letters contained in function and variable names will be composed entirely of lowercase letters [JSF-51-3]</a></code><br>
+<code><a href="JSF-52.html">Identifiers for constant and enumerator values shall be lowercase [JSF-52-2]</a></code><br>
+<code><a href="JSF-53.html">Header files will always have a file name extension of ".h" [JSF-53-3]</a></code><br>
+<code><a href="JSF-53.1.html">The following character sequences shall not appear in header file names: ', \, /*, //, or " [JSF-53.1-2]</a></code><br>
+<code><a href="JSF-54.html">Implementation files will always have a file name extension of ".cpp" [JSF-54-3]</a></code><br>
+<code><a href="JSF-57_a.html">Order of scopes in class: public before all others [JSF-57_a-3]</a></code><br>
+<code><a href="JSF-57_b.html">Order of scopes in classes: protected before private [JSF-57_b-3]</a></code><br>
+<code><a href="JSF-58.html">When declaring functions with more than 2 parameters, the leading parenthesis and the first argument are to be written on the same line as the function name, each additional argument will be written on a separate line [JSF-58-3]</a></code><br>
+<code><a href="JSF-59_a.html">The statement forming the body of a 'switch', 'while', 'do...while' or 'for' statement shall be a compound statement [JSF-59_a-2]</a></code><br>
+<code><a href="JSF-59_b.html">'if' and 'else' should be followed by a compound statement [JSF-59_b-2]</a></code><br>
+<code><a href="JSF-61.html">Closing curly brace '}' shall appear on a line by themselves [JSF-61-3]</a></code><br>
+<code><a href="JSF-62.html">The dereference operator `*' and the address-of operator `&amp;' should be directly connected with the type names [JSF-62-3]</a></code><br>
+<code><a href="JSF-63_a.html">There shall be no white space following a primary operator [JSF-63_a-3]</a></code><br>
+<code><a href="JSF-63_b.html">There shall be no white space preceding a primary operator [JSF-63_b-3]</a></code><br>
+<code><a href="JSF-63_c.html">There shall be no white space between a prefix unary operator and its operand [JSF-63_c-3]</a></code><br>
+<code><a href="JSF-63_d.html">There shall be no white space between a postfix unary operator and its operand [JSF-63_d-3]</a></code><br>
+<code><a href="JSF-67_a.html">Avoid "public" data members [JSF-67_a-2]</a></code><br>
+<code><a href="JSF-67_b.html">Avoid 'protected' data members [JSF-67_b-2]</a></code><br>
+<code><a href="JSF-68.html">Declare the copy constructor and copy assignment operator private not in class itself, but in a specifically designed base class [JSF-68-2]</a></code><br>
+<code><a href="JSF-69.html">Member functions shall be declared const whenever possible [JSF-69-3]</a></code><br>
+<code><a href="JSF-70.1.html">Freed memory shouldn't be accessed under any circumstances. Destructor should not be called manually [JSF-70.1-2]</a></code><br>
+<code><a href="JSF-71.html">Public and protected methods should not be invoked by class constructor [JSF-71-2]</a></code><br>
+<code><a href="JSF-71.1.html">Avoid calling virtual functions from constructors and destructors [JSF-71.1-2]</a></code><br>
+<code><a href="JSF-74.html">Prefer initialization to assignment in constructors [JSF-74-3]</a></code><br>
+<code><a href="JSF-75.html">List members in an initialization list in the order in which they are declared [JSF-75-2]</a></code><br>
+<code><a href="JSF-76_a.html">Declare an assignment operator for classes with dynamically allocated memory [JSF-76_a-2]</a></code><br>
+<code><a href="JSF-76_b.html">Declare a copy constructor for classes with dynamically allocated memory [JSF-76_b-2]</a></code><br>
+<code><a href="JSF-77.html">A copy constructor shall copy all data members and bases [JSF-77-2]</a></code><br>
+<code><a href="JSF-77.1.html">The definition of a constructor shall not contain default arguments that produce a signature identical to that of the implicitly-declared copy constructor [JSF-77.1-2]</a></code><br>
+<code><a href="JSF-78.html">Define a virtual destructor in classes used as base classes which have virtual functions [JSF-78-2]</a></code><br>
+<code><a href="JSF-79.html">Call fclose() on pointer member in destructor if the pointer was used to open a file [JSF-79-2]</a></code><br>
+<code><a href="JSF-81.html">Check for assignment to self in operator= [JSF-81-2]</a></code><br>
+<code><a href="JSF-82.html">Have assignment operator returns a reference to *this; make assignment operator's return type a non-const reference to it's class' type [JSF-82-2]</a></code><br>
+<code><a href="JSF-83.html">The assignment operator must assign all members, including those in base classes [JSF-83-2]</a></code><br>
+<code><a href="JSF-85.html">When two operators are opposites (such as == and !=), it is appropriate to define both [JSF-85-3]</a></code><br>
+<code><a href="JSF-87.html">Hierarchies should be based on abstract classes [JSF-87-4]</a></code><br>
+<code><a href="JSF-88.1.html">A stateful virtual base shall be explicitly declared in each derived class that accesses it [JSF-88.1-2]</a></code><br>
+<code><a href="JSF-89.html">A base class shall not be both virtual and non-virtual in the same hierarchy [JSF-89-2]</a></code><br>
+<code><a href="JSF-9.html">Only use characters defined in ISO C standard [JSF-9-3]</a></code><br>
+<code><a href="JSF-94_a.html">Never redefine an inherited nonvirtual function [JSF-94_a-2]</a></code><br>
+<code><a href="JSF-94_b.html">Do not redefine an inherited nonvirtual function with template parameter [JSF-94_b-2]</a></code><br>
+<code><a href="JSF-95.html">Do not redefine an inherited virtual function with a different default parameter value [JSF-95-2]</a></code><br>
+<code><a href="JSF-96.html">Don't treat arrays polymorphically [JSF-96-2]</a></code><br>
+<code><a href="JSF-97.html">Arrays shall not be used in interfaces [JSF-97-2]</a></code><br>
+<code><a href="JSF-98.html">Avoid using global variables, global functions, and class in file outside namespaces [JSF-98-4]</a></code><br>
+<code><a href="JSF-99.html">Namespaces will not be nested more than two levels deep [JSF-99-3]</a></code><br>
+</BODY>
+</HTML>

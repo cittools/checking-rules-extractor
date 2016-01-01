@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+The operands of logical operators (&amp;&amp;, || and !) should be effectively Boolean
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+The operands of logical operators (&amp;&amp;, || and !) should be effectively Boolean [MISRA2004-12_6_a-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"The operands of logical operators (&amp;&amp;, ||, !) should be 'effectively Boolean'.
+An 'effectively Boolean' expression which is either 'Boolean-by-construct'
+or 'Boolean-by-enforcement' as defined below.
+Boolean-by-construct values are produced by the following operators:
+- equality operators (== and !=)
+- logical operators (!, &amp;&amp; and ||)
+- relational operators (&lt;, &gt;, &lt;= and &gt;=)
+Boolean-by-enforcement values can be introduced by implementing a specific type
+enforcement mechanism using a tool. A Boolean type could be associated with
+a specific typedef, and would then be used for any objects that are Boolean."
+
+Rule does not report violation if as an operand of logical operator is used:
+- Boolean-by-construct values
+- boolean constant
+- integer or enum constant defined as '0' or '1' 
+- variable, parameter or expression of type:
+  - bool,
+  - typedef to bool,
+  - enum that name begins with 'bool' (ignoring case)
+    and that contains exactly 2 enum constant in body
+  - typedef to char/short/int/enum which name begins with 'bool' (ignoring case) 
+  - reference to above types
+
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability.
+Rule prevents confusion between logical and bitwise operators.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int goo();
+void foo()
+{
+    int x, y, z;
+
+    z = (x &gt; y) &amp;&amp; goo();         // Violation
+    z = (x &gt; y) || goo();         // Violation
+    z = !(x = y);                 // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int goo();
+void foo()
+{
+    int x, y, z;
+
+    z = (x &gt; y) &amp;&amp; (goo() != 0);  // OK
+    z = (x &gt; y) || (goo() != 0);  // OK
+    x = y;
+    z = (x == 0);                 // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 36
+
+</PRE>
+</BODY>
+</HTML>

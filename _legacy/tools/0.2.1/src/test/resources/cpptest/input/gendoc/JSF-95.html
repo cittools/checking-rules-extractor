@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not redefine an inherited virtual function with a different default parameter value
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not redefine an inherited virtual function with a different default parameter value [JSF-95-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Virtual functions are dynamically bound, but default parameters are statically
+bound. That means that you may end up invoking a virtual function defined
+in a derived class but using a default parameter value from a base class"
+This rule detects cases when you redefine an inherited virtual function
+with a different default parameter value.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule does not check:
+- functions with template parameters
+- non-constant default parameter values
+- default parameter values with complex expressions
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+This rule prevents misinterpretation which value is passed as default.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base
+{
+public:
+    virtual void func(int i = 1);
+};
+
+class Derived: public Base
+{
+public:
+    virtual void func(int i = 0);  // Violation
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base
+{
+    public:
+        virtual void func1(int i = 1);
+        virtual void func2(int i = 1);
+};
+
+class Derived: public Base
+{
+    public:
+        virtual void func1(int i);      // OK
+        virtual void func2(int i = 1);  // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 6, Item 37
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison-Wesley,
+   (C) 2005 Pearson Education, Inc., Chapter: "Inheritance and Object-Oriented Design", Item 38
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 95
+
+4. MISRA C++:2008 - Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 8, Rule 8-3-1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Member function containing recursion or loops should not be inlined
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Member function containing recursion or loops should not be inlined [OPT-18-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Most compilers refuse to inline functions they deem too complicated
+(e.g., those that contain loops or are recursive)."
+Rule disallows inlining for member functions with loops
+or member recursion functions.
+See also: OPT-16, OPT-17
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"This facilitates debugging and binary upgradeability, minimizes potential 
+code bloat, and maximizes the chances of greater program speed."
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class MyClass{
+public:
+    void foo1( ) {              // Violation
+        foo1( );
+    }
+
+    inline void foo2( int i );
+};
+
+void MyClass::foo2( int i ) {   // Violation
+     while (i &gt; 0) {
+         i--;
+     }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class MyClass {
+public:
+    void foo1( ) ;           // OK
+    void foo2( int i );      // OK
+};
+
+void MyClass::foo1( ) {
+    foo1( );
+}
+void MyClass::foo2( int i ) {
+    while (i &gt; 0) {
+        i--;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Scott Meyers, "Effective C++: 55 Specific Ways to Improve
+   Your Programs and Design", Third Edition, Addison-Wesley, 
+   (C) 2005 Pearson Education, Inc., Chapter 5, Item 30
+
+2. Scott Meyers, "Effective C++: 50 Specific Ways to Improve
+   Your Programs and Design", Second Edition, Addison Wesley,
+   (C) 2005 Pearson Education, Inc., 
+   Chapter: "Classes and Functions: Implementation", Item 33
+
+</PRE>
+</BODY>
+</HTML>

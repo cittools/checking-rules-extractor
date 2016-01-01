@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Consider making virtual functions nonpublic, and public functions nonvirtual
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Consider making virtual functions nonpublic, and public functions nonvirtual [CODSTA-CPP-25-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Prefer to make public functions nonvirtual. 
+Prefer to make virtual functions private, 
+or protected if derived classes need to be able to call the base versions."
+
+
+Exceptions:
+
+"Rule doesn't apply to destructors because of their special 
+order of execution."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule helps keeping good class encapsulation, makes the base class robust 
+in the face of change, allows each interface to take its natural shape.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class A{
+public: 
+	virtual void foo(); // Violation
+	void goo();
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class B{
+public: 
+	void goo();
+	
+private:
+	virtual void foo(); // OK
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+(C) 2005 Pearson Education, Inc.
+Chapter: "Class Design and Inheritance", Rule 39
+
+</PRE>
+</BODY>
+</HTML>

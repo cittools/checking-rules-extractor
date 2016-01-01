@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+"#define" or enum constants should be used instead of hard coded values whenever possible
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+"#define" or enum constants should be used instead of hard coded values whenever possible [CODSTA-29-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks whether you are avoiding using hard coded values. Using #define
+or enum constants rather than hard coded values promotes the maintainability
+of 'C' code by creating a localized area for changes.
+See also: CODSTA-26
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Rule active for C code only.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo( ) {
+    int tabColors[256];         // Violation
+    if (tabColors[2] == 1) {    // Violation
+        /*...*/
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#define buff 256
+#define OK 1
+
+enum color {
+    RED = 0,
+    BLUE = 1,
+    GREEN = 2
+    /*...*/
+};
+
+void foo( ) {
+    int tabColors[buff];        // OK
+    if (tabColors[RED] == OK) { // OK
+        /*...*/
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Ellemtel Coding Standards 
+<A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A>
+From: 10 Constants - Rule 37
+
+</PRE>
+</BODY>
+</HTML>

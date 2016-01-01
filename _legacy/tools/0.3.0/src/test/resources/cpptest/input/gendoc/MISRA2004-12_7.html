@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Bitwise operators shall not be applied to operands whose underlying type is signed
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Bitwise operators shall not be applied to operands whose underlying type is signed [MISRA2004-12_7-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"Bitwise operations (~, &lt;&lt;, &gt;&gt;, &amp;, ^ and |) are not normally meaningful on 
+signed integers. Problems can arise if, for example, a right shift moves the 
+sign bit into the number, or a left shift moves a numeric bit 
+into the sign bit.
+The term 'underlying type' is defined as describing the type that would
+be obtained from evaluating an expression if it were not for the effects
+of integral promotion."
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule makes the code more readable and less confusing.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo( int x, int y )
+{
+    x = y &gt;&gt; 2;       // Violation
+    x = y &amp; 0x0F;     // Violation
+    return x | 5;     // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+int foo( int x, int y )
+{
+    /* Caller must make sure x and y are not negative */
+    x = (unsigned int)y &gt;&gt; 2u;       /* OK */
+    x = (unsigned int)y &amp; 0x0Fu;     /* OK */
+    return (unsigned int)x | 5u;     /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+    Chapter 6, Section 12
+
+2. Origin: Misra Guidelines - Rule 37
+
+</PRE>
+</BODY>
+</HTML>

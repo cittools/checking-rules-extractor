@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+A variable which is not modified shall be const qualified
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+A variable which is not modified shall be const qualified [MISRA2008-7_1_1-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks if you declared your parameters or local variable as const. 
+Immutable values are easier to understand, track, and reason about, so prefer
+constants over variables whenever it is sensible and make const your default 
+choice when you define a value:
+See also: CODSTA-CPP-43, MISRA2004-16_7
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+It's safe, it's checked at compile time, and it's integrated
+with C++'s type system. It also prevents future revisions
+from unintentional changing the caller's data.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+int foo1( int x, int * z ) {  // Violation 2x
+    int y = 0;                     // Violation
+    return x + y + *z;
+}
+
+int foo2( int x, int * z ) { // OK - x and z are modified
+    int y = 0;                    // OK - y is modifed
+    return (x++) + (y++) + (*(++z));
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+// Fixed violations - const added
+int foo1( const int x, int * const z ) {  // OK - x and z are const
+    const int y = 0;                               // OK - y is const
+    return x + y + *z;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Herb Sutter, Andrei Alexandrescu, "C++ Coding Standards," Addison-Wesley, 
+  (C) 2005 Pearson Education, Inc., Chapter: "Coding Style", Rule 15
+
+2. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 7, Rule 7-1-1
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+When two operators are opposites (such as == and !=), it is appropriate to define both
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+When two operators are opposites (such as == and !=), it is appropriate to define both [CODSTA-CPP-16-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"When a client of a class is allowed to apply an operator against a class, 
+it also expects to be able to apply the negation of that operator against 
+a class. A good example is the operator==; its semantic opposite is the 
+operator!=, which should also be defined if operator== was defined."
+
+Rule prevents using:
+- '==' operator without '!=' operator
+- '&lt;=' operator without '&gt;=' operator
+- '&lt;' operator without '&gt;' operator
+- '++' operator without '--' operator
+- '+' operator without '-' operator
+- '&lt;&lt;' operator without '&gt;&gt;' operator
+- '&amp;&amp;' operator without '||' operator
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and maintainability of code and 
+prevents misunderstanding the meaning of an overloaded operator.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class C { // Violation
+public:
+    bool operator&lt;=( C&amp; c );
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class C { // OK
+public:
+    bool operator&lt;=( C&amp; c );
+    bool operator&gt;=( C&amp; c );
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Ellemtel Coding Standards 
+   <A HREF="http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html">http://www.chris-lott.org/resources/cstyle/Ellemtel-rules-mm.html</A> 
+   From: 7 Classes - 7.7 Operator Overloading - Rec. 36
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.10 Classes, AV Rule 85
+
+</PRE>
+</BODY>
+</HTML>

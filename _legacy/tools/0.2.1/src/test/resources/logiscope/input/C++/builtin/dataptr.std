@@ -1,0 +1,18 @@
+.NAME Data of Pointer Type
+
+.DESCRIPTION
+
+Definition:
+-----------
+Class members which are pointers to objects are not allowed.
+(This rule relates to Item 10 in "More Effective C++", Scott Meyers).
+
+Justification:
+--------------
+Prevents resource leaks in constructors and simplifies destructors definitions.
+
+
+.SEVERITY Advisory
+
+.COMMAND builtin
+

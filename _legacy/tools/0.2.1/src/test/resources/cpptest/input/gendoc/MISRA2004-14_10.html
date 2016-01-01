@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+All if ... else if constructs shall be terminated with an else clause
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+All if ... else if constructs shall be terminated with an else clause [MISRA2004-14_10-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"This rule applies whenever an if statement is followed by one or more 
+else if statements; the final else if shall be followed by an else statement. 
+In the case of a simple if statement then the else statement need not 
+be included.
+The requirement for a final else statement is defensive programming. 
+The else statement should either take appropriate action or contain a suitable 
+comment as to why no action is taken."
+See also: CODSTA-23
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule ensures proper data flow and improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(int a)
+{
+    if(a &gt; 0)
+    {
+    }
+    else if (a &gt; 10)   // Violation
+    {
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(int a)
+{
+    if(a &gt; 0)
+    {
+    }
+    else if (a &gt; 10)   // OK
+    {
+    }
+    else
+    {
+        // comment or action
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. MISRA-C:2004 Guidelines for the use of the C language in critical systems
+   Chapter 6, Section 14
+
+2. Origin: Misra Guidelines - Rule 60
+
+3. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.24 Flow Control Structures, AV Rule 192
+
+4. MISRA C++:2008 Guidelines for the use of the C++ language in critical
+   systems, Chapter 6, Section 6, Rule 6-4-2
+
+</PRE>
+</BODY>
+</HTML>

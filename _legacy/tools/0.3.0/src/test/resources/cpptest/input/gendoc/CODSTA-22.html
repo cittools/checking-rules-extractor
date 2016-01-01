@@ -1,0 +1,154 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Local variable or parameter names and class member variable or parent class/struct member variable names shall differ by more than a single character
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Local variable or parameter names and class member variable or parent class/struct member variable names shall differ by more than a single character [CODSTA-22-1]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+This rule checks that local variable or parameter names and
+class member variable or parent class/struct member variable
+names differ by more than a single character.
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+Case insensitive check is performed.
+Names that are one character in length are skipped.
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule improves readability and prevents writing ambiguous code.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+class Base {
+    void foo( ) {
+        float memberF;      // Violation
+    }
+    int foo1( );
+    short foo2( ) {
+        for( int _var2 = 0; _var2 &lt; 10; _var2++ ) {    // Violation
+        }
+        return Var3;
+    }
+public:
+    int Member;
+    float Var1;
+    float Var2;
+    short Var3;
+};
+
+int Base::foo1( ) {
+    int _var1 = 6;         // Violation
+    return _var1;
+} 
+
+class A : public Base {
+    void foo( ) {
+        float memberF;      // Violation
+    }
+    int foo1( );
+    short foo2( ) {
+        for( int _var2 = 0; _var2 &lt; 10; _var2++ ) {    // Violation
+        }
+        return Var3;
+    }
+};
+
+int A::foo1( ) {
+    int _var1 = 6;         // Violation
+    return _var1;
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+class Base {
+    void foo( ) {
+        float fLocal;      // OK
+    }
+    int foo1( );
+    int x;
+    short foo2( ) {
+        int y;             // OK
+        for( int iValue = 0; iValue &lt; 10; iValue++ ) {    // OK
+        }
+        return Var3;
+    }
+public:
+    int Member;
+    float Var1;
+    float Var2;
+    short Var3;
+};
+
+int Base::foo1( ) {
+    int iValue = 6;        // OK
+    return iValue;
+} 
+
+class A : public Base {
+    void foo( ) {
+        float fLocal;      // OK
+    }
+    int foo1( );
+    int x;
+    short foo2( ) {
+        int y;             // OK
+        for( int iValue = 0; iValue &lt; 10; iValue++ ) {    // OK
+        }
+        return Var3;
+    }
+};
+
+int A::foo1( ) {
+    int iValue = 6;        // OK
+    return iValue;
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

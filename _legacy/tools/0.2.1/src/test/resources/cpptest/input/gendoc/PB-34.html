@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Third parameter to 'memcpy'/'strncpy'/'memmove' should not depend on second
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Third parameter to 'memcpy'/'strncpy'/'memmove' should not depend on second [PB-34-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message if a third parameter
+of 'memcpy', 'memmove', or 'strncpy' function depends on a second.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule prevents undefined behavior.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;string.h&gt;
+
+void foo(void)
+{
+	const int array1[10] = {0,1,2,3,4,5,6,7,8,9};
+	int array2[10];
+		
+	memcpy ( array2, array1, sizeof(array1)); // Violation
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+#include &lt;string.h&gt;
+
+void foo(void)
+{
+	const int array1[10] = {0,1,2,3,4,5,6,7,8,9};
+	int array2[10];
+		
+	memcpy ( array2, array1, sizeof(array2)); // OK
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+Recommended by ParaSoft
+
+</PRE>
+</BODY>
+</HTML>

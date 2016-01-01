@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Implicit conversions which may result in a loss of information shall not be used
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Implicit conversions which may result in a loss of information shall not be used [JSF-180_a-2]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+"C performs many type conversions implicitly and silently, so as to harmonize
+types within an expression before evaluating it. Some of these conversions can
+result in loss of information. Such implicit conversions shall not be used,
+but explicit casts should be used instead.
+As a general principle, avoid mixing arithmetic of different precisions in the 
+same expression, and avoid mixing signed and unsigned integers in the same
+expression. Mixed arithmetic normally entails implicit promotions and balancing
+of types (i.e. conversions), some of which can lead to unexpected behaviour."
+The rule reports a violation if in one expression (assignment, initialization,
+arithmetic expression) are used two non-constant operands of different types.
+See also: MISRA2004-10_1_a, MISRA2004-10_1_b, MISRA2004-10_1_c,
+MISRA2004-10_1_d, MISRA2004-10_1_e, MISRA2004-10_1_f, MISRA2004-10_1_g,
+MISRA2004-10_1_h, MISRA2004-10_1_i, MISRA2004-10_2, MISRA2004-10_2_b     
+
+
+
+</PRE>
+<STRONG>
+NOTES
+</STRONG>
+<PRE>
+
+The rule checks only the following types: signed/unsigned (char, short, int,
+long, long long), float, double, long double and typedefs to mentioned types.
+The fundamental type and typedef to this type the rule treats as the same type. 
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+"Explicit casts should normally only be used in the case where a conversion 
+which could result in a loss of information is specifically required by the 
+programmer. If the static checking of implicit conversions is overridden by
+the use of explicit casts in this way, then the programmer should be aware
+of the issues of truncation and lost of precision associated with the operation,
+and should provide appropriate checking of values in the code"
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+void foo(unsigned int ui, signed int i)
+{
+  float f;
+  unsigned short us = ui; /* Violation */
+
+  ui = i;                 /* Violation */
+  i = f;                  /* Violation */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+void foo(unsigned int ui, signed int i)
+{
+  float f;
+  unsigned short us = (unsigned short)ui; /* OK */
+
+  ui = (unsigned int)i;                   /* OK */
+  i = (signed int)f;                      /* OK */
+}
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. Origin: Misra Guidelines rule 43
+
+2. JOINT STRIKE FIGHTER, AIR VEHICLE, C++ CODING STANDARDS
+   Chapter 4.23 Type Conversions, AV Rule 180
+
+</PRE>
+</BODY>
+</HTML>

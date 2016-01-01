@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Hungarian notation for short int types
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Hungarian notation for short int types [NAMING-HN-36-3]
+</STRONG>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+For short int variables and parameters use "si" prefix.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.0
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Improves readability and maintainability.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+short int g_simyVar;                                 // Violation
+short int g_MyVariable;                              // Violation
+static const short int g_skMyVariable = 0;           // Violation
+class B {
+    short int m_MyVariable;                          // Violation
+    static const short int m_skMyVariable;           // Violation
+    void foo( short int MyParam ) {                  // Violation
+        short int MyVariable;                        // Violation
+        static const short int skMyVariable = 0;     // Violation
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+short int g_siMyVar;                                 // OK
+short int g_siMyVariable;                            // OK
+static const short int g_sksiMyVariable = 0;         // OK
+class A {
+    short int m_siMyVariable;                        // OK
+    static const short int m_sksiMyVariable;         // OK
+    void foo( short int siMyParam ) {                // OK
+        short int siMyVariable;                      // OK
+        static const short int sksiMyVariable = 0;   // OK
+    }
+};
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+<A HREF="http://web.mst.edu/~cpp/common/hungarian.html">http://web.mst.edu/~cpp/common/hungarian.html</A>
+
+</PRE>
+</BODY>
+</HTML>
